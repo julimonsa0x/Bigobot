@@ -5,6 +5,8 @@ images = [
   'https://i.imgur.com/YfSuqEg.jpg', #american fat girls 
   'https://youtu.be/OQfctKSrJEg', #Luigi bailando negro boca 
   'no hay meme, monsa arreglando mi código...',
+  'no hay meme, monsa arreglando mi código...', # X2
+  'no hay meme, monsa arreglando mi código...', # X3
   'https://imgur.com/a/voWCoIg', #evo morales
   'https://imgur.com/a/y13HFNP', #amongus hidden
   'https://www.youtube.com/watch?v=MXQOUHJToSg', #tenet 2 fat boi backflip
@@ -317,7 +319,7 @@ images = [
   'https://cdn.discordapp.com/attachments/793309880861458473/796903397550063646/Screenshot_20210107-034141.png',
   'https://cdn.discordapp.com/attachments/793309880861458473/796904773029855252/wink_yes.mp4',
   'https://media.discordapp.net/attachments/793309880861458473/796904772749754418/aaf488ee05387c2fed167850037cb98d.jpg?width=471&height=473',
-  'https://www.youtube.com/watch?v=2A9nZRfierMhttps://www.youtube.com/watch?v=2A9nZRfierM',
+  'https://www.youtube.com/watch?v=2A9nZRfierM',
   'https://images-ext-1.discordapp.net/external/t1UWS8RI2H1ssvrFT06oCFHKMxmjdMSQghpfAQtlCvE/%3Fwidth%3D666%26height%3D473/https/media.discordapp.net/attachments/559592087641915433/796234030746959912/ErBV201XcAAqARf.png',
   'https://media.discordapp.net/attachments/793309880861458473/796159305790783518/unknown.png',
   'https://cdn.discordapp.com/attachments/793309880861458473/796077349954256916/Screenshot_20210105-150657.png',
@@ -332,7 +334,7 @@ images = [
   'https://media.discordapp.net/attachments/793309880861458473/796238881661255680/Screenshot_20210105-234135.png?width=517&height=473',
   'https://media.discordapp.net/attachments/793309880861458473/796238894281785424/Screenshot_20210105-221744.png?width=475&height=473',
   'https://cdn.discordapp.com/attachments/793309880861458473/796239825090117652/glock_gol.mp4',
-  'https://media.discordapp.net/attachments/793309880861458473/796257391938502696/coppi_paste.png?width=841&height=473',
+  'https://media.discordapp.net/attachments/793309880861458473/796257391938502696/coppi_paste.png', # COPI PASTE .PNG
   'https://cdn.discordapp.com/attachments/793309880861458473/796042120477409320/nullMP4.mp4',
   'https://cdn.discordapp.com/attachments/793309880861458473/796042120094810152/chorros_de_jovenes.mp4',
   'https://cdn.discordapp.com/attachments/793309880861458473/796257551842803736/The_Boys_Homelander_Had_a_Delicious_Breakfast.mp4',
@@ -347,7 +349,7 @@ images = [
   'https://cdn.discordapp.com/attachments/793309880861458473/795837295151284264/Screenshot_20210104-222331.png',
   'https://gyazo.com/474b11c6fa1fe9285f9ab93d7065102a',
   'https://cdn.discordapp.com/attachments/793309880861458473/795795301645680640/Screenshot_20210104-190229.png',
-  'ezreal gaming https://www.youtube.com/watch?v=TxacKedyaw0',
+  'https://www.youtube.com/watch?v=TxacKedyaw0', # ezreal gaming
   'https://cdn.discordapp.com/attachments/793309880861458473/795795290577043486/Screenshot_20210104-190318.png',
   'https://cdn.discordapp.com/attachments/793309880861458473/795795253239742514/Screenshot_20210104-190348.png',
   'https://cdn.discordapp.com/attachments/793309880861458473/795795192804278272/Screenshot_20210104-190356.png',
@@ -409,7 +411,7 @@ images = [
   'https://media1.tenor.com/images/49aaaecce837f242263198c54e4f0080/tenor.gif?itemid=17745710',
   'https://media.tenor.com/images/bcb64e54a9e2b8f0c4a740e421cffefb/tenor.gif',
   'https://media1.tenor.com/images/85805966c1638e4bdd4af32a480c26c1/tenor.gif?itemid=12661768',
-  'https://img.desmotivaciones.es/202006/imposible-amigos-imagenes.jpg',
+  'https://img.desmotivaciones.es/202006/imposible-amigos-imagenes.jpg', #imposible amigos
   'https://i.imgur.com/urGkvX0.jpeg', #copipedro
   'https://i.imgur.com/MLcQAgZ.png',
   'https://i.imgur.com/DLS7PUZ.png',
@@ -452,7 +454,7 @@ images = [
   'https://cdn.discordapp.com/attachments/791042478982824000/791200717565198346/lezcanito.jpg',
   'https://cdn.discordapp.com/attachments/713263461362303076/779571694347747378/IMG_20180801_080110.jpg',
   'https://cdn.discordapp.com/attachments/713263461362303076/779569634496086026/IMG_20180624_143110.jpg',
-  'https://drive.google.com/file/d/1SxwOL368t5rRMcg57DQ1bGTl_h3tApG0/view?usp=sharing', #titties photo delete soon
+  'https://drive.google.com/file/d/1SxwOL368t5rRMcg57DQ1bGTl_h3tApG0/view?usp=sharing', #titties photo delete soon !!!!!!!!
   'https://cdn.discordapp.com/attachments/793309880861458473/795063342779596810/unknown.png',
   'https://cdn.discordapp.com/attachments/791042478982824000/792563953116643348/Screenshot_20201226-222551.png',
   'https://cdn.discordapp.com/attachments/559592087641915433/794752983065034802/EqsVYFVXcAIvA_S.png',

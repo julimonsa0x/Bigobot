@@ -1111,11 +1111,24 @@ async def meme(ctx):
     '''Memes randoms, a quien no le gustan los memes...'''
     embed = discord.Embed(color = discord.Colour.red(), timestamp=datetime.utcnow())
     random_link = random.choice(listas.images)
-    embed.set_image(url = random_link)
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)
-        await ctx.send(embed = embed)
-        print(f'cmdMeme||         Meme enviado a {ctx.author.name} a las {current_hour}')
+    if (
+            random_link.startswith('https://video.twimg.com/ext_tw_video/') or 
+            random_link.startswith('https://imgur') or 
+            random_link.startswith('https://www.youtube:') or
+            random_link.startswith('https://i.imgur') or 
+            random_link.startswith('https://youtu')
+        ):
+        async with ctx.typing():    
+            await asyncio.sleep(type_time)
+            await ctx.send(random_link)
+            print(f'cmdMeme||         Meme enviado a {ctx.author.name} a las {current_hour}')
+        
+    else:
+        embed.set_image(url = random_link)
+        async with ctx.typing():    
+            await asyncio.sleep(type_time)
+            await ctx.send(embed = embed)
+            print(f'cmdMeme||         Meme enviado a {ctx.author.name} a las {current_hour}')
 
 #----> Reddit meme <----
 @bot.command()
