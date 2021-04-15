@@ -2078,7 +2078,7 @@ def degrees_to_cardinal(d):
     return dirs[ix % len(dirs)]
 
 # openweathermap api key sensible 
-api_key = 'efa0a53827523ff1142068e23a9df2e6'      # API KEY is sensible and personal, should not be shown...
+api_key = os.getenv('OWM_API_KEY')      # API KEY is sensible and personal, should not be shown...
 @bot.command()
 async def clima(ctx, *, location: str=None):
     '''Clima de la ubicacion que introduzcas'''
