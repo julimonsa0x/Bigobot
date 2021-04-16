@@ -93,37 +93,37 @@ def bro_birthdays_check(member: int):
     elif member == brosId['Reteke']: #rtk
         fecha_Cumple = broBdays.rtkBday
         return fecha_Cumple
-    elif member == 338108250861993985: #ssk
+    elif member == brosId['Souskenin']: #ssk
         fecha_Cumple = broBdays.sskBday
         return fecha_Cumple
-    elif member == 547595215666675745: #sofi
+    elif member == brosId['Sofi']: #sofi
         fecha_Cumple = broBdays.sofiBday
         return fecha_Cumple
-    elif member == 343963045682216960: #tambo
+    elif member == brosId['Tambo']: #tambo
         fecha_Cumple = broBdays.tamboBday
         return fecha_Cumple
-    elif member == 369991700942159872: #jose
+    elif member == brosId['Jose']: #jose
         fecha_Cumple = broBdays.jopiBday
         return fecha_Cumple
-    elif member == 472079465569189891: #copi
+    elif member == brosId['Coppi']: #copi
         fecha_Cumple = broBdays.copiBday
         return fecha_Cumple
-    elif member == 310123637493596163: #mato
+    elif member == brosId['Mato']: #mato
         fecha_Cumple = broBdays.matoBday
         return fecha_Cumple
-    elif member == 505198628512595979: #seki
+    elif member == brosId['Seki']: #seki
         fecha_Cumple = broBdays.sekiBday
         return fecha_Cumple    
-    elif member == 485259816399536128: #yo
+    elif member == brosId['Monsa']: #yo
        fecha_Cumple = broBdays.juliBday
        return fecha_Cumple
-    elif member == 369960552337768458: #lezca
+    elif member == brosId['Lezcano']: #lezca
         fecha_Cumple = broBdays.lezcBday
         return fecha_Cumple  
-    elif member == 788950461884792854:  #bot 
+    elif member == brosId['Bigobot']:  #bot 
         fecha_Cumple = broBdays.botBday
         return fecha_Cumple
-    elif member == 342671279041806346: #stalk
+    elif member == brosId['Stalker']: #stalk
         fecha_Cumple = broBdays.stalkerBday
         return fecha_Cumple  
 
@@ -1793,7 +1793,7 @@ async def mensaje(ctx, channel_id=None, *, args=None):
 async def tunear(ctx, order: int, *, args=None,):
     '''Tunea un texto, la sintaxis es #tunear <orden> <el_texto_que_quieras_tunear>, siendo el orden un numero del 1 al 7 (distintas fuentes)'''
     if args != None and order == 1:
-        myThiccString = ExtraThicc.tunear1(args.replace("#tunear", ""))
+        myThiccString = tuning.tunear1(args.replace("#tunear", ""))
         async with ctx.typing():    
             await asyncio.sleep(type_time)
             await ctx.send(myThiccString)
@@ -1801,7 +1801,7 @@ async def tunear(ctx, order: int, *, args=None,):
         return
 
     elif args != None and order == 2:
-        myThiccString = ExtraThicc.tunear2(args.replace("#tunear", ""))
+        myThiccString = tuning.tunear2(args.replace("#tunear", ""))
         async with ctx.typing():    
             await asyncio.sleep(type_time)
             await ctx.send(myThiccString)
@@ -1811,7 +1811,7 @@ async def tunear(ctx, order: int, *, args=None,):
     elif args != None and order == 3:
         async with ctx.typing():    
             await asyncio.sleep(type_time)
-            myThiccString = ExtraThicc.tunear3(args.replace("#tunear", ""))
+            myThiccString = tuning.tunear3(args.replace("#tunear", ""))
             await ctx.send(myThiccString)
             print(f"cmdTunear3||        {ctx.author.name} tuneó un texto el {current_hour}")
         return
@@ -1819,7 +1819,7 @@ async def tunear(ctx, order: int, *, args=None,):
     elif args != None and order == 4:
         async with ctx.typing():    
             await asyncio.sleep(type_time)
-            myThiccString = ExtraThicc.tunear4(args.replace("#tunear", ""))
+            myThiccString = tuning.tunear4(args.replace("#tunear", ""))
             await ctx.send(myThiccString)
             print(f"cmdTunear4||        {ctx.author.name} tuneó un texto el {current_hour}")
         return
@@ -1827,7 +1827,7 @@ async def tunear(ctx, order: int, *, args=None,):
     elif args != None and order == 5:
         async with ctx.typing():    
             await asyncio.sleep(type_time)
-            myThiccString = ExtraThicc.tunear5(args.replace("#tunear", ""))
+            myThiccString = tuning.tunear5(args.replace("#tunear", ""))
             await ctx.send(myThiccString)
             print(f"cmdTunear5||        {ctx.author.name} tuneó un texto el {current_hour}")
         return
@@ -1835,7 +1835,7 @@ async def tunear(ctx, order: int, *, args=None,):
     elif args != None and order == 6:
         async with ctx.typing():    
             await asyncio.sleep(type_time)
-            myThiccString = ExtraThicc.tunear6(args.replace("#tunear", ""))
+            myThiccString = tuning.tunear6(args.replace("#tunear", ""))
             await ctx.send(myThiccString)
             print(f"cmdTunear6||        {ctx.author.name} tuneó un texto el {current_hour}")
         return
@@ -1843,7 +1843,7 @@ async def tunear(ctx, order: int, *, args=None,):
     elif args != None and order == 7:
         async with ctx.typing():    
             await asyncio.sleep(type_time)
-            myThiccString = ExtraThicc.tunear7(args.replace("#tunear", ""))
+            myThiccString = tuning.tunear7(args.replace("#tunear", ""))
             await ctx.send(myThiccString)
             print(f"cmdTunear6||        {ctx.author.name} tuneó un texto el {current_hour}")
         return

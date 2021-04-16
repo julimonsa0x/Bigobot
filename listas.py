@@ -551,7 +551,7 @@ images = [
   'https://cdn.discordapp.com/attachments/793309880861458473/827035716236083241/IMG-20210325-WA0023.jpg', #MATO SACANDO LA LENGUA 
   'https://cdn.discordapp.com/attachments/793309880861458473/827391096295784489/los_pibes_estudiando.jpg', #los pibes estudiando
   'https://cdn.discordapp.com/attachments/793309880861458473/827432502977101834/Screenshot_20210401-231000.png', #te qiero
-  '', #nico te ha transferido 1 centavo
+  #'', #nico te ha transferido 1 centavo
   'https://cdn.discordapp.com/attachments/793309880861458473/828715039132614696/20200915_003430.png', #dardo amongus
   'https://cdn.discordapp.com/attachments/793309880861458473/828716836769759313/unknown.png', # tomatela puntano mato 
   'https://cdn.discordapp.com/attachments/793309880861458473/828717040323657748/Ej1A4gNXcAETFWo.png', # joystik cyberpunk 
@@ -619,16 +619,16 @@ images = [
   'https://cdn.discordapp.com/attachments/793309880861458473/831715240478638080/PicsArt_04-13-11.17.44.jpg', # tengan cuidado gente de la epet 14, nico sin barbijo
   'https://cdn.discordapp.com/attachments/793309880861458473/831730430222401536/unknown.png', # pili amongo le sale el tiro por la culata
   'https://cdn.discordapp.com/attachments/793309880861458473/831731317867544629/unknown.png', # debo admitir, copi bardeado
-  '',
-  '',
-  '',
-  '',
-  '',
-  '',
-  '',
-  '',
-  '',
-  '',
+  #'',
+  #'',
+  #'',
+  #'',
+  #'',
+  #'',
+  #'',
+  #'',
+  #'',
+  #'',
 
 
 
@@ -1105,9 +1105,7 @@ brawlers = [ # ordered by rarity!
     'Gale',
     'Surge',
     'Colette',
-    'Sprout',
     'Byron',
-    'Crow',
     'Sandy',
     'Lou',
     'Coronel Ruffs',
@@ -1421,6 +1419,7 @@ brosId = {
     'Sofi': 547595215666675745,
     'Coppi': 472079465569189891,
     'Pili': 214477416293335041,
+    'Bigobot': 788950461884792854,
     'Mato': 310123637493596163, 
     'Jose': 369991700942159872,
     'More': 654536379136475146,
