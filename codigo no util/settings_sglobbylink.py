@@ -9,7 +9,7 @@ import os
 discordBotTokenIMPORTANT = os.getenv('TOKEN')
 
 # IMPORTANT: get your Steam API key from https://steamcommunity.com/dev/apikey
-steamApiKeyIMPORTANT = "E6970CEB3ABF657FC4408F2AD6949C44"
+steamApiKeyIMPORTANT = ""
 
 
 ####### SETTINGS:
