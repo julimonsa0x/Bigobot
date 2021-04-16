@@ -40,8 +40,9 @@ from pyqrcode import QRCode
 from pytube import extract  # for the descarga cmd
 #<-------------------------------------------> File imports
 import listas
+from listas import brosId
 import broBdays 
-import ExtraThicc
+import tuning
 import game
 import invitaciones
 load_dotenv()
@@ -85,10 +86,11 @@ def bro_birthdays_check(member: int):
     if member == None:
         fecha_Cumple = "Fecha desconocida..."
 
-    elif member == 343971450644070410: #nico
+    #elif member == 343971450644070410: #nico - USAR EL DICT QUE SI FUNCIONA brosID CON TODOS LOS DEMAS!!!
+    elif member == brosId['Nico']:
         fecha_Cumple = broBdays.nicoBday
         return fecha_Cumple
-    elif member == 391269386935074838: #rtk
+    elif member == brosId['Reteke']: #rtk
         fecha_Cumple = broBdays.rtkBday
         return fecha_Cumple
     elif member == 338108250861993985: #ssk
@@ -540,7 +542,7 @@ async def monsa(ctx):
     async with ctx.typing():    
         await asyncio.sleep(type_time)
         await ctx.send(embed=embedMine)
-        print(f'cmdInfoSobreMí||  Info del autor enviada a {ctx.author.name} a las {current_hour}')
+        print(f'cmdInfoSobreMí||     Info del autor enviada a {ctx.author.name} a las {current_hour}')
 
 #---------> comando de joda tucson <--------
 @bot.command()
