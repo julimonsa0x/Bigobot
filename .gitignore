@@ -1,0 +1,12 @@
+.vscode/settings.json
+.env
+main.py
+__pycache__/listas.cpython-38.pyc
+__pycache__/main.cpython-38.pyc
+__pycache__/tuning.cpython-38.pyc
+databases/poll.json
+databases/scheduler.json
+cogs/__pycache__/poll.cpython-38.pyc
+cogs/__pycache__/reactions.cpython-38.pyc
+cogs/__pycache__/voice_member_count.cpython-38.pyc
+cogs/reactions.py

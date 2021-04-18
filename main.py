@@ -86,7 +86,6 @@ def bro_birthdays_check(member: int):
     if member == None:
         fecha_Cumple = "Fecha desconocida..."
 
-    #elif member == 343971450644070410: #nico - USAR EL DICT QUE SI FUNCIONA brosID CON TODOS LOS DEMAS!!!
     elif member == brosId['Nico']:
         fecha_Cumple = broBdays.nicoBday
         return fecha_Cumple
@@ -176,33 +175,33 @@ async def on_ready():
 
         bot.warnings[guild.id] = {}
 
-    for file in ["reaction_roles.txt", "welcome_channels.txt", "goodbye_channels.txt", "ticket_configs.txt"]:
+    for file in ["databases/reaction_roles.txt", "databases/welcome_channels.txt", "databases/goodbye_channels.txt", "databases/ticket_configs.txt"]:
         async with aiofiles.open(file, mode="a") as temp:
             pass
     #alphascript cmd
 
-    async with aiofiles.open("reaction_roles.txt", mode="r") as file:
+    async with aiofiles.open("databases/reaction_roles.txt", mode="r") as file:
         lines = await file.readlines()
         for line in lines:
             data = line.split(" ")
             bot.reaction_roles.append((int(data[0]), int(data[1]), data[2].strip("\n")))
     #alphascript cmd
 
-    async with aiofiles.open("welcome_channels.txt", mode="r") as file:
+    async with aiofiles.open("databases/welcome_channels.txt", mode="r") as file:
         lines = await file.readlines()
         for line in lines:
             data = line.split(" ")
             bot.welcome_channels[int(data[0])] = (int(data[1]), " ".join(data[2:]).strip("\n"))
     #alphascript cmd
 
-    async with aiofiles.open("goodbye_channels.txt", mode="r") as file:
+    async with aiofiles.open("databases/goodbye_channels.txt", mode="r") as file:
         lines = await file.readlines()
         for line in lines:
             data = line.split(" ")
             bot.goodbye_channels[int(data[0])] = (int(data[1]), " ".join(data[2:]).strip("\n"))
     #alphascript cmd
 
-    async with aiofiles.open("ticket_configs.txt", mode="r") as file:
+    async with aiofiles.open("databases/ticket_configs.txt", mode="r") as file:
         lines = await file.readlines()
         for line in lines:
             data = line.split(" ")
@@ -256,8 +255,8 @@ async def on_ready():
 ##------> Statuses del Bot <--------
 async def change_presence():
     await bot.wait_until_ready()
-    # wait 30 secs. to start the change_presence loop...
-    await asyncio.sleep(30)
+    # wait 35 secs. to start the change_presence loop...
+    await asyncio.sleep(35)
     while not bot.is_closed():
         status = random.choice(listas.bot_statuses)
         await bot.change_presence(activity=discord.Game(name=status))
@@ -414,14 +413,24 @@ async def rol_reaccion(ctx, role: discord.Role=None, msg: discord.Message=None, 
 @bot.command()
 @commands.has_permissions(kick_members=True)
 async def set_canal_bienvenida(ctx, new_channel: discord.TextChannel=None, *, message=None):
-    '''Asigna un canal de bienvenida junto a un mensaje'''
+    '''ES: Asigna un canal de bienvenida junto a un mensaje, a modo de ejemplo: #set_canal_bienvenida <ID_del_canal_de_texto> <mensaje>
+    Ejemplo practico: #set_canal_bienvenida 123423798689324 Bienvenido al server de _____
+    Si no sabes como obtener el id de un canal debes tener activado el modo desarrollador. Para eso
+    debes ir a Ajustes de Usuario > Avanzado > desarrollador. Esto habilitara la opcion de copiar el
+    ID de un canal de texto cuando des click derecho en el mismo...
+    EN: Assigns a welcome channel along a message, e.g: #set_canal_bienvenida <ID_del_canal_de_texto> <mensaje>
+    Practical example: #set_canal_bienvenida 123423798689324 Welcome to _____'s guild
+    If you are not able to copy the ID of a text channel you should activate developer mode. For that
+    you gotta go to User settings > Advanced > Developer. Now you'll be able to copy a text channel's ID
+    when right clicking...
+    '''
     if new_channel != None and message != None:
         for channel in ctx.guild.channels:
             if channel == new_channel:
                 bot.welcome_channels[ctx.guild.id] = (channel.id, message)
                 await ctx.channel.send(f"El canal de bienvenida ahora es: {channel.name}, y el mensaje de bienvenida será: \"{message}\"")
                 await channel.send("¡Ahora este es el nuevo canal de bienvenida!")
-                print(f"cmdCanaldeBienvenida|| {ctx.author.name} definió el canal de bienvenida a {channel.name}")
+                print(f"cmdCanaldeBienvenida||    {ctx.author.name} definió el canal de bienvenida a {channel.name}")
 
                 async with aiofiles.open("welcome_channels.txt", mode="a") as file:
                     await file.write(f"{ctx.guild.id} {new_channel.id} {message}\n")
@@ -886,7 +895,6 @@ async def info(ctx):
         await ctx.send(embed=embed2)
         print(f'cmdInfo|| Info sobre {ctx.guild.name} enviada a {ctx.author.name} a las {current_hour}')
 
-    embed.add_field(name=':orange_circle:  Contado con liqui:', value=f"Compra: {compra} | Venta: {venta} | Var: {varCcl}", inline=False)
 
 #-------->COMANDOS DE AYUDA inicio<----------
 #----> menu de comandos <---- 

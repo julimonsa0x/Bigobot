@@ -16,10 +16,11 @@ class Fortnite(commands.Cog):
 
 
     @commands.command()
-    async def fortnitestats(self, ctx, *args):
+    async def fortnitestats(self, ctx, *usuario):
         """Este comando muestra las estadisticas de un usuario del juego para todas las plataformas.
-        Para usar el comando debes usar la sintaxis #fortnitestats <jugador>"""
-        username = list(args)
+        Para usar el comando debes usar la sintaxis #fortnitestats <jugador>
+        A modo de ejemplo: #fortnitestats ninja"""
+        username = list(usuario)
         format_player_name = '%20'.join(username)
 
         fortnite_response = fortnite_api_request(username=format_player_name)
