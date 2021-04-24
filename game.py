@@ -17,53 +17,17 @@ pos_8 = 7
 pos_9 = 8
 REACTIONEMOJI = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🚫"]
 
-async def LoadGames(ctx, bot):
-    embed = discord.Embed(
-        title = "Escoje un juego",
-        description = "1️⃣: Ta te ti \n\n 2️⃣: Piedra papel o tijeras \n\n 3️⃣: Coming soon..."
-    )
-    await ctx.channel.purge(limit=1)
-    msg = await ctx.send(embed=embed)
-
-    await msg.add_reaction('1️⃣')
-    await msg.add_reaction('2️⃣')
-    await msg.add_reaction('3️⃣')
-    await msg.add_reaction('4️⃣')
-
-    def checkReaction(reaction, user):
-        return user != bot.user and (str(reaction.emoji) == '1️⃣' or str(reaction.emoji) == '2️⃣' or str(reaction.emoji) == '3️⃣' or str(reaction.emoji) == '4️⃣')
-
-    reaction, user = await bot.wait_for("reaction_add", timeout=25.0, check=checkReaction)
-    if str(reaction.emoji) == '1️⃣':
-        await ticTacToe(ctx, bot)
-        pass
-    elif str(reaction.emoji) == '2️⃣':
-        await ctx.send("para jugar al piedra papel o tijeras, debes usar el comando #ppt aparte y @mencionar contra quien quieres jugar...")
-        pass
-    elif str(reaction.emoji) == '3️⃣':
-        await ctx.send("Proximamente...")
-        pass
-    elif str(reaction.emoji) == '4️⃣':
-        await ctx.send("copipedro <:copi:770818273217609758>")
-        pass
-    else:
-        await ctx.send("No obtuve respuesta, escribe el comando de vuelta si deseas jugar...", delete_after=10)
-
-
 #------------------------------------>>>> RPS / PPT BEGINNING
-async def ppt(ctx, member : discord.Member):
+async def ppt(ctx, bot, member:discord.Member=None):
     '''Piedra papel o tijeras'''
-    if member == ctx.author:
+
+    if member == ctx.author and member != None:
         await ctx.send("No puedes jugar contra ti mismo")
         return
+    elif member == None:
+        await ctx.send("Seguido del comando debes @mencionar a tu contrincante!")
 
-    await ctx.send("@Menciona a tu oponente...")
-    async def on_message(message):
-        user = message.mentions[0]
-        member = await bot.fetch_user(user)
-    await asyncio.sleep(3)
     author = ctx.author
-    
     async with ctx.typing():    
         await asyncio.sleep(0.5)
         await ctx.send(f"{ctx.author.name} y {member.name}, recuerden que se juega a traves de Mensajes Directos...")
@@ -162,6 +126,39 @@ async def ppt(ctx, member : discord.Member):
         await w.delete()
         return
 #------------------------------------>>>> RPS ENDING
+
+async def LoadGames(ctx, bot):
+    embed = discord.Embed(
+        title = "Escoje un juego",
+        description = "1️⃣: Ta te ti \n\n 2️⃣: Piedra papel o tijeras \n\n 3️⃣: Coming soon..."
+    )
+    await ctx.channel.purge(limit=1)
+    msg = await ctx.send(embed=embed)
+
+    await msg.add_reaction('1️⃣')
+    await msg.add_reaction('2️⃣')
+    await msg.add_reaction('3️⃣')
+    await msg.add_reaction('4️⃣')
+
+    def checkReaction(reaction, user):
+        return user != bot.user and (str(reaction.emoji) == '1️⃣' or str(reaction.emoji) == '2️⃣' or str(reaction.emoji) == '3️⃣' or str(reaction.emoji) == '4️⃣')
+
+    reaction, user = await bot.wait_for("reaction_add", timeout=25.0, check=checkReaction)
+    if str(reaction.emoji) == '1️⃣':
+        await ticTacToe(ctx, bot)
+        pass
+    elif str(reaction.emoji) == '2️⃣':
+        await ctx.send("para jugar al piedra papel o tijeras, debes usar el comando #ppt aparte y @mencionar contra quien quieres jugar...")
+        pass
+    elif str(reaction.emoji) == '3️⃣':
+        await ctx.send("Proximamente...")
+        pass
+    elif str(reaction.emoji) == '4️⃣':
+        await ctx.send("copipedro <:copi:770818273217609758>")
+        pass
+    else:
+        await ctx.send("No obtuve respuesta, escribe el comando de vuelta si deseas jugar...", delete_after=10)
+
 
 #---------------------------------->>>>> Tic Tac Toe Game BEGINNING
 async def ticTacToe(ctx, bot):

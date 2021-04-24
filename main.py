@@ -44,107 +44,12 @@ from listas import brosId
 import broBdays 
 import tuning
 import game
-import invitaciones
+#import invitaciones
+from functions import get_dolar
+import functions
 load_dotenv()
 
-# ----------------------------------------> Beginning of code |
-
-
-#--------------->>> DOLAR json <<<--------------------
-DOLAR_URL = 'https://www.dolarsi.com/api/api.php?type=valoresprincipales'
-dolar_json = requests.get(DOLAR_URL).json()
-
-compraOfi = dolar_json[0]['casa']['compra'][:-1]
-ventaOfi = dolar_json[0]['casa']['venta'][:-1]
-varOfi = dolar_json[0]['casa']['variacion'][:-1]
-
-compraOfiSolid = str(float(dolar_json[0]['casa']['compra'][:-1].replace(",", ".")) * 1.65)[:6]
-ventaOfiSolid = str(float(dolar_json[0]['casa']['venta'][:-1].replace(",", ".")) * 1.65)[:6]
-
-compraBlue = dolar_json[1]['casa']['compra'][:-1]
-ventaBlue = dolar_json[1]['casa']['venta'][:-1] 
-varBlue = dolar_json[1]['casa']['variacion'][:-1]
-
-compraCcl = dolar_json[3]['casa']['compra'][:-1]
-ventaCcl = dolar_json[3]['casa']['venta'][:-1]
-varCcl = dolar_json[3]['casa']['variacion'][:-1]
-
-compraBolsa = dolar_json[4]['casa']['compra'][:-1]
-ventaBolsa = dolar_json[4]['casa']['venta'][:-1]
-varBolsa = dolar_json[4]['casa']['variacion'][:-1]
-
-print("-----Cotizacion del dolar funcionando-------")
-#--------------->>> DOLAR json <<<--------------------
-
-
-# Custom Functions
-# ------------------------------------------------->>>>>
-
-# bros birthdays checker function to use it widely
-def bro_birthdays_check(member: int):
-    '''La funcion solo recibe el member.id (int)...'''
-    if member == None:
-        fecha_Cumple = "Fecha desconocida..."
-
-    elif member == brosId['Nico']:
-        fecha_Cumple = broBdays.nicoBday
-        return fecha_Cumple
-    elif member == brosId['Reteke']: #rtk
-        fecha_Cumple = broBdays.rtkBday
-        return fecha_Cumple
-    elif member == brosId['Souskenin']: #ssk
-        fecha_Cumple = broBdays.sskBday
-        return fecha_Cumple
-    elif member == brosId['Sofi']: #sofi
-        fecha_Cumple = broBdays.sofiBday
-        return fecha_Cumple
-    elif member == brosId['Tambo']: #tambo
-        fecha_Cumple = broBdays.tamboBday
-        return fecha_Cumple
-    elif member == brosId['Jose']: #jose
-        fecha_Cumple = broBdays.jopiBday
-        return fecha_Cumple
-    elif member == brosId['Coppi']: #copi
-        fecha_Cumple = broBdays.copiBday
-        return fecha_Cumple
-    elif member == brosId['Mato']: #mato
-        fecha_Cumple = broBdays.matoBday
-        return fecha_Cumple
-    elif member == brosId['Seki']: #seki
-        fecha_Cumple = broBdays.sekiBday
-        return fecha_Cumple    
-    elif member == brosId['Monsa']: #yo
-       fecha_Cumple = broBdays.juliBday
-       return fecha_Cumple
-    elif member == brosId['Lezcano']: #lezca
-        fecha_Cumple = broBdays.lezcBday
-        return fecha_Cumple  
-    elif member == brosId['Bigobot']:  #bot 
-        fecha_Cumple = broBdays.botBday
-        return fecha_Cumple
-    elif member == brosId['Stalker']: #stalk
-        fecha_Cumple = broBdays.stalkerBday
-        return fecha_Cumple  
-
-# fibbonacci
-def fibonacci(n):
-    '''devuelve el enesimo numero de fibonacci'''
-    a = 0
-    b = 1
-    
-    for k in range(n):
-        c = b+a
-        #print(c)
-        a = b
-        #print(a)
-        b = c
-        #print(b)
-        
-    return str(a)
-
-
-
-# ------------------------------------------------->>>>>
+# ----------------------------------------> Beginning of code
 
 now = datetime.now()
 
@@ -170,7 +75,7 @@ async def on_ready():
 
     #bot warnings.txt
     for guild in bot.guilds:
-        async with aiofiles.open(f"{guild.id}.txt", mode="a") as temp:
+        async with aiofiles.open(f"databases/{guild.id}.txt", mode="a") as temp:
             pass
 
         bot.warnings[guild.id] = {}
@@ -210,7 +115,7 @@ async def on_ready():
 
     #bot.warnings
     for guild in bot.guilds:
-        async with aiofiles.open(f"{guild.id}.txt", mode="r") as file:
+        async with aiofiles.open(f"databases/{guild.id}.txt", mode="r") as file:
             lines = await file.readlines()
 
             for line in lines:
@@ -231,20 +136,20 @@ async def on_ready():
     await bot.change_presence(
         activity=discord.Streaming(
         name="--> #comandos",
-        url="http://www.twitch.tv/slakun10"))
-    ###msg1.start() va si se quiere mandar el mensaje recurrente, el codigo restante esta en errores.py
-    print('----------------------------------------------------->>>')   
-    print(f" El bot fue logeado correctamente como: {bot.user} a las {current_hour} <¬")
-    print(f" Nombre del bot: {bot.user.name} <¬")
-    print(f" ID del bot: {bot.user.id} <¬")
-    print(f" Estoy en {len(bot.guilds)} servidores! <¬")
-    print(f" Con un total de {len(set(bot.get_all_members()))} miembros <¬")
-    print(' |            author: JuliTJZ             |')
-    print(' |          created : 23/12/2020          |')
-    print(' |        last updated: dd/01/2021        |')
-    print(f' |      Python: 3.8.0, Oct 14 2019        |')
-    print(f' |          Discord.py:  {discord.__version__}            |')
-    print('---------------------------------------------------->>>')
+        url="http://www.twitch.tv/slakun10")
+    )
+    functions.printt('----------------------------------------------------->>>', 0.002)   
+    functions.printt(f" El bot fue logeado correctamente como: {bot.user} a las {current_hour} <¬", 0.002)
+    functions.printt(f" Nombre del bot: {bot.user.name} <¬", 0.002)
+    functions.printt(f" ID del bot: {bot.user.id} <¬", 0.002)
+    functions.printt(f" Estoy en {len(bot.guilds)} servidores! <¬", 0.002)
+    functions.printt(f" Con un total de {len(set(bot.get_all_members()))} miembros <¬", 0.002)
+    functions.printt(' |            author: JuliTJZ             |', 0.002)
+    functions.printt(' |          created : 23/12/2020          |', 0.002)
+    functions.printt(' |        last updated: dd/01/2021        |', 0.002)
+    functions.printt(f' |      Python: 3.8.0, Oct 14 2019        |', 0.002)
+    functions.printt(f' |          Discord.py:  {discord.__version__}            |', 0.002)
+    functions.printt('---------------------------------------------------->>>', 0.002)
 
     # connected message to "bigobot-testing" of Los Bigotazos
     channel = bot.get_channel(799387331403579462)
@@ -351,10 +256,10 @@ async def pedir_ticket(ctx, msg: discord.Message=None, category: discord.Categor
 
     bot.ticket_configs[ctx.guild.id] = [msg.id, msg.channel.id, category.id] # this resets the configuration
 
-    async with aiofiles.open("ticket_configs.txt", mode="r") as file:
+    async with aiofiles.open("databases/ticket_configs.txt", mode="r") as file:
         data = await file.readlines()
 
-    async with aiofiles.open("ticket_configs.txt", mode="w") as file:
+    async with aiofiles.open("databases/ticket_configs.txt", mode="w") as file:
         await file.write(f"{ctx.guild.id} {msg.id} {msg.channel.id} {category.id}\n")
 
         for line in data:
@@ -393,7 +298,7 @@ async def rol_reaccion(ctx, role: discord.Role=None, msg: discord.Message=None, 
         await msg.add_reaction(emoji)
         bot.reaction_roles.append((role.id, msg.id, str(emoji.encode("utf-8"))))
         
-        async with aiofiles.open("reaction_roles.txt", mode="a") as file:
+        async with aiofiles.open("databases/reaction_roles.txt", mode="a") as file:
             emoji_utf = emoji.encode("utf-8")
             await file.write(f"{role.id} {msg.id} {emoji_utf}\n")
 
@@ -408,7 +313,7 @@ async def rol_reaccion(ctx, role: discord.Role=None, msg: discord.Message=None, 
             await ctx.send("Argumentos no válidos, debe ser de la forma #comando <nombre del rol> <id del mensaje a reaccionar> <emoji>")
             await ctx.send("La idea de este comando es fijar un mensaje para que sea reaccionado y así obtener el rol asignado")
             await ctx.send(f"{ctx.author.mention} ten en cuenta que el nombre del rol debe ser identico al rol")
-            print(f"cmdSetReaccion|| {ctx.author.name} falló al definir una reaccion para un rol")
+            print(f"cmdSetReaccion||     {ctx.author.name} falló al definir una reaccion para un rol")
 
 @bot.command()
 @commands.has_permissions(kick_members=True)
@@ -432,7 +337,7 @@ async def set_canal_bienvenida(ctx, new_channel: discord.TextChannel=None, *, me
                 await channel.send("¡Ahora este es el nuevo canal de bienvenida!")
                 print(f"cmdCanaldeBienvenida||    {ctx.author.name} definió el canal de bienvenida a {channel.name}")
 
-                async with aiofiles.open("welcome_channels.txt", mode="a") as file:
+                async with aiofiles.open("databases/welcome_channels.txt", mode="a") as file:
                     await file.write(f"{ctx.guild.id} {new_channel.id} {message}\n")
 
                 return
@@ -454,19 +359,19 @@ async def set_canal_despedida(ctx, new_channel: discord.TextChannel=None, *, mes
                 bot.goodbye_channels[ctx.guild.id] = (channel.id, message)
                 await ctx.channel.send(f"El canal de despedida ahora es: {channel.name}, junto al mensaje: {message}")
                 await channel.send("¡Este es el nuevo canal de despedida!")
-                print(f"cmdCanaldeDespedida|| {ctx.author.name} definió el canal de despedida a {channel.name}")
+                print(f"cmdCanaldeDespedida||    {ctx.author.name} definió el canal de despedida a {channel.name}")
 
-                async with aiofiles.open("goodbye_channels.txt", mode="a") as file:
+                async with aiofiles.open("databases/goodbye_channels.txt", mode="a") as file:
                     await file.write(f"{ctx.guild.id} {new_channel.id} {message}\n")
 
                 return
 
         await ctx.channel.send("No pude encontrar ese canal :(")
-        print(f"cmdCanaldeDespedida|| {ctx.author.name} falló al setear un canal de Despedida...")
+        print(f"cmdCanaldeDespedida||    {ctx.author.name} falló al setear un canal de Despedida...")
 
     else:
         await ctx.channel.send("No incluiste el nombre del canal o el mensaje a setear...")
-        print(f"cmdCanaldeDespedida|| {ctx.author.name} falló al setear un canal de Despedida...")
+        print(f"cmdCanaldeDespedida||    {ctx.author.name} falló al setear un canal de Despedida...")
 
 @bot.command()
 @commands.has_permissions(administrator=True)
@@ -509,7 +414,7 @@ async def advertir(ctx, member: discord.Member=None, *, reason=None):
 
     count = bot.warnings[ctx.guild.id][member.id][0]
 
-    async with aiofiles.open(f"{member.guild.id}.txt", mode="a") as file:
+    async with aiofiles.open(f"databases/{member.name}_adverts.txt", mode="a") as file:
         await file.write(f"{member.id} {ctx.author.id} {reason}\n")
 
     await ctx.send(f"{member.mention} tiene {count} {'warning' if first_warning else 'warnings'}.")
@@ -600,6 +505,22 @@ async def trivia(ctx):
 @bot.command()
 async def dolar(ctx):
     '''Cotizacion del dolar'''
+    compraOfi = get_dolar('compraOfi')
+    ventaOfi = get_dolar('ventaOfi')
+    varOfi = get_dolar('varOfi')
+    compraOfiSolid = get_dolar('compraOfiSolid')
+    ventaOfiSolid = get_dolar('ventaOfiSolid')
+    compraBlue = get_dolar('compraBlue')
+    ventaBlue = get_dolar('ventaBlue')
+    varBlue = get_dolar('varBlue')
+    compraCcl = get_dolar('compraCcl')
+    ventaCcl = get_dolar('ventaCcl')
+    varCcl = get_dolar('varCcl')
+    compraBolsa = get_dolar('compraBolsa')
+    ventaBolsa = get_dolar('ventaBolsa')
+    varBolsa = get_dolar('varBolsa')
+
+
     embedDolar = discord.Embed(
         Title = "Cotización del dolar",
         color = discord.Colour.green())
@@ -757,7 +678,7 @@ async def dados(ctx, number1=1, number2=6):
     
     async with ctx.typing():    
         await asyncio.sleep(type_time)
-        await ctx.send(f"Tocó el numero {number}!")
+        await ctx.send(f"Tocó el numero **{number}**!", tts=True)
         print(f"cmdDados||   A {ctx.author.name} le tocó el dado {number}")
 
 
@@ -768,7 +689,7 @@ async def steamcito(ctx):
     async with ctx.typing():    
         await asyncio.sleep(type_time)    
         await ctx.send("https://emilianog94.github.io/Steamcito-Precios-Steam-Argentina-Impuestos-Incluidos/landing/#howto")
-        print(f'cmdSteamcito||  {ctx.author.name} solicitó la web del addon Steamcito')
+        print(f'cmdSteamcito||            {ctx.author.name} solicitó la web del addon Steamcito')
 
 #-------> repite conmigo CMD 8<--------
 @bot.command()
@@ -780,9 +701,10 @@ async def repite(ctx, *, arg=None):
             await ctx.send("Seguido del comando, escribe lo que quieres que repita", tts=True, delete_after=15)
             print(f'cmdRepite||  {ctx.author.name} intentó repetir y el bot tardó {round(type_time, 2)} segundos')
     else:
+        await ctx.message.delete()
         async with ctx.typing():    
             await asyncio.sleep(type_time)
-            ctx.message.delete()
+            await ctx.message.delete()
             await ctx.send(f"{str(arg)}", tts=True)
             print(f'cmdRepite||    {ctx.author.name} repitió "{arg}" el {current_hour}')
 
@@ -1039,7 +961,7 @@ async def temporal(ctx, *, arg):
         await asyncio.sleep(3)  
         ## delete the message
         await message.delete()
-        print(f"cmdTemporal|| {ctx.author.name} borró el mensaje '{arg}' a las {current_hour}...")
+        print(f"cmdTemporal||      {ctx.author.name} borró el mensaje '{arg}' a las {current_hour}...")
 
 #-----> Chusmea los mensajes borrados <-----
 @bot.command()
@@ -1679,7 +1601,7 @@ async def integral(ctx, function=None, dif1=None, dif2=None):
             await asyncio.sleep(type_time)
             await ctx.channel.send(f"La integral definida de {function} es:")
             await ctx.channel.send(f"``` {intResult} ```")
-            rint(f"{ctx.author.name} halló la integral def. de {function} ---> {intResult} a las {current_hour}")
+            print(f"{ctx.author.name} halló la integral def. de {function} ---> {intResult} a las {current_hour}")
 
     else:
         async with ctx.typing():    
@@ -1716,9 +1638,9 @@ async def fib(ctx, number: int):
     elif number != None:
         async with ctx.typing():    
             await asyncio.sleep(type_time)
-            result = fibonacci(number)
+            result = functions.fibonacci(number)
             await ctx.send(f"El enesimo numero {number} en la sucesion de fibonacci es: {result}")
-            print(f"{ctx.author.name} encontro el {number}esimo numero de fibonaccio: {result}")
+            print(f"{ctx.author.name} encontro el {number}esimo numero de fibonacci: {result}")
 
 
 #------------------------------------------>>>>>
@@ -1877,34 +1799,82 @@ async def tunear_error(ctx, error):
 @commands.has_permissions(kick_members=True)
 async def kick(ctx, member: discord.Member, *, reason=None):
     '''Kick a un usuario, requiere permisos'''
-    embed = discord.Embed(
-        title=f"Kickeado porque {random.choice(listas.frases)}",
-        colour=0x2859B8,
-        description=f"{member.mention} fue kickeado del server.",
-    )
+
     async with ctx.typing():    
         await asyncio.sleep(type_time)
-        await member.kick(reason=reason)
-        await ctx.send(embed=embed)
+        msg = await ctx.channel.send(f"Estas seguro que quieres kickear a {member}?")
+        await msg.add_reaction(u"\u2705")
+        await msg.add_reaction(u"\U0001F6AB")
 
-    print(f"cmdKick||      {member} fue kickeado correctamente por {ctx.author.name} el {current_hour} ")
+    try:
+        reaction, user = await bot.wait_for("reaction_add", check=lambda reaction, user: user == ctx.author and reaction.emoji in [u"\u2705", u"\U0001F6AB"], timeout=10)
+
+    except asyncio.TimeoutError:
+        async with ctx.typing():    
+            await asyncio.sleep(type_time)
+            await ctx.channel.send("Pasaron 10 segundos, me fui a la bosta amigo/a")
+            print(f"cmdKick||      {member} iba a ser kickeado {ctx.author.name} pero safo")
+
+    else:
+        if reaction.emoji ==  u"\u2705":
+            async with ctx.typing():    
+                await asyncio.sleep(type_time)      
+                embed = discord.Embed(
+                    title=f"Kickeado porque {random.choice(listas.frases)}",
+                    colour=0x2859B8,
+                    description=f"{member.mention} fue kickeado del server."
+                )
+                await member.kick(reason=reason)
+                await ctx.send(embed=embed)
+                print(f"cmdKick||      {member} fue kickeado correctamente por {ctx.author.name} el {current_hour} ")
+
+        else:
+            async with ctx.typing():    
+                await asyncio.sleep(type_time)
+                await ctx.channel.send(f"{member} no fue kickeado")
+                print(f"cmdKick||      {member} iba a ser kickeado {ctx.author.name} pero safo")
+
+
 
 #----------> Ban Command <---------
 @bot.command()
 @commands.has_permissions(ban_members=True)
 async def ban(ctx, member: discord.Member, *, reason=None):
-    '''Banea a un usuario, requiere permisos'''
-    embed = discord.Embed(
-        title=f"Baneado porque {random.choice(listas.frases)}",
-        colour=0x2859B8,
-        description=f"{member.mention} fue baneado del servidor.",
-    )
+    '''Banea a un usuario, requiere permisos. Argumento reason opcionable.'''
     async with ctx.typing():    
         await asyncio.sleep(type_time)
-        await member.kick(reason=reason)
-        await ctx.send(embed=embed)
+        msg = await ctx.channel.send(f"Estas seguro que quieres **banear** a {member}?")
+        await msg.add_reaction(u"\u2705")
+        await msg.add_reaction(u"\U0001F6AB")
 
-    print(f"cmdBan||       {member} fue baneado correctamente por {ctx.author.name} el {current_hour} ")
+    try:
+        reaction, user = await bot.wait_for("reaction_add", check=lambda reaction, user: user == ctx.author and reaction.emoji in [u"\u2705", u"\U0001F6AB"], timeout=10)
+
+    except asyncio.TimeoutError:
+        async with ctx.typing():    
+            await asyncio.sleep(type_time)
+            await ctx.channel.send("Pasaron 10 segundos, me fui a la bosta amigo/a")
+            print(f"cmdBan||        {member} iba a ser baneado {ctx.author.name} pero safo")
+
+    else:
+        if reaction.emoji ==  u"\u2705":
+            async with ctx.typing():    
+                await asyncio.sleep(type_time)      
+                embed = discord.Embed(
+                    title=f"Baneado porque {random.choice(listas.frases)}",
+                    colour=0x2859B8,
+                    description=f"{member.mention} fue **baneado** del server."
+                )
+                await member.ban(reason=reason)
+                await ctx.send(embed=embed)
+                print(f"cmdBan||        {member} fue baneado correctamente por {ctx.author.name} el {current_hour} ")
+
+        else:
+            async with ctx.typing():    
+                await asyncio.sleep(type_time)
+                await ctx.channel.send(f"{member} no fue baneado")
+                print(f"cmdBan||        {member} iba a ser baneado {ctx.author.name} pero safo")
+
 
 #------------>  interaccion con el bot 2  <---------------
 @bot.listen('on_message')
@@ -2066,7 +2036,7 @@ async def on_message(message):
 
 
 #-----------------> Clima comando <-----------------
-def degrees_to_cardinal(d):
+def degrees_to_cardinal(d: int):
     '''Source: https://gist.github.com/RobertSudwarts/acf8df23a16afdb5837f'''
     dirs = ['N - Norte', 
     'NNE - Nornoreste', 
@@ -2087,8 +2057,8 @@ def degrees_to_cardinal(d):
     ix = round(d / (360. / len(dirs)))
     return dirs[ix % len(dirs)]
 
-# openweathermap api key sensible 
-api_key = os.getenv('OWM_API_KEY')      # API KEY is sensible and personal, should not be shown...
+# openweathermap api key sensible stored in .env 
+api_key = os.getenv('OWM_API_KEY')
 @bot.command()
 async def clima(ctx, *, location: str=None):
     '''Clima de la ubicacion que introduzcas'''
@@ -2136,127 +2106,26 @@ async def clima(ctx, *, location: str=None):
                 await ctx.send(embed=error_embed)
                 print(f'cmdClima||        {ctx.author.name} fallo al solicitar el clima de {location}')
 
-#-------> juego command <------
+#---------> juego command <--------
 @bot.command()
 async def juego(ctx):
     '''ta te ti y otros juegos (otros juegos estan por venir)'''
     await game.LoadGames(ctx, bot)    
 
-
-#------------------------------------>>>> PPT BEGINNING
 @bot.command()
 async def ppt(ctx, member : discord.Member=None):
     '''Piedra papel o tijeras contra jugador que menciones'''
-    if member == ctx.author and member != None:
-        await ctx.send("No puedes jugar contra ti mismo")
-        return
-    elif member == None:
-        await ctx.send("Seguido del comando debes @mencionar a tu contrincante!")
-
-    author = ctx.author
-    
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)
-        await ctx.send(f"{ctx.author.name} y {member.name}, recuerden que se juega a traves de MD")
-
-    msg1 = await member.send(f" {author} ha iniciado el piedra papel o tijeras, si aceptas reacciona con :white_check_mark: a este mensaje, caso contrario reacciona con :negative_squared_cross_mark: ...")
-    await msg1.add_reaction('✅')
-    await msg1.add_reaction('❎')
-    
-    msg2 = await author.send(f" Desafiaste a {member} a un piedra papel o tijeras, ahora espera si {member} acepta o rechaza")
-    def check(reaction, user):
-        return user == member and str(reaction.emoji) == "✅" or "❎" and reaction.message.id == msg1.id
-
-    reaction, user = await bot.wait_for('reaction_add', timeout=None, check=check)
-
-    # >ACEPTO<
-    if str(reaction.emoji) =="✅":
-        await msg1.delete()
-        await author.send(f"{member} aceptó tu desafio, esperando a su elección ") 
-        members_choice_1 = await member.send(f" Aceptaste la invitación de {author}, reacciona 🥌 para **roca**, ✂ para **tijeras** o 📰 para **papel**")
-        def check(reaction, user):
-            return user == member and str(reaction.emoji) == "🥌" or "✂" or "📰"  and reaction.message.id == members_choice_1.id
-
-        reaction, user = await bot.wait_for('reaction_add', timeout=None, check=check)
-
-    # --PIEDRA
-    if str(reaction.emoji) == "🥌":
-        author_choice_1 = await author.send(f"{member} ya hizo su elección, ahora tu turno , reacciona 🥌 para **roca**, ✂ para **tijeras** o  📰 para **papel**")
-        def check(reaction, user):
-            return user == member and str(reaction.emoji) == "🥌" or "✂" or "📰"  and reaction.message.id == author_choice_1.id
-
-        reaction, user = await bot.wait_for('reaction_add', timeout=None, check=check)
-        if str(reaction.emoji) == "🥌":
-            await author.send(f"Es un empate, ambos eligieron **roca**")
-            await member.send(f"Es un empate, ambos eligieron **roca**")
-            return
-
-        if str(reaction.emoji) == "📰":
-            await author.send(f"Tu ganas, elegiste **papel** y {member} eligió **piedra**")
-            await member.send(f"Tu pierdes, elegiste **piedra** y {author} eligió **papel**")
-            return
-
-        if str(reaction.emoji) == "✂":
-            await author.send(f"Tu pierdes, elegiste **tijeras** y {member} eligió **piedra**")
-            await member.send(f"Tu ganas, elegiste **piedra** y {author} eligió **tijeras** ")
-            return
-
-    # --TIJERA
-    if str(reaction.emoji) == "✂":
-        author_choice_2 = await author.send(f"{member} ya hizo su elección, ahora tu turno, 🥌 para **piedra**, ✂ para **tijeras** o 📰 para **papel**")
-
-        def check(reaction, user):
-            return user == member and str(reaction.emoji) == "🥌" or "✂" or "📰" and reaction.message.id == author_choice_2.id
-
-        reaction, user = await bot.wait_for('reaction_add', timeout=None, check=check)
-        if str(reaction.emoji) == "🥌":
-            await author.send(f"Tu ganas, elegiste **piedra** y {member} eligió **tijeras**!")
-            await member.send(f"Tu pierdes, elegiste **tijeras** y {author} eligió**piedra**!")
-            return
-        if str(reaction.emoji) == "📰":
-            await author.send(f"Tu pierdes, elegiste **papel** y {member} eligió **tijeras**!")
-            await member.send(f"Tu ganas, elegiste **tijeras** y {author} eligió **papel**!")
-            return
-        if str(reaction.emoji) == "✂":
-            await author.send(f"Es un empate, ambos eligieron **tijeras**!")
-            await member.send(f"Es un empate, ambos eligieron **tijeras**!")
-            return
-
-    # --PAPEL
-    if str(reaction.emoji) == "📰":
-        author_choice_3 = await author.send(f"{member} ya hizo su elección, ahora tu turno: 🥌 para **piedra**, ✂ para **tijeras** o 📰 para **papel**!")
-
-        def check(reaction, user):
-            return user == member and str(reaction.emoji) == "🥌" or "✂" or "📰" and reaction.message.id == author_choice_3.id
-
-        reaction, user = await bot.wait_for('reaction_add', timeout=None, check=check)
-
-        if str(reaction.emoji) == "🥌":
-            await author.send(f"Tu pierdes, elegiste **piedra** y  {member} eligió **papel**!")
-            await member.send(f"Tu ganas, elegiste **papel** y {author} eligió **piedra**!")
-            return
-        if str(reaction.emoji) == "📰":
-            await author.send(f"Es un empate, ambos eligieron **papel**")
-            await member.send(f"Es un empate, ambos eligieron **papel**")
-            return
-        if str(reaction.emoji) == "✂":
-            await author.send(f"Tu ganas, elegiste **tijeras** y {member} eligió **papel**!")
-            await member.send(f"Tu pierdes, elegiste **papel** y {author} eligió **tijeras**!")
-            return
-
-    # >NEGACION<
-    if str(reaction.emoji) =="❎":
-        await msg1.delete()
-        w = await author.send(f"{member} rechazó tu batalla ")
-        await asyncio.sleep(15)
-        await w.delete()
-        return
-#------------------------------------>>>> PPT ENDING'''
-
+    try:
+        await game.ppt(ctx, bot, member=member)
+    except AttributeError:
+        print("An attribute error seems to have appeared but just ignore it and continue! :)")
+#-------> juego command end <------
 
 @bot.command()
 async def qr(ctx, *, qrstring: str=None):
-    '''Crea un QR de un texto, puede ser un texto cualquier, URL, etc.'''
+    '''ES: Crea y devuelve el QR de un texto, puede ser un texto cualquiera, URL, etc. No 
+    funciona con imagenes y otro tipo de archivos
+    EN: Creates and returns a QR code of any text, images are not supported...'''
     if qrstring == None:
         async with ctx.typing():    
             await asyncio.sleep(type_time)
@@ -2266,11 +2135,11 @@ async def qr(ctx, *, qrstring: str=None):
     
     elif qrstring != None:
         url = pyqrcode.create(qrstring)
-        url.png(r'qr.png', scale=6)
+        url.png('images/qr.png', scale=6)  # saves qr image
         async with ctx.typing():    
             await asyncio.sleep(type_time)
-            await ctx.send(f'{ctx.author.mention} aca esta tu QR', file=discord.File('qr.png'))
-            #await ctx.send(file=discord.File('qr.png'))
+            await ctx.send(f'{ctx.author.mention} aca esta tu QR', file=discord.File('images/qr.png'))
+            #await ctx.send(file=discord.File('images/qr.png'))
             
 # ---------> Purge messages of a mentioned user <--------
 @bot.command()
@@ -2306,7 +2175,6 @@ async def borrar(ctx, limit=10, member: discord.Member=None):
             await ctx.send(f"{ctx.author.name} solo es posible borrar mensajes con menos de 14 dias de antiguedad...")
 
 
-
 # cog loader cmd
 bot_developer_id = '485259816399536128'
 @bot.command()
@@ -2315,7 +2183,8 @@ async def load(ctx, extension):
     id = str(ctx.author.id)
     if id == f'{bot_developer_id}':
         bot.load_extension(f'cogs.{extension}')
-        print(f'cmdUnload||   {ctx.author.name} cargo un cogs')
+        await ctx.send(f"{ctx.author.name} cargaste el cog {extension} con exito")
+        print(f'cmdLoad||     {ctx.author.name} cargo un cogs')
     else:
         await ctx.send("Solo el desarrollador puede cargar/habilitar los cogs del bot")
 

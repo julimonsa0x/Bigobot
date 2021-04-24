@@ -619,16 +619,17 @@ images = [
   'https://cdn.discordapp.com/attachments/793309880861458473/831715240478638080/PicsArt_04-13-11.17.44.jpg', # tengan cuidado gente de la epet 14, nico sin barbijo
   'https://cdn.discordapp.com/attachments/793309880861458473/831730430222401536/unknown.png', # pili amongo le sale el tiro por la culata
   'https://cdn.discordapp.com/attachments/793309880861458473/831731317867544629/unknown.png', # debo admitir, copi bardeado
-  #'',
-  #'',
-  #'',
-  #'',
-  #'',
-  #'',
-  #'',
-  #'',
-  #'',
-  #'',
+  
+  'https://media.discordapp.net/attachments/793309880861458473/831997479394345020/unknown.png', # PECETOTE EGIRL
+  'https://cdn.discordapp.com/attachments/793309880861458473/832256451149168760/Screenshot_20210415-103519.png' #STEPHEN HAWKING NO SE MOVIA TRUCO,
+  'https://cdn.discordapp.com/attachments/793309880861458473/832256451481174046/Screenshot_20210414-194834.png', # FINO SEÑORES
+  'https://cdn.discordapp.com/attachments/793309880861458473/832256452144005120/IMG-20210414-WA0002.jpg', # RUBEN VACUNANDO 
+  'https://cdn.discordapp.com/attachments/793309880861458473/832271332917903410/IMG-20210415-WA0001.jpg', # Profe puedo ir al baño rompi todo la silla
+  'https://cdn.discordapp.com/attachments/793309880861458473/832317654094053456/Screenshot_20210415-150558.png' # Marshmello eres el mejor,
+  'https://cdn.discordapp.com/attachments/793309880861458473/832317654693707806/IMG-20210415-WA0000.jpg' # culo que resong pide poronga,
+  'https://cdn.discordapp.com/attachments/793309880861458473/832446712488525854/unknown.png' # maputa el mato,
+  'https://cdn.discordapp.com/attachments/793309880861458473/832771149594886164/dec1cd21-b370-4eed-a3cf-319d74d2b8b1.png' # lezca hackeado steam csgo,
+  '',
 
 
 
@@ -958,7 +959,7 @@ asociados = [
 ##----> dibujos y frases sobre sofi <--
 sofia = [
     'me dijeron que tiene un onlyfans ( ͡° ͜ʖ ͡°) ',
-    'dibuja lindo :thumbsup: ',
+    'dibuja lindo :thumbsup: @hotchillisauce69',
     'juega Doom osea una genia :alien: ',
     'rushea mid',
     'vende budines puede ser? corte empresaria :sunglasses:',

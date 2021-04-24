@@ -1,3 +1,6 @@
+# cog to extract json data from a minecraft sv
+# source: github.com/afazio1/robotic-nation-proj/blob/master/projects/discord-bot/minecraft-bot.py
+
 import discord
 from discord.ext import commands
 from discord.ext.commands import Cog
@@ -5,8 +8,6 @@ import requests
 from asyncio import sleep
 from random import uniform
 
-# cog to extract json data from a minehut sv
-# source: github.com/afazio1/robotic-nation-proj/blob/master/projects/discord-bot/minecraft-bot.py
 
 class ServerInfo(Cog):	
     def __init__(self, bot):
@@ -17,7 +18,7 @@ class ServerInfo(Cog):
 	    print("cog de server_statuses listo")
 
     @commands.command()
-    async def server_mc(self, ctx, server_ip):
+    async def server_mc(self, ctx, server_ip: str):
         '''Info sobre servers solo versiones +1.7, debes introducir la IP del servidor...'''
         r = requests.get('https://api.mcsrvstat.us/2/' + server_ip)
         json_data = r.json()

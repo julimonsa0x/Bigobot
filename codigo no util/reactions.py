@@ -1,14 +1,17 @@
+# Poll and Giveaways cog moved to useless code since no longer being used
+# Now using DevStrikerTech poll.py cog from YT tutorial...
+
+"""
 from datetime import datetime, timedelta
 from random import choice
 
+import discord.colour
 from discord import Embed
 from discord.ext.commands import Cog
 from discord.ext.commands import command, has_permissions
 
 #from ..db import db
 
-# Here are all the number emotes.
-# 0⃣ 1️⃣ 2⃣ 3⃣ 4⃣ 5⃣ 6⃣ 7⃣ 8⃣ 9⃣
 
 numbers = ("1️⃣", "2⃣", "3⃣", "4⃣", "5⃣",
 		   "6⃣", "7⃣", "8⃣", "9⃣", "🔟")
@@ -19,37 +22,54 @@ class Reactions(Cog):
 		self.bot = bot
 		self.polls = []
 		self.giveaways = []
-
+	
+		
 	@Cog.listener()
 	async def on_ready(self):
-		print("reactions cog loaded succesfully")
-		if not self.bot.ready:
-			self.colours = {
-				"❤️": self.bot.guild.get_role(653940117680947232), # Red
-				"💛": self.bot.guild.get_role(653940192780222515), # Yellow
-				"💚": self.bot.guild.get_role(653940254293622794), # Green
-				"💙": self.bot.guild.get_role(653940277761015809), # Blue
-				"💜": self.bot.guild.get_role(653940305300815882), # Purple
-				"🖤": self.bot.guild.get_role(653940328453373952), # Black
-			}
-			self.reaction_message = await self.bot.get_channel(759432499221889034).fetch_message(759434223802253362)
-			self.starboard_channel = self.bot.get_channel(759432499221889034)
-			self.bot.cogs_ready.ready_up("reactions")
-
-	@command(name="createpoll", aliases=["mkpoll"])
+		print("cog de reacciones listo")
+	
+	
+	@command(name="createpoll", aliases=['encuesta'])
 	@has_permissions(manage_guild=True)
-	async def create_poll(self, ctx, hours: int, question: str, *options):
-		if len(options) > 10:
-			await ctx.send("La cantidad de Opciones máximas son 10")
+	async def mkpoll(self, ctx, question: str=None, *options):
+		'''Crea una encuesta, seguido de las opciones que introduzcas (max. 10 opc.).
+		Sigue '''
+		if question == None or options == None:
+			await ctx.send('Para crear una encuesta debes seguir la sintaxis #encuesta <"**titulo** de tu encuesta" (si el titulo contiene mas de 1 palabra debe ir en comillas)> <opciones>')
+			await ctx.send('el **titulo** debe estar entre comillas ---> "" y pueden haber hasta 10 opciones, no mas.')
+			
+		elif len(options) > 10:
+			await ctx.send("Solo pueden haber 10 opciones en la encuesta!")
 
-		else:
-			embed = Embed(title="Encuesta",
-						  description=question,
-						  colour=ctx.author.colour,
+		# instead of numbers reaction, yes or not reaction!
+		elif len(options) == 2:
+			embed = Embed(title=question, 
+						  #description=question,
+						  colour = discord.Colour.red(),
 						  timestamp=datetime.utcnow())
 
-			fields = [("Opciones", "\n".join([f"{numbers[idx]} {option}" for idx, option in enumerate(options)]), False),
-					  ("Instrucciones", "Reacciona un numero para responder!", False)]
+			fields = [("Decide", "\n".join([f"{numbers[idx]} ---> {option}" for idx, option in enumerate(options)]), False),
+					  ("Instrucciones", "Votar si o no", False)]
+
+			for name, value, inline in fields:
+				embed.add_field(name=name, value=value, inline=inline)
+
+			message = await ctx.send(embed=embed)
+
+			await message.add_reaction('✅')
+			await message.add_reaction("🚫")
+
+			print(f"cmdEncuesta||     {ctx.author.name}#{ctx.author.discriminator} creo una encuesta con exito")
+
+		# numbers reaction to vote
+		else:
+			embed = Embed(title=question, 
+						  #description=question,
+						  colour = discord.Colour.red(),
+						  timestamp=datetime.utcnow())
+
+			fields = [("Opciones", "\n".join([f"{numbers[idx]} ---> {option}" for idx, option in enumerate(options)]), False),
+					  ("Instrucciones", "Reacciona la opcion que consideras...", False)]
 
 			for name, value, inline in fields:
 				embed.add_field(name=name, value=value, inline=inline)
@@ -59,20 +79,18 @@ class Reactions(Cog):
 			for emoji in numbers[:len(options)]:
 				await message.add_reaction(emoji)
 
-			self.polls.append((message.channel.id, message.id))
+			print(f"cmdEncuesta||     {ctx.author.name}#{ctx.author.discriminator} creo una encuesta con exito")
 
-			self.bot.scheduler.add_job(self.complete_poll, "date", run_date=datetime.utcnow()+timedelta(seconds=hours),
-									   args=[message.channel.id, message.id])
-
-	@command(name="giveaway")
+	@command(name="giveaway", aliases =['sorteo'])
 	@has_permissions(manage_guild=True)
-	async def create_giveaway(self, ctx, mins: int, *, description: str):
-		embed = Embed(title="Sorteo!!",
+	async def mkgaw(self, ctx, mins: int, *, description: str):
+		'''Crea un sorteo, seguido de una cuenta atras (en mins) y una descripcion que introduzcas'''
+		embed = Embed(title="Sorteo",
 					  description=description,
 					  colour=ctx.author.colour,
 					  timestamp=datetime.utcnow())
 
-		fields = [("Cierre del sorteo", f"{datetime.utcnow()+timedelta(seconds=mins*60)} UTC", False)]
+		fields = [("Termina en", f"{datetime.utcnow()+timedelta(seconds=mins*60)} UTC", False)]
 
 		for name, value, inline in fields:
 			embed.add_field(name=name, value=value, inline=inline)
@@ -82,7 +100,7 @@ class Reactions(Cog):
 
 		self.giveaways.append((message.channel.id, message.id))
 
-		self.bot.scheduler.add_job(self.complete_giveaway, "date", run_date=datetime.utcnow()+timedelta(seconds=mins),
+		self.bot.scheduler.add_job(self.complete_giveaway, "date", run_date=datetime.now()+timedelta(seconds=mins),
 								   args=[message.channel.id, message.id])
 
 	async def complete_poll(self, channel_id, message_id):
@@ -90,7 +108,7 @@ class Reactions(Cog):
 
 		most_voted = max(message.reactions, key=lambda r: r.count)
 
-		await message.channel.send(f"Resultado listo {most_voted.emoji} siendo la opción mas votada con {most_voted.count-1:,} votos!")
+		await message.channel.send(f"Los resultados ya están y la opción {most_voted.emoji} fue la más popular con {most_voted.count-1:,} votos!")
 		self.polls.remove((message.channel.id, message.id))
 
 	async def complete_giveaway(self, channel_id, message_id):
@@ -98,15 +116,14 @@ class Reactions(Cog):
 
 		if len((entrants := [u for u in await message.reactions[0].users().flatten() if not u.bot])) > 0:
 			winner = choice(entrants)
-			await message.channel.send(f"Congratulations {winner.mention} - you won the giveaway!")
+			await message.channel.send(f"Enhorabuena {winner.mention} - has ganado el sorteo!")
 			self.giveaways.remove((message.channel.id, message.id))
 
 		else:
-			await message.channel.send("Giveaway ended - no one entered!")
+			await message.channel.send("Sorteo finalizado - nadie entró!")
 			self.giveaways.remove((message.channel.id, message.id))
 
-	'''
-	@Cog.listener()
+	'''@Cog.listener()
 	async def on_raw_reaction_add(self, payload):
 		if self.bot.ready and payload.message_id == self.reaction_message.id:
 			current_colours = filter(lambda r: r in self.colours.values(), payload.member.roles)
@@ -156,7 +173,11 @@ class Reactions(Cog):
 
 			else:
 				await message.remove_reaction(payload.emoji, payload.member)
-	'''
+
+		elif AttributeError:
+			print("error acerca de las reacciones (poll n gaws")'''
 
 def setup(bot):
 	bot.add_cog(Reactions(bot))
+
+"""

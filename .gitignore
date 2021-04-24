@@ -1,12 +1,33 @@
 .vscode/settings.json
+.vscode
 .env
-main.py
+__pycache__
 __pycache__/listas.cpython-38.pyc
 __pycache__/main.cpython-38.pyc
 __pycache__/tuning.cpython-38.pyc
 databases/poll.json
 databases/scheduler.json
-cogs/__pycache__/poll.cpython-38.pyc
+cogs/__pycache__
+poetry.lock
+pyproject.toml
+experimental_functions.py
+fonts
+codigo no util/birthday.py
+codigo no util/invites.py
+codigo no util/reactions.py
+codigo no util/settings_sglobbylink.py
+codigo no util/userinfo.py
+codigo no util/utils.py
+codigo no util/invitaciones.py
+__pycache__/game.cpython-38.pyc
+__pycache__/listas.cpython-38.pyc
+json_files
+__pycache__/listas.cpython-38.pyc
+.gitignore
+cogs/__pycache__/fortnite.cpython-38.pyc
 cogs/__pycache__/reactions.cpython-38.pyc
-cogs/__pycache__/voice_member_count.cpython-38.pyc
-cogs/reactions.py
+__pycache__/game.cpython-38.pyc
+__pycache__/listas.cpython-38.pyc
+__pycache__/main.cpython-38.pyc
+cogs/__pycache__/fortnite.cpython-38.pyc
+cogs/__pycache__/reactions.cpython-38.pyc

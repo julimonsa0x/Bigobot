@@ -25,6 +25,7 @@ def get_json(url: str, json_name: str, indent=2):
         json.dump(j, f, indent=indent)
     print(f'json: {json_name} saved succesfully')
 
+# automatically saves the epic games free weekly games
 get_json('https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions?locale=en-US&country=US&allowCountries=US', 'pepe2', 2)
 
 #print("----------------------------------------------------------------")
