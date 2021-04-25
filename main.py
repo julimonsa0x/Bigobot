@@ -45,7 +45,7 @@ import broBdays
 import tuning
 import game
 #import invitaciones
-from functions import get_dolar
+from functions import get_dolar, get_apex_data
 import functions
 load_dotenv()
 
@@ -138,18 +138,18 @@ async def on_ready():
         name="--> #comandos",
         url="http://www.twitch.tv/slakun10")
     )
-    functions.printt('----------------------------------------------------->>>', 0.002)   
-    functions.printt(f" El bot fue logeado correctamente como: {bot.user} a las {current_hour} <¬", 0.002)
-    functions.printt(f" Nombre del bot: {bot.user.name} <¬", 0.002)
-    functions.printt(f" ID del bot: {bot.user.id} <¬", 0.002)
-    functions.printt(f" Estoy en {len(bot.guilds)} servidores! <¬", 0.002)
-    functions.printt(f" Con un total de {len(set(bot.get_all_members()))} miembros <¬", 0.002)
-    functions.printt(' |            author: JuliTJZ             |', 0.002)
-    functions.printt(' |          created : 23/12/2020          |', 0.002)
-    functions.printt(' |        last updated: dd/01/2021        |', 0.002)
-    functions.printt(f' |      Python: 3.8.0, Oct 14 2019        |', 0.002)
-    functions.printt(f' |          Discord.py:  {discord.__version__}            |', 0.002)
-    functions.printt('---------------------------------------------------->>>', 0.002)
+    functions.printt('----------------------------------------------------->>>', 0.001)   
+    functions.printt(f" El bot fue logeado correctamente como: {bot.user} a las {current_hour} <¬", 0.001)
+    functions.printt(f" Nombre del bot: {bot.user.name} <¬", 0.001)
+    functions.printt(f" ID del bot: {bot.user.id} <¬", 0.001)
+    functions.printt(f" Estoy en {len(bot.guilds)} servidores! <¬", 0.001)
+    functions.printt(f" Con un total de {len(set(bot.get_all_members()))} miembros <¬", 0.001)
+    functions.printt(' |            author: JuliTJZ             |', 0.001)
+    functions.printt(' |          created : 23/12/2020          |', 0.001)
+    functions.printt(' |        last updated: dd/01/2021        |', 0.001)
+    functions.printt(f' |      Python: 3.8.0, Oct 14 2019        |', 0.001)
+    functions.printt(f' |          Discord.py:  {discord.__version__}            |', 0.001)
+    functions.printt('---------------------------------------------------->>>', 0.001)
 
     # connected message to "bigobot-testing" of Los Bigotazos
     channel = bot.get_channel(799387331403579462)
@@ -701,11 +701,10 @@ async def repite(ctx, *, arg=None):
             await ctx.send("Seguido del comando, escribe lo que quieres que repita", tts=True, delete_after=15)
             print(f'cmdRepite||  {ctx.author.name} intentó repetir y el bot tardó {round(type_time, 2)} segundos')
     else:
-        await ctx.message.delete()
         async with ctx.typing():    
             await asyncio.sleep(type_time)
-            await ctx.message.delete()
             await ctx.send(f"{str(arg)}", tts=True)
+            await ctx.message.delete()
             print(f'cmdRepite||    {ctx.author.name} repitió "{arg}" el {current_hour}')
 
 ########
@@ -932,7 +931,7 @@ async def ayuda(ctx):
     )
     #embed_help.set_author(name=f"Menu de comandos a tu orden {ctx.author.name}")
     embed_help.set_thumbnail(url="https://cdn.discordapp.com/attachments/793309880861458473/794724078224670750/25884936-fd9d-4627-ac55-d904eb5269cd.png") #icono del bigobot
-    embed_help.add_field(name="--> Comandos interactivos ", value="Por ejemplo #reacciona, #dados, #trivia, #randomchamp, #randombrawl, #moar, #meme, y más", inline=False)
+    embed_help.add_field(name="--> Comandos interactivos ", value="Por ejemplo #reacciona, #dados, #trivia, #randomchamp, #randombrawl, #moar, #meme, y mucho mas...", inline=False)
     embed_help.add_field(name="--> Comandos sobre videos ", value="#pistero, #tadeo, #golaso, #spider, #locurabailando, #galosniper, #roast, #willy")
     embed_help.add_field(name="--> Comandos útiles ", value="#dolar, #qr, #steamcito, #info, #clima, #youtube, #dm, #md, #chusmear, #descarga, #repite, #tunear, #wiki, #crearemoji", inline=False)
     embed_help.add_field(name="--> Comandos para admins ", value="#advertir, #advertencias, #kick, #ban, #set_canal_bienvenida, #set_canal_despedida, #pedir_ticket, #rol_reaccion, #setdelay", inline=False)
@@ -1006,7 +1005,7 @@ async def quien(ctx, member: discord.Member):
     '''Info sobre @Mencion'''
     #fecha_Cumple = date.today() #datetime.datetime.now() changed to datetime.now()
     # esta de arriba solo si no se usa la funcion de abajo
-    fecha_Cumple = bro_birthdays_check(member.id)
+    fecha_Cumple = functions.bro_birthdays_check(member.id)
 
     embedWho = discord.Embed(
         title = member.name, 
@@ -1193,7 +1192,7 @@ async def randombrawl(ctx):
     randomBrawl = random.choice(listas.brawlers)
     embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/793309880861458473/797964925980246066/c849eb95e858ce12cdc86cb6d4ecb36b00bbdfaa96d9973852d1421661f5aec5200.png")
     embed.add_field(name= "Brawler Aleatorio: ", value=f"{randomBrawl}")
-    embed.set_footer(icon_url = ctx.author.avatar_url, text = f"Le tocó a {ctx.author.mention}")
+    embed.set_footer(icon_url = ctx.author.avatar_url, text = f"Le tocó a {ctx.author}")
     
     async with ctx.typing():    
         await asyncio.sleep(type_time)
@@ -1214,6 +1213,12 @@ async def youtube(ctx, *, search):
         await asyncio.sleep(type_time)
         await ctx.send('https://youtube.com/watch?v=' + search_results[0])
         print(f'cmdYoutube|| {ctx.author.name} buscó el video {search} en yt')
+
+@youtube.error
+async def youtube_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await ctx.send("Seguido del comando debes introducir el nomber del video a buscar")
+        await ctx.send("Recuerda que si quieres ver la sintaxis especfica de un comando puedes recurrir a **#help <#comando>** y\npara ver todos los comandos puedes recurrir a **#help** o **#ayuda** / **#comandos**")
 
 #------> buscar en wikipedia <------
 @bot.command()
@@ -1249,13 +1254,6 @@ async def wiki_error(ctx, error):
         await ctx.send("Para una búsqueda correcta debes seguir la sintaxis **#wiki <lenguaje> <tu_busqueda>**. Para buscar en inglés -> en | Para buscar en español -> es | (símbolo del lenguaje)")
         await ctx.send("Recuerda que si quieres ver la sintaxis especfica de un comando puedes recurrir a **#help <#comando>** y\npara ver todos los comandos puedes recurrir a **#help** o **#ayuda** / **#comandos**")
         print(f"cmdWiki||     {ctx.author.name} falló al buscar en wikipedia por falta de argumentos")
-
-
-@youtube.error
-async def youtube_error(ctx, error):
-    if isinstance(error, commands.MissingRequiredArgument):
-        await ctx.send("Seguido del comando debes introducir el nomber del video a buscar")
-        await ctx.send("Recuerda que si quieres ver la sintaxis especfica de un comando puedes recurrir a **#help <#comando>** y\npara ver todos los comandos puedes recurrir a **#help** o **#ayuda** / **#comandos**")
 
 #----> Descargar YT Videos <-----
 @bot.command()
@@ -2173,6 +2171,117 @@ async def borrar(ctx, limit=10, member: discord.Member=None):
         async with ctx.typing():    
             await asyncio.sleep(type_time)
             await ctx.send(f"{ctx.author.name} solo es posible borrar mensajes con menos de 14 dias de antiguedad...")
+
+@bot.command()
+async def apex(ctx, platforma: str, usuario: str):
+
+    apex_json = functions.get_apex_data(platforma, usuario)
+    buttons = [u"\u23EA", u"\u2B05", u"\u27A1", u"\u23E9"] # jump to start, left, right, jump to end
+    current = 0
+
+    # Page 1
+    rankName = apex_json["data"]["segments"][0]["stats"]["rankScore"]["metadata"]["rankName"]
+    rankPic = apex_json["data"]["segments"][0]["stats"]["rankScore"]["metadata"]["iconUrl"]
+    level = apex_json["data"]["segments"][0]["stats"]["level"]["displayValue"]
+    kills = apex_json["data"]["segments"][0]["stats"]["kills"]["displayValue"]
+    damage = apex_json["data"]["segments"][0]["stats"]["damage"]["displayValue"]
+    headshots = apex_json["data"]["segments"][0]["stats"]["headshots"]["displayValue"]
+    finishers = apex_json["data"]["segments"][0]["stats"]["finishers"]["displayValue"]
+    arKills = apex_json["data"]["segments"][0]["stats"]["arKills"]["displayValue"]
+
+
+    # Page 2 
+    current_legend = apex_json["data"]["segments"][1]["metadata"]["isActive"]  # returns boolean
+    if current_legend:
+        legendMain = apex_json["data"]["segments"][1]["metadata"]["name"]
+        legendMainPic = apex_json["data"]["segments"][1]["metadata"]["imageUrl"]
+        killsMain = str(apex_json["data"]["segments"][1]["stats"]["kills"]["displayValue"]).replace(",", ".")
+
+
+    # Page 3
+    secondLegend = apex_json["data"]["segments"][2]["metadata"]["name"]
+    secondLegendPic = apex_json["data"]["segments"][2]["metadata"]["imageUrl"]
+    secondKills = apex_json["data"]["segments"][2]["stats"]["kills"]["displayValue"] 
+
+
+    # Page 1 embed
+    page1 = discord.Embed(
+        title="Stats generales", 
+        description="Usa los botones de abajo para cambiar de pagina.", 
+        colour=discord.Colour.orange()
+    )
+    page1.add_field(name="Rango", value=rankName, inline=True)
+    page1.add_field(name="Nivel", value=level, inline=True)
+    page1.add_field(name="Bajas", value=kills, inline=True)
+    page1.add_field(name="Daño total", value=damage, inline=True)
+    page1.add_field(name="Headshots", value=headshots, inline=True)
+    page1.add_field(name="Finalizadores", value=finishers, inline=True)
+    page1.add_field(name="Bajas de AR", value=arKills, inline=True)
+    page1.set_thumbnail(url=rankPic)
+    page1.set_footer(text=f"Page n° {current}")
+
+    # Page 2 embed
+    page2 = discord.Embed(
+        title="Stats: Leyenda Main", 
+        colour=discord.Colour.orange()
+    )
+    page2.add_field(name="Leyenda", value=legendMain, inline=True)
+    page2.add_field(name="Bajas", value=killsMain, inline=True)
+    page2.set_thumbnail(url=legendMainPic)
+    page2.set_footer(text=f"Page n° {current}")
+
+    # Page 3 embed
+    page3 = discord.Embed(
+        title="Stats: demas leyendas...", 
+        colour=discord.Colour.orange()
+    )
+    page3.add_field(name="Leyenda", value=secondLegend, inline=True)
+    page3.add_field(name="Bajas", value=secondKills, inline=True)
+    page3.set_thumbnail(url=secondLegendPic)
+    page3.set_footer(text=f"Page n° {current}")
+
+
+    pages_list = [page1, page2, page3] 
+    msg = await ctx.send(embed=pages_list[current])
+    print(f"cmdApexStats||         {ctx.author.mention} busco las estadisticas de {usuario} en Apex a las {current_hora}")
+    
+    for button in buttons:
+        await msg.add_reaction(button)  
+    
+    while True:
+        try:
+            reaction, user = await bot.wait_for(
+                "reaction_add", 
+                check=lambda reaction, user: user == ctx.author and reaction.emoji in buttons, 
+                timeout=25.0
+            )
+
+        except asyncio.TimeoutError:
+            return print("test")
+
+        else:
+            previous_page = current
+            if reaction.emoji == u"\u23EA":
+                current = 0
+                
+            elif reaction.emoji == u"\u2B05":
+                if current > 0:
+                    current -= 1
+                    
+            elif reaction.emoji == u"\u27A1":
+                if current < len(pages_list)-1:
+                    current += 1
+
+            elif reaction.emoji == u"\u23E9":
+                current = len(pages_list)-1
+
+            for button in buttons:
+                await msg.remove_reaction(button, ctx.author)
+
+            if current != previous_page:
+                await msg.edit(embed=pages_list[current])
+
+
 
 
 # cog loader cmd

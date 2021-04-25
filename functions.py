@@ -9,6 +9,10 @@ import requests
 # 3rd function Bro_Birthdays_Check| ==>
 from listas import brosId
 # 4th function || ==>
+import json
+from dotenv import load_dotenv
+import os
+load_dotenv()
 # 5th function || ==>
 # 6th function || ==>
 # 7th function || ==>
@@ -120,7 +124,16 @@ def fibonacci(n: int):
     return str(a)
 
 # 5th function
-
+def get_apex_data(platform: str, username: str):
+    tail = f'profile/{platform}/{username}'
+    apex_req = requests.get(
+        f"https://public-api.tracker.gg/v2/apex/standard/{tail}", 
+        headers={"TRN-Api-Key": os.getenv('TRN-API-KEY')}
+    )
+    print("APEX CHECK")
+    print(apex_req.ok)
+    apex_json = apex_req.json()
+    return apex_json
 
 # 6th function
 

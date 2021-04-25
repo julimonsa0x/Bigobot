@@ -26,7 +26,7 @@ def get_json(url: str, json_name: str, indent=2):
     print(f'json: {json_name} saved succesfully')
 
 # automatically saves the epic games free weekly games
-get_json('https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions?locale=en-US&country=US&allowCountries=US', 'pepe2', 2)
+#get_json('https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions?locale=en-US&country=US&allowCountries=US', 'pepe2', 2)
 
 #print("----------------------------------------------------------------")
 
@@ -297,5 +297,5 @@ def num_to_roman(entero: int):
 
     return numeral
 
-print("Exiting :)")
+print("==========\nExiting :)")
 exit()
