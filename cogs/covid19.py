@@ -6,6 +6,7 @@ from matplotlib import pyplot
 from apis.covid_api import covid_api_request
 from asyncio import sleep
 from random import uniform
+from functions import printt
 
 
 class Covid(commands.Cog):
@@ -14,7 +15,7 @@ class Covid(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-	    print("cog de covid-19 listo")
+	    printt("cog de covid_19 listo")
 
     @commands.command()
     async def covid(self, ctx, country):

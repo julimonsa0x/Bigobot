@@ -146,7 +146,7 @@ async def on_ready():
     functions.printt(f" Con un total de {len(set(bot.get_all_members()))} miembros <¬", 0.001)
     functions.printt(' |            author: JuliTJZ             |', 0.001)
     functions.printt(' |          created : 23/12/2020          |', 0.001)
-    functions.printt(' |        last updated: dd/01/2021        |', 0.001)
+    functions.printt(' |        last updated: dd/mm/2021        |', 0.001)
     functions.printt(f' |      Python: 3.8.0, Oct 14 2019        |', 0.001)
     functions.printt(f' |          Discord.py:  {discord.__version__}            |', 0.001)
     functions.printt('---------------------------------------------------->>>', 0.001)
@@ -293,19 +293,28 @@ async def ticket_menu(ctx):
 @bot.command()
 @commands.has_permissions(kick_members=True)
 async def rol_reaccion(ctx, role: discord.Role=None, msg: discord.Message=None, emoji=None):
-    '''Creas un mensaje reaccionable para asignacion de un rol especifico'''
+    '''
+    Creas un mensaje reaccionable para un determinado rol, quien reaccione a dicho mensaje obtendra tal rol 
+    ejemplo de uso: #rol_reaccion P A C H U S 836026898584829963 :thumbsup: 
+    '''
     if role != None and msg != None and emoji != None:
-        await msg.add_reaction(emoji)
-        bot.reaction_roles.append((role.id, msg.id, str(emoji.encode("utf-8"))))
-        
-        async with aiofiles.open("databases/reaction_roles.txt", mode="a") as file:
-            emoji_utf = emoji.encode("utf-8")
-            await file.write(f"{role.id} {msg.id} {emoji_utf}\n")
+        try:    
+            await msg.add_reaction(emoji)
+            bot.reaction_roles.append((role.id, msg.id, str(emoji.encode("utf-8"))))
 
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.channel.send("Reacción definida con éxito :thumbsup:")
-            print(f"cmdSetReaccion|| {ctx.author.name} definió la reaccion para el rol: {role}")
+            async with aiofiles.open("databases/reaction_roles.txt", mode="a") as file:
+                emoji_utf = emoji.encode("utf-8")
+                await file.write(f"{role.id} {msg.id} {emoji_utf}\n") # TO_DO: improve file.write poor detailed content 
+
+            async with ctx.typing():    
+                await asyncio.sleep(type_time)
+                await ctx.channel.send("Reacción definida con éxito :thumbsup:")
+                print(f"cmdSetReaccion||       {ctx.author.name} definió la reaccion para el rol: {role}")
+        
+        except discord.errors.Forbidden:
+            async with ctx.typing():    
+                await asyncio.sleep(type_time)
+                await ctx.send(f"Lo siento {ctx.author.name} pero no tienes permisos suficientes para realizar esta accion")
 
     else:
         async with ctx.typing():    
@@ -313,7 +322,7 @@ async def rol_reaccion(ctx, role: discord.Role=None, msg: discord.Message=None, 
             await ctx.send("Argumentos no válidos, debe ser de la forma #comando <nombre del rol> <id del mensaje a reaccionar> <emoji>")
             await ctx.send("La idea de este comando es fijar un mensaje para que sea reaccionado y así obtener el rol asignado")
             await ctx.send(f"{ctx.author.mention} ten en cuenta que el nombre del rol debe ser identico al rol")
-            print(f"cmdSetReaccion||     {ctx.author.name} falló al definir una reaccion para un rol")
+            print(f"cmdSetReaccion||          {ctx.author.name} falló al definir una reaccion para un rol")
 
 @bot.command()
 @commands.has_permissions(kick_members=True)
@@ -435,28 +444,27 @@ async def contar(ctx, number: int):
 async def monsa(ctx):
     '''Info sobre mi autor'''
     embedMine = discord.Embed(
-        title=None,
-        description="Acerca de mi",
+        title="Acerca de mi",
         timestamp = datetime.utcnow(),
         color=discord.Color.blurple())
     
     #embedMine.set_author(name="Juli Monsa", icon_url="https://cdn.discordapp.com/attachments/793309880861458473/797528089726418974/yo_quien_mas.png")
     embedMine.set_author(name="Juli Monsa", url="https://www.steamcommunity.com/id/JuliMonsa", icon_url="https://cdn.discordapp.com/attachments/793309880861458473/797528089726418974/yo_quien_mas.png")
-    embedMine.set_thumbnail(url="https://i.imgur.com/mmF8hSX.png")  # ETHER ADDRESS 
     embedMine.add_field(name="Canal YT:", value=f" https://www.youtube.com/channel/UCeQLgYEcEj9PteUzWWa2bRA", inline= False)
     embedMine.add_field(name="Perfil de Steam:", value=f" https://www.steamcommunity.com/id/JuliMonsa", inline= False)
     embedMine.add_field(name="Github:", value=f" https://github.com/julimonsa0x", inline= False)
-    embedMine.add_field(name="Repl.it:", value=f" https://repl.it/@julimonsa0x", inline= False)
+    embedMine.add_field(name="Replit:", value=f" https://repl.it/@julimonsa0x", inline= False)
     embedMine.add_field(name="Telegram:", value=f" @julimonsa0x", inline= False)
     embedMine.add_field(name="Discord:", value=f" JuliTJZ#8141", inline= False)
     #embedMine.add_field(name="Página de", value=f"", inline= False)
     #embedMine.add_field(name="Página de", value=f"", inline= False)
+    embedMine.set_thumbnail(url="https://i.imgur.com/mmF8hSX.png")  # ETHER ADDRESS 
     embedMine.set_footer(icon_url = ctx.author.avatar_url, text = f"Solicitud de {ctx.author.name}")
     
     async with ctx.typing():    
         await asyncio.sleep(type_time)
         await ctx.send(embed=embedMine)
-        print(f'cmdInfoSobreMí||     Info del autor enviada a {ctx.author.name} a las {current_hour}')
+        print(f'cmdInfoSobreMí||         Info del autor enviada a {ctx.author.name} a las {current_hour}')
 
 #---------> comando de joda tucson <--------
 @bot.command()
@@ -937,7 +945,7 @@ async def ayuda(ctx):
     embed_help.add_field(name="--> Comandos para admins ", value="#advertir, #advertencias, #kick, #ban, #set_canal_bienvenida, #set_canal_despedida, #pedir_ticket, #rol_reaccion, #setdelay", inline=False)
     embed_help.add_field(name="--> Comandos matemáticos", value="#matecomandos", inline=False)
     embed_help.add_field(name="--> Comandos de conversion", value="#bin_a_dec, #dec_a_bin, #hex_a_dec, #dec_a_hex, #num_a_rom", inline=False)
-    embed_help.set_footer(text = "Listo para ayudarte ;)/🥂")
+    embed_help.set_footer(text = "Listo para ayudarte ;)/🥂", icon_url=ctx.author.avatar_url)
     
     async with ctx.typing():    
         await asyncio.sleep(type_time)
@@ -1003,16 +1011,12 @@ async def avatar(ctx, member: discord.Member):
 @bot.command()
 async def quien(ctx, member: discord.Member): 
     '''Info sobre @Mencion'''
-    #fecha_Cumple = date.today() #datetime.datetime.now() changed to datetime.now()
-    # esta de arriba solo si no se usa la funcion de abajo
     fecha_Cumple = functions.bro_birthdays_check(member.id)
 
     embedWho = discord.Embed(
         title = member.name, 
         description = member.mention, 
-        color = discord.Colour.green(),
-        #timestamp=datetime.utcnow()
-        )
+        color = discord.Colour.green())
     embedWho.add_field(name = "ID", value = member.id, inline = False)
     embedWho.add_field(name = "Cumple", value = fecha_Cumple, inline = False)
     embedWho.add_field(name = "Es bot?", value = member.bot, inline = False)
@@ -2172,117 +2176,6 @@ async def borrar(ctx, limit=10, member: discord.Member=None):
             await asyncio.sleep(type_time)
             await ctx.send(f"{ctx.author.name} solo es posible borrar mensajes con menos de 14 dias de antiguedad...")
 
-@bot.command()
-async def apex(ctx, platforma: str, usuario: str):
-
-    apex_json = functions.get_apex_data(platforma, usuario)
-    buttons = [u"\u23EA", u"\u2B05", u"\u27A1", u"\u23E9"] # jump to start, left, right, jump to end
-    current = 0
-
-    # Page 1
-    rankName = apex_json["data"]["segments"][0]["stats"]["rankScore"]["metadata"]["rankName"]
-    rankPic = apex_json["data"]["segments"][0]["stats"]["rankScore"]["metadata"]["iconUrl"]
-    level = apex_json["data"]["segments"][0]["stats"]["level"]["displayValue"]
-    kills = apex_json["data"]["segments"][0]["stats"]["kills"]["displayValue"]
-    damage = apex_json["data"]["segments"][0]["stats"]["damage"]["displayValue"]
-    headshots = apex_json["data"]["segments"][0]["stats"]["headshots"]["displayValue"]
-    finishers = apex_json["data"]["segments"][0]["stats"]["finishers"]["displayValue"]
-    arKills = apex_json["data"]["segments"][0]["stats"]["arKills"]["displayValue"]
-
-
-    # Page 2 
-    current_legend = apex_json["data"]["segments"][1]["metadata"]["isActive"]  # returns boolean
-    if current_legend:
-        legendMain = apex_json["data"]["segments"][1]["metadata"]["name"]
-        legendMainPic = apex_json["data"]["segments"][1]["metadata"]["imageUrl"]
-        killsMain = str(apex_json["data"]["segments"][1]["stats"]["kills"]["displayValue"]).replace(",", ".")
-
-
-    # Page 3
-    secondLegend = apex_json["data"]["segments"][2]["metadata"]["name"]
-    secondLegendPic = apex_json["data"]["segments"][2]["metadata"]["imageUrl"]
-    secondKills = apex_json["data"]["segments"][2]["stats"]["kills"]["displayValue"] 
-
-
-    # Page 1 embed
-    page1 = discord.Embed(
-        title="Stats generales", 
-        description="Usa los botones de abajo para cambiar de pagina.", 
-        colour=discord.Colour.orange()
-    )
-    page1.add_field(name="Rango", value=rankName, inline=True)
-    page1.add_field(name="Nivel", value=level, inline=True)
-    page1.add_field(name="Bajas", value=kills, inline=True)
-    page1.add_field(name="Daño total", value=damage, inline=True)
-    page1.add_field(name="Headshots", value=headshots, inline=True)
-    page1.add_field(name="Finalizadores", value=finishers, inline=True)
-    page1.add_field(name="Bajas de AR", value=arKills, inline=True)
-    page1.set_thumbnail(url=rankPic)
-    page1.set_footer(text=f"Page n° {current}")
-
-    # Page 2 embed
-    page2 = discord.Embed(
-        title="Stats: Leyenda Main", 
-        colour=discord.Colour.orange()
-    )
-    page2.add_field(name="Leyenda", value=legendMain, inline=True)
-    page2.add_field(name="Bajas", value=killsMain, inline=True)
-    page2.set_thumbnail(url=legendMainPic)
-    page2.set_footer(text=f"Page n° {current}")
-
-    # Page 3 embed
-    page3 = discord.Embed(
-        title="Stats: demas leyendas...", 
-        colour=discord.Colour.orange()
-    )
-    page3.add_field(name="Leyenda", value=secondLegend, inline=True)
-    page3.add_field(name="Bajas", value=secondKills, inline=True)
-    page3.set_thumbnail(url=secondLegendPic)
-    page3.set_footer(text=f"Page n° {current}")
-
-
-    pages_list = [page1, page2, page3] 
-    msg = await ctx.send(embed=pages_list[current])
-    print(f"cmdApexStats||         {ctx.author.mention} busco las estadisticas de {usuario} en Apex a las {current_hora}")
-    
-    for button in buttons:
-        await msg.add_reaction(button)  
-    
-    while True:
-        try:
-            reaction, user = await bot.wait_for(
-                "reaction_add", 
-                check=lambda reaction, user: user == ctx.author and reaction.emoji in buttons, 
-                timeout=25.0
-            )
-
-        except asyncio.TimeoutError:
-            return print("test")
-
-        else:
-            previous_page = current
-            if reaction.emoji == u"\u23EA":
-                current = 0
-                
-            elif reaction.emoji == u"\u2B05":
-                if current > 0:
-                    current -= 1
-                    
-            elif reaction.emoji == u"\u27A1":
-                if current < len(pages_list)-1:
-                    current += 1
-
-            elif reaction.emoji == u"\u23E9":
-                current = len(pages_list)-1
-
-            for button in buttons:
-                await msg.remove_reaction(button, ctx.author)
-
-            if current != previous_page:
-                await msg.edit(embed=pages_list[current])
-
-
-
 
 # cog loader cmd
 bot_developer_id = '485259816399536128'
@@ -2321,7 +2214,7 @@ async def ping(ctx, arg=None):
     if arg == "pong":
         await ctx.send("ah chistoso")
     else:
-        await ctx.send(f"¡Pong pong pong!, tu ping es: {round(bot.latency * 1000)}ms\nEste ping es con respecto a mí, no con respecto a los servidores de discord!!")
+        await ctx.send(f"Tu ping es: {round(bot.latency * 1000)}ms\nEste ping es con respecto a mí, no con respecto a los servidores de discord!!")
 
 
 bot.run(os.getenv('TOKEN'))

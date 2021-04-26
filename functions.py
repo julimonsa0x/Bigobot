@@ -25,7 +25,7 @@ def printt(string, delay=0.005):
     '''
     Print a string or f-string with delay between its characters.
     Argument delay float expected recommended 0.005 <= delay <= 0.2
-    argument delay 5ms between every character by default
+    delay 5ms between every character by default
     Author: Lorenzo Campos, forked from his snake.py repl ...
     '''
     for character in string:
@@ -125,15 +125,14 @@ def fibonacci(n: int):
 
 # 5th function
 def get_apex_data(platform: str, username: str):
+    """ Used in cogs/Apex.py, expects two arguments(platform and user)"""
     tail = f'profile/{platform}/{username}'
     apex_req = requests.get(
         f"https://public-api.tracker.gg/v2/apex/standard/{tail}", 
         headers={"TRN-Api-Key": os.getenv('TRN-API-KEY')}
     )
-    print("APEX CHECK")
-    print(apex_req.ok)
     apex_json = apex_req.json()
-    return apex_json
+    return apex_json, apex_req.ok
 
 # 6th function
 

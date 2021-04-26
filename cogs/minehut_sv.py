@@ -1,10 +1,12 @@
+# cog to extract json data from a minehut sv
+# source: github.com/afazio1/robotic-nation-proj/blob/master/projects/discord-bot/minecraft-bot.py
+
 import discord
 from discord.ext import commands
 from discord.ext.commands import Cog
 import requests
+from functions import printt
 
-# cog to extract json data from a minehut sv
-# source: github.com/afazio1/robotic-nation-proj/blob/master/projects/discord-bot/minecraft-bot.py
 
 class MinehutInfo(Cog):	
     def __init__(self, bot):
@@ -12,7 +14,7 @@ class MinehutInfo(Cog):
 
     @Cog.listener()
     async def on_ready(self):
-	    print("cog de Minehut info listo")
+	    printt("cog de minehut_server info listo")
 
     @commands.command()
     async def minehut(self, ctx, arg):

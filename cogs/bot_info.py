@@ -8,6 +8,8 @@ import os
 from datetime import datetime
 from discord.ext import commands
 from apis.default import timeago
+from functions import printt
+
 
 class Information(commands.Cog):
     def __init__(self, bot):
@@ -16,11 +18,11 @@ class Information(commands.Cog):
 
         @commands.Cog.listener()
         async def on_ready(self):
-	        print("cog de bot_info listo")
+	        printt("cog de bot_info listo")
 
     @commands.command()
     async def about(self, ctx):
-        """ About the bot """
+        """ Some info about the bot | Algo de informacion sobre el bot """
         ramUsage = self.process.memory_full_info().rss / 1024**2
         avgmembers = sum(g.member_count for g in self.bot.guilds) / len(self.bot.guilds)
 
@@ -29,14 +31,18 @@ class Information(commands.Cog):
             embedColour = ctx.me.top_role.colour
 
         embed = discord.Embed(colour=embedColour)
-        embed.set_thumbnail(url=ctx.bot.user.avatar_url)
-        embed.add_field(name="Ultimo inicio", value=timeago(datetime.now() - self.bot.uptime), inline=True)
-        embed.add_field(name="Libreria", value=f"discord.py: {discord.__version__}", inline=True)
-        embed.add_field(name="Servers", value=f"{len(ctx.bot.guilds)} ( avg: {avgmembers:,.2f} users/server )", inline=True)
-        embed.add_field(name="Comandos totales", value=len([x.name for x in self.bot.commands]), inline=True)
-        embed.add_field(name="Uso de RAM", value=f"{ramUsage:.2f} MB", inline=True)
+        # If not thumbnail, try using self.bot.user.avatar_url or self.ctx.bot.user.avatar_url or ctx.bot.user.avatar_url when not in cogs
+        embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/793309880861458473/836063449989513216/bigobot_avatar.png")
+        #embed.add_field(name="Ultimo inicio", value=timeago(datetime.now() - self.bot.uptime), inline=False)
+        embed.add_field(name="Libreria", value=f"discord.py: {discord.__version__}", inline=False)
+        embed.add_field(name="Servers", value=f"{len(ctx.bot.guilds)} ( avg: {avgmembers:,.2f} users/server )", inline=False)
+        embed.add_field(name="Comandos totales", value=len([x.name for x in self.bot.commands]), inline=False)
+        embed.add_field(name="Uso de RAM", value=f"{ramUsage:.2f} MB", inline=False)
+        embed.add_field(name="Codigo fuente", value="https://github.com/julimonsa0x/Bigobot")
+        embed.set_footer(icon_url=ctx.author.avatar_url, text=f"Solicitud de: {ctx.author.name}")
 
         await ctx.send(content=f"ℹ About **{ctx.bot.user}**", embed=embed)
+        print(f"cmdAbout||       {ctx.author.name} just requested the info about the bot")
 
 def setup(bot):
     bot.add_cog(Information(bot))

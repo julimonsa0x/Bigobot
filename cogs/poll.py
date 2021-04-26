@@ -3,6 +3,7 @@ import json
 import discord
 from datetime import datetime
 from discord.ext import commands, tasks
+from functions import printt
 
 
 class Poll(commands.Cog):
@@ -13,7 +14,7 @@ class Poll(commands.Cog):
     
     @commands.Cog.listener()
     async def on_ready(self):
-	    print("cog de encuestas listo")
+	    printt("cog de encuestas listo")
 
     @commands.Cog.listener()
     async def on_ready(self):

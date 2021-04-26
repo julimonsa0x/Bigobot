@@ -619,7 +619,6 @@ images = [
   'https://cdn.discordapp.com/attachments/793309880861458473/831715240478638080/PicsArt_04-13-11.17.44.jpg', # tengan cuidado gente de la epet 14, nico sin barbijo
   'https://cdn.discordapp.com/attachments/793309880861458473/831730430222401536/unknown.png', # pili amongo le sale el tiro por la culata
   'https://cdn.discordapp.com/attachments/793309880861458473/831731317867544629/unknown.png', # debo admitir, copi bardeado
-  
   'https://media.discordapp.net/attachments/793309880861458473/831997479394345020/unknown.png', # PECETOTE EGIRL
   'https://cdn.discordapp.com/attachments/793309880861458473/832256451149168760/Screenshot_20210415-103519.png' #STEPHEN HAWKING NO SE MOVIA TRUCO,
   'https://cdn.discordapp.com/attachments/793309880861458473/832256451481174046/Screenshot_20210414-194834.png', # FINO SEÑORES
@@ -629,7 +628,83 @@ images = [
   'https://cdn.discordapp.com/attachments/793309880861458473/832317654693707806/IMG-20210415-WA0000.jpg' # culo que resong pide poronga,
   'https://cdn.discordapp.com/attachments/793309880861458473/832446712488525854/unknown.png' # maputa el mato,
   'https://cdn.discordapp.com/attachments/793309880861458473/832771149594886164/dec1cd21-b370-4eed-a3cf-319d74d2b8b1.png' # lezca hackeado steam csgo,
-  '',
+  'https://cdn.discordapp.com/attachments/793309880861458473/833033937482809395/Captura_de_pantalla_20200430-105122.png', # lezca Silla pene
+  'https://cdn.discordapp.com/attachments/793309880861458473/833033938750275654/IMG-20210416-WA0004.jpg', # Conejo Zurdito 
+  'https://cdn.discordapp.com/attachments/793309880861458473/833216204982321162/Screenshot_20210418-024150.png', # batman esta vez solo cortame las puntas
+  'https://cdn.discordapp.com/attachments/793309880861458473/833216205305020468/Screenshot_20210418-023856.png', # amongus boxer calzoncillo
+  'https://cdn.discordapp.com/attachments/793309880861458473/833216205677658142/Screenshot_20210418-023847.png', # cumple nena cristina torta remera
+  'https://cdn.discordapp.com/attachments/793309880861458473/833216206249000960/Screenshot_20210418-010303.png', # hoy la pongo ana 10 años 
+  'https://cdn.discordapp.com/attachments/793309880861458473/833216206538276884/Screenshot_20210417-211411.png', # el pritty blinder
+  'https://cdn.discordapp.com/attachments/793309880861458473/833216206776696862/Screenshot_20210417-211124.png', # gta v chop como?
+  'https://cdn.discordapp.com/attachments/793309880861458473/833330487430611034/Screenshot_20210418-101652.png', # pan de amongas
+  'https://cdn.discordapp.com/attachments/793309880861458473/833330487790796830/Screenshot_20210418-033128.png', # fino señores niquito
+  'https://cdn.discordapp.com/attachments/793309880861458473/833330488126734336/Screenshot_20210418-025109.png', # nenito lleno de jabon
+  'https://cdn.discordapp.com/attachments/793309880861458473/834145737393700884/Screenshot_20210420-134734.png', # RTX 9080
+  'https://cdn.discordapp.com/attachments/793309880861458473/834145737058025502/Screenshot_20210420-154959.png', # bardeo garden 
+  'https://cdn.discordapp.com/attachments/793309880861458473/834145737897148416/Screenshot_20210420-090809.png', # ricardo milos doom
+  'https://cdn.discordapp.com/attachments/793309880861458473/834145737700409365/IMG-20210420-WA0004.jpg', # busco a nicolas
+  'https://cdn.discordapp.com/attachments/793309880861458473/834145738169516133/Screenshot_20210420-090759.png', # patos arriba de un cocodrilo
+  'https://cdn.discordapp.com/attachments/793309880861458473/834145738438737981/Screenshot_20210420-001118.png', # guarra como te llamas en el fortnite
+  'https://cdn.discordapp.com/attachments/793309880861458473/834145738690789376/Screenshot_20210419-235019.png', # saludos a mi techo mato
+  'https://cdn.discordapp.com/attachments/793309880861458473/834146209258012683/Screenshot_20210419-234355.png', # si bro ya me independice
+  'https://cdn.discordapp.com/attachments/793309880861458473/834146209500758076/Screenshot_20210419-202040.png', # hola nena soy marcelo
+  'https://cdn.discordapp.com/attachments/793309880861458473/834146209735901294/FB_IMG_1618861473509.jpg', # mira bro se te cayo
+  'https://cdn.discordapp.com/attachments/793309880861458473/834146209735901294/FB_IMG_1618861473509.jpg', # mira bro se te cayo x2
+  'https://cdn.discordapp.com/attachments/793309880861458473/834146209869987880/Screenshot_20210419-113856.png', # chabonas en el baño
+  'https://cdn.discordapp.com/attachments/793309880861458473/834146210171322408/Screenshot_20210419-115206.png', # doble multa al gatito
+  'https://cdn.discordapp.com/attachments/793309880861458473/834246247425507378/Screenshot_20210420-211344.png', # me've
+  'https://cdn.discordapp.com/attachments/793309880861458473/834246247753842759/IMG_20210420_210810_062.jpg', # ya entendi te pido disculpas
+  'https://cdn.discordapp.com/attachments/793309880861458473/834246248109965332/Screenshot_20210420-190104.png', # MAN I LOVE FACTURAS
+  'https://cdn.discordapp.com/attachments/793309880861458473/834246248536997888/Screenshot_20210420-201101.png', # el duko te falta mucho cabron
+  'https://cdn.discordapp.com/attachments/793309880861458473/834520339547160626/Screenshot_20210420-201304.png', # si vine ma mira csgo natacion
+  'https://cdn.discordapp.com/attachments/793309880861458473/834520340168048730/Screenshot_20210420-231517.png', # nos dijeron que crees en cristo chabonas
+  'https://cdn.discordapp.com/attachments/793309880861458473/834520340168048730/Screenshot_20210420-231517.png', # nos dijeron que crees en cristo chabonas x2
+  'https://cdn.discordapp.com/attachments/793309880861458473/834520340889337896/Screenshot_20210420-231545.png', # profe diga maria
+  'https://cdn.discordapp.com/attachments/793309880861458473/834520341816672266/Screenshot_20210420-231613.png', # whatsapp 2 fragancia
+  'https://cdn.discordapp.com/attachments/793309880861458473/834623520981647400/Screenshot_20210421-235309.png', # POV TU ERES EL LARVA
+  'https://cdn.discordapp.com/attachments/793309880861458473/834623521434763274/Screenshot_20210421-222712.png', # en guerra con la camiseta de boca
+  'https://cdn.discordapp.com/attachments/793309880861458473/834623521211809812/Screenshot_20210421-223512.png', # ma ponte esta foto de steve pelado 
+  'https://cdn.discordapp.com/attachments/793309880861458473/835310690713600010/dj_cheli_vs_hydra.png', # avg dj cheli enjoyer vs avg hydra enjoyer
+  'https://cdn.discordapp.com/attachments/793309880861458473/835310690713600010/dj_cheli_vs_hydra.png', # avg dj cheli enjoyer vs avg hydra enjoyer x2
+  'https://cdn.discordapp.com/attachments/793309880861458473/835310690713600010/dj_cheli_vs_hydra.png', # avg dj cheli enjoyer vs avg hydra enjoyer x3
+  'https://cdn.discordapp.com/attachments/793309880861458473/835310759990001744/EzlwQoAUcAA2moi.png', # ruka de boca
+  'https://cdn.discordapp.com/attachments/793309880861458473/835311295980371989/unknown.png', # god of war 4 me lo voy a platinar en gs4 tambo
+  'https://cdn.discordapp.com/attachments/793309880861458473/835354398833377280/Screenshot_20210424-001855-462.png', # elsa jean con tomii 11
+  'https://cdn.discordapp.com/attachments/793309880861458473/835354399739871262/Screenshot_20210422-231814.png', # chad foto de perfil caricatura japonesa
+  'https://cdn.discordapp.com/attachments/793309880861458473/835354400049332224/Screenshot_20210422-233025.png', # me anoto un amigo spiderman 
+  'https://video.twimg.com/ext_tw_video/1380314898832494592/pu/vid/426x240/Q3-wYg83IhCazZV1.mp4?tag=12', # nico nico ni auto pisteando
+  'https://video.twimg.com/ext_tw_video/1380315155163140096/pu/vid/640x1136/8CTyly8SJnMMK1wV.mp4?tag=12', # dale pelotudo con ganas, A BUENO botellita
+  'https://video.twimg.com/ext_tw_video/1381218601076658176/pu/vid/480x600/FJomy4E-NV-Hc0tZ.mp4?tag=12', # cachetazo por meterte en la foto
+  'https://video.twimg.com/ext_tw_video/1381218601076658176/pu/vid/480x600/FJomy4E-NV-Hc0tZ.mp4?tag=12', # cachetazo por meterte en la foto x2
+  'https://video.twimg.com/ext_tw_video/1381218601076658176/pu/vid/480x600/FJomy4E-NV-Hc0tZ.mp4?tag=12', # cachetazo por meterte en la foto x3
+  'https://video.twimg.com/ext_tw_video/1381289835185463302/pu/vid/480x600/O_k8OtcHXQ3JL_Au.mp4?tag=12', # che alberto timbre
+  'https://video.twimg.com/ext_tw_video/1381289835185463302/pu/vid/480x600/O_k8OtcHXQ3JL_Au.mp4?tag=12', # che alberto timbre x2
+  'https://video.twimg.com/ext_tw_video/1381289835185463302/pu/vid/480x600/O_k8OtcHXQ3JL_Au.mp4?tag=12', # che alberto timbre x3
+  'https://video.twimg.com/ext_tw_video/1381289937736192002/pu/vid/408x360/_21br54nmkrjRiCR.mp4?tag=12', # el que se mueve es gei
+  'https://video.twimg.com/ext_tw_video/1382698011332067339/pu/vid/540x960/Umr9OtWIoBjciBHV.mp4?tag=12', # bolsonaro vs chavez 
+  'https://video.twimg.com/ext_tw_video/1382698063408603143/pu/vid/480x600/sJz5LNsav0tWGwjU.mp4?tag=12', # transiciones god tier
+  'https://video.twimg.com/ext_tw_video/1384239120797474819/pu/vid/640x640/SlQjl1Yk-kY1FBvV.mp4?tag=12', # un poco de ketchup no viene mal al pancho
+  'https://video.twimg.com/ext_tw_video/1384239361152020483/pu/vid/640x640/SRLzuVJD80BfzCUb.mp4?tag=12', # grito burguer random nigga
+  'https://video.twimg.com/ext_tw_video/1385065196180344835/pu/vid/480x600/ch4y9N43POT_59V3.mp4?tag=12', # que pasa larva
+  'https://video.twimg.com/ext_tw_video/1385065196180344835/pu/vid/480x600/ch4y9N43POT_59V3.mp4?tag=12', # que pasa larva x2
+  'https://video.twimg.com/ext_tw_video/1385065196180344835/pu/vid/480x600/ch4y9N43POT_59V3.mp4?tag=12', # que pasa larva x3
+  'https://video.twimg.com/ext_tw_video/1385065196180344835/pu/vid/480x600/ch4y9N43POT_59V3.mp4?tag=12', # que pasa larva x4
+  'https://video.twimg.com/ext_tw_video/1385065196180344835/pu/vid/480x600/ch4y9N43POT_59V3.mp4?tag=12', # que pasa larva x5
+  'https://video.twimg.com/ext_tw_video/1386098309400567810/pu/vid/320x400/3HQO1UHK8u0sqJpf.mp4?tag=12', # dime que tu huele perro 
+  'https://video.twimg.com/ext_tw_video/1386098370805223425/pu/vid/320x400/5fwuMyTxsZ_vLVDa.mp4?tag=12', # mono choca con bici
+  'https://video.twimg.com/ext_tw_video/1386098466816937984/pu/vid/640x800/1c7eevdZ1CXnpCEP.mp4?tag=12', # neko
+  'https://video.twimg.com/ext_tw_video/1386098514694914049/pu/vid/480x600/shea8ZinBkOaoKtA.mp4?tag=12', # soplando velas otaku way
+  'https://video.twimg.com/ext_tw_video/1386098589001203718/pu/vid/640x800/a2wEzC8GJIXXMzqC.mp4?tag=12', # pelea nivel dios 
+  'https://video.twimg.com/ext_tw_video/1386100259756052482/pu/vid/640x800/6wR_-Pw9qh_1cWRn.mp4?tag=12', # periodista en el agua
+  #'', #
+  #'', #
+  #'', #
+  #'', #
+  #'', #
+  #'', #
+  #'', #
+  #'', #
+  #'', #
 
 
 

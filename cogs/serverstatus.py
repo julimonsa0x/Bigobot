@@ -7,6 +7,7 @@ from discord.ext.commands import Cog
 import requests
 from asyncio import sleep
 from random import uniform
+from functions import printt
 
 
 class ServerInfo(Cog):	
@@ -15,11 +16,14 @@ class ServerInfo(Cog):
 
     @Cog.listener()
     async def on_ready(self):
-	    print("cog de server_statuses listo")
+	    printt("cog de server_statuses listo")
 
     @commands.command()
     async def server_mc(self, ctx, server_ip: str):
-        '''Info sobre servers solo versiones +1.7, debes introducir la IP del servidor...'''
+        """
+        Info sobre servers de mc solo versiones +1.7, debes introducir la IP del servidor...
+        ejemplo: #server_mc 103.195.100.57:25474 
+        """
         r = requests.get('https://api.mcsrvstat.us/2/' + server_ip)
         json_data = r.json()
 

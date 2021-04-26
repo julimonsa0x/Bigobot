@@ -13,6 +13,7 @@ from io import BytesIO
 from discord.ext import commands
 from apis import permissions
 from databases import ballresponse
+from functions import printt
 
 type_time = uniform(0.5, 2)
 
@@ -24,7 +25,7 @@ class Fun_Commands(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-	    print("cog de fun_stuff listo")
+	    printt("cog de fun_stuff listo")
     
 
     @commands.command(aliases=["8ball"])
@@ -47,6 +48,7 @@ class Fun_Commands(commands.Cog):
         async with ctx.typing():    
             await asyncio.sleep(type_time)
             await ctx.send(embed = embed)
+            print(f"cmdPato||         {ctx.author.name} pidio una foto de patos")
 
 
     @commands.command()
@@ -60,6 +62,7 @@ class Fun_Commands(commands.Cog):
         async with ctx.typing():    
             await asyncio.sleep(type_time)
             await ctx.send(embed = embed)
+            print(f"cmdCafe||         {ctx.author.name} pidio una foto de cafes")
 
     @commands.command(aliases=["flip", "coin", "tossacoin"])
     async def coinflip(self, ctx):
@@ -81,21 +84,21 @@ class Fun_Commands(commands.Cog):
 
     @commands.command()
     @commands.cooldown(rate=1, per=2.0, type=commands.BucketType.user)
-    async def urban(self, ctx, *search: commands.clean_content):
-        """ Find the 'best' definition to your words """
+    async def definir(self, ctx, *search: commands.clean_content):
+        """ Encuentra la mejor definicion para tus palabras """
         async with ctx.channel.typing():
             try:
                 r = requests.get(f"https://api.urbandictionary.com/v0/define?term={search}").json()
             except Exception as e:
                 async with ctx.typing():    
                     await asyncio.sleep(type_time)
-                    return await ctx.send(f"Exception: {e}. Urban API returned invalid data... might be down atm.")
+                    await ctx.send(f"Exception: {e}. Urban API returned invalid data... might be down atm.")
 
             if not r:
-                return await ctx.send("I think the API broke...")
+                return await ctx.send("Hubo un error...")
 
             if not len(r["list"]):
-                return await ctx.send("Couldn't find your search in the dictionary...")
+                return await ctx.send(f"No pude encontrar una definicion para {search}...")
 
             result = sorted(r["list"], reverse=True, key=lambda g: int(g["thumbs_up"]))[0]
 
@@ -134,16 +137,17 @@ class Fun_Commands(commands.Cog):
             await ctx.author.send(f"🎁 **Esta es tu contraseña:**\n{secrets.token_urlsafe(nbytes)}")
 
     @commands.command()
-    async def rate(self, ctx, *, thing: commands.clean_content):
+    async def rating(self, ctx, *, thing: commands.clean_content):
         """ Le doy un rating a lo que sea... """
         rate_amount = random.uniform(0.0, 100.0)
         async with ctx.typing():    
             await asyncio.sleep(type_time)
             await ctx.send(f"A `{thing}` le daria un... **{round(rate_amount, 2)} / 100**")
+            print(f"cmdRating||        el bigobot le dio un rating de {rate_amount} a {thing}")
 
     @commands.command()
-    async def beer(self, ctx, user: discord.Member = None, *, reason: commands.clean_content = ""):
-        """ Toma una cerveza con alguien! 🍻 """
+    async def birra(self, ctx, user: discord.Member = None, *, reason: commands.clean_content = ""):
+        """ Toma una cerveza con alguien! 🍻, la sintaxis es #birra <@usuario> <razon> """
         if not user or user.id == ctx.author.id:
             async with ctx.typing():    
                 await asyncio.sleep(type_time)
@@ -201,7 +205,7 @@ class Fun_Commands(commands.Cog):
     @commands.command(aliases=["slots", "bet"])
     @commands.cooldown(rate=1, per=3.0, type=commands.BucketType.user)
     async def slot(self, ctx):
-        """ Roll the slot machine """
+        """ Gira la maquina tragaperras, util para decisiones de turnos """
         emojis = "🍎🍊🍐🍋🍉🍇🍓🍒"
         a = random.choice(emojis)
         b = random.choice(emojis)
@@ -212,7 +216,7 @@ class Fun_Commands(commands.Cog):
         if (a == b == c):
             await ctx.send(f"{slotmachine} Perfecto, Tu ganas! 🎉")
         elif (a == b) or (a == c) or (b == c):
-            await ctx.send(f"{slotmachine} 2 pajaros de un tiro, tu ganas! 🎉")
+            await ctx.send(f"{slotmachine} Casi perfecto, pero aun ganas! 🎉")
         else:
             await ctx.send(f"{slotmachine} No hay match, no ganas... 😢")
 

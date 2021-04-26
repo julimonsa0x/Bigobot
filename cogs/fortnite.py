@@ -3,6 +3,7 @@ import discord
 from discord.ext import commands
 from PIL import Image, ImageFont, ImageDraw
 from apis.fortnite_api import fortnite_api_request
+from functions import printt
 
 
 class Fortnite(commands.Cog):
@@ -12,7 +13,7 @@ class Fortnite(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-	    print("cog de fortniteStats listo")
+	    printt("cog de fortniteStats listo")
 
 
     @commands.command()
