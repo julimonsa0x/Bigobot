@@ -44,8 +44,7 @@ from listas import brosId
 import broBdays 
 import tuning
 import game
-from functions import get_dolar, get_apex_data, typing_sleep
-import functions
+from functions import get_dolar, get_apex_data, typing_sleep, degrees_to_cardinal
 load_dotenv()
 
 # ----------------------------------------> Beginning of code
@@ -961,9 +960,8 @@ async def chusmear(ctx):
     embed.set_author(name=f"{author.name}#{author.discriminator}", icon_url=author.avatar_url)
     embed.set_footer(text=f"Borrado de : #{channel_name}")
 
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)
-        await ctx.channel.send(embed=embed)
+    await typing_sleep(ctx)
+    await ctx.channel.send(embed=embed)
 
 @bot.command()
 async def avatar(ctx, member: discord.Member):
@@ -977,10 +975,9 @@ async def avatar(ctx, member: discord.Member):
     embedAvatar.set_author(name=f"Avatar de: {member.name}#{member.discriminator}", icon_url=member.avatar_url)
     embedAvatar.set_image(url = member.avatar_url)
     embedAvatar.set_footer(icon_url = ctx.author.avatar_url, text = f"Solicitud de {ctx.author.name}")
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)
-        await ctx.send(embed=embedAvatar)
-        print(f"cmdAvatar||          Avatar de {member.name}#{member.discriminator} para {ctx.author.name} a las {current_hour}")
+    await typing_sleep(ctx)
+    await ctx.send(embed=embedAvatar)
+    print(f"cmdAvatar||          Avatar de {member.name}#{member.discriminator} para {ctx.author.name} a las {current_hour}")
 
 
 #-----> Comando: "¿quien es?" 6<----
@@ -1003,10 +1000,9 @@ async def quien(ctx, member: discord.Member):
     embedWho.set_thumbnail(url = member.avatar_url)
     embedWho.set_footer(icon_url = ctx.author.avatar_url, text = f"Solicitud de {ctx.author.name}#{member.discriminator}")
     
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)
-        await ctx.send(embed=embedWho)
-        print(f"cmdQuien||       Info sobre {member.name}#{member.discriminator} para {ctx.author.name} a las {current_hour}")
+    await typing_sleep(ctx)
+    await ctx.send(embed=embedWho)
+    print(f"cmdQuien||       Info sobre {member.name}#{member.discriminator} para {ctx.author.name} a las {current_hour}")
 
 @quien.error
 async def quien_error(ctx, error):
@@ -1029,17 +1025,15 @@ async def meme(ctx):
             random_link.startswith('https://i.imgur') or 
             random_link.startswith('https://youtu')
         ):
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.send(random_link)
-            print(f'cmdMeme||         Meme enviado a {ctx.author.name} a las {current_hour}')
+        await typing_sleep(ctx)
+        await ctx.send(random_link)
+        print(f'cmdMeme||         Meme enviado a {ctx.author.name} a las {current_hour}')
         
     else:
         embed.set_image(url = random_link)
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.send(embed = embed)
-            print(f'cmdMeme||         Meme enviado a {ctx.author.name} a las {current_hour}')
+        await typing_sleep(ctx)
+        await ctx.send(embed = embed)
+        print(f'cmdMeme||         Meme enviado a {ctx.author.name} a las {current_hour}')
 
 #----> Reddit meme <----
 @bot.command()
@@ -1070,10 +1064,9 @@ async def reddit_meme(ctx, subreddit_to_search=None):
             embedReddit.add_field(name = "***Likes***", value = f'{memes["data"]["children"][pick_random]["data"]["score"]}', inline = True)
             embedReddit.set_image(url=memes["data"]["children"][pick_random]["data"]["url"])
             embedReddit.set_footer(icon_url = ctx.author.avatar_url, text = f"Meme para {ctx.author.name}")
-            async with ctx.typing():    
-                await asyncio.sleep(type_time)
-                await ctx.send(embed = embedReddit)
-                print(f'cmdRedditMeme||         Meme enviado  {ctx.author.name} a las {current_hour}')
+            await typing_sleep(ctx)
+            await ctx.send(embed = embedReddit)
+            print(f'cmdRedditMeme||         Meme enviado  {ctx.author.name} a las {current_hour}')
 
 #---->Juegos gratis epic <----
 @bot.command()
@@ -1117,22 +1110,20 @@ async def juegos_gratis(ctx, platform=None):
         embedGame2.add_field(name = f"Luego de {title1}:", value = f"{title2}")
         embedGame2.add_field(name = f"Luego de {title2}:", value = f"{title3}")
         embedGame2.add_field(name = f"Luego de {title3}:", value = f"{title4}")
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.send(embed = embedGame1)
-            await ctx.send(embed = embedGame2)
-            await ctx.send(f"Eso es todo por ahora {ctx.author.name}!")
-            print(f'cmdJuegosGratis||         Juego gratis por {ctx.author.name} a las {current_hour}')
+        await typing_sleep(ctx)
+        await ctx.send(embed = embedGame1)
+        await ctx.send(embed = embedGame2)
+        await ctx.send(f"Eso es todo por ahora {ctx.author.name}!")
+        print(f'cmdJuegosGratis||         Juego gratis por {ctx.author.name} a las {current_hour}')
 
 
 #--> videos out of context willy <--
 @bot.command()
 async def willy(ctx):
     '''videos del willy out of context, un cago de risa...'''
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)
-        await ctx.send(random.choice(listas.willyooc))
-        print(f'cmdWilly||      Willy OOC enviado a {ctx.author.name} a las {current_hour}')
+    await typing_sleep(ctx)
+    await ctx.send(random.choice(listas.willyooc))
+    print(f'cmdWilly||      Willy OOC enviado a {ctx.author.name} a las {current_hour}')
 
 #----> campeones del LoL 10<-----
 @bot.command()
@@ -1151,11 +1142,9 @@ async def randomchamp(ctx):
     embed3.add_field(name= f"Campeón Aleatorio:", value=f"{randomChamp}")
     embed3.set_footer(icon_url = ctx.author.avatar_url, text = f"Le tocó a {ctx.author}") 
     
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)
-        await ctx.send(embed=embed3)
-        print(f"cmdRandomChamp|| Campeón aleatorio enviado, a día de hoy en la lista hay: {str(len(listas.campeones))}")
-        #len(list) es para obtener la cantidad de elementos de una lista
+    await typing_sleep(ctx)
+    await ctx.send(embed=embed3)
+    print(f"cmdRandomChamp|| Campeón aleatorio enviado, a día de hoy en la lista hay: {str(len(listas.campeones))}")
 
 #----> Brawlers randoms de BS<-----
 @bot.command()
@@ -1174,11 +1163,9 @@ async def randombrawl(ctx):
     embed.add_field(name= "Brawler Aleatorio: ", value=f"{randomBrawl}")
     embed.set_footer(icon_url = ctx.author.avatar_url, text = f"Le tocó a {ctx.author}")
     
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)
-        await ctx.send(embed=embed)
-        print(f"cmdRandomBrawl|| Brawler aleatorio enviado, hoy {current_hour} en la lista hay: {str(len(listas.brawlers))}")
-        #len(list) es para obtener la cantidad de elementos de una lista
+    await typing_sleep(ctx)
+    await ctx.send(embed=embed)
+    print(f"cmdRandomBrawl|| Brawler aleatorio enviado, hoy {current_hour} en la lista hay: {str(len(listas.brawlers))}")
 
 
 #--------> buscar vids de yt 3<-------
@@ -1189,10 +1176,9 @@ async def youtube(ctx, *, search):
     html_content = request.urlopen('http://www.youtube.com/results?' + query_string)
     search_results = re.findall('/watch\?v=(.{11})', html_content.read().decode())
     #print(search_results)
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)
-        await ctx.send('https://youtube.com/watch?v=' + search_results[0])
-        print(f'cmdYoutube|| {ctx.author.name} buscó el video {search} en yt')
+    await typing_sleep(ctx)
+    await ctx.send('https://youtube.com/watch?v=' + search_results[0])
+    print(f'cmdYoutube|| {ctx.author.name} buscó el video {search} en yt')
 
 @youtube.error
 async def youtube_error(ctx, error):
@@ -1213,20 +1199,18 @@ async def wiki(ctx, lang:str='es', *, search):
     wikipedia.set_lang(f"{lang}")
     result = wikipedia.summary(f"{search}")   
     if len(result) <= 2000:
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.send(f"```{result}```")
-            print(f"cmdWikipedia||   {ctx.author.name} buscó en wikipedia: {search} el {current_hour}")
-            print(f" longitud de result : {len(result)} ")
+        await typing_sleep(ctx)
+        await ctx.send(f"```{result}```")
+        print(f"cmdWikipedia||   {ctx.author.name} buscó en wikipedia: {search} el {current_hour}")
+        print(f" longitud de result : {len(result)} ")
 
     else:
         wikipedia.set_lang(f"{lang}")
         result = wikipedia.summary(f"{search}")
         result = result[:1996] + "..."
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.send(f"```{result}```")
-            print(f"cmdWikipedia||   {ctx.author.name} buscó en wikipedia: {search} el {current_hour}\nlongitud de result: {len(result)}\n lenguaje: {lang}\n---")
+        await typing_sleep(ctx)
+        await ctx.send(f"```{result}```")
+        print(f"cmdWikipedia||   {ctx.author.name} buscó en wikipedia: {search} el {current_hour}\nlongitud de result: {len(result)}\n lenguaje: {lang}\n---")
 
 @wiki.error
 async def wiki_error(ctx, error):
@@ -1244,15 +1228,13 @@ async def descarga(ctx, url=None):
     if url != None:
         id = extract.video_id(url)
         downl_url = f"https://www.y2mate.com/es/convert-youtube/{id}"
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.send(f"Aqui esta el video listo para ser descargado: {downl_url}")
-            print(f"cmdDescarga||            {ctx.author.name} descargo un video...")                
+        await typing_sleep(ctx)
+        await ctx.send(f"Aqui esta el video listo para ser descargado: {downl_url}")
+        print(f"cmdDescarga||            {ctx.author.name} descargo un video...")                
     else:
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.send("No se pudo convertir con exito el video...")
-            print(f"cmdDescarga||            {ctx.author.name} no pudo descargar un video...")     
+        await typing_sleep(ctx)
+        await ctx.send("No se pudo convertir con exito el video...")
+        print(f"cmdDescarga||            {ctx.author.name} no pudo descargar un video...")     
 
 ###------------- Comandos de conversiones Inicio ---------->>>>
 
@@ -1270,9 +1252,8 @@ async def bin_a_dec(ctx, binary: str):
         multiplicador = 2**posicion
         decimal += int(digito) * multiplicador
         posicion += 1
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)    
-        await ctx.send(f"El binario: {binary} en decimal es: {decimal}")
+    await typing_sleep(ctx)    
+    await ctx.send(f"El binario: {binary} en decimal es: {decimal}")
 
 
 # ---> Convertir de decimal a binario <---
@@ -1283,9 +1264,8 @@ async def dec_a_bin(ctx, decimal: int):
     bin_result = bin(decimal).replace("0b", "")
     bin_result2 = bin(decimal)[2:]
     print(bin_result2)
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)
-        await ctx.send(f"El decimal {decimal} en binario es: {bin_result}")
+    await typing_sleep(ctx)
+    await ctx.send(f"El decimal {decimal} en binario es: {bin_result}")
 
 
 # ----> Convertir de HEX a decimal <----
@@ -1295,9 +1275,8 @@ async def hex_a_dec(ctx, hex: str):
     '''Convierte un Hexadecimal dado, a decimal'''
     dec_result = int(hex, 16) 
     dec_result = str(dec_result)
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)
-        await ctx.send(f"El hexadecimal {hex} en decimal es: {dec_result}")
+    await typing_sleep(ctx)
+    await ctx.send(f"El hexadecimal {hex} en decimal es: {dec_result}")
 
 
 # ---> Convertir de decimal a HEX <---
@@ -1305,9 +1284,8 @@ async def hex_a_dec(ctx, hex: str):
 async def dec_a_hex(ctx, decimal: int):
     '''Convierte un decimal dado, a hexadecimal'''
     hex_result = hex(int(decimal))[2:].upper()
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)
-        await ctx.send(f"El decimal {decimal} en hexadecimal es: {hex_result}")
+    await typing_sleep(ctx)
+    await ctx.send(f"El decimal {decimal} en hexadecimal es: {hex_result}")
 
 
 # ---> Convertir decimal a romano <----
@@ -1332,9 +1310,8 @@ async def num_a_rom(ctx, numero: int):
     i = 0
 
     if numero > 3999:
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.send("Actualmente no es posible convertir numeros mayores a 3999\npara esto se requieren caracteres especiales :(")
+        await typing_sleep(ctx)
+        await ctx.send("Actualmente no es posible convertir numeros mayores a 3999\npara esto se requieren caracteres especiales :(")
     
     elif numero <= 3999:
         while numero > 0:
@@ -1343,9 +1320,8 @@ async def num_a_rom(ctx, numero: int):
                 numero -= numeros[i]
             i += 1
 
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)
-        await ctx.send(f"El numero {numero_inicial} en romano es {numeral}")
+    await typing_sleep(ctx)
+    await ctx.send(f"El numero {numero_inicial} en romano es {numeral}")
 
 ###------------- Comandos de conversiones Final ------------>>>>
 ################################################################
@@ -1357,10 +1333,9 @@ async def suma(ctx, num1: int, num2: int):
     a modo de ejemplo: #suma 1 5 -----> 6
     '''
     sumResult = num1 + num2
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)
-        await ctx.send("Resultado de la suma: ```{}``` " .format(sumResult))
-        print(f'cmdSuma||   {ctx.author.name} sumó {num1} con {num2} ---> {sumResult} a las {current_hour}')
+    await typing_sleep(ctx)
+    await ctx.send("Resultado de la suma: ```{}``` " .format(sumResult))
+    print(f'cmdSuma||   {ctx.author.name} sumó {num1} con {num2} ---> {sumResult} a las {current_hour}')
 
 #---------> Resta no hay jaja <---------
 @bot.command()
@@ -1368,20 +1343,18 @@ async def resta(ctx, num1: int, num2: int):
     '''Resta dos numeros, deben estar separados
     a modo de ejemplo: #resta 20 15
     '''
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)    
-        await ctx.send(random.choice(listas.intentoResta))
-        print(f'cmdResta||  {ctx.author.name} intentó restar jaja')
+    await typing_sleep(ctx)
+    await ctx.send(random.choice(listas.intentoResta))
+    print(f'cmdResta||  {ctx.author.name} intentó restar jaja')
 
 #----> multiplicacion  <----
 @bot.command()
 async def mult(ctx, num1: int, num2: int):
     '''Multiplica dos numeros que introduzcas'''
     multResult = num1 * num2
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)
-        await ctx.send(" Resultado del producto: ```{}``` " .format(multResult))
-        print(f'cmdMult||   {ctx.author.name} multiplicó {num1} y {num2} ---> {multResult} a las {current_hour}')
+    await typing_sleep(ctx)
+    await ctx.send(" Resultado del producto: ```{}``` " .format(multResult))
+    print(f'cmdMult||   {ctx.author.name} multiplicó {num1} y {num2} ---> {multResult} a las {current_hour}')
 
 #----> division <----
 @bot.command()
@@ -1389,10 +1362,9 @@ async def division(ctx, num1: int, num2: int):
     '''Divide dos numeros que introduzcas'''
     divQuotient = (num1 // num2)
     divRemain = (num1 % num2)
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)
-        await ctx.send(f"El cociente da {divQuotient} y el resto queda {divRemain}")
-        print(f'cmdDivision|| {ctx.author.name} dividió {num1} sobre {num2} ---> {divQuotient} | {divRemain} a las {current_hour}')
+    await typing_sleep(ctx)
+    await ctx.send(f"El cociente da {divQuotient} y el resto queda {divRemain}")
+    print(f'cmdDivision|| {ctx.author.name} dividió {num1} sobre {num2} ---> {divQuotient} | {divRemain} a las {current_hour}')
 
 #----> potenciación y radicación  <----
 @bot.command()
@@ -1401,10 +1373,9 @@ async def pot(ctx, num1: int, num2: int):
     ejemplo: #pot 3 3 ----> 3 al cubo ---> 27
     '''
     potResult = num1 ** num2
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)
-        await ctx.send("Resultado: ```{}``` " .format(potResult))
-        print(f'cmdPot||    {ctx.author.name} potenció/radicó {num1} a la {num2} ---> {potResult} a las {current_hour}')
+    await typing_sleep(ctx)
+    await ctx.send("Resultado: ```{}``` " .format(potResult))
+    print(f'cmdPot||    {ctx.author.name} potenció/radicó {num1} a la {num2} ---> {potResult} a las {current_hour}')
 
 #----> BASKARA <----
 @bot.command()
@@ -1417,20 +1388,18 @@ async def bask(ctx, numOne: float, numTwo: float, numThree: float):
     # Formula----------------->>> realBaskEcuation = str(f"{numOne}x^2 {numTwo}x {numThree}"   
     if ((numTwo**2)-4*numOne*numThree) < 0:
         complexBaskEcuation = int((numTwo**2)-4*numOne*numThree)
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.send("La solución de la ecuación es con numeros complejos :(")
-            print(f'La ecuación de {ctx.author.name} es compleja: "{complexBaskEcuation}"')
+        await typing_sleep(ctx))
+        await ctx.send("La solución de la ecuación es con numeros complejos :(")
+        print(f'La ecuación de {ctx.author.name} es compleja: "{complexBaskEcuation}"')
         
     else:
         realBaskEcuation = str(f"{numOne}x^2 {numTwo}x {numThree}")
         root1 = ((-numTwo)+(numTwo**2-(4*numOne*numThree))**0.5)/(2*numOne)   # Raíz positiva
         root2 = ((-numTwo)-(numTwo**2-(4*numOne*numThree))**0.5)/(2*numOne)   # Raíz negativa
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.send(" Parte positiva: ```{}``` " .format(root1))
-            await ctx.send(" Parte negativa: ```{}``` " .format(root2))
-            print(f'cmdBask||   {ctx.author.name} halló raices con éxito para la ecuación {realBaskEcuation} ----> {root1} y {root2} a las {current_hour}')
+        await typing_sleep(ctx)
+        await ctx.send(" Parte positiva: ```{}``` " .format(root1))
+        await ctx.send(" Parte negativa: ```{}``` " .format(root2))
+        print(f'cmdBask||       {ctx.author.name} halló raices con éxito para la ecuación {realBaskEcuation} ----> {root1} y {root2} a las {current_hour}')
 
 @bask.error
 async def bask_error(ctx, error):
@@ -1445,10 +1414,9 @@ async def bask_error(ctx, error):
 async def raiz(ctx, num1: int): 
     '''La raiz cuadrada de un numero que introduzcas'''  
     sqrtResult = np.sqrt(num1)   
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)
-        await ctx.send("Resultado de la raíz: ```{}``` " .format(sqrtResult))
-        print(f'cmdSqrt|| {ctx.author.name} halló la raíz cuadrada de {num1}, ---> {sqrtResult} a las {current_hour}')
+    await typing_sleep(ctx)
+    await ctx.send("Resultado de la raíz: ```{}``` " .format(sqrtResult))
+    print(f'cmdSqrt|| {ctx.author.name} halló la raíz cuadrada de {num1}, ---> {sqrtResult} a las {current_hour}')
 
 
 ##-------> Seno de un ángulo <-------
@@ -1456,20 +1424,18 @@ async def raiz(ctx, num1: int):
 async def seno(ctx, num1: int):
     '''El seno de un grado que introduzcas'''
     sinResult = math.sin(math.radians(num1)) 
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)
-        await ctx.send("Resultado: ```{}``` " .format(sinResult))
-        print(f'cmdPot||    {ctx.author.name} halló el seno de {num1} ---> {sinResult} a las {current_hour}')
+    await typing_sleep(ctx)
+    await ctx.send("Resultado: ```{}``` " .format(sinResult))
+    print(f'cmdPot||    {ctx.author.name} halló el seno de {num1} ---> {sinResult} a las {current_hour}')
 
 #-------> Coseno de un ángulo <-------
 @bot.command()
 async def coseno(ctx, num1: int):
     '''El coseno de un grado que introduzcas'''
     cosResult = math.cos(math.radians(num1)) 
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)
-        await ctx.send("Resultado: ```{}``` " .format(cosResult))
-        print(f'cmdPot||    {ctx.author.name} halló el coseno de {num1} ---> {cosResult} a las {current_hour}')
+    await typing_sleep(ctx)
+    await ctx.send("Resultado: ```{}``` " .format(cosResult))
+    print(f'cmdPot||    {ctx.author.name} halló el coseno de {num1} ---> {cosResult} a las {current_hour}')
 
  #----> Tangente de un ángulo <----
 
@@ -1478,20 +1444,18 @@ async def coseno(ctx, num1: int):
 async def tangente(ctx, num1: int):
     '''La tangente de un grado que introduzcas'''
     tanResult = math.tan(math.radians(num1)) 
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)
-        await ctx.send("Resultado: ```{}``` " .format(tanResult))
-        print(f'cmdPot||    {ctx.author.name} halló la tangente de {num1} ---> {tanResult} a las {current_hour}')
+    await typing_sleep(ctx)
+    await ctx.send("Resultado: ```{}``` " .format(tanResult))
+    print(f'cmdPot||    {ctx.author.name} halló la tangente de {num1} ---> {tanResult} a las {current_hour}')
 
 #------> Hipotenusa de dos catetos <------
 @bot.command()
 async def hipotenusa(ctx, num1: int, num2: int):
     '''Calcula la hipotenusa de dos numeros que introduzcas'''
     hipResult = math.hypot(num1, num2) 
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)
-        await ctx.send("Resultado: ```{}``` " .format(hipResult))
-        print(f'cmdPot||    {ctx.author.name} halló la tangente de {num1} ---> {hipResult} a las {current_hour}')
+    await typing_sleep(ctx)
+    await ctx.send("Resultado: ```{}``` " .format(hipResult))
+    print(f'cmdPot||    {ctx.author.name} halló la tangente de {num1} ---> {hipResult} a las {current_hour}')
 
 
 #-----> Límites <----
@@ -1505,27 +1469,25 @@ async def limite(ctx, function=None, var=None, point=None):
         var:str
         point:int
         limitResult = limit(function, var, point)
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.channel.send(f"El límite cuando {function} tiende a {point} es: {limitResult}")
-            print(f"{ctx.author.name} halló el límite de {function} ---> {limitResult} a las {current_hour}")
+        await typing_sleep(ctx)
+        await ctx.channel.send(f"El límite cuando {function} tiende a {point} es: {limitResult}")
+        print(f"{ctx.author.name} halló el límite de {function} ---> {limitResult} a las {current_hour}")
     
     else:
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.channel.send(f"Debes seguir la sintaxis #limite[funcion], [variable], [punto] ")
-            await ctx.channel.send(f"{ctx.author.name} mira este ejemplo con *x²-8x+5*")
-            await ctx.channel.send(f"La entrada debe ser escrita así: ``` x**2-8*x+5 x 10 ```")
-            await ctx.channel.send(f"Ignora el formateo de texto automatico de discord, en cuanto escribes esa funcion se te convertirá en ``` x*2-8x+5 x 10 ```")
-            await ctx.channel.send(f"Esto no es posible de evitar debido a que está implementado de manera predeterminada en discord pero el bot aun asi te dará el resultado correcto :thumbsup:")
-            await ctx.channel.send(f"Por ultimo recordar que esto no pasa solo en esta funcion, ocurre cuando un texto esta encerrado con asteriscos (se convierte en cursiva)")
-            embed = discord.Embed()
-            embed.set_image(url="https://cdn.discordapp.com/attachments/793309880861458473/797301871374237766/teoriadelimites.jpg")
-            #embed.set_image(url="attachment://teoriadelimites.jpg")   #estas 2 lineas seran necesarias
-            #image = discord.File("teoriadelimites.jpg")               #si se quiere usar archivo local
-            await ctx.send(embed=embed)                               #embed no necesario por el momento
-            await ctx.channel.send(f"Salida: ``` 25 ```")
-            print(f"{ctx.author.name} falló al querer calcular un límite a las {current_hour}")
+        await typing_sleep(ctx)
+        await ctx.channel.send(f"Debes seguir la sintaxis #limite[funcion], [variable], [punto] ")
+        await ctx.channel.send(f"{ctx.author.name} mira este ejemplo con *x²-8x+5*")
+        await ctx.channel.send(f"La entrada debe ser escrita así: ``` x**2-8*x+5 x 10 ```")
+        await ctx.channel.send(f"Ignora el formateo de texto automatico de discord, en cuanto escribes esa funcion se te convertirá en ``` x*2-8x+5 x 10 ```")
+        await ctx.channel.send(f"Esto no es posible de evitar debido a que está implementado de manera predeterminada en discord pero el bot aun asi te dará el resultado correcto :thumbsup:")
+        await ctx.channel.send(f"Por ultimo recordar que esto no pasa solo en esta funcion, ocurre cuando un texto esta encerrado con asteriscos (se convierte en cursiva)")
+        embed = discord.Embed()
+        embed.set_image(url="https://cdn.discordapp.com/attachments/793309880861458473/797301871374237766/teoriadelimites.jpg")
+        #embed.set_image(url="attachment://teoriadelimites.jpg")   #estas 2 lineas seran necesarias
+        #image = discord.File("teoriadelimites.jpg")               #si se quiere usar archivo local
+        await ctx.send(embed=embed)                               #embed no necesario por el momento
+        await ctx.channel.send(f"Salida: ``` 25 ```")
+        print(f"{ctx.author.name} falló al querer calcular un límite a las {current_hour}")
     
 
 #----> Derivadas <----
@@ -1538,22 +1500,20 @@ async def derivada(ctx, function=None):
         fx = str(function)
         x = Symbol('x')
         ddxResult = simplify(diff(fx, x))
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.channel.send(f"La derivada de {function} es: ```{ddxResult}```")
-            print(f"{ctx.author.name} halló la derivada de {function} ---> {ddxResult} a las {current_hour}")
+        await typing_sleep(ctx)
+        await ctx.channel.send(f"La derivada de {function} es: ```{ddxResult}```")
+        print(f"{ctx.author.name} halló la derivada de {function} ---> {ddxResult} a las {current_hour}")
     
     else:
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.channel.send(f"Debes seguir la sintaxis #derivada[funcion]")
-            await ctx.channel.send(f"{ctx.author.name} mira este ejemplo con *x²-10x")
-            await ctx.channel.send(f"Entrada x²-10x: Debe ser ingresada así ``` x**2-10*x ```")
-            await ctx.channel.send(f"Ignora el formateo de texto automatico de discord, en cuanto escribes esa funcion se te convertirá en ``` x*2-10x ```, tu solo dale enter por mas que se haya cambiado")
-            await ctx.channel.send(f"Esto no es posible de evitar debido a que está implementado de manera predeterminada en discord pero el bot aun asi te dará el resultado correcto :thumbsup:")
-            await ctx.channel.send(f"Por ultimo recordar que esto no pasa solo en esta funcion, ocurre en cualquier texto encerrado con asteriscos (se convierte en cursiva)")
-            await ctx.channel.send(f"Salida: ``` 2*x-10 ```")
-            print(f"{ctx.author.name} falló al querer calcular una derivada a las {current_hour}")
+        await typing_sleep(ctx)
+        await ctx.channel.send(f"Debes seguir la sintaxis #derivada[funcion]")
+        await ctx.channel.send(f"{ctx.author.name} mira este ejemplo con *x²-10x")
+        await ctx.channel.send(f"Entrada x²-10x: Debe ser ingresada así ``` x**2-10*x ```")
+        await ctx.channel.send(f"Ignora el formateo de texto automatico de discord, en cuanto escribes esa funcion se te convertirá en ``` x*2-10x ```, tu solo dale enter por mas que se haya cambiado")
+        await ctx.channel.send(f"Esto no es posible de evitar debido a que está implementado de manera predeterminada en discord pero el bot aun asi te dará el resultado correcto :thumbsup:")
+        await ctx.channel.send(f"Por ultimo recordar que esto no pasa solo en esta funcion, ocurre en cualquier texto encerrado con asteriscos (se convierte en cursiva)")
+        await ctx.channel.send(f"Salida: ``` 2*x-10 ```")
+        print(f"{ctx.author.name} falló al querer calcular una derivada a las {current_hour}")
 
 #----> Integrales <----
 @bot.command()
@@ -1563,11 +1523,10 @@ async def integral(ctx, function=None, dif1=None, dif2=None):
         fx = str(function)
         x = Symbol('x')
         intResult = Integral(fx, x).doit()
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.channel.send(f"La integral indefinida de {function} es:")
-            await ctx.channel.send(f"``` {intResult} ```")
-            print(f"{ctx.author.name} halló la integral indef. de {function} ---> {intResult} a las {current_hour}")
+        await typing_sleep(ctx)
+        await ctx.channel.send(f"La integral indefinida de {function} es:")
+        await ctx.channel.send(f"``` {intResult} ```")
+        print(f"{ctx.author.name} halló la integral indef. de {function} ---> {intResult} a las {current_hour}")
     
     elif function != None and dif1 != None and dif2 != None:
         fx = str(function)
@@ -1575,11 +1534,10 @@ async def integral(ctx, function=None, dif1=None, dif2=None):
         a = int(dif1)
         b = int(dif2)
         intResult = Integral(fx, (x, a, b)).doit()
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.channel.send(f"La integral definida de {function} es:")
-            await ctx.channel.send(f"``` {intResult} ```")
-            print(f"{ctx.author.name} halló la integral def. de {function} ---> {intResult} a las {current_hour}")
+        await typing_sleep(ctx)
+        await ctx.channel.send(f"La integral definida de {function} es:")
+        await ctx.channel.send(f"``` {intResult} ```")
+        print(f"{ctx.author.name} halló la integral def. de {function} ---> {intResult} a las {current_hour}")
 
     else:
         async with ctx.typing():    
@@ -1609,16 +1567,14 @@ async def integral(ctx, function=None, dif1=None, dif2=None):
 async def fib(ctx, number: int):
     '''Encuentra el enésimo numero de fibonacci'''
     if number == None:
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.send("Debes ingresar un numero")
+        await typing_sleep(ctx)
+        await ctx.send("Debes ingresar un numero")
     
     elif number != None:
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            result = functions.fibonacci(number)
-            await ctx.send(f"El enesimo numero {number} en la sucesion de fibonacci es: {result}")
-            print(f"{ctx.author.name} encontro el {number}esimo numero de fibonacci: {result}")
+        await typing_sleep(ctx)
+        result = functions.fibonacci(number)
+        await ctx.send(f"El enesimo numero {number} en la sucesion de fibonacci es: {result}")
+        print(f"{ctx.author.name} encontro el {number}esimo numero de fibonacci: {result}")
 
 
 #------------------------------------------>>>>>
@@ -1630,6 +1586,7 @@ async def fib(ctx, number: int):
 async def setdelay(ctx, seconds: int):
     '''Define el modo lento a una cantidad determinada, debes tener permisos suficientes (kick permissions required)'''
     await ctx.channel.edit(slowmode_delay=seconds)
+    await typing_sleep(ctx)
     await ctx.send(f"El modo lento ha sido definido en {seconds} segundos!")
 
 @setdelay.error
@@ -1644,20 +1601,17 @@ async def md(ctx, user_id=None, *, args=None):
     if user_id != None and args != None:
         try:
             target = await bot.fetch_user(user_id) #fetch_user convierte una ID dada a su apodo (nombre de usuario sin #id)
-            async with ctx.typing():    
-                await asyncio.sleep(type_time)
-                await target.send(args)
-                await ctx.channel.send(f"Le enviaste un md con éxito a: {target.name}")
-                print(f"cmdMD||    {ctx.author.name} le envió un md a {target.name} diciendole: {args} a las {current_hour}")
+            await typing_sleep(ctx)
+            await target.send(args)
+            await ctx.channel.send(f"Le enviaste un md con éxito a: {target.name}")
+            print(f"cmdMD||    {ctx.author.name} le envió un md a {target.name} diciendole: {args} a las {current_hour}")
         except:
-            async with ctx.typing():    
-                await asyncio.sleep(type_time)
-                await ctx.channel.send("No se pudo enviar el md, este comando funciona con ID y no con @Mención")       
+            await typing_sleep(ctx)
+            await ctx.channel.send("No se pudo enviar el md, este comando funciona con ID y no con @Mención")       
     else:
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.channel.send("Debes proporcionar una ID, seguido del mensaje a enviar!")
-            print(f"cmdMD||     {ctx.author.name} falló al enviar un md")
+        await typing_sleep(ctx)
+        await ctx.channel.send("Debes proporcionar una ID, seguido del mensaje a enviar!")
+        print(f"cmdMD||     {ctx.author.name} falló al enviar un md")
 
 #---> DM a usuarios con @mencion <---
 @bot.command()
@@ -1666,19 +1620,16 @@ async def dm(ctx, member: discord.Member, *, args=None):
     if member != None or args != None:
         try:
             await member.send(args)
-            async with ctx.typing():    
-                await asyncio.sleep(type_time)
-                await ctx.channel.send(f"Le enviaste un md con éxito a: {member.name}")
-                print(f"cmdMD||    {ctx.author.name} le envió un md a {member.name} diciendole: {args} a las {current_hour}")
+            await typing_sleep(ctx))
+            await ctx.channel.send(f"Le enviaste un md con éxito a: {member.name}")
+            print(f"cmdMD||    {ctx.author.name} le envió un md a {member.name} diciendole: {args} a las {current_hour}")
         except:
-            async with ctx.typing():    
-                await asyncio.sleep(type_time)
-                await ctx.channel.send("No se pudo enviar el dm, este comando funcion con @Mención y no con ID")       
+            await typing_sleep(ctx)
+            await ctx.channel.send("No se pudo enviar el dm, este comando funcion con @Mención y no con ID")       
     else:
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.channel.send("Debes @mencionar un usuario, seguido del mensaje a enviar!")
-            print(f"cmdMD||     {ctx.author.name} falló al enviar un md")
+        await typing_sleep(ctx)
+        await ctx.channel.send("Debes @mencionar un usuario, seguido del mensaje a enviar!")
+        print(f"cmdMD||     {ctx.author.name} falló al enviar un md")
 
 
 #---> Mensajes a canales con el bot 13<---
@@ -1689,11 +1640,14 @@ async def mensaje(ctx, channel_id=None, *, args=None):
         try:
             target = await bot.fetch_channel(channel_id) #fetch_channel utilizado una ID de un canal dado para poder usar target.name
             await target.send(args)
+            await typing_sleep(ctx)
             await ctx.channel.send(f"Enviaste un mensaje con éxito a: {target.name}")
             print(f"cmdMensaje||       {ctx.author.name} le envió un mensaje a {target.name} diciendole: {args} ")
         except:
+            await typing_sleep(ctx)
             await ctx.channel.send("No se pudo enviar el mensaje.")       
     else:
+        await typing_sleep(ctx)
         await ctx.channel.send("Debes proporcionar una ID de un canal, seguido del mensaje a enviar!")
         print(f"cmdMensaje||       {ctx.author.name} falló al enviar un mensaje")
 
@@ -1702,68 +1656,60 @@ async def tunear(ctx, order: int, *, args=None,):
     '''Tunea un texto, la sintaxis es #tunear <orden> <el_texto_que_quieras_tunear>, siendo el orden un numero del 1 al 7 (distintas fuentes)'''
     if args != None and order == 1:
         myThiccString = tuning.tunear1(args.replace("#tunear", ""))
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.send(myThiccString)
-            print(f"cmdTunear1||        {ctx.author.name} tuneó un texto el {current_hour}")
+        await typing_sleep(ctx)
+        await ctx.send(myThiccString)
+        print(f"cmdTunear1||        {ctx.author.name} tuneó un texto el {current_hour}")
         return
 
     elif args != None and order == 2:
         myThiccString = tuning.tunear2(args.replace("#tunear", ""))
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.send(myThiccString)
-            print(f"cmdTunear2||        {ctx.author.name} tuneó un texto el {current_hour}")
+        await typing_sleep(ctx)
+        await ctx.send(myThiccString)
+        print(f"cmdTunear2||        {ctx.author.name} tuneó un texto el {current_hour}")
         return
 
     elif args != None and order == 3:
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            myThiccString = tuning.tunear3(args.replace("#tunear", ""))
-            await ctx.send(myThiccString)
-            print(f"cmdTunear3||        {ctx.author.name} tuneó un texto el {current_hour}")
+        await typing_sleep(ctx)
+        myThiccString = tuning.tunear3(args.replace("#tunear", ""))
+        await ctx.send(myThiccString)
+        print(f"cmdTunear3||        {ctx.author.name} tuneó un texto el {current_hour}")
         return
 
     elif args != None and order == 4:
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            myThiccString = tuning.tunear4(args.replace("#tunear", ""))
-            await ctx.send(myThiccString)
-            print(f"cmdTunear4||        {ctx.author.name} tuneó un texto el {current_hour}")
+        await typing_sleep(ctx)
+        myThiccString = tuning.tunear4(args.replace("#tunear", ""))
+        await ctx.send(myThiccString)
+        print(f"cmdTunear4||        {ctx.author.name} tuneó un texto el {current_hour}")
         return
 
     elif args != None and order == 5:
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            myThiccString = tuning.tunear5(args.replace("#tunear", ""))
-            await ctx.send(myThiccString)
-            print(f"cmdTunear5||        {ctx.author.name} tuneó un texto el {current_hour}")
+        await typing_sleep(ctx)
+        myThiccString = tuning.tunear5(args.replace("#tunear", ""))
+        await ctx.send(myThiccString)
+        print(f"cmdTunear5||        {ctx.author.name} tuneó un texto el {current_hour}")
         return
 
     elif args != None and order == 6:
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            myThiccString = tuning.tunear6(args.replace("#tunear", ""))
-            await ctx.send(myThiccString)
-            print(f"cmdTunear6||        {ctx.author.name} tuneó un texto el {current_hour}")
+        await typing_sleep(ctx)
+        myThiccString = tuning.tunear6(args.replace("#tunear", ""))
+        await ctx.send(myThiccString)
+        print(f"cmdTunear6||        {ctx.author.name} tuneó un texto el {current_hour}")
         return
 
     elif args != None and order == 7:
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            myThiccString = tuning.tunear7(args.replace("#tunear", ""))
-            await ctx.send(myThiccString)
-            print(f"cmdTunear6||        {ctx.author.name} tuneó un texto el {current_hour}")
+        await typing_sleep(ctx)
+        myThiccString = tuning.tunear7(args.replace("#tunear", ""))
+        await ctx.send(myThiccString)
+        print(f"cmdTunear6||        {ctx.author.name} tuneó un texto el {current_hour}")
         return
 
     #else:
     elif args == None and order == None:
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            #args == None and order == None        
-            await ctx.send("Seguido del comando debes introducir un orden (1 a 6) seguido del texto a tunear")
-            await ctx.send("A modo de ejemplo: **#tunear 4 textodepruebacopipedro**")
-            print(f"cmdTunear||        {ctx.author.name} falló al tunear un texto el {current_hour}")
+        await typing_sleep(ctx))
+        #args == None and order == None        
+        await ctx.send("Seguido del comando debes introducir un orden (1 a 6) seguido del texto a tunear")
+        await ctx.send("A modo de ejemplo: **#tunear 4 textodepruebacopipedro**")
+        print(f"cmdTunear||        {ctx.author.name} falló al tunear un texto el {current_hour}")
         return
 
 @tunear.error
@@ -1788,10 +1734,9 @@ async def kick(ctx, member: discord.Member, *, reason=None):
         reaction, user = await bot.wait_for("reaction_add", check=lambda reaction, user: user == ctx.author and reaction.emoji in [u"\u2705", u"\U0001F6AB"], timeout=10)
 
     except asyncio.TimeoutError:
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.channel.send("Pasaron 10 segundos, me fui a la bosta amigo/a")
-            print(f"cmdKick||      {member} iba a ser kickeado {ctx.author.name} pero safo")
+        await typing_sleep(ctx)
+        await ctx.channel.send("Pasaron 10 segundos, me fui a la bosta amigo/a")
+        print(f"cmdKick||      {member} iba a ser kickeado {ctx.author.name} pero safo")
 
     else:
         if reaction.emoji ==  u"\u2705":
@@ -1807,10 +1752,9 @@ async def kick(ctx, member: discord.Member, *, reason=None):
                 print(f"cmdKick||      {member} fue kickeado correctamente por {ctx.author.name} el {current_hour} ")
 
         else:
-            async with ctx.typing():    
-                await asyncio.sleep(type_time)
-                await ctx.channel.send(f"{member} no fue kickeado y safó...")
-                print(f"cmdKick||      {member} iba a ser kickeado {ctx.author.name} pero safo")
+            await typing_sleep(ctx)
+            await ctx.channel.send(f"{member} no fue kickeado y safó...")
+            print(f"cmdKick||      {member} iba a ser kickeado {ctx.author.name} pero safo")
 
 
 
@@ -1829,10 +1773,9 @@ async def ban(ctx, member: discord.Member, *, reason=None):
         reaction, user = await bot.wait_for("reaction_add", check=lambda reaction, user: user == ctx.author and reaction.emoji in [u"\u2705", u"\U0001F6AB"], timeout=10)
 
     except asyncio.TimeoutError:
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.channel.send("Pasaron 10 segundos, me fui a la bosta amigo/a")
-            print(f"cmdBan||        {member} iba a ser baneado {ctx.author.name} pero safo")
+        await typing_sleep(ctx)
+        await ctx.channel.send("Pasaron 10 segundos, me tome el palo amigo/a")
+        print(f"cmdBan||        {member} iba a ser baneado {ctx.author.name} pero safo")
 
     else:
         if reaction.emoji ==  u"\u2705":
@@ -1848,9 +1791,8 @@ async def ban(ctx, member: discord.Member, *, reason=None):
                 print(f"cmdBan||        {member} fue baneado correctamente por {ctx.author.name} el {current_hour} ")
 
         else:
-            async with ctx.typing():    
-                await asyncio.sleep(type_time)
-                await ctx.channel.send(f"{member} no fue baneado")
+            await typing_sleep(ctx)
+            await ctx.channel.send(f"{member} no fue baneado asi que safo")
                 print(f"cmdBan||        {member} iba a ser baneado {ctx.author.name} pero safo")
 
 
@@ -2014,26 +1956,6 @@ async def on_message(message):
 
 
 #-----------------> Clima comando <-----------------
-def degrees_to_cardinal(d: int):
-    '''Source: https://gist.github.com/RobertSudwarts/acf8df23a16afdb5837f'''
-    dirs = ['N - Norte', 
-    'NNE - Nornoreste', 
-    'NE - Noreste', 
-    'ENE - Estenoreste', 
-    'E - Este', 
-    'ESE - Estesureste', 
-    'SE - Sureste', 
-    'SSE - Sursureste', 
-    'S - Sur', 
-    'SSO - Sursuroeste', 
-    'SO - Suroeste', 
-    'OSO - Oestesuroeste', 
-    'O - Oeste', 
-    'ONO - Oestenoroeste', 
-    'NO - Noroeste', 
-    'NNO - Nornoroeste']
-    ix = round(d / (360. / len(dirs)))
-    return dirs[ix % len(dirs)]
 
 # openweathermap api key sensible stored in .env 
 api_key = os.getenv('OWM_API_KEY')
@@ -2047,42 +1969,40 @@ async def clima(ctx, *, location: str=None):
         weather_url = f'http://api.openweathermap.org/data/2.5/weather?q={location}&appid={api_key}&units=metric' # change metric for imperial if u prefer degrees in farenheit
         try:
             weather_json = requests.get(weather_url).json() 
-            async with ctx.typing():    
-                await asyncio.sleep(type_time)
-                embed_weather = discord.Embed(
+            await typing_sleep(ctx)
+            embed_weather = discord.Embed(
                     title=f'Clima en {location} ',
                     description=f'Asi esta el clima en {location}.',
                     color=discord.Colour.gold(),
                     timestamp = datetime.utcnow())
-                if weather_json['weather'][0]['main'] == 'Clouds':
+            if weather_json['weather'][0]['main'] == 'Clouds':
                     actual_state = "https://cdn.discordapp.com/attachments/793309880861458473/804835639669030942/cloudy.png"
                     weather_traduction = "Nubes."
-                elif weather_json['weather'][0]['main'] == 'Clear':
+            elif weather_json['weather'][0]['main'] == 'Clear':
                     actual_state = "https://cdn.discordapp.com/attachments/793309880861458473/804835642999046144/soleado.png"
                     weather_traduction = "Despejado."
-                elif weather_json['weather'][0]['main'] == 'Rain':
-                    actual_state = "https://cdn.discordapp.com/attachments/793309880861458473/804835641904726016/lluvia.png"
-                    weather_traduction = "Lluvia."
-                wind_direction = degrees_to_cardinal(weather_json['wind']['deg'])
-                embed_weather.add_field(name="Estado", value=f"{weather_traduction}", inline=False)
-                embed_weather.add_field(name="Temperatura", value=f"{weather_json['main']['temp']} °C", inline=False)
-                embed_weather.add_field(name="Sensacion termica", value=f"{weather_json['main']['feels_like']} °C", inline=False)
-                embed_weather.add_field(name="Temperatura minima", value=f"{weather_json['main']['temp_min']} °C", inline=False)
-                embed_weather.add_field(name="Temperatura maxima", value=f"{weather_json['main']['temp_max']} °C", inline=False)
-                embed_weather.add_field(name="Presion", value=f"{weather_json['main']['pressure']} mbar", inline=False)
-                embed_weather.add_field(name="Humedad", value=f"{weather_json['main']['humidity']} %", inline=False)
-                embed_weather.add_field(name="Velocidad del viento", value=f"{weather_json['wind']['speed']} km/h", inline=False)
-                embed_weather.add_field(name="Direccion del viento", value=f"{wind_direction}", inline=False)
-                embed_weather.set_thumbnail(url=f"{actual_state}")
-                await ctx.send(embed=embed_weather)
-                print(f'cmdClima||        {ctx.author.name} solicito el clima en {location} a las {current_hora}')
+            elif weather_json['weather'][0]['main'] == 'Rain':
+                actual_state = "https://cdn.discordapp.com/attachments/793309880861458473/804835641904726016/lluvia.png"
+                weather_traduction = "Lluvia."
+            wind_direction = degrees_to_cardinal(weather_json['wind']['deg'])
+            embed_weather.add_field(name="Estado", value=f"{weather_traduction}", inline=False)
+            embed_weather.add_field(name="Temperatura", value=f"{weather_json['main']['temp']} °C", inline=False)
+            embed_weather.add_field(name="Sensacion termica", value=f"{weather_json['main']['feels_like']} °C", inline=False)
+            embed_weather.add_field(name="Temperatura minima", value=f"{weather_json['main']['temp_min']} °C", inline=False)
+            embed_weather.add_field(name="Temperatura maxima", value=f"{weather_json['main']['temp_max']} °C", inline=False)
+            embed_weather.add_field(name="Presion", value=f"{weather_json['main']['pressure']} mbar", inline=False)
+            embed_weather.add_field(name="Humedad", value=f"{weather_json['main']['humidity']} %", inline=False)
+            embed_weather.add_field(name="Velocidad del viento", value=f"{weather_json['wind']['speed']} km/h", inline=False)
+            embed_weather.add_field(name="Direccion del viento", value=f"{wind_direction}", inline=False)
+            embed_weather.set_thumbnail(url=f"{actual_state}")
+            await ctx.send(embed=embed_weather)
+            print(f'cmdClima||        {ctx.author.name} solicito el clima en {location} a las {current_hora}')
 
         except KeyError:
-            async with ctx.typing():    
-                await asyncio.sleep(type_time)
-                error_embed = discord.Embed(title='Hubo un error', description=f'No fue posible encontrar el clima para {location}...')
-                await ctx.send(embed=error_embed)
-                print(f'cmdClima||        {ctx.author.name} fallo al solicitar el clima de {location}')
+            await typing_sleep(ctx)
+            error_embed = discord.Embed(title='Hubo un error', description=f'No fue posible encontrar el clima para {location}...')
+            await ctx.send(embed=error_embed)
+            print(f'cmdClima||        {ctx.author.name} fallo al solicitar el clima de {location}')
 
 #---------> juego command <--------
 @bot.command()
@@ -2095,7 +2015,10 @@ async def ppt(ctx, member : discord.Member=None):
     '''Piedra papel o tijeras contra jugador que menciones'''
     try:
         await game.ppt(ctx, bot, member=member)
-    except AttributeError:
+    except AttributeError as e:
+        await typing_sleep(ctx)
+        await ctx.send("An exception occurred :disappointed:")
+        await ctx.send(f"```{e.args}```")
         print("An attribute error seems to have appeared but just ignore it and continue! :)")
 #-------> juego command end <------
 
@@ -2105,19 +2028,17 @@ async def qr(ctx, *, qrstring: str=None):
     funciona con imagenes y otro tipo de archivos
     EN: Creates and returns a QR code of any text, images are not supported...'''
     if qrstring == None:
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.send(f'{ctx.author.mention} debes seguir la sintaxis #qr <texto a convertir> \n Solo funciona con textos, ej: urls, links, etc., no con numeros...')
-            await asyncio.sleep(15)
-            await ctx.channel.purge(limit=2)  # elimina los 2 mensajes anteriores...
+        await typing_sleep(ctx)
+        await ctx.send(f'{ctx.author.mention} debes seguir la sintaxis #qr <texto a convertir> \n Solo funciona con textos, ej: urls, links, etc., no con numeros...')
+        await asyncio.sleep(15)
+        await ctx.channel.purge(limit=2)  # elimina los 2 mensajes anteriores...
     
     elif qrstring != None:
         url = pyqrcode.create(qrstring)
         url.png('images/qr.png', scale=6)  # saves qr image
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.send(f'{ctx.author.mention} aca esta tu QR', file=discord.File('images/qr.png'))
-            #await ctx.send(file=discord.File('images/qr.png'))
+        await typing_sleep(ctx)
+        await ctx.send(f'{ctx.author.mention} aca esta tu QR', file=discord.File('images/qr.png'))
+        #await ctx.send(file=discord.File('images/qr.png'))
             
 # ---------> Purge messages of a mentioned user <--------
 @bot.command()
@@ -2138,6 +2059,7 @@ async def borrar(ctx, limit=10, member: discord.Member=None):
             return await ctx.send('Se requiere de un numero para el limite de mensajes a borrar!' + '\n' + 'recuerda seguir la sintaxis #borrar **<cantidad de mensajes a borrar>**')
         if not member:
             await ctx.channel.purge(limit=limit)
+            await typing_sleep(ctx)
             return await ctx.send(f"{limit} mensajes borrados", delete_after=12)
         async for m in ctx.channel.history():
             if len(msg) == limit:
@@ -2145,12 +2067,12 @@ async def borrar(ctx, limit=10, member: discord.Member=None):
             if m.author == member:
                 msg.append(m)
         await ctx.channel.delete_messages(msg)
+        await typing_sleep(ctx)
         await ctx.send(f"{limit} mensajes borrados de {member.mention}", delete_after=12)
     
     except errors.CommandInvokeError:
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.send(f"{ctx.author.name} solo es posible borrar mensajes con menos de 14 dias de antiguedad...")
+        await typing_sleep(ctx)
+        await ctx.send(f"{ctx.author.name} solo es posible borrar mensajes con menos de 14 dias de antiguedad...")
 
 
 # cog loader cmd
@@ -2161,9 +2083,11 @@ async def load(ctx, extension):
     id = str(ctx.author.id)
     if id == f'{bot_developer_id}':
         bot.load_extension(f'cogs.{extension}')
+        await typing_sleep(ctx)
         await ctx.send(f"{ctx.author.name} cargaste el cog {extension} con exito")
         print(f'cmdLoad||     {ctx.author.name} cargo un cogs')
     else:
+        await typing_sleep(ctx)
         await ctx.send("Solo el desarrollador puede cargar/habilitar los cogs del bot")
 
 # cog unloader cmdf
@@ -2173,9 +2097,11 @@ async def unload(ctx, extension):
     id = str(ctx.author.id)
     if id == f'{bot_developer_id}':
         bot.unload_extension(f'cogs.{extension}')
+        await typing_sleep(ctx)
         await ctx.send(f"{ctx.author.name} descargaste el cog {extension} con exito")
         print(f'cmdUnload||   {ctx.author.name} descargo un cogs')
     else:
+        await typing_sleep(ctx)
         await ctx.send("Solo el desarrollador puede cargar/habilitar los cogs del bot")
 
 for filename in os.listdir('./cogs'):
@@ -2188,8 +2114,10 @@ for filename in os.listdir('./cogs'):
 async def ping(ctx, arg=None):
     '''Muestra tu ping con respecto al bot'''
     if arg == "pong":
+        await typing_sleep(ctx)
         await ctx.send("ah chistoso")
     else:
+        await typing_sleep(ctx)
         await ctx.send(f"Tu ping es: {round(bot.latency * 1000)}ms\nEste ping es con respecto a mí, no con respecto a los servidores de discord!!")
 
 

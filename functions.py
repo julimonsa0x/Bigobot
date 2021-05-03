@@ -151,6 +151,29 @@ async def typing_sleep(ctx):
         await asyncsleep(type_time)
 
 # 7th function
+def degrees_to_cardinal(d: int):
+    '''
+    Converts a degree between 0 and 360 into cardinal point.
+    Source: https://gist.github.com/RobertSudwarts/acf8df23a16afdb5837f
+    '''
+    dirs = ['N - Norte', 
+    'NNE - Nornoreste', 
+    'NE - Noreste', 
+    'ENE - Estenoreste', 
+    'E - Este', 
+    'ESE - Estesureste', 
+    'SE - Sureste', 
+    'SSE - Sursureste', 
+    'S - Sur', 
+    'SSO - Sursuroeste', 
+    'SO - Suroeste', 
+    'OSO - Oestesuroeste', 
+    'O - Oeste', 
+    'ONO - Oestenoroeste', 
+    'NO - Noroeste', 
+    'NNO - Nornoroeste']
+    ix = round(d / (360. / len(dirs)))
+    return dirs[ix % len(dirs)]
 
 # 8th function
 
