@@ -7,7 +7,7 @@ import os
 
 from datetime import datetime
 from discord.ext import commands
-from apis.default import timeago
+#from apis.default import timeago Last Boot embed field is not working properly so its useless
 from functions import printt
 
 

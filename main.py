@@ -44,8 +44,7 @@ from listas import brosId
 import broBdays 
 import tuning
 import game
-#import invitaciones
-from functions import get_dolar, get_apex_data
+from functions import get_dolar, get_apex_data, typing_sleep
 import functions
 load_dotenv()
 
@@ -55,8 +54,7 @@ now = datetime.now()
 
 current_hora = now.strftime("%H:%M:%S")
 current_hour = now.strftime("%d/%m/%Y, %H:%M:%S")  # mm/dd/YY H:M:S format
-
-type_time = random.uniform(0.5, 2) # this is for a random float amount of reply time   
+   
 
 intents = discord.Intents.all() 
 bot = commands.Bot(command_prefix="#", intents=intents)
@@ -248,11 +246,10 @@ async def on_message_delete(message):
 async def pedir_ticket(ctx, msg: discord.Message=None, category: discord.CategoryChannel=None):
     '''Ideal para admins y moderadores, la sintaxis puede verse al escribir el comando sin argumentos (#pedir_ticket a secas)'''
     if msg is None or category is None:
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.channel.send("Para que no haya errores, debes poner #pedir_ticket + <id del mensaje a reaccionar> + <id de la categoria de canales>")
-            await ctx.channel.send("Este comando consiste en crear subcanales de ayuda, comando experimental...")
-            return
+        await typing_sleep(ctx)
+        await ctx.channel.send("Para que no haya errores, debes poner #pedir_ticket + <id del mensaje a reaccionar> + <id de la categoria de canales>")
+        await ctx.channel.send("Este comando consiste en crear subcanales de ayuda, comando experimental...")
+        return
 
     bot.ticket_configs[ctx.guild.id] = [msg.id, msg.channel.id, category.id] # this resets the configuration
 
@@ -268,9 +265,8 @@ async def pedir_ticket(ctx, msg: discord.Message=None, category: discord.Categor
                 
 
     await msg.add_reaction(u"\U0001F3AB")
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)
-        await ctx.channel.send("Sistema de tickets configurado exitosamente :thumbsup:") 
+    await typing_sleep(ctx)
+    await ctx.channel.send("Sistema de tickets configurado exitosamente :thumbsup:") 
     #alphascript cmd
 
 @bot.command()
@@ -306,23 +302,20 @@ async def rol_reaccion(ctx, role: discord.Role=None, msg: discord.Message=None, 
                 emoji_utf = emoji.encode("utf-8")
                 await file.write(f"{role.id} {msg.id} {emoji_utf}\n") # TO_DO: improve file.write poor detailed content 
 
-            async with ctx.typing():    
-                await asyncio.sleep(type_time)
-                await ctx.channel.send("Reacción definida con éxito :thumbsup:")
-                print(f"cmdSetReaccion||       {ctx.author.name} definió la reaccion para el rol: {role}")
+            await typing_sleep(ctx)
+            await ctx.channel.send("Reacción definida con éxito :thumbsup:")
+            print(f"cmdSetReaccion||       {ctx.author.name} definió la reaccion para el rol: {role}")
         
         except discord.errors.Forbidden:
-            async with ctx.typing():    
-                await asyncio.sleep(type_time)
-                await ctx.send(f"Lo siento {ctx.author.name} pero no tienes permisos suficientes para realizar esta accion")
+            await typing_sleep(ctx)
+            await ctx.send(f"Lo siento {ctx.author.name} pero no tienes permisos suficientes para realizar esta accion")
 
     else:
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.send("Argumentos no válidos, debe ser de la forma #comando <nombre del rol> <id del mensaje a reaccionar> <emoji>")
-            await ctx.send("La idea de este comando es fijar un mensaje para que sea reaccionado y así obtener el rol asignado")
-            await ctx.send(f"{ctx.author.mention} ten en cuenta que el nombre del rol debe ser identico al rol")
-            print(f"cmdSetReaccion||          {ctx.author.name} falló al definir una reaccion para un rol")
+        await typing_sleep(ctx)
+        await ctx.send("Argumentos no válidos, debe ser de la forma #comando <nombre del rol> <id del mensaje a reaccionar> <emoji>")
+        await ctx.send("La idea de este comando es fijar un mensaje para que sea reaccionado y así obtener el rol asignado")
+        await ctx.send(f"{ctx.author.mention} ten en cuenta que el nombre del rol debe ser identico al rol")
+        print(f"cmdSetReaccion||          {ctx.author.name} falló al definir una reaccion para un rol")
 
 @bot.command()
 @commands.has_permissions(kick_members=True)
@@ -461,11 +454,10 @@ async def monsa(ctx):
     embedMine.set_thumbnail(url="https://i.imgur.com/mmF8hSX.png")  # ETHER ADDRESS 
     embedMine.set_footer(icon_url = ctx.author.avatar_url, text = f"Solicitud de {ctx.author.name}")
     
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)
-        await ctx.send(embed=embedMine)
-        print(f'cmdInfoSobreMí||         Info del autor enviada a {ctx.author.name} a las {current_hour}')
-
+    await typing_sleep(ctx)
+    await ctx.send(embed=embedMine)
+    print(f'cmdInfoSobreMí||         Info del autor enviada a {ctx.author.name} a las {current_hour}')
+0
 #---------> comando de joda tucson <--------
 @bot.command()
 async def tucson(ctx):
@@ -478,11 +470,10 @@ async def tucson(ctx):
 @bot.command()
 async def trivia(ctx):
     '''It's trivia time!!!'''
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)
-        msg = await ctx.channel.send("{}".format(random.choice(listas.trivias)))
-        await msg.add_reaction(u"\u2705")
-        await msg.add_reaction(u"\U0001F6AB")
+    await typing_sleep(ctx)
+    msg = await ctx.channel.send("{}".format(random.choice(listas.trivias)))
+    await msg.add_reaction(u"\u2705")
+    await msg.add_reaction(u"\U0001F6AB")
 
     try:
         reaction, user = await bot.wait_for("reaction_add", check=lambda reaction, user: user == ctx.author and reaction.emoji in [u"\u2705", u"\U0001F6AB"], timeout=8.0)  
@@ -494,20 +485,17 @@ async def trivia(ctx):
         await ctx.channel.send("1...")
 
     except asyncio.TimeoutError:
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.channel.send("Che me ignoraron la trivia (▀̿Ĺ̯▀̿ ̿) ")
+        await typing_sleep(ctx)
+        await ctx.channel.send("Che me ignoraron la trivia (▀̿Ĺ̯▀̿ ̿) ")
 
     else:
         if reaction.emoji ==  u"\u2705":
-            async with ctx.typing():    
-                await asyncio.sleep(type_time)
-                await ctx.channel.send("Estoy seguro que sí... :alien:")
+            await typing_sleep(ctx)
+            await ctx.channel.send("Estoy seguro que sí... :alien:")
 
         else:
-            async with ctx.typing():    
-                await asyncio.sleep(type_time)
-                await ctx.channel.send("mmm puede ser pa?¿ ")
+            await typing_sleep(ctx)
+            await ctx.channel.send("mmm puede ser pa?¿ ")
 
 #-------------> dolar info 11<----------------
 @bot.command()
@@ -539,10 +527,9 @@ async def dolar(ctx):
     embedDolar.add_field(name=':yellow_circle:  Bolsa:', value=f"Compra: {compraBolsa} | Venta: {ventaBolsa} | Var. 24h: {varBolsa}", inline=False)
     embedDolar.add_field(name=':orange_circle:  Contado con liqui:', value=f"Compra: {compraCcl} | Venta: {ventaCcl} | Var. 24h: {varCcl}", inline=False)
     
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)
-        await ctx.send(embed=embedDolar)
-        print(f"cmdDolar||            {ctx.author.name} solicitó la cot. del dolar el {current_hour}")
+    await typing_sleep(ctx)
+    await ctx.send(embed=embedDolar)
+    print(f"cmdDolar||            {ctx.author.name} solicitó la cot. del dolar el {current_hour}")
 
 #-------------> RIP command <-----------------
 @bot.command()
@@ -575,10 +562,9 @@ async def rip(ctx, member:discord.Member=None):
     rip_image.save('images/prip2.jpg')
 
 
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)
-        await ctx.send(file = discord.File(r'images/prip2.jpg'))
-        print(f'cmdRip||          {ctx.author.name} ripeo a {member} el {current_hour}')
+    await typing_sleep(ctx)
+    await ctx.send(file = discord.File(r'images/prip2.jpg'))
+    print(f'cmdRip||          {ctx.author.name} ripeo a {member} el {current_hour}')
 
 #----------> Another PILLOW command <-----------
 @bot.command()
@@ -618,9 +604,8 @@ async def profile(ctx, user: discord.Member = None):
     #image.paste(imguser_open, (50, 50))
     #image.save("images/profile_save2.png")    #this two lasts ones works with  the output one line 622
     
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)
-        await ctx.send(file = discord.File("images/profile_save2.png"))
+    await typing_sleep(ctx)
+    await ctx.send(file = discord.File("images/profile_save2.png"))
 
 #----------> Crear emoji desde una URL <--------
 @bot.command()
@@ -684,36 +669,32 @@ async def dados(ctx, number1=1, number2=6):
     '''Tira un dado, recomendado para decidir turnos...'''
     number = random.randint(number1,number2)
     
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)
-        await ctx.send(f"Tocó el numero **{number}**!", tts=True)
-        print(f"cmdDados||   A {ctx.author.name} le tocó el dado {number}")
+    await typing_sleep(ctx)
+    await ctx.send(f"Tocó el numero **{number}**!", tts=True)
+    print(f"cmdDados||   A {ctx.author.name} le tocó el dado {number}")
 
 
 #--------> Steamcito Addon link <--------
 @bot.command()
 async def steamcito(ctx):   
     '''Extension util para steam'''
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)    
-        await ctx.send("https://emilianog94.github.io/Steamcito-Precios-Steam-Argentina-Impuestos-Incluidos/landing/#howto")
-        print(f'cmdSteamcito||            {ctx.author.name} solicitó la web del addon Steamcito')
+    await typing_sleep(ctx)    
+    await ctx.send("https://emilianog94.github.io/Steamcito-Precios-Steam-Argentina-Impuestos-Incluidos/landing/#howto")
+    print(f'cmdSteamcito||            {ctx.author.name} solicitó la web del addon Steamcito')
 
 #-------> repite conmigo CMD 8<--------
 @bot.command()
 async def repite(ctx, *, arg=None):
     '''Repito lo que escribas y se borra en 15seg'''
     if arg == None:
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.send("Seguido del comando, escribe lo que quieres que repita", tts=True, delete_after=15)
-            print(f'cmdRepite||  {ctx.author.name} intentó repetir y el bot tardó {round(type_time, 2)} segundos')
+        await typing_sleep(ctx)
+        await ctx.send("Seguido del comando, escribe lo que quieres que repita", tts=True, delete_after=15)
+        print(f'cmdRepite||       {ctx.author.name} intentó repetir sin argumentos')
     else:
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.send(f"{str(arg)}", tts=True)
-            await ctx.message.delete()
-            print(f'cmdRepite||    {ctx.author.name} repitió "{arg}" el {current_hour}')
+        await typing_sleep(ctx)
+        await ctx.send(f"{str(arg)}", tts=True)
+        await ctx.message.delete()
+        print(f'cmdRepite||         {ctx.author.name} repitió "{arg}" el {current_hour}')
 
 ########
 ############## COMANDOS DE VIDEOS RANDOMS 
@@ -721,10 +702,9 @@ async def repite(ctx, *, arg=None):
 @bot.command()
 async def roast(ctx):
     '''Lamar roasts Franklin trending videos...'''
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)
-        await ctx.send(random.choice(listas.roasts))
-        print(f'cmdRoast||      Lamar v Franklin enviado a {ctx.author.name} a las {current_hour}')
+    await typing_sleep(ctx)
+    await ctx.send(random.choice(listas.roasts))
+    print(f'cmdRoast||      Lamar v Franklin enviado a {ctx.author.name} a las {current_hour}')
 
 
 #---> LocuraBailandoSinPantalones vid <---
@@ -819,10 +799,9 @@ async def info(ctx):
     embed2.set_footer(icon_url = ctx.author.avatar_url, text = f"Solicitud de {ctx.author.name}")
     #embed2.set_thumbnail(url="https://photos.app.goo.gl/2KgkWLgrErRmC6mx5")
 
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)
-        await ctx.send(embed=embed2)
-        print(f'cmdInfo|| Info sobre {ctx.guild.name} enviada a {ctx.author.name} a las {current_hour}')
+    await typing_sleep(ctx)
+    await ctx.send(embed=embed2)
+    print(f'cmdInfo|| Info sobre {ctx.guild.name} enviada a {ctx.author.name} a las {current_hour}')
 
 
 #-------->COMANDOS DE AYUDA inicio<----------
@@ -857,10 +836,9 @@ async def comandos(ctx):
     embedCmd.add_field(name="-->Sugerencia", value="Comandos detallados por seccion con #ayuda", inline=False)
     embedCmd.set_footer(text = "Listo para ayudarte ;)/🥂")
 
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)
-        await ctx.send(embed=embedCmd)
-        print(f"cmdComandos||   Comandos de ayuda enviados correctamente a {ctx.author.name} a las {current_hour}")
+    await typing_sleep(ctx)
+    await ctx.send(embed=embedCmd)
+    print(f"cmdComandos||   Comandos de ayuda enviados correctamente a {ctx.author.name} a las {current_hour}")
 
 #menu #moar para las "interacciones" del bot
 @bot.command()
@@ -895,10 +873,9 @@ async def moar(ctx):
     embedMoar.add_field(name="Comando  #locurabailando", value="muestra *locurabailandosinpantalones.mp4* ", inline=False)
     embedMoar.add_field(name="y muchos mas", value="Simplemente probá con los nombres de los bros o con otra cosa, sin olvidar el prefijo #", inline=False)
     
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)
-        await ctx.send(embed=embedMoar)
-        print(f"cmdMoar||      Mas interacciones enviadas correctamente a {ctx.author.name} a las {current_hour}")
+    await typing_sleep(ctx)
+    await ctx.send(embed=embedMoar)
+    print(f"cmdMoar||      Mas interacciones enviadas correctamente a {ctx.author.name} a las {current_hour}")
 
 #menu #matecomandos para las operaciones que puede hacer el bot
 @bot.command()
@@ -961,14 +938,13 @@ async def temporal(ctx, *, arg):
     #channel = 559592087054450690     #get the channel, could be useful for a channel whitelist 
     await ctx.message.delete()
     ## send the message
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)
-        message = await ctx.send(arg, tts=True)
-        ## wait for 3 seconds
-        await asyncio.sleep(3)  
-        ## delete the message
-        await message.delete()
-        print(f"cmdTemporal||      {ctx.author.name} borró el mensaje '{arg}' a las {current_hour}...")
+    await typing_sleep(ctx)
+    message = await ctx.send(arg, tts=True)
+    ## wait for 3 seconds
+    await asyncio.sleep(3)  
+    ## delete the message
+    await message.delete()
+    print(f"cmdTemporal||      {ctx.author.name} borró el mensaje '{arg}' a las {current_hour}...")
 
 #-----> Chusmea los mensajes borrados <-----
 @bot.command()

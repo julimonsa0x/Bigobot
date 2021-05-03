@@ -8,14 +8,24 @@ import requests
 
 # 3rd function Bro_Birthdays_Check| ==>
 from listas import brosId
+
 # 4th function || ==>
 import json
 from dotenv import load_dotenv
 import os
 load_dotenv()
+
 # 5th function || ==>
+from asyncio import sleep as asyncsleep
+from random import uniform
+
 # 6th function || ==>
 # 7th function || ==>
+
+
+
+# ====== Variables ======
+type_time = uniform(0.5, 2)
 
 
 
@@ -135,6 +145,10 @@ def get_apex_data(platform: str, username: str):
     return apex_json, apex_req.ok
 
 # 6th function
+async def typing_sleep(ctx):
+    """Async Function to avoid re-coding the typing and the sleep code once and once again"""
+    async with ctx.typing():    
+        await asyncsleep(type_time)
 
 # 7th function
 

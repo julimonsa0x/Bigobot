@@ -129,8 +129,8 @@ async def ppt(ctx, bot, member:discord.Member=None):
 
 async def LoadGames(ctx, bot):
     embed = discord.Embed(
-        title = "Escoje un juego",
-        description = "1️⃣: Ta te ti \n\n 2️⃣: Piedra papel o tijeras \n\n 3️⃣: Coming soon..."
+        title = "*Escoje un juego*",
+        description = "1️⃣: Ta te ti \n\n 2️⃣: Piedra papel o tijeras \n\n 3️⃣: Adivina el pais"
     )
     await ctx.channel.purge(limit=1)
     msg = await ctx.send(embed=embed)
@@ -148,10 +148,10 @@ async def LoadGames(ctx, bot):
         await ticTacToe(ctx, bot)
         pass
     elif str(reaction.emoji) == '2️⃣':
-        await ctx.send("para jugar al piedra papel o tijeras, debes usar el comando #ppt aparte y @mencionar contra quien quieres jugar...")
+        await ctx.send("Para jugar al piedra papel o tijeras, debes usar el comando *#ppt* aparte y *@mencionar* contra quien quieres jugar...")
         pass
     elif str(reaction.emoji) == '3️⃣':
-        await ctx.send("Proximamente...")
+        await ctx.send("Para jugar a adivina el pais, debes usar el comando *#paises* aparte...")
         pass
     elif str(reaction.emoji) == '4️⃣':
         await ctx.send("copipedro <:copi:770818273217609758>")
