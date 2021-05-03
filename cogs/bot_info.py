@@ -16,9 +16,9 @@ class Information(commands.Cog):
         self.bot = bot
         self.process = psutil.Process(os.getpid())
 
-        @commands.Cog.listener()
-        async def on_ready(self):
-	        printt("cog de bot_info listo")
+    @commands.Cog.listener()
+    async def on_ready(self):
+	    printt("cog de bot_info listo")
 
     @commands.command()
     async def about(self, ctx):

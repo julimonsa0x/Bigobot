@@ -1805,8 +1805,8 @@ async def kick(ctx, member: discord.Member, *, reason=None):
     async with ctx.typing():    
         await asyncio.sleep(type_time)
         msg = await ctx.channel.send(f"Estas seguro que quieres kickear a {member}?")
-        await msg.add_reaction(u"\u2705")
-        await msg.add_reaction(u"\U0001F6AB")
+        await msg.add_reaction(u"\u2705") # emoji OK
+        await msg.add_reaction(u"\U0001F6AB") # emoji NO
 
     try:
         reaction, user = await bot.wait_for("reaction_add", check=lambda reaction, user: user == ctx.author and reaction.emoji in [u"\u2705", u"\U0001F6AB"], timeout=10)
@@ -1833,7 +1833,7 @@ async def kick(ctx, member: discord.Member, *, reason=None):
         else:
             async with ctx.typing():    
                 await asyncio.sleep(type_time)
-                await ctx.channel.send(f"{member} no fue kickeado")
+                await ctx.channel.send(f"{member} no fue kickeado y safó...")
                 print(f"cmdKick||      {member} iba a ser kickeado {ctx.author.name} pero safo")
 
 

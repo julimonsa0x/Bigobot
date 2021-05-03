@@ -78,6 +78,8 @@ class Apex(commands.Cog):
         elif not third_has_stats:
             thirdStats = f"No pude obtener datos correctos para {thirdLegend}"
         
+        #####################################
+        #####################################
 
         # Page 1 embed | General Stats
         page1 = discord.Embed(

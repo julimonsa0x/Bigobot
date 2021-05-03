@@ -114,8 +114,9 @@ class Fun_Commands(commands.Cog):
 
     @commands.command()
     async def reverse(self, ctx, *, text: str):
-        """ !poow ,ffuts esreveR
-        Everything you type after reverse will of course, be reversed
+        """
+        EN: Everything you type after reverse will of course, be reversed
+        ES: Lo que escribas se da vuelta, aunque es recomendable usar #tunear 4 <tu_texto>
         """
         t_rev = text[::-1].replace("@", "@\u200B").replace("&", "&\u200B")
         async with ctx.typing():    
@@ -148,12 +149,18 @@ class Fun_Commands(commands.Cog):
     @commands.command()
     async def birra(self, ctx, user: discord.Member = None, *, reason: commands.clean_content = ""):
         """ Toma una cerveza con alguien! 🍻, la sintaxis es #birra <@usuario> <razon> """
+        
+        # if its yourself or theres no mention
         if not user or user.id == ctx.author.id:
             async with ctx.typing():    
                 await asyncio.sleep(type_time)
                 return await ctx.send(f"**{ctx.author.name}**: paaaarty! 🎉 🍺")
+        
+        # if you mention the bot
         if user.id == self.bot.user.id:
-            return await ctx.send("*Toma birra contigo* 🍻")
+            return await ctx.send("Toma birra contigo 🍻")
+        
+        # if ??? XDLOL 
         if user.bot:
             return await ctx.send(f"I would love to give beer to the bot **{ctx.author.name}**, but I don't think it will respond to you :/")
 
@@ -176,7 +183,7 @@ class Fun_Commands(commands.Cog):
             await msg.delete()
             await ctx.send(f"Al parecer **{user.name}** no tenia interes en tomar una pinta con **{ctx.author.name}** ;-;")
         except discord.Forbidden:
-            # Yeah so, bot doesn't have reaction permission, drop the "offer" word
+            # Yeah so, if bot doesn't have reaction permission, drop the "offer" word
             beer_offer = f"**{user.name}**, acabas de recibir una invitacion 🍺  de parte de: **{ctx.author.name}**"
             beer_offer = beer_offer + f"\n\n**Razon:** {reason}" if reason else beer_offer
             await msg.edit(content=beer_offer)
