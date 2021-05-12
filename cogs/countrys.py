@@ -1,3 +1,5 @@
+#julimonsa
+
 import discord
 from discord.ext import commands
 from functions import printt

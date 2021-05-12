@@ -1,10 +1,10 @@
 # Original author AlexFlipnote / discord_bot.py
+# Modified and added stuff by me
 
 import random
 import discord
 import secrets
 import asyncio
-from random import uniform
 import aiohttp
 import requests
 import json
@@ -13,9 +13,9 @@ from io import BytesIO
 from discord.ext import commands
 from apis import permissions
 from databases import ballresponse
-from functions import printt
+from functions import printt, typing_sleep
 
-type_time = uniform(0.5, 2)
+
 
 
 class Fun_Commands(commands.Cog):
@@ -32,9 +32,8 @@ class Fun_Commands(commands.Cog):
     async def eightball(self, ctx, *, question: commands.clean_content):
         """ Consulta 8ball para recibir una respuesta """
         answer = random.choice(ballresponse)
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.send(f"🎱 **Pregunta:** {question}\n**Respuesta:** {answer}")
+        await typing_sleep(ctx)
+        await ctx.send(f"🎱 **Pregunta:** {question}\n**Respuesta:** {answer}")
 
 
     @commands.command()
@@ -45,10 +44,9 @@ class Fun_Commands(commands.Cog):
         duck_url = r.json()["url"]
         embed = discord.Embed(color = discord.Colour.dark_gold())
         embed.set_image(url = duck_url)
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.send(embed = embed)
-            print(f"cmdPato||         {ctx.author.name} pidio una foto de patos")
+        await typing_sleep(ctx)
+        await ctx.send(embed = embed)
+        print(f"cmdPato||         {ctx.author.name} pidio una foto de patos")
 
 
     @commands.command()
@@ -59,28 +57,25 @@ class Fun_Commands(commands.Cog):
         coffe_url = r.json()["file"]
         embed = discord.Embed(color = discord.Colour.dark_gold())
         embed.set_image(url = coffe_url)
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.send(embed = embed)
-            print(f"cmdCafe||         {ctx.author.name} pidio una foto de cafes")
+        await typing_sleep(ctx)
+        await ctx.send(embed = embed)
+        print(f"cmdCafe||         {ctx.author.name} pidio una foto de cafes")
 
-    @commands.command(aliases=["flip", "coin", "tossacoin"])
+    @commands.command(aliases=["flip", "coin", "tossacoin", "flipcoin", "caracruz"])
     async def coinflip(self, ctx):
-        """ Coinflip! """
+        """ Coinflip! / Cara o cruz, ideal para decisiones de turnos!"""
         # head and tails in english!
         coinsides = ["Cara", "Cruz"]
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.send(f"**{ctx.author.name}** tiro una moneda y toco **{random.choice(coinsides)}**!")
+        await typing_sleep(ctx)
+        await ctx.send(f"**{ctx.author.name}** tiro una moneda y toco **{random.choice(coinsides)}**!")
 
     @commands.command()
     async def f(self, ctx, *, text: commands.clean_content = None):
-        """ Press F to pay respect """
+        """ Press #F to pay respect """
         hearts = ["❤", "💛", "💚", "💙", "💜"]
         reason = f"for **{text}** " if text else ""
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.send(f"**{ctx.author.name}** le ha pagado respetos {reason}{random.choice(hearts)}")
+        await typing_sleep(ctx)
+        await ctx.send(f"**{ctx.author.name}** le ha pagado respetos {reason}{random.choice(hearts)}")
 
     @commands.command()
     @commands.cooldown(rate=1, per=2.0, type=commands.BucketType.user)
@@ -90,14 +85,15 @@ class Fun_Commands(commands.Cog):
             try:
                 r = requests.get(f"https://api.urbandictionary.com/v0/define?term={search}").json()
             except Exception as e:
-                async with ctx.typing():    
-                    await asyncio.sleep(type_time)
-                    await ctx.send(f"Exception: {e}. Urban API returned invalid data... might be down atm.")
+                await typing_sleep(ctx)
+                await ctx.send(f"Exception: {e}. Urban API returned invalid data... might be down atm.")
 
             if not r:
+                await typing_sleep(ctx)
                 return await ctx.send("Hubo un error...")
 
             if not len(r["list"]):
+                await typing_sleep(ctx)
                 return await ctx.send(f"No pude encontrar una definicion para {search}...")
 
             result = sorted(r["list"], reverse=True, key=lambda g: int(g["thumbs_up"]))[0]
@@ -108,9 +104,8 @@ class Fun_Commands(commands.Cog):
                 definition = definition.rsplit(" ", 1)[0]
                 definition += "..."
 
-            async with ctx.typing():    
-                await asyncio.sleep(type_time)
-                await ctx.send(f"📚 Definicion para: **{result['word']}**```fix\n{definition}```")
+            await typing_sleep(ctx)
+            await ctx.send(f"📚 Definicion para: **{result['word']}**```fix\n{definition}```")
 
     @commands.command()
     async def reverse(self, ctx, *, text: str):
@@ -119,9 +114,8 @@ class Fun_Commands(commands.Cog):
         ES: Lo que escribas se da vuelta, aunque es recomendable usar #tunear 4 <tu_texto>
         """
         t_rev = text[::-1].replace("@", "@\u200B").replace("&", "&\u200B")
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.send(f"🔁 {t_rev}")
+        await typing_sleep(ctx)
+        await ctx.send(f"🔁 {t_rev}")
 
     @commands.command()
     async def password(self, ctx, nbytes: int = 18):
@@ -130,21 +124,21 @@ class Fun_Commands(commands.Cog):
         The text is Base64 encoded, so on average each byte results in approximately 1.3 characters.
         """
         if nbytes not in range(3, 1401):
-            return await ctx.send("I only accept any numbers between 3-1400")
+            await typing_sleep(ctx)
+            return await ctx.send("El argumento **nbytes** debe ser un numero entre 3 y 1301!")
         if hasattr(ctx, "guild") and ctx.guild is not None:
-            await ctx.send(f"Sending you a private message with your random generated password **{ctx.author.name}**")
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.author.send(f"🎁 **Esta es tu contraseña:**\n{secrets.token_urlsafe(nbytes)}")
+            await typing_sleep(ctx)
+            await ctx.send(f"Te mandare un mensaje con la contraseña generada  **{ctx.author.name}**")
+        await typing_sleep(ctx)
+        await ctx.author.send(f"🎁 **Esta es tu contraseña:**\n{secrets.token_urlsafe(nbytes)}")
 
     @commands.command()
     async def rating(self, ctx, *, thing: commands.clean_content):
         """ Le doy un rating a lo que sea... """
         rate_amount = random.uniform(0.0, 100.0)
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.send(f"A `{thing}` le daria un... **{round(rate_amount, 2)} / 100**")
-            print(f"cmdRating||        el bigobot le dio un rating de {rate_amount} a {thing}")
+        await typing_sleep(ctx)
+        await ctx.send(f"A `{thing}` le doy un... **{round(rate_amount, 2)} / 100**")
+        print(f"cmdRating||        el bigobot le dio un rating de {rate_amount} a {thing}")
 
     @commands.command()
     async def birra(self, ctx, user: discord.Member = None, *, reason: commands.clean_content = ""):
@@ -152,16 +146,17 @@ class Fun_Commands(commands.Cog):
         
         # if its yourself or theres no mention
         if not user or user.id == ctx.author.id:
-            async with ctx.typing():    
-                await asyncio.sleep(type_time)
-                return await ctx.send(f"**{ctx.author.name}**: paaaarty! 🎉 🍺")
+            await typing_sleep(ctx)
+            return await ctx.send(f"**{ctx.author.name}**: paaaarty! 🎉 🍺")
         
         # if you mention the bot
         if user.id == self.bot.user.id:
-            return await ctx.send("Toma birra contigo 🍻")
+            await typing_sleep(ctx)
+            return await ctx.send("Tomare birra contigo 🍻")
         
         # if ??? XDLOL 
         if user.bot:
+            await typing_sleep(ctx)
             return await ctx.send(f"I would love to give beer to the bot **{ctx.author.name}**, but I don't think it will respond to you :/")
 
         beer_offer = f"**{user.name}**, acabas de recibir una invitacion 🍺  de parte de: **{ctx.author.name}**"
@@ -176,11 +171,11 @@ class Fun_Commands(commands.Cog):
         try:
             await msg.add_reaction("🍻")
             await self.bot.wait_for("raw_reaction_add", timeout=30.0, check=reaction_check)
-            async with ctx.typing():    
-                await asyncio.sleep(type_time)
-                await msg.edit(content=f"**{user.name}** junto a **{ctx.author.name}** estan disfrutando unas birritas 🍻")
+            await typing_sleep(ctx)
+            await msg.edit(content=f"**{user.name}** junto a **{ctx.author.name}** estan disfrutando unas birritas 🍻")
         except asyncio.TimeoutError:
             await msg.delete()
+            await typing_sleep(ctx)
             await ctx.send(f"Al parecer **{user.name}** no tenia interes en tomar una pinta con **{ctx.author.name}** ;-;")
         except discord.Forbidden:
             # Yeah so, if bot doesn't have reaction permission, drop the "offer" word
@@ -205,9 +200,8 @@ class Fun_Commands(commands.Cog):
             emoji = "💞"
         else:
             emoji = "💔"
-        async with ctx.typing():    
-            await asyncio.sleep(type_time)
-            await ctx.send(f"**{user.name}** is **{hot:.2f}%** hot {emoji}")
+        await typing_sleep(ctx)
+        await ctx.send(f"**{user.name}** is **{hot:.2f}%** hot {emoji}")
 
     @commands.command(aliases=["slots", "bet"])
     @commands.cooldown(rate=1, per=3.0, type=commands.BucketType.user)

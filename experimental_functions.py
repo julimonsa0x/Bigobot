@@ -5,17 +5,36 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 from PIL import Image, ImageDraw, ImageOps
+from functions import printt
 
 
 
-#from facebook_scraper import get_posts
+from facebook_scraper import get_posts
 
-# this gets the last posts from the epet 14 page 
-#for post in get_posts('EPET-14-Institucional-312214785790856', pages=10, extra_info=True):
-    #print(post['text'][:50])
-    #print("<---------------->")
-#print(*post)
+# this gets the last posts from the epet 14 page
+# i = 0 
+# for post in get_posts('EPET-14-Institucional-312214785790856', pages=2, extra_info=True, options={"comments": True}):
+#     print("<---------------->")
+#     print(post["post_text"])
+#     if "image" in post != None:
+#         #print(post["image"])
+#     print(post)
+#     i += 1
+#     if i == 1:
+#         break
+    
+# print("reteke puto XD")
 
+
+#TRANSLATOR 
+
+#from translate import Translator
+
+#translator = Translator(to_lang="es"6)
+#trans = translator.translate("hello people")
+#printt(trans)
+
+#TRANSLATOR 
 
 
 def get_json(url: str, json_name: str, indent=2):

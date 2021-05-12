@@ -1,50 +1,53 @@
 # REMEMBER TO USE Python 3.8.0 WHILE EDITING IN VSC
-import os
-import sys # to get python version 
-from dotenv import load_dotenv # to get the .env TOKEN
-# ----------------------------------------->  # discord.py fundamentals 
-import discord
-from discord.ext import commands, tasks
-from discord.ext.commands import Bot, errors
-from discord.utils import get
 import asyncio
+import datetime
+import json
+import math
+import os
+import random
+import re
+import sys  # to get python version
+import time
+import urllib
+from datetime import date, datetime, time, timedelta
+from io import BytesIO
+from math import sqrt
+from time import gmtime, strftime
+#import urllib3
+from urllib import parse, request
+
 # ----------------------------------------->  # Required Libraries 
 import aiofiles
 import aiohttp
-import time
-from time import gmtime, strftime  
-import datetime
-from datetime import timedelta, date, time, datetime
-import requests
-import json
-import urllib
-#import urllib3
-from urllib import parse, request
-import re
-import random
-from bs4 import BeautifulSoup
 import certifi
-import math
-from math import sqrt
+# ----------------------------------------->  # discord.py fundamentals 
+import discord
 import numpy as np
-import sympy
-from sympy import Limit, limit, Symbol, S
-from sympy import Derivative, diff, simplify
-from sympy import Integral, integrate
-from PIL import Image, ImageFilter, ImageDraw, ImageFont, ImageOps
-from io import BytesIO
-import wikipedia
 import png
 import pyqrcode
+import requests
+import sympy
+import wikipedia
+from bs4 import BeautifulSoup
+from discord.ext import commands, tasks
+from discord.ext.commands import Bot, errors
+from discord.utils import get
+from dotenv import load_dotenv  # to get the .env TOKEN
+from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
 from pyqrcode import QRCode
 from pytube import extract  # for the descarga cmd
+from sympy import (Derivative, Integral, Limit, S, Symbol, diff, integrate,
+                   limit, simplify)
+
+import broBdays
+import game
 #<-------------------------------------------> File imports
 import listas
-from listas import brosId
-import broBdays 
 import tuning
-import game
-from functions import get_dolar, get_apex_data, typing_sleep, degrees_to_cardinal
+from functions import (degrees_to_cardinal, get_apex_data, get_dolar, printt,
+                       typing_sleep)
+from listas import brosId
+
 load_dotenv()
 
 # ----------------------------------------> Beginning of code
@@ -135,18 +138,18 @@ async def on_ready():
         name="--> #comandos",
         url="http://www.twitch.tv/slakun10")
     )
-    functions.printt('----------------------------------------------------->>>', 0.001)   
-    functions.printt(f" El bot fue logeado correctamente como: {bot.user} a las {current_hour} <¬", 0.001)
-    functions.printt(f" Nombre del bot: {bot.user.name} <¬", 0.001)
-    functions.printt(f" ID del bot: {bot.user.id} <¬", 0.001)
-    functions.printt(f" Estoy en {len(bot.guilds)} servidores! <¬", 0.001)
-    functions.printt(f" Con un total de {len(set(bot.get_all_members()))} miembros <¬", 0.001)
-    functions.printt(' |            author: JuliTJZ             |', 0.001)
-    functions.printt(' |          created : 23/12/2020          |', 0.001)
-    functions.printt(' |        last updated: dd/mm/2021        |', 0.001)
-    functions.printt(f' |      Python: 3.8.0, Oct 14 2019        |', 0.001)
-    functions.printt(f' |          Discord.py:  {discord.__version__}            |', 0.001)
-    functions.printt('---------------------------------------------------->>>', 0.001)
+    printt('----------------------------------------------------->>>', 0.001)   
+    printt(f" El bot fue logeado correctamente como: {bot.user} a las {current_hour} <¬", 0.001)
+    printt(f" Nombre del bot: {bot.user.name} <¬", 0.001)
+    printt(f" ID del bot: {bot.user.id} <¬", 0.001)
+    printt(f" Estoy en {len(bot.guilds)} servidores! <¬", 0.001)
+    printt(f" Con un total de {len(set(bot.get_all_members()))} miembros <¬", 0.001)
+    printt(' |            author: JuliTJZ             |', 0.001)
+    printt(' |          created : 23/12/2020          |', 0.001)
+    printt(' |        last updated: dd/mm/2021        |', 0.001)
+    printt(f' |      Python: 3.8.0, Oct 14 2019        |', 0.001)
+    printt(f' |          Discord.py:  {discord.__version__}            |', 0.001)
+    printt('---------------------------------------------------->>>', 0.001)
 
     # connected message to "bigobot-testing" of Los Bigotazos
     channel = bot.get_channel(799387331403579462)
@@ -432,7 +435,7 @@ async def contar(ctx, number: int):
             i += 1
 
 #-----> comando sobre info del autor <-----
-@bot.command()
+@bot.command(aliases=["autor", "dev", "desarrollador", "creador"])
 async def monsa(ctx):
     '''Info sobre mi autor'''
     embedMine = discord.Embed(
@@ -456,7 +459,7 @@ async def monsa(ctx):
     await typing_sleep(ctx)
     await ctx.send(embed=embedMine)
     print(f'cmdInfoSobreMí||         Info del autor enviada a {ctx.author.name} a las {current_hour}')
-0
+
 #---------> comando de joda tucson <--------
 @bot.command()
 async def tucson(ctx):
@@ -664,12 +667,22 @@ async def roles_n_colors(ctx):
 
 #--------> Tira un dado 9<--------
 @bot.command()
-async def dados(ctx, number1=1, number2=6):
-    '''Tira un dado, recomendado para decidir turnos...'''
-    number = random.randint(number1,number2)
-    
+async def dados(ctx, user=None, number1=1, number2=6):
+    '''
+    Tira un dado, recomendado para decidir turnos...
+    argumento user opcional.
+    argumento number1 y number2 por defecto 1 y 6 pero son modificables'''
+    if user is None:
+        user = ctx.author
+    number = random.randint(number1, number2)
+    dadosEmbed = discord.Embed(
+        title="#Dados",
+        description=f"Toco el numero {number} para {user.mention}"
+        )
+    dadosEmbed.set_thumbnail(url="https://cdn.discordapp.com/attachments/793309880861458473/842125661585276978/1f3b2.png") # dado.png
+
     await typing_sleep(ctx)
-    await ctx.send(f"Tocó el numero **{number}**!", tts=True)
+    await ctx.send(embed=dadosEmbed)
     print(f"cmdDados||   A {ctx.author.name} le tocó el dado {number}")
 
 
@@ -821,17 +834,17 @@ async def comandos(ctx):
     embedCmd.add_field(name="-->Comando #matecomandos", value="operaciones que puede resolver el bot a detalle", inline=False)
     embedCmd.add_field(name="-->Comando #reacciona, #...", value="Este y muchos otros comandos en ----> #moar", inline=False)
     embedCmd.add_field(name="-->Comando  *#youtube*", value="Busca un video que coincida", inline=False)
-    embedCmd.add_field(name="-->Comando  #ping  y  #ping pong", value="Muestra tu latencia con respecto al bot", inline=False)
+    embedCmd.add_field(name="-->Comando  #ping", value="Muestra tu latencia con respecto al bot", inline=False)
     embedCmd.add_field(name="-->Comando  #meme", value="Muestra memes randoms", inline=False)
     embedCmd.add_field(name="-->Comando  #quien", value="Muestra información sobre un miembro del server", inline=False)
     embedCmd.add_field(name="-->Comando  #temporal", value="Escribe un mensaje y se borra a los 3 segundos.", inline=False)
-    embedCmd.add_field(name="-->Comando  #repite", value="El bot repite tus palabras como un pelotudo", inline=False)
+    embedCmd.add_field(name="-->Comando  #repite", value="El bot repite tus palabras como un pelotudo + tts=True", inline=False)
     embedCmd.add_field(name="-->Comando  #dados", value="Tira un dado con resultado del 1 al 6", inline=False)
     embedCmd.add_field(name="-->Comando  #md <id> <mensaje>", value="Envía un mensaje a un usuario con el bot con *#md <id del usuario> <tu mensaje>*, si no conoces su id usá *#quien <usuario>* ", inline=False)
     embedCmd.add_field(name="-->Comando  #dolar", value="te muestra la cotización del dolar blue un capo el bot", inline=False)
     embedCmd.add_field(name="-->Comando  #randomchamp", value="Te muestra un campeón random de LOL", inline=False)
     embedCmd.add_field(name="-->Comando  #randombrawl", value="Te muestra un brawler random de BS", inline=False)
-    embedCmd.add_field(name="-->Comando  #pedir_ticket", value="Función experimental...", inline=False)
+    embedCmd.add_field(name="-->Comando  #help", value="Lista de todos los comandos", inline=False)
     embedCmd.add_field(name="-->Sugerencia", value="Comandos detallados por seccion con #ayuda", inline=False)
     embedCmd.set_footer(text = "Listo para ayudarte ;)/🥂")
 
@@ -1388,7 +1401,7 @@ async def bask(ctx, numOne: float, numTwo: float, numThree: float):
     # Formula----------------->>> realBaskEcuation = str(f"{numOne}x^2 {numTwo}x {numThree}"   
     if ((numTwo**2)-4*numOne*numThree) < 0:
         complexBaskEcuation = int((numTwo**2)-4*numOne*numThree)
-        await typing_sleep(ctx))
+        await typing_sleep(ctx)
         await ctx.send("La solución de la ecuación es con numeros complejos :(")
         print(f'La ecuación de {ctx.author.name} es compleja: "{complexBaskEcuation}"')
         
@@ -1592,6 +1605,7 @@ async def setdelay(ctx, seconds: int):
 @setdelay.error
 async def setdelay_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
+        await typing_sleep(ctx)
         await ctx.send("Debes seguir la sintaxis #setdelay <segundos>, para desactivar el modo lento el argumento <segundos> debe ser cero")
 
 #---> MD a usuario 12 con ID <---
@@ -1604,14 +1618,14 @@ async def md(ctx, user_id=None, *, args=None):
             await typing_sleep(ctx)
             await target.send(args)
             await ctx.channel.send(f"Le enviaste un md con éxito a: {target.name}")
-            print(f"cmdMD||    {ctx.author.name} le envió un md a {target.name} diciendole: {args} a las {current_hour}")
+            print(f"cmdMD||       {ctx.author.name} le envió un md a {target.name} diciendole: {args} a las {current_hour}")
         except:
             await typing_sleep(ctx)
             await ctx.channel.send("No se pudo enviar el md, este comando funciona con ID y no con @Mención")       
     else:
         await typing_sleep(ctx)
         await ctx.channel.send("Debes proporcionar una ID, seguido del mensaje a enviar!")
-        print(f"cmdMD||     {ctx.author.name} falló al enviar un md")
+        print(f"cmdMD||        {ctx.author.name} falló al enviar un md")
 
 #---> DM a usuarios con @mencion <---
 @bot.command()
@@ -1620,7 +1634,7 @@ async def dm(ctx, member: discord.Member, *, args=None):
     if member != None or args != None:
         try:
             await member.send(args)
-            await typing_sleep(ctx))
+            await typing_sleep(ctx)
             await ctx.channel.send(f"Le enviaste un md con éxito a: {member.name}")
             print(f"cmdMD||    {ctx.author.name} le envió un md a {member.name} diciendole: {args} a las {current_hour}")
         except:
@@ -1659,58 +1673,50 @@ async def tunear(ctx, order: int, *, args=None,):
         await typing_sleep(ctx)
         await ctx.send(myThiccString)
         print(f"cmdTunear1||        {ctx.author.name} tuneó un texto el {current_hour}")
-        return
 
     elif args != None and order == 2:
         myThiccString = tuning.tunear2(args.replace("#tunear", ""))
         await typing_sleep(ctx)
         await ctx.send(myThiccString)
         print(f"cmdTunear2||        {ctx.author.name} tuneó un texto el {current_hour}")
-        return
 
     elif args != None and order == 3:
         await typing_sleep(ctx)
         myThiccString = tuning.tunear3(args.replace("#tunear", ""))
         await ctx.send(myThiccString)
         print(f"cmdTunear3||        {ctx.author.name} tuneó un texto el {current_hour}")
-        return
 
     elif args != None and order == 4:
         await typing_sleep(ctx)
         myThiccString = tuning.tunear4(args.replace("#tunear", ""))
         await ctx.send(myThiccString)
         print(f"cmdTunear4||        {ctx.author.name} tuneó un texto el {current_hour}")
-        return
 
     elif args != None and order == 5:
         await typing_sleep(ctx)
         myThiccString = tuning.tunear5(args.replace("#tunear", ""))
         await ctx.send(myThiccString)
         print(f"cmdTunear5||        {ctx.author.name} tuneó un texto el {current_hour}")
-        return
 
     elif args != None and order == 6:
         await typing_sleep(ctx)
         myThiccString = tuning.tunear6(args.replace("#tunear", ""))
         await ctx.send(myThiccString)
         print(f"cmdTunear6||        {ctx.author.name} tuneó un texto el {current_hour}")
-        return
 
     elif args != None and order == 7:
         await typing_sleep(ctx)
         myThiccString = tuning.tunear7(args.replace("#tunear", ""))
         await ctx.send(myThiccString)
         print(f"cmdTunear6||        {ctx.author.name} tuneó un texto el {current_hour}")
-        return
 
     #else:
     elif args == None and order == None:
-        await typing_sleep(ctx))
+        await typing_sleep(ctx)
         #args == None and order == None        
         await ctx.send("Seguido del comando debes introducir un orden (1 a 6) seguido del texto a tunear")
         await ctx.send("A modo de ejemplo: **#tunear 4 textodepruebacopipedro**")
         print(f"cmdTunear||        {ctx.author.name} falló al tunear un texto el {current_hour}")
-        return
 
 @tunear.error
 async def tunear_error(ctx, error):
@@ -1740,16 +1746,15 @@ async def kick(ctx, member: discord.Member, *, reason=None):
 
     else:
         if reaction.emoji ==  u"\u2705":
-            async with ctx.typing():    
-                await asyncio.sleep(type_time)      
-                embed = discord.Embed(
-                    title=f"Kickeado porque {random.choice(listas.frases)}",
-                    colour=0x2859B8,
-                    description=f"{member.mention} fue kickeado del server."
-                )
-                await member.kick(reason=reason)
-                await ctx.send(embed=embed)
-                print(f"cmdKick||      {member} fue kickeado correctamente por {ctx.author.name} el {current_hour} ")
+            await typing_sleep(ctx)      
+            embed = discord.Embed(
+                title=f"Kickeado porque {random.choice(listas.frases)}",
+                colour=0x2859B8,
+                description=f"{member.mention} fue kickeado del server."
+            )
+            await member.kick(reason=reason)
+            await ctx.send(embed=embed)
+            print(f"cmdKick||      {member} fue kickeado correctamente por {ctx.author.name} el {current_hour} ")
 
         else:
             await typing_sleep(ctx)
@@ -1779,21 +1784,20 @@ async def ban(ctx, member: discord.Member, *, reason=None):
 
     else:
         if reaction.emoji ==  u"\u2705":
-            async with ctx.typing():    
-                await asyncio.sleep(type_time)      
-                embed = discord.Embed(
-                    title=f"Baneado porque {random.choice(listas.frases)}",
-                    colour=0x2859B8,
-                    description=f"{member.mention} fue **baneado** del server."
-                )
-                await member.ban(reason=reason)
-                await ctx.send(embed=embed)
-                print(f"cmdBan||        {member} fue baneado correctamente por {ctx.author.name} el {current_hour} ")
+            await typing_sleep(ctx)      
+            embed = discord.Embed(
+                title=f"Baneado porque {random.choice(listas.frases)}",
+                colour=0x2859B8,
+                description=f"{member.mention} fue **baneado** del server."
+            )
+            await member.ban(reason=reason)
+            await ctx.send(embed=embed)
+            print(f"cmdBan||        {member} fue baneado correctamente por {ctx.author.name} el {current_hour} ")
 
         else:
             await typing_sleep(ctx)
             await ctx.channel.send(f"{member} no fue baneado asi que safo")
-                print(f"cmdBan||        {member} iba a ser baneado {ctx.author.name} pero safo")
+            print(f"cmdBan||        {member} iba a ser baneado {ctx.author.name} pero safo")
 
 
 #------------>  interaccion con el bot 2  <---------------
@@ -2104,10 +2108,6 @@ async def unload(ctx, extension):
         await typing_sleep(ctx)
         await ctx.send("Solo el desarrollador puede cargar/habilitar los cogs del bot")
 
-for filename in os.listdir('./cogs'):
-    if filename.endswith('.py'):
-        bot.load_extension(f'cogs.{filename[:-3]}')
-
 
 # ---> ping con latencia  4<----
 @bot.command()
@@ -2119,6 +2119,11 @@ async def ping(ctx, arg=None):
     else:
         await typing_sleep(ctx)
         await ctx.send(f"Tu ping es: {round(bot.latency * 1000)}ms\nEste ping es con respecto a mí, no con respecto a los servidores de discord!!")
+
+
+for filename in os.listdir('./cogs'):
+    if filename.endswith('.py'):
+        bot.load_extension(f'cogs.{filename[:-3]}')
 
 
 bot.run(os.getenv('TOKEN'))

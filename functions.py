@@ -1,4 +1,9 @@
-"""Useful functions for a main.py cleaner"""
+"""
+Monsa's custom functions
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Useful functions for a main.py cleaner
+"""
 # 1st function |Printt| ==> 
 from sys import stdout
 from time import sleep
@@ -8,6 +13,7 @@ import requests
 
 # 3rd function Bro_Birthdays_Check| ==>
 from listas import brosId
+import broBdays
 
 # 4th function || ==>
 import json
@@ -25,7 +31,7 @@ from random import uniform
 
 
 # ====== Variables ======
-type_time = uniform(0.5, 2)
+# no any var atm...
 
 
 
@@ -44,6 +50,7 @@ def printt(string, delay=0.005):
 	    sleep(delay)
     print("")
 
+
 # 2nd function
 def get_dolar(key):
     """Used in dolar cmd""" 
@@ -55,8 +62,8 @@ def get_dolar(key):
             'compraOfi': dolar_json[0]['casa']['compra'][:-1],
             'ventaOfi': dolar_json[0]['casa']['venta'][:-1],
             'varOfi': dolar_json[0]['casa']['variacion'][:-1],
-            'compraOfiSolid': str(float(dolar_json[0]['casa']['compra'][:-1].replace(",", ".")) * 1.65)[:6],
-            'ventaOfiSolid': str(float(dolar_json[0]['casa']['venta'][:-1].replace(",", ".")) * 1.65)[:6],
+            'compraOfiSolid': str(float(dolar_json[0]['casa']['compra'][:-1]) * 1.65).replace(",", ".")[:6], # .replace() moved to outer str() instead of inner float
+            'ventaOfiSolid': str(float(dolar_json[0]['casa']['venta'][:-1]) * 1.65).replace(",", ".")[:6], # .replace() moved to outer str() instead of inner float
             'compraBlue': dolar_json[1]['casa']['compra'][:-1],
             'ventaBlue': dolar_json[1]['casa']['venta'][:-1], 
             'varBlue': dolar_json[1]['casa']['variacion'][:-1],
@@ -71,7 +78,8 @@ def get_dolar(key):
         return final_dict[key]
 
     except Exception as e:
-        print(f"Ocurrio un error con la cotizacion del dolar, error: {e.message}, args: {e.args}")
+        print(f"Ocurrio un error con la cotizacion del dolar, error: {e}, args: {e.args}")
+
 
 # 3rd function
 def bro_birthdays_check(member: int):
@@ -120,6 +128,7 @@ def bro_birthdays_check(member: int):
         fecha_Cumple = broBdays.stalkerBday
         return fecha_Cumple 
 
+
 # 4th function
 def fibonacci(n: int):
     '''devuelve el enesimo numero de fibonacci'''
@@ -133,6 +142,7 @@ def fibonacci(n: int):
         
     return str(a)
 
+
 # 5th function
 def get_apex_data(platform: str, username: str):
     """ Used in cogs/Apex.py, expects two arguments(platform and user)"""
@@ -144,11 +154,13 @@ def get_apex_data(platform: str, username: str):
     apex_json = apex_req.json()
     return apex_json, apex_req.ok
 
+
 # 6th function
 async def typing_sleep(ctx):
     """Async Function to avoid re-coding the typing and the sleep code once and once again"""
     async with ctx.typing():    
         await asyncsleep(type_time)
+
 
 # 7th function
 def degrees_to_cardinal(d: int):
@@ -175,8 +187,11 @@ def degrees_to_cardinal(d: int):
     ix = round(d / (360. / len(dirs)))
     return dirs[ix % len(dirs)]
 
+
 # 8th function
 
+
 # 9th function
+
 
 # 10th function

@@ -141,7 +141,7 @@ class Apex(commands.Cog):
 
         # Asyncio.TimeoutError Embed
         pageTimeout = discord.Embed(title="Asyncio.TimeoutError ", color=discord.Colour.red())
-        pageTimeout.add_field(name="not working embed", value="rewrite the command and react within 2 minutes")
+        pageTimeout.add_field(name="Embed stopped working", value="Friendly reminder to the dev, clean the code... Consider reacting within 2 minutes")
 
         pages_list = [page1, page2, page3] 
         msg = await ctx.send(embed=pages_list[current])
