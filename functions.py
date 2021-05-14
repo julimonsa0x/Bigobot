@@ -31,13 +31,13 @@ from random import uniform
 
 
 # ====== Variables ======
-# no any var atm...
+type_time = uniform(0, 2)
 
 
 
 
 # 1st Function
-def printt(string, delay=0.005):
+def printt(string, delay=0.003):
     '''
     Print a string or f-string with delay between its characters.
     Argument delay float expected recommended 0.005 <= delay <= 0.2
@@ -189,7 +189,12 @@ def degrees_to_cardinal(d: int):
 
 
 # 8th function
-
+def word_to_emoji(word:str):
+    """Converts a word:str into various letters discord emojis e.g: (:regional_indicator_x:)""" 
+    word_list = []
+    for letter in word:
+        word_list.append(f":regional_indicator_{letter}:")
+    return "".join(word_list)
 
 # 9th function
 

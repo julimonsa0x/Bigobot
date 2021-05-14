@@ -143,7 +143,7 @@ class Apex(commands.Cog):
         pageTimeout = discord.Embed(title="Asyncio.TimeoutError ", color=discord.Colour.red())
         pageTimeout.add_field(name="Embed stopped working", value="Friendly reminder to the dev, clean the code... Consider reacting within 2 minutes")
 
-        pages_list = [page1, page2, page3] 
+        pages_list = [page1, page2, page3, page4] 
         msg = await ctx.send(embed=pages_list[current])
         printt(f"cmdApexStats||         {ctx.author.name} busco las estadisticas de {usuario} en Apex")
         
@@ -162,24 +162,29 @@ class Apex(commands.Cog):
                 await msg.edit(embed=pageTimeout)
 
             else:
+                # home page
                 previous_page = current
                 if reaction.emoji == u"\u23EA":
                     current = 0
-                    
+                
+                # backward
                 elif reaction.emoji == u"\u2B05":
                     if current > 0:
                         current -= 1
                         
+                # forward
                 elif reaction.emoji == u"\u27A1":
                     if current < len(pages_list)-1:
                         current += 1
 
+                # last page
                 elif reaction.emoji == u"\u23E9":
                     current = len(pages_list)-1
 
                 for button in buttons:
                     await msg.remove_reaction(button, ctx.author)
 
+                # if not in home page, change the embed
                 if current != previous_page:
                     await msg.edit(embed=pages_list[current])
 

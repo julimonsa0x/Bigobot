@@ -1000,6 +1000,8 @@ tamborindegui = [
     'Tobías Ramón Tamborindegui picante de Valentina Sur, te llaman <@!343963045682216960>',
     'una vez le hicieron cumple sorpresa a ese: https://photos.app.goo.gl/jiXYcbczxdB2SDNx9 <@!343963045682216960>',
     '24/7 en los juegos',
+    'Esta smurfeando en el apex seguro',
+    'RANKEANDO APEX',
     'me se su número, su calle, su grupo sanguíneo, su nombre y apellido, sus zapas, su celu, su GPU, su marca de inodoro y hasta que almorzó ayer'
 ]
 
@@ -1017,6 +1019,7 @@ aquitocartes = [
     'ese es main aurelion tengo entendido',
     'tambien conocido como el pro del Apex',
     'ese si es un tipo humilde...'
+    'LLEVA 2 AÑOS JUGANDO APEX Y NO SABE PONER UNA BARRICADA'
 ]
 
 ##----> frases de bros de bros <----
@@ -1040,6 +1043,7 @@ sofia = [
     'vende budines puede ser? corte empresaria :sunglasses:',
     'no se mucho sobre ella ',
     'juega lol',
+    'fallutea las pelis...',
     'en mi base de datos aparece que ella "es una mentira" https://discord.com/channels/559592087054450690/559592087641915433/793347673839108108',
     'le gustan las patas puede ser? https://discord.com/channels/559592087054450690/559592087641915433/793670189077233714',
 ]
@@ -1332,7 +1336,10 @@ bot_statuses = [
     'copipedro.exe',
     'wish you a happy day :)',
     '(:/ ten un gran dia!',
-    'Grieta del invocador'
+    'Grieta del invocador',
+    'depto en lo de frankito',
+    'En Github!',
+    'viendo un directo',
 ]
 
 #---> ASCII ART <-----

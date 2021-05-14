@@ -13,7 +13,7 @@ ahora = date.today()  # fecha de hoy
 ahorita = ['0:00:00']  # if the birthday is today, print happy birthday
 # ahora = datetime.now()  si queremos la hora tambien, cambiar los date --> datetime
 
-cumple_nico = date(2021, 5, 9) - ahora  #con estas 3 lineas calculo la fecha de nico
+cumple_nico = date(2022, 5, 9) - ahora  #con estas 3 lineas calculo la fecha de nico
 cumple_nico = str(cumple_nico).split(".")
 if cumple_nico == ahorita:
     nicoBday = str("¡¡Es hoy, feliz cumple!!")
@@ -58,7 +58,7 @@ else:
 
 
 
-cumple_jopi = date(2021, 4, 16) - ahora  #con estas 3 lineas calculo la fecha de jopiYo
+cumple_jopi = date(2022, 4, 16) - ahora  #con estas 3 lineas calculo la fecha de jopiYo
 cumple_jopi = str(cumple_jopi).split(".")
 if cumple_jopi == ahorita:
     jopiBday = str("¡¡Es hoy, feliz cumple!!")

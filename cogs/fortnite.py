@@ -13,7 +13,7 @@ class Fortnite(commands.Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-	    printt("cog de fortniteStats listo")
+	    printt("cog de fortnite_stats listo")
 
 
     @commands.command()

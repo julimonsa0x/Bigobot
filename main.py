@@ -1,12 +1,19 @@
 # REMEMBER TO USE Python 3.8.0 WHILE EDITING IN VSC
+import os
+import sys  # to get python version
+from dotenv import load_dotenv  # to get the .env TOKEN
+# ----------------------------------------->  # discord.py fundamentals 
+import discord
+from discord.ext import commands, tasks
+from discord.ext.commands import Bot, errors
+from discord.utils import get
 import asyncio
+# ----------------------------------------->  # Required Libraries 
 import datetime
 import json
 import math
-import os
 import random
 import re
-import sys  # to get python version
 import time
 import urllib
 from datetime import date, datetime, time, timedelta
@@ -15,13 +22,9 @@ from math import sqrt
 from time import gmtime, strftime
 #import urllib3
 from urllib import parse, request
-
-# ----------------------------------------->  # Required Libraries 
 import aiofiles
 import aiohttp
 import certifi
-# ----------------------------------------->  # discord.py fundamentals 
-import discord
 import numpy as np
 import png
 import pyqrcode
@@ -29,24 +32,25 @@ import requests
 import sympy
 import wikipedia
 from bs4 import BeautifulSoup
-from discord.ext import commands, tasks
-from discord.ext.commands import Bot, errors
-from discord.utils import get
-from dotenv import load_dotenv  # to get the .env TOKEN
 from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
 from pyqrcode import QRCode
 from pytube import extract  # for the descarga cmd
 from sympy import (Derivative, Integral, Limit, S, Symbol, diff, integrate,
                    limit, simplify)
 
-import broBdays
-import game
 #<-------------------------------------------> File imports
 import listas
-import tuning
-from functions import (degrees_to_cardinal, get_apex_data, get_dolar, printt,
-                       typing_sleep)
 from listas import brosId
+import broBdays
+import tuning
+import game
+from functions import (degrees_to_cardinal, 
+                       get_apex_data, 
+                       get_dolar, 
+                       printt,
+                       typing_sleep,
+                       word_to_emoji
+                       )
 
 load_dotenv()
 
@@ -844,7 +848,7 @@ async def comandos(ctx):
     embedCmd.add_field(name="-->Comando  #dolar", value="te muestra la cotización del dolar blue un capo el bot", inline=False)
     embedCmd.add_field(name="-->Comando  #randomchamp", value="Te muestra un campeón random de LOL", inline=False)
     embedCmd.add_field(name="-->Comando  #randombrawl", value="Te muestra un brawler random de BS", inline=False)
-    embedCmd.add_field(name="-->Comando  #help", value="Lista de todos los comandos", inline=False)
+    embedCmd.add_field(name="-->Comando  #help", value="Lista de todos y cada uno de los comandos", inline=False)
     embedCmd.add_field(name="-->Sugerencia", value="Comandos detallados por seccion con #ayuda", inline=False)
     embedCmd.set_footer(text = "Listo para ayudarte ;)/🥂")
 
@@ -911,10 +915,9 @@ async def matecomandos(ctx):
     embedMates.add_field(name="Calcular Derivadas", value="Para calcular derivadas sigue esta sintaxis: (función, variable, punto). Entonces para calcular el límite de f(x) cuando x tiende a 0, debemos escribir: (f(x), x, 0), Puede optar por #help derivada", inline=True)
     embedMates.add_field(name="Calcular Integrales", value="Para calcular integrales sigue esta sintaxis: (función, variable, punto). Entonces para calcular el límite de f(x) cuando x tiende a 0, debemos escribir: (f(x), x, 0), Puede optar por #help integral", inline=True)
     
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)
-        await ctx.send(embed=embedMates)
-        print(f"{ctx.author.name} solicitó los comandos matemáticos")
+    await typing_sleep(ctx)
+    await ctx.send(embed=embedMates)
+    print(f"{ctx.author.name} solicitó los comandos matemáticos")
 
     
 @bot.command()
@@ -928,18 +931,17 @@ async def ayuda(ctx):
     )
     #embed_help.set_author(name=f"Menu de comandos a tu orden {ctx.author.name}")
     embed_help.set_thumbnail(url="https://cdn.discordapp.com/attachments/793309880861458473/794724078224670750/25884936-fd9d-4627-ac55-d904eb5269cd.png") #icono del bigobot
-    embed_help.add_field(name="--> Comandos interactivos ", value="Por ejemplo #reacciona, #dados, #trivia, #randomchamp, #randombrawl, #moar, #meme, y mucho mas...", inline=False)
+    embed_help.add_field(name="--> Comandos interactivos ", value="Por ejemplo #juegos, #dados, #trivia, #randomchamp, #randombrawl, #ppt, #meme, y mucho mas...", inline=False)
     embed_help.add_field(name="--> Comandos sobre videos ", value="#pistero, #tadeo, #golaso, #spider, #locurabailando, #galosniper, #roast, #willy")
-    embed_help.add_field(name="--> Comandos útiles ", value="#dolar, #qr, #steamcito, #info, #clima, #youtube, #dm, #md, #chusmear, #descarga, #repite, #tunear, #wiki, #crearemoji", inline=False)
+    embed_help.add_field(name="--> Comandos útiles ", value="#dolar, #qr, #steamcito, #info, #clima, #youtube, #letras, #fb_post, #chusmear, #descarga, #repite, #tunear, #wiki, #crearemoji", inline=False)
     embed_help.add_field(name="--> Comandos para admins ", value="#advertir, #advertencias, #kick, #ban, #set_canal_bienvenida, #set_canal_despedida, #pedir_ticket, #rol_reaccion, #setdelay", inline=False)
     embed_help.add_field(name="--> Comandos matemáticos", value="#matecomandos", inline=False)
     embed_help.add_field(name="--> Comandos de conversion", value="#bin_a_dec, #dec_a_bin, #hex_a_dec, #dec_a_hex, #num_a_rom", inline=False)
     embed_help.set_footer(text = "Listo para ayudarte ;)/🥂", icon_url=ctx.author.avatar_url)
     
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)
-        await author.send(embed=embed_help)
-        print(f"cmdAyuda||   Ayuda de comandos solicitda por {ctx.author.name} a las {current_hour}")
+    await typing_sleep(ctx)
+    await author.send(embed=embed_help)
+    print(f"cmdAyuda||   Ayuda de comandos solicitada por {ctx.author.name} a las {current_hour}")
 #-------->COMANDOS DE AYUDA fin<----------
 
 
@@ -1833,25 +1835,30 @@ async def on_message(message):
     elif msg.startswith('#capo'):
         await message.channel.send("{}".format(random.choice(listas.botCall)))
     elif msg.startswith('#claudia'):
+        await message.channel.send(word_to_emoji("claudia"))
         await message.channel.send("{}".format(random.choice(listas.lacla)))
     elif msg.startswith('#flaco'):
         await message.channel.send("{}".format(random.choice(listas.botCall)))
     elif msg.startswith('#ruben'):
+        await message.channel.send(word_to_emoji("ruben"))
         await message.channel.send("{}".format(random.choice(listas.rubenes)))
     elif msg.startswith('#pibe'):
         await message.channel.send("{}".format(random.choice(listas.botCall)))
     elif msg.startswith('#rubén'):
         await message.channel.send("{}".format(random.choice(listas.rubenes)))
     elif msg.startswith('#nico'):
+        await message.channel.send(word_to_emoji("nico"))
         await message.channel.send("{}".format(random.choice(listas.nicolas)))
     elif msg.startswith('#seki'):
+        await message.channel.send(word_to_emoji("seki"))
         await message.channel.send("{}".format(random.choice(listas.sekiam)))
     elif msg.startswith('#franc'):
         await message.channel.send("{}".format(random.choice(listas.sekiam)))
     elif msg.startswith('#franki'):
         await message.channel.send("{}".format(random.choice(listas.sekiam)))
     elif msg.startswith('#copi'):
-        await message.channel.send('pedro')
+        await message.channel.send(word_to_emoji("copi"))
+        await message.channel.send(word_to_emoji("pedro"))
     elif msg.startswith('#hola'):
         await message.channel.send("{}".format(random.choice(listas.botCall)))
     elif msg.startswith('#Hola'):
@@ -1861,34 +1868,42 @@ async def on_message(message):
     elif msg.startswith('#hentai'):
         await message.channel.send('sos pajin eh :alien:')
     elif msg.startswith('#mato'):
+        await message.channel.send(word_to_emoji("mato"))
         await message.channel.send("{}".format(random.choice(listas.matote)))
     elif msg.startswith('#matu'):
         await message.channel.send("{}".format(random.choice(listas.matote)))
     elif msg.startswith('#Mato'):
         await message.channel.send("{}".format(random.choice(listas.matote)))
     elif msg.startswith('#lezca'):
+        await message.channel.send(word_to_emoji("lezca"))
         await message.channel.send("{}".format(random.choice(listas.inválido)))
     elif msg.startswith('#lesca'):
+        await message.channel.send(word_to_emoji("lesca"))
         await message.channel.send("{}".format(random.choice(listas.inválido)))
     elif msg.startswith('#firu'):
+        await message.channel.send(word_to_emoji("firu"))
         await message.channel.send("wof wof xd")
     elif msg.startswith('#ursula'):
         await message.channel.send('gorda mala leche como dijeron <@!343963045682216960> y <@!343971450644070410>') #primero el tambo segundo el nico
     elif msg.startswith('-monsa'):
         await message.channel.send('mi creador')
     elif msg.startswith('#menem'):
+        await message.channel.send(word_to_emoji("menem"))
         await message.channel.send('se movió a la bolocco ese un capo')
     elif msg.startswith('-Monsa'):
         await message.channel.send('un distinto')
     elif msg.startswith('-tadeo'):
         await message.channel.send('gordo puto, por cierto, con "#tadeo" pones el video ( ͡° ͜ʖ ͡°) 🚴‍♂️')
     elif msg.startswith('#costi'):
+        await message.channel.send(word_to_emoji("costi"))
         await message.channel.send('un carnasa 🐕')
     elif msg.startswith('#pela'):
         await message.channel.send('un capo')
     elif msg.startswith('#tambo'):
+        await message.channel.send(word_to_emoji("tambo"))
         await message.channel.send("{}".format(random.choice(listas.tamborindegui)))
     elif msg.startswith('#tobo'):
+        await message.channel.send(word_to_emoji("tobo"))
         await message.channel.send("{}".format(random.choice(listas.tamborindegui)))
     elif msg.startswith('#pepo'):
         await message.channel.send('ese tambien es puto')
@@ -1913,8 +1928,10 @@ async def on_message(message):
     elif msg.startswith('#Jopi'):
         await message.channel.send("{}".format(random.choice(listas.jopiyo)))
     elif msg.startswith('#Nico'): 
+        await message.channel.send(word_to_emoji("nico"))
         await message.channel.send("{}".format(random.choice(listas.nicolas)))
     elif msg.startswith('#reteke'): 
+        await message.channel.send(word_to_emoji("reteke"))
         await message.channel.send("{}".format(random.choice(listas.aquitocartes)))
     elif msg.startswith('#rtk'): 
         await message.channel.send("{}".format(random.choice(listas.aquitocartes)))
@@ -1923,10 +1940,13 @@ async def on_message(message):
     elif msg.startswith('#wens'): 
         await message.channel.send("{}".format(random.choice(listas.nicolas)))  
     elif msg.startswith('#ecla'): 
+        await message.channel.send(word_to_emoji("ecla"))
         await message.channel.send("{}".format(random.choice(listas.asociados)))
     elif msg.startswith('#beje'): 
+        await message.channel.send(word_to_emoji("beje"))
         await message.channel.send("{}".format(random.choice(listas.asociados)))
     elif msg.startswith('#sofi'): 
+        await message.channel.send(word_to_emoji("sofi"))
         await message.channel.send("{}".format(random.choice(listas.sofia)))
     elif msg.startswith('#araragi'):
         await message.channel.send("{}".format(random.choice(listas.asociados)))
@@ -1935,12 +1955,14 @@ async def on_message(message):
     elif msg.startswith('#masilo'):
         await message.channel.send("{}".format(random.choice(listas.asociados)))
     elif msg.startswith('#sousken'):
+        await message.channel.send(word_to_emoji("souskenin"))
         await message.channel.send("{}".format(random.choice(listas.asociados)))
     elif msg.startswith('#among'):
         await message.channel.send("{}".format(random.choice(listas.amongo)))
     elif msg.startswith('#waif'):
         await message.channel.send("{}".format(random.choice(listas.waifu)))   
     elif msg.startswith('#pecetote'): 
+        await message.channel.send(word_to_emoji("pecetote"))
         await message.channel.send("rey de reyes")
         return
 
