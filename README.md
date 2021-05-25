@@ -1,5 +1,5 @@
 # Bigobot
-![image](https://cdn.discordapp.com/attachments/791042478982824000/845824777313714196/bigobot_avatar_chikito.png)
+![image](https://cdn.discordapp.com/attachments/793309880861458473/846617737337110528/bigobot_avatar_chikito.png)
 
 Bot under development, every contribution is accepted and can be forked. Bot intended for personal discord guild and educational purposes...
 
