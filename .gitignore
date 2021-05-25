@@ -23,7 +23,6 @@ __pycache__/game.cpython-38.pyc
 __pycache__/listas.cpython-38.pyc
 json_files
 __pycache__/listas.cpython-38.pyc
-.gitignore
 cogs/__pycache__/fortnite.cpython-38.pyc
 cogs/__pycache__/reactions.cpython-38.pyc
 __pycache__/game.cpython-38.pyc
@@ -32,6 +31,5 @@ __pycache__/main.cpython-38.pyc
 cogs/__pycache__/fortnite.cpython-38.pyc
 cogs/__pycache__/reactions.cpython-38.pyc
 databases/coppi_adverts.txt
-requirements.txt
 invitaciones.py
 experimental_functions.py
