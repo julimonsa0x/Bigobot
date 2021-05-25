@@ -1,6 +1,7 @@
 # REMEMBER TO USE Python 3.8.0 WHILE EDITING IN VSC
 import os
-import sys  # to get python version
+import sys
+from discord.guild import Guild  # to get python version
 from dotenv import load_dotenv  # to get the .env TOKEN
 # ----------------------------------------->  # discord.py fundamentals 
 import discord
@@ -31,44 +32,56 @@ import pyqrcode
 import requests
 import sympy
 import wikipedia
-from bs4 import BeautifulSoup
+#from bs4 import BeautifulSoup
 from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
 from pyqrcode import QRCode
 from pytube import extract  # for the descarga cmd
 from sympy import (Derivative, Integral, Limit, S, Symbol, diff, integrate,
                    limit, simplify)
 
-#<-------------------------------------------> File imports
+#<-------------------------------------------> Custom imports
 import listas
 from listas import brosId
 import broBdays
 import tuning
 import game
 from functions import (degrees_to_cardinal, 
-                       get_apex_data, 
                        get_dolar, 
                        printt,
                        typing_sleep,
-                       word_to_emoji
+                       word_to_emoji,
+                       bro_birthdays_check,
                        )
 
 load_dotenv()
 
-# ----------------------------------------> Beginning of code
+# ----------------------------------------> Beginning of code and some variables
 
 now = datetime.now()
 
 current_hora = now.strftime("%H:%M:%S")
 current_hour = now.strftime("%d/%m/%Y, %H:%M:%S")  # mm/dd/YY H:M:S format
    
+bot_developer_id = '485259816399536128' # that's me.
 
 intents = discord.Intents.all() 
-bot = commands.Bot(command_prefix="#", intents=intents)
+
+def get_prefix(bot, mssg):
+    with open("databases/prefixes.json", "r") as f:
+        prefixes = json.load(f)
+        #print(prefixes)
+    return prefixes[str(mssg.guild.id)]
+
+bot = commands.Bot(command_prefix=get_prefix, intents=intents)
+
+
+bigo_guild_id = 559592087054450690  # if bot is public, call the var "base_guild_id"
+bigo_guild_base = bot.fetch_guild(bigo_guild_id)  # if bot is public, call the var "base_guild"
 
 
 # --------> Bot en marcha <-------
 @bot.event 
-async def on_ready():
+async def on_ready():    
     bot.reaction_roles = []
     bot.welcome_channels = {} # store like {guild_id : (channel_id, message)}
     bot.goodbye_channels = {}
@@ -139,7 +152,7 @@ async def on_ready():
     # change presence of the bot and prints some info
     await bot.change_presence(
         activity=discord.Streaming(
-        name="--> #comandos",
+        name="--> #ayuda",
         url="http://www.twitch.tv/slakun10")
     )
     printt('----------------------------------------------------->>>', 0.001)   
@@ -161,6 +174,16 @@ async def on_ready():
     channel2 = bot.get_channel(791042478982824000)
     await channel2.send(f' :white_check_mark:  Connected at {current_hora}!')
 
+
+    # Populate prefixes.json for every joined guild
+    for guild in bot.guilds:
+        with open("databases/prefixes.json", "r") as f:
+            prefixes = json.load(f)
+        prefixes[str(guild.id)] = "#"
+        with open("databases/prefixes.json", "w") as f:
+            json.dump(prefixes,f, indent=2)
+        print(f"Added the prefix `#` to {guild.name}!")
+
 ##------> Statuses del Bot <--------
 async def change_presence():
     await bot.wait_until_ready()
@@ -174,6 +197,32 @@ async def change_presence():
 bot.loop.create_task(change_presence())
 
 ##### ----------------->>>>  Comienzo de eventos  <<<<---------------- #####
+@bot.event
+async def on_message(msg):
+    try:
+        if bot.user.mentioned_in(msg) or bot.user.mentioned_in(msg.content) or msg.split()[0] == bot.user:
+            with open("databases/prefixes.json", "r") as f:
+                prefixes = json.load(f)
+            pre = prefixes[str(msg.guild.id)] 
+            await msg.channel.send(f"Mi prefijo en este servidor es: {pre}\nPara cambiarlo usa: `#changeprefix`.")
+    except Exception as e:
+        pass
+        #print(f"Excepcion al mencionar al bot: {e}\n{e.args}")
+
+    await bot.process_commands(msg)
+
+# Required by json_level.py CONSIDER MOVING IT
+@bot.event
+async def on_guild_join(guild):
+    # prefixes stuff for json_level.py
+    with open("databases/prefixes.json", "r") as f:
+        prefixes = json.load(f)
+    prefixes[str(guild.id)] = "#"
+    with open("databases/prefixes.json", "w") as f:
+        json.dump(prefixes,f, indent=2)
+
+    await bigo_guild_base.send("#setpadlockedinfo", delete_after=60)    
+
 @bot.event
 async def on_raw_reaction_add(payload):
     for role_id, msg_id, emoji in bot.reaction_roles:
@@ -221,36 +270,66 @@ async def on_raw_reaction_remove(payload):
             return
             #alphascript cmd
 
-@bot.event
+@bot.event # alphascript cmd
 async def on_member_join(member):
     for guild_id in bot.welcome_channels:
         if guild_id == member.guild.id:
             channel_id, message = bot.welcome_channels[guild_id]
             await bot.get_guild(guild_id).get_channel(channel_id).send(f"{message} {member.mention}")
+            await bot.get_guild(guild_id).get_channel(channel_id).send(f"{listas.new_arrival} {member.mention} somos {len(set(bot.get_all_members()))} miembros!")
             return
-            #alphascript cmd
 
-@bot.event
+@bot.event # alphascript cmd
 async def on_member_remove(member):
     for guild_id in bot.goodbye_channels:
         if guild_id == member.guild.id:
             channel_id, message = bot.goodbye_channels[guild_id]
             await bot.get_guild(guild_id).get_channel(channel_id).send(f"{message} {member.mention}")
-            return
-            #alphascript cmd
+            return      
 
-@bot.event
-async def on_message_delete(message):
+@bot.event # alphascript cmd
+async def on_message_delete(message): 
     bot.sniped_messages[message.guild.id] = (message.content, message.author, message.channel.name, message.created_at)
-    #alphascript cmd
 ##### --------------->>>>  Finalizacion de eventos  <<<<-------------- #####
+############################################################################
+
 
 ############################################################################
 
 #### -------------->>>>  Acá comienzan los comandos  <<<<-------------- ####
-@bot.command()
+@bot.command(aliases=['padlocked','set_padlocked','setpadlockedinfo','set_padlocked_info'])
+@commands.has_permissions(administrator=True)
+async def set_info_channels(ctx):
+    """
+    An admin/mod command only to set the padlocked info channels.
+    For this command to work properly, create 3 private voice channels
+    at the top of the guild with the role @everyone and the connect 
+    voice permission set to false. After that copy the 3 id of the channels
+    and replace the total_chan, real_chan and bot_chan variables with the 
+    ids    
+    """
+
+    guild = ctx.guild
+    if guild.id == bigo_guild_id:
+        # create variables 
+        total_members = guild.member_count
+        real_members = len(list(filter(lambda m: not m.bot, guild.members)))
+        bot_members = len(list(filter(lambda m: m.bot, guild.members)))
+        # fetch channels
+        total_chan = await bot.fetch_channel(846513178144931870)  # replace here with your copied ID
+        real_chan = await bot.fetch_channel(846540695904452676)  # replace here with your copied ID
+        bot_chan = await bot.fetch_channel(846540959177113610)  # replace here with your copied ID
+        # edit channels
+        try:
+            await total_chan.edit(name=f"✔️  Miembros Totales: {total_members}")
+            await real_chan.edit(name=f"🧍 Personas: {real_members}")
+            await bot_chan.edit(name=f"🤖 Bots: {bot_members}")
+        except Exception as e:
+            await ctx.send(f":exclamation: Ocurio un error al ejecutar el comando: Info detallada:\n==========\n`Excepcion:{e.with_traceback}`\n`Razon:{e.args}`", delete_after=180.0)
+
+@bot.command(aliases=['reqticket','pedirticket'])
 async def pedir_ticket(ctx, msg: discord.Message=None, category: discord.CategoryChannel=None):
-    '''Ideal para admins y moderadores, la sintaxis puede verse al escribir el comando sin argumentos (#pedir_ticket a secas)'''
+    '''Ideal para peticiones a admins y moderadores, la sintaxis puede verse al escribir el comando sin argumentos (#pedir_ticket a secas)'''
     if msg is None or category is None:
         await typing_sleep(ctx)
         await ctx.channel.send("Para que no haya errores, debes poner #pedir_ticket + <id del mensaje a reaccionar> + <id de la categoria de canales>")
@@ -292,12 +371,12 @@ async def ticket_menu(ctx):
         await ctx.channel.send(embed=embed)
         #alphascript cmd
 
-@bot.command()
-@commands.has_permissions(kick_members=True)
+@bot.command(aliases=['emoterol','rol_emote','rol_reaction','rol_react','rolreaction'])
+@commands.has_permissions(administrator=True)
 async def rol_reaccion(ctx, role: discord.Role=None, msg: discord.Message=None, emoji=None):
     '''
     Creas un mensaje reaccionable para un determinado rol, quien reaccione a dicho mensaje obtendra tal rol 
-    ejemplo de uso: #rol_reaccion P A C H U S 836026898584829963 :thumbsup: 
+    ejemplo de uso: #rol_reaccion Consiglieres 836026898584829963 :thumbsup: 
     '''
     if role != None and msg != None and emoji != None:
         try:    
@@ -324,18 +403,20 @@ async def rol_reaccion(ctx, role: discord.Role=None, msg: discord.Message=None, 
         print(f"cmdSetReaccion||          {ctx.author.name} falló al definir una reaccion para un rol")
 
 @bot.command()
-@commands.has_permissions(kick_members=True)
+@commands.has_permissions(administrator=True)
 async def set_canal_bienvenida(ctx, new_channel: discord.TextChannel=None, *, message=None):
-    '''ES: Asigna un canal de bienvenida junto a un mensaje, a modo de ejemplo: #set_canal_bienvenida <ID_del_canal_de_texto> <mensaje>
-    Ejemplo practico: #set_canal_bienvenida 123423798689324 Bienvenido al server de _____
+    '''
+    ES: Asigna un canal de bienvenida junto a un mensaje, a modo de ejemplo: #set_canal_bienvenida <ID_del_canal_de_texto> <mensaje>
+    Ejemplo practico: #set_canal_bienvenida 123423798689324 Bienvenido al server de _____.....
     Si no sabes como obtener el id de un canal debes tener activado el modo desarrollador. Para eso
     debes ir a Ajustes de Usuario > Avanzado > desarrollador. Esto habilitara la opcion de copiar el
     ID de un canal de texto cuando des click derecho en el mismo...
+    
     EN: Assigns a welcome channel along a message, e.g: #set_canal_bienvenida <ID_del_canal_de_texto> <mensaje>
-    Practical example: #set_canal_bienvenida 123423798689324 Welcome to _____'s guild
+    Practical example: #set_canal_bienvenida 123423798689324 Welcome to _____'s guild.....
     If you are not able to copy the ID of a text channel you should activate developer mode. For that
     you gotta go to User settings > Advanced > Developer. Now you'll be able to copy a text channel's ID
-    when right clicking...
+    when right clicking it...
     '''
     if new_channel != None and message != None:
         for channel in ctx.guild.channels:
@@ -358,7 +439,7 @@ async def set_canal_bienvenida(ctx, new_channel: discord.TextChannel=None, *, me
         print(f"cmdCanaldeBienvenida|| {ctx.author.name} falló al setear un canal de bienvenida...")
 
 @bot.command()
-@commands.has_permissions(kick_members=True)
+@commands.has_permissions(administrator=True)
 async def set_canal_despedida(ctx, new_channel: discord.TextChannel=None, *, message=None):
     '''Asigna un canal de despedida junto a un mensaje'''
     if new_channel != None and message != None:
@@ -404,7 +485,14 @@ async def advertencias(ctx, member: discord.Member=None):
 @bot.command()
 @commands.has_permissions(administrator=True)
 async def advertir(ctx, member: discord.Member=None, *, reason=None):
-    '''Advierte a un usuario junto a una razon, ideal para moderadores. Comando experimental y no funcional al 100%'''
+    '''
+    Advierte a un usuario junto a una razon, ideal para moderadores. 
+    Comando experimental y no funcional al 100%
+    Requerido permiso de administracion para poder usar el comando.
+    '''
+    warned =  member.id
+    warner = ctx.author.id
+    
     if member is None:
         return await ctx.send("No he podido encontrar a ese miembro u olvidaste mencionarlo.")
         
@@ -422,21 +510,76 @@ async def advertir(ctx, member: discord.Member=None, *, reason=None):
 
     count = bot.warnings[ctx.guild.id][member.id][0]
 
+    # create the .txt warnings file. (base file)
     async with aiofiles.open(f"databases/{member.name}_adverts.txt", mode="a") as file:
         await file.write(f"{member.id} {ctx.author.id} {reason}\n")
 
-    await ctx.send(f"{member.mention} tiene {count} {'warning' if first_warning else 'warnings'}.")
+    warn_json = {
+        "Warnings":[
+            {
+                "warn_no.": count,
+                "warned_id": warned,
+                "warner_id": warner,
+                "reason": reason,
+            }
+        ]
+    }
+
+    new_warn = {    
+        "warn_no.": count,
+        "warned_id": warned,
+        "warner_id": warner,
+        "reason": reason
+    }
+
+    if first_warning:
+        async with aiofiles.open(f"databases/{member.name}_adverts.json", "w") as file_json:
+            await json.dump(warn_json, file_json, indent=4)
+
+    if not first_warning:
+        async with aiofiles.open(f"databases/{member.name}_adverts.json", "r+") as data_file:
+            data = json.load(data_file)
+            data = data["Warnings"][0]
+            data.update(new_warn)
+            #data_file.seek(0)
+            await json.dump(data, data_file, indent=4)
+
+    await typing_sleep(ctx)
+    await ctx.send(f"{member.mention} tiene {count} {'advertencia' if first_warning else 'advertencias'}.")
+    print(f"cmdAdvertir||      {ctx.author.name} advirtio a {member} por {count}° vez a las {current_hour}")
 
 @bot.command()
 #@commands.has_permissions(kick_members=True)    #for if you wanna limit this command usage and prevent spamming
-async def contar(ctx, number: int):
-    '''Contar hasta un numero dado, puede ser re carnasa...'''
+async def contar(ctx, number: int, intervalo):
+    '''
+    El bot cuenta hasta un numero dado, puede ser re carnasa...
+    Argumento <number>: int | numero hasta el cual contar. 
+    Argumento <intervalo>: float | velocidad a la cual contar.
+    '''
     i = 1
     while i <= number:
         async with ctx.typing():    
-            await asyncio.sleep(0.5)
-            await ctx.send(f"{i}")
+            await asyncio.sleep(float(intervalo))
+            await ctx.send(f"{i}", delete_after=30.0)
             i += 1
+
+
+@bot.command(aliases=['cambiar_prefijo','set_prefix'])
+@commands.has_permissions(administrator = True)
+async def changeprefix(ctx, prefix):
+    """ Comando para cambiar el prefijo de activacion del bot, por defecto es # """
+    try:
+        with open("databases/prefixes.json", "r") as f:
+            prefixes = json.load(f)
+        prefixes[str(ctx.guild.id)] = prefix
+        with open("databases/prefixes.json", "w") as f:
+            json.dump(prefixes,f, indent=2)    
+        await ctx.send(f":exclamation: Mi nuevo prefijo para este servidor ahora es: {prefix}")
+    except Exception as e:
+        await typing_sleep(ctx)
+        await ctx.send(f"Al parecer no tienes los permisos necesarios para cambiar mi prefijo.\nMas info:```Excepcion:{e}\nRazon: {e.args}```")
+
+############################
 
 #-----> comando sobre info del autor <-----
 @bot.command(aliases=["autor", "dev", "desarrollador", "creador"])
@@ -503,39 +646,6 @@ async def trivia(ctx):
             await typing_sleep(ctx)
             await ctx.channel.send("mmm puede ser pa?¿ ")
 
-#-------------> dolar info 11<----------------
-@bot.command()
-async def dolar(ctx):
-    '''Cotizacion del dolar'''
-    compraOfi = get_dolar('compraOfi')
-    ventaOfi = get_dolar('ventaOfi')
-    varOfi = get_dolar('varOfi')
-    compraOfiSolid = get_dolar('compraOfiSolid')
-    ventaOfiSolid = get_dolar('ventaOfiSolid')
-    compraBlue = get_dolar('compraBlue')
-    ventaBlue = get_dolar('ventaBlue')
-    varBlue = get_dolar('varBlue')
-    compraCcl = get_dolar('compraCcl')
-    ventaCcl = get_dolar('ventaCcl')
-    varCcl = get_dolar('varCcl')
-    compraBolsa = get_dolar('compraBolsa')
-    ventaBolsa = get_dolar('ventaBolsa')
-    varBolsa = get_dolar('varBolsa')
-
-
-    embedDolar = discord.Embed(
-        Title = "Cotización del dolar",
-        color = discord.Colour.green())
-    embedDolar.set_thumbnail(url="https://cdn.discordapp.com/attachments/793309880861458473/801587601474715648/dollar.png")  
-    embedDolar.add_field(name=':blue_circle:  Blue:', value=f"Compra: {compraBlue} | Venta: {ventaBlue} | Var. 24h: {varBlue}", inline=False)
-    embedDolar.add_field(name=':green_circle:  Oficial:', value=f"Compra: {compraOfi} | Venta: {ventaOfi} | Var. 24h: {varOfi}", inline=False)
-    embedDolar.add_field(name=':green_circle:  Oficial con impuestos:', value=f"Compra: {compraOfiSolid} | Venta: {ventaOfiSolid} | \n**¡Valores aproximados!**", inline=False)
-    embedDolar.add_field(name=':yellow_circle:  Bolsa:', value=f"Compra: {compraBolsa} | Venta: {ventaBolsa} | Var. 24h: {varBolsa}", inline=False)
-    embedDolar.add_field(name=':orange_circle:  Contado con liqui:', value=f"Compra: {compraCcl} | Venta: {ventaCcl} | Var. 24h: {varCcl}", inline=False)
-    
-    await typing_sleep(ctx)
-    await ctx.send(embed=embedDolar)
-    print(f"cmdDolar||            {ctx.author.name} solicitó la cot. del dolar el {current_hour}")
 
 #-------------> RIP command <-----------------
 @bot.command()
@@ -571,6 +681,73 @@ async def rip(ctx, member:discord.Member=None):
     await typing_sleep(ctx)
     await ctx.send(file = discord.File(r'images/prip2.jpg'))
     print(f'cmdRip||          {ctx.author.name} ripeo a {member} el {current_hour}')
+
+
+#############
+#############
+def make_circular(im):
+    offset = (im.width - im.height) // 2
+    im = im.crop((offset, 0, im.height + offset, im.height))
+
+    mask = Image.new("L", im.size, 0)
+    draw = ImageDraw.Draw(mask)
+    draw.ellipse((0, 0) + im.size, fill=255)
+
+    out = ImageOps.fit(im, mask.size, centering=(0.5, 0.5))
+    out.putalpha(mask)
+    return out
+
+
+# -----> Make a user avatar circular.png <-----
+@bot.command()
+async def circular(ctx, user:discord.Member=None):
+    if user is None:
+        await ctx.send(":exclamation: You forgot to mention someone, try again.")
+    
+    if user != None:
+        avatar = user.avatar_url_as(size = 1024) 
+        avt = BytesIO(await avatar.read())
+        imga = Image.open(avt)
+        imguser = imga.resize((340, 340))  
+        imguser.save("images/avatar_save2.png")
+
+
+        with Image.open("images/avatar_save2.png") as im:
+            im = im.convert("RGBA")
+
+            circular_im = make_circular(im)
+            circular_im.save("images/avatar_save2_circular.png")
+        
+        await typing_sleep(ctx)
+        await ctx.send("Aqui esta la foto circular", file=discord.File('images/avatar_save2_circular.png'))
+
+
+# ---> Welcome a user with a template <-----
+@bot.command()
+async def crear_template(ctx, member:discord.Member=None, *, content):
+    if member != None:
+        templat = Image.open('images/welcome_template.png')
+        template = templat.copy()
+
+        idraw = ImageDraw.Draw(template)
+        title = ImageFont.truetype(r'fonts/Roboto-Black.ttf', size = 360)      # Title fonts
+        subtitle = ImageFont.truetype(r'fonts/Roboto-Bold.ttf', size = 240)     # Subtitle fonts
+
+        name = member.name
+
+        idraw.text((493, 116), name, font = title, fill = "white")
+        idraw.text((465, 600), content, font = subtitle, fill = "white")
+
+        avatar_circ = Image.open('images/avatar_save2_circular.png')
+
+        template.paste(avatar_circ, (122, 97))          
+        template.save("images/final_template.png")    #saves the final photo with info
+
+        await typing_sleep(ctx)
+        await ctx.send("aqui esta el template", file=discord.File('images/final_template.png', spoiler=True))
+##############
+##############
+
 
 #----------> Another PILLOW command <-----------
 @bot.command()
@@ -613,11 +790,14 @@ async def profile(ctx, user: discord.Member = None):
     await typing_sleep(ctx)
     await ctx.send(file = discord.File("images/profile_save2.png"))
 
+
 #----------> Crear emoji desde una URL <--------
 @bot.command()
 async def crearemoji(ctx, url_emoji=None, *, name):
-    '''Crea un emoji a partir de una URL, aconsejable un formato menor de 512x512.
-    Si desconoces el tamaño de la imagen porbablemente no se cree el emoji...
+    '''
+    Crea un emote a partir de una URL, aconsejable un formato menor de 512x512.
+    Si desconoces el tamaño de la imagen probablemente no se cree el emoji...
+    Aconsejable que la URL sea directo a una imagen y no a una pagina en si.
     '''
     if url_emoji == None:
         await ctx.send("Debes seguir esta sintaxis: #crearemoji <url> <nombre_del_emoji>")
@@ -640,13 +820,20 @@ async def crearemoji(ctx, url_emoji=None, *, name):
                 await ctx.send("No pueden crearse emojis animados!")
 
             elif is_animated == False:
-                b = BytesIO()
-                img.save(b, format='PNG')
-                b_value = b.getvalue()
-                emoji = await guild.create_custom_emoji(image=b_value, name=name)
-                await ctx.send(f'Emoji creado satisfactoriamente, aquí está: <:{name}:{emoji.id}> y su id es:\n```< :{name}:{emoji.id} >```')
-                print(f"cmdCrearEmoji||     {ctx.author.name} creo el emoji custom '{name}' ")
-                
+                try:
+                    b = BytesIO()
+                    img.save(b, format='PNG')
+                    b_value = b.getvalue()
+                    emoji = await guild.create_custom_emoji(image=b_value, name=name)
+                    await ctx.send(f'Emoji creado satisfactoriamente, aquí está: <:{name}:{emoji.id}> y su id es:\n`<:{name}:{emoji.id}>`')
+                    print(f"cmdCrearEmoji||     {ctx.author.name} creo el emoji custom '{name}' ")
+                except Exception as e:
+                    await typing_sleep(ctx)
+                    await ctx.send("Hubo un error al tratar de crear el emote, lo mas probable es que su resolucion sea mayor a 512x512... Detalles del error en canal del bigobot")
+                    exception = f"Excepcion causada:{e}\nRazon:{e.args}"
+                    bigobot_chann = 799387331403579462
+                    bigobot_channel = await bot.fetch_channel(bigobot_chann)
+                    await bigobot_channel.send(exception)
 
 @crearemoji.error
 async def crearemoji_error(ctx, error):
@@ -654,41 +841,8 @@ async def crearemoji_error(ctx, error):
         await ctx.send("Faltan argumentos, debes seguir la sintaxis #crearemoji <url_de_la_imagen_a_convertir> <nombre_del_emoji>. Recuerda tener espacio suficiente en el servidor para emojis y que no sea .gif")
         await ctx.send("Recuerda que si quieres ver la sintaxis especfica de un comando puedes recurrir a **#help <#comando>** y para ver todos los comandos puedes recurrir a **#help** o **#ayuda** / **#comandos**")
         print(f"cmdCrearEmoji||      {ctx.author.name} fallo al crear un emoji ")
-
-# ----------> Roles Colors <---------
-# Be Careful if you have n roles, it'll print n messages
-# suggest to use #borrar cmd
-@bot.command()
-async def roles_n_colors(ctx):
-    '''Prints all roles with his respective HEX color, useful for dev's...'''
-    roles_quantity = 0
-    for role in ctx.guild.roles:
-        await ctx.send(f" The role '{role.name}' has a HEX color: {role.color}")
-        roles_quantity += 1
-    
-    await ctx.send(f" {ctx.author.mention} i highly suggest using command *#borrar {roles_quantity}* to clean this mess...")
-    print(f"cmdRolesColors||     {ctx.author.name} requested the roles colors")
-
-#--------> Tira un dado 9<--------
-@bot.command()
-async def dados(ctx, user=None, number1=1, number2=6):
-    '''
-    Tira un dado, recomendado para decidir turnos...
-    argumento user opcional.
-    argumento number1 y number2 por defecto 1 y 6 pero son modificables'''
-    if user is None:
-        user = ctx.author
-    number = random.randint(number1, number2)
-    dadosEmbed = discord.Embed(
-        title="#Dados",
-        description=f"Toco el numero {number} para {user.mention}"
-        )
-    dadosEmbed.set_thumbnail(url="https://cdn.discordapp.com/attachments/793309880861458473/842125661585276978/1f3b2.png") # dado.png
-
-    await typing_sleep(ctx)
-    await ctx.send(embed=dadosEmbed)
-    print(f"cmdDados||   A {ctx.author.name} le tocó el dado {number}")
-
+    else:
+        pass
 
 #--------> Steamcito Addon link <--------
 @bot.command()
@@ -712,7 +866,9 @@ async def repite(ctx, *, arg=None):
         await ctx.message.delete()
         print(f'cmdRepite||         {ctx.author.name} repitió "{arg}" el {current_hour}')
 
-########
+
+
+##############
 ############## COMANDOS DE VIDEOS RANDOMS 
 #---> Lamar roasts Franklin vid <---
 @bot.command()
@@ -760,7 +916,7 @@ async def golaso(ctx, *, args=None):
 #---> MATEUS505 GALO SNIPER vid <---
 @bot.command()
 async def galosniper(ctx):
-    '''galo sniper...'''
+    ''' PLEASE DO NOT ! '''
     embedGalo = discord.Embed(
         title="galo sniper",
         description="galo sniper",
@@ -781,43 +937,8 @@ async def galosniper(ctx):
     await ctx.send("https://www.youtube.com/watch?v=cwiVlpW7-XM")
     print(f'cmdGaloSniper|| Video del GALOSNIPER enviado a {ctx.author.name} XD')
 ############## FIN DE VIDEOS DE COMANDOS RANDOMS
-#########
+##############
 
-#--------> info del sv 1<-------
-@bot.command()
-async def info(ctx):
-    '''Info sobre el servidor'''
-    embed2 = discord.Embed(
-        title=f"{ctx.guild.name}",
-        description="Un poco de info del sv",
-        timestamp=datetime.utcnow(),
-        color=discord.Color.blue())
-
-    statuses = [len(list(filter(lambda m: str(m.status) == "online", ctx.guild.members))),
-					len(list(filter(lambda m: str(m.status) == "idle", ctx.guild.members))),
-					len(list(filter(lambda m: str(m.status) == "dnd", ctx.guild.members))),
-					len(list(filter(lambda m: str(m.status) == "offline", ctx.guild.members)))]
-
-
-    embed2.add_field(name=":calendar: *Sv creado el*", value=f'{ctx.guild.created_at.strftime("%d/%m/%Y, %H:%M:%S")}')
-    embed2.add_field(name=":crown: Server *ADMIN*", value=f"{ctx.guild.owner}")
-    embed2.add_field(name=":earth_americas: Region del server", value=f"{ctx.guild.region}", inline = False)
-    embed2.add_field(name=":id: *Server ID*", value=f"{ctx.guild.id}")
-    embed2.add_field(name=":family_mmbb: *Miembros totales*", value=f"{ctx.guild.member_count}")
-    embed2.add_field(name=":family_mmbb: *Personas*", value=f"{len(list(filter(lambda m: not m.bot, ctx.guild.members)))}", inline = False)
-    embed2.add_field(name=":robot: *Bots*", value=f"{len(list(filter(lambda m: m.bot, ctx.guild.members)))}")
-    embed2.add_field(name=":scroll: *Roles*", value=f"{len(ctx.guild.roles)}")
-    embed2.add_field(name=":traffic_light: *Estado de conexion*", value=f"🟢 {statuses[0]} 🟠 {statuses[1]} 🔴 {statuses[2]} ⚪ {statuses[3]}", inline = False)
-    embed2.add_field(name=":sound: Canales de voz", value=f"{len(ctx.guild.voice_channels)}")
-    embed2.add_field(name=":speech_balloon: Canales de texto", value=f"{len(ctx.guild.text_channels)}")
-    embed2.add_field(name=":no_entry: Baneos", value=f"{len(await ctx.guild.bans())}", inline = False)  
-    embed2.set_thumbnail(url=f"{ctx.guild.icon_url}")
-    embed2.set_footer(icon_url = ctx.author.avatar_url, text = f"Solicitud de {ctx.author.name}")
-    #embed2.set_thumbnail(url="https://photos.app.goo.gl/2KgkWLgrErRmC6mx5")
-
-    await typing_sleep(ctx)
-    await ctx.send(embed=embed2)
-    print(f'cmdInfo|| Info sobre {ctx.guild.name} enviada a {ctx.author.name} a las {current_hour}')
 
 
 #-------->COMANDOS DE AYUDA inicio<----------
@@ -937,6 +1058,7 @@ async def ayuda(ctx):
     embed_help.add_field(name="--> Comandos para admins ", value="#advertir, #advertencias, #kick, #ban, #set_canal_bienvenida, #set_canal_despedida, #pedir_ticket, #rol_reaccion, #setdelay", inline=False)
     embed_help.add_field(name="--> Comandos matemáticos", value="#matecomandos", inline=False)
     embed_help.add_field(name="--> Comandos de conversion", value="#bin_a_dec, #dec_a_bin, #hex_a_dec, #dec_a_hex, #num_a_rom", inline=False)
+    embed_help.add_field(name="--> Ayuda de un comando especifico", value="#help <comando>, a modo de ejemplo si quieres ver la ayuda del comando #descarga, seria: #help <descarga>...")
     embed_help.set_footer(text = "Listo para ayudarte ;)/🥂", icon_url=ctx.author.avatar_url)
     
     await typing_sleep(ctx)
@@ -978,54 +1100,6 @@ async def chusmear(ctx):
     await typing_sleep(ctx)
     await ctx.channel.send(embed=embed)
 
-@bot.command()
-async def avatar(ctx, member: discord.Member):
-    '''Muestra el avatar de un @usuario que menciones'''
-    embedAvatar = discord.Embed(
-        description = f'[**URL de la imagen**]({member.avatar_url})',  
-        color = discord.Colour.green(),
-        timestamp=datetime.utcnow()
-        )
-    #embedAvatar.add_field('[URL del avatar]: (str(member.avatar_url))')
-    embedAvatar.set_author(name=f"Avatar de: {member.name}#{member.discriminator}", icon_url=member.avatar_url)
-    embedAvatar.set_image(url = member.avatar_url)
-    embedAvatar.set_footer(icon_url = ctx.author.avatar_url, text = f"Solicitud de {ctx.author.name}")
-    await typing_sleep(ctx)
-    await ctx.send(embed=embedAvatar)
-    print(f"cmdAvatar||          Avatar de {member.name}#{member.discriminator} para {ctx.author.name} a las {current_hour}")
-
-
-#-----> Comando: "¿quien es?" 6<----
-@bot.command()
-async def quien(ctx, member: discord.Member): 
-    '''Info sobre @Mencion'''
-    fecha_Cumple = functions.bro_birthdays_check(member.id)
-
-    embedWho = discord.Embed(
-        title = member.name, 
-        description = member.mention, 
-        color = discord.Colour.green())
-    embedWho.add_field(name = "ID", value = member.id, inline = False)
-    embedWho.add_field(name = "Cumple", value = fecha_Cumple, inline = False)
-    embedWho.add_field(name = "Es bot?", value = member.bot, inline = False)
-    embedWho.add_field(name = "Mayor Rol", value = member.top_role.mention, inline = False)
-    embedWho.add_field(name = "Estado", value = str(member.status).title(), inline = False)
-    embedWho.add_field(name = "Actividad", value = f"{str(member.activity.type).split('.')[-1].title() if member.activity else 'N/A'} {member.activity.name if member.activity else ''}", inline = False)
-    embedWho.add_field(name = "Unido el", value = member.joined_at.strftime("%d/%m/%Y %H:%M:%S"), inline = False)
-    embedWho.set_thumbnail(url = member.avatar_url)
-    embedWho.set_footer(icon_url = ctx.author.avatar_url, text = f"Solicitud de {ctx.author.name}#{member.discriminator}")
-    
-    await typing_sleep(ctx)
-    await ctx.send(embed=embedWho)
-    print(f"cmdQuien||       Info sobre {member.name}#{member.discriminator} para {ctx.author.name} a las {current_hour}")
-
-@quien.error
-async def quien_error(ctx, error):
-    if isinstance(error, commands.MissingRequiredArgument):
-        await ctx.send("Seguido del comando debes @Mencionar a alguien")
-        await ctx.send("Recuerda que si quieres ver la sintaxis especfica de un comando puedes recurrir a **#help <#comando>** y\npara ver todos los comandos puedes recurrir a **#help** o **#ayuda** / **#comandos**")
-        print(f"cmdQuien||     {ctx.author.name} olvidó mencionar a alguien")
-#------------------------------->>>
 
 #----> memes y gifs 5<-----
 @bot.command()
@@ -1051,14 +1125,14 @@ async def meme(ctx):
         print(f'cmdMeme||         Meme enviado a {ctx.author.name} a las {current_hour}')
 
 #----> Reddit meme <----
-@bot.command()
+'''@bot.command()
 async def reddit_meme(ctx, subreddit_to_search=None):
-    """EN: Searchs for a random meme in a given subreddit. 
+    EN: Searchs for a random meme in a given subreddit. 
     subreddit r/memes by default if no subreddit is given...
     syntax example: #reddit_meme dankmemes\n
     ES: Busca un meme random en un subreddit dado.
     por defecto envia memes del subreddit r/memes...
-    ejemplo: #reddit_meme MemesArgentina"""
+    ejemplo: #reddit_meme MemesArgentina
     if subreddit_to_search != None:
         subreddit_url = f"https://www.reddit.com/r/{subreddit_to_search}.json"
     elif subreddit_to_search == None:
@@ -1072,7 +1146,6 @@ async def reddit_meme(ctx, subreddit_to_search=None):
             embedReddit = discord.Embed(
                 title = (f"Meme/post de r/{subreddit_to_search}."),
                 color = discord.Color.purple(),
-                timestamp = datetime.utcnow()
             )
             embedReddit.add_field(name = "***Título***", value = f'{memes["data"]["children"][pick_random]["data"]["title"]}', inline = True)
             embedReddit.add_field(name = "***Autor***", value = f'{memes["data"]["children"][pick_random]["data"]["author"]}', inline = True)
@@ -1081,7 +1154,7 @@ async def reddit_meme(ctx, subreddit_to_search=None):
             embedReddit.set_footer(icon_url = ctx.author.avatar_url, text = f"Meme para {ctx.author.name}")
             await typing_sleep(ctx)
             await ctx.send(embed = embedReddit)
-            print(f'cmdRedditMeme||         Meme enviado  {ctx.author.name} a las {current_hour}')
+            print(f'cmdRedditMeme||         Meme enviado  {ctx.author.name} a las {current_hour}')'''
 
 #---->Juegos gratis epic <----
 @bot.command()
@@ -1139,48 +1212,6 @@ async def willy(ctx):
     await typing_sleep(ctx)
     await ctx.send(random.choice(listas.willyooc))
     print(f'cmdWilly||      Willy OOC enviado a {ctx.author.name} a las {current_hour}')
-
-#----> campeones del LoL 10<-----
-@bot.command()
-async def randomchamp(ctx):
-    '''Campeon random de lol, recomendado primero jugar al #ppt (piedra papel o tijeras) si se requiere turnarse'''
-    await ctx.send("3...")
-    await asyncio.sleep(0.5)
-    await ctx.send("2...")
-    await asyncio.sleep(0.5)
-    await ctx.send("1...")
-    await asyncio.sleep(0.5)
-
-    embed3 = discord.Embed(color = discord.Colour.orange(), timestamp=datetime.utcnow())
-    randomChamp = random.choice(listas.campeones)
-    embed3.set_thumbnail(url="https://cdn.discordapp.com/attachments/793309880861458473/797965087767396442/lol-icon.png")
-    embed3.add_field(name= f"Campeón Aleatorio:", value=f"{randomChamp}")
-    embed3.set_footer(icon_url = ctx.author.avatar_url, text = f"Le tocó a {ctx.author}") 
-    
-    await typing_sleep(ctx)
-    await ctx.send(embed=embed3)
-    print(f"cmdRandomChamp|| Campeón aleatorio enviado, a día de hoy en la lista hay: {str(len(listas.campeones))}")
-
-#----> Brawlers randoms de BS<-----
-@bot.command()
-async def randombrawl(ctx):
-    '''Brawler random, recomendado primero jugar al #ppt (piedra papel o tijeras) si se requiere turnarse'''
-    await ctx.send("3...")
-    await asyncio.sleep(0.5)
-    await ctx.send("2...")
-    await asyncio.sleep(0.5)
-    await ctx.send("1...")
-    await asyncio.sleep(0.5)
-    
-    embed = discord.Embed(color = discord.Colour.orange(), timestamp=datetime.utcnow())
-    randomBrawl = random.choice(listas.brawlers)
-    embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/793309880861458473/797964925980246066/c849eb95e858ce12cdc86cb6d4ecb36b00bbdfaa96d9973852d1421661f5aec5200.png")
-    embed.add_field(name= "Brawler Aleatorio: ", value=f"{randomBrawl}")
-    embed.set_footer(icon_url = ctx.author.avatar_url, text = f"Le tocó a {ctx.author}")
-    
-    await typing_sleep(ctx)
-    await ctx.send(embed=embed)
-    print(f"cmdRandomBrawl|| Brawler aleatorio enviado, hoy {current_hour} en la lista hay: {str(len(listas.brawlers))}")
 
 
 #--------> buscar vids de yt 3<-------
@@ -1599,7 +1630,7 @@ async def fib(ctx, number: int):
 @bot.command()
 @commands.has_permissions(kick_members=True)
 async def setdelay(ctx, seconds: int):
-    '''Define el modo lento a una cantidad determinada, debes tener permisos suficientes (kick permissions required)'''
+    '''Define el modo lento a una cantidad determinada, debes tener permisos suficientes (kick permissions al menos)'''
     await ctx.channel.edit(slowmode_delay=seconds)
     await typing_sleep(ctx)
     await ctx.send(f"El modo lento ha sido definido en {seconds} segundos!")
@@ -1612,6 +1643,7 @@ async def setdelay_error(ctx, error):
 
 #---> MD a usuario 12 con ID <---
 @bot.command()
+@commands.has_permissions(administrator=True)
 async def md(ctx, user_id=None, *, args=None):
     '''Envia un MD a una ID, solo funciona con ID's de usuarios...'''
     if user_id != None and args != None:
@@ -1631,14 +1663,15 @@ async def md(ctx, user_id=None, *, args=None):
 
 #---> DM a usuarios con @mencion <---
 @bot.command()
-async def dm(ctx, member: discord.Member, *, args=None):
+@commands.has_permissions(administrator=True)
+async def dm(ctx, member_mention: discord.Member, *, args=None):
     '''Envia un MD a un @usuario, solo funciona con @menciones...'''
-    if member != None or args != None:
+    if member_mention != None or args != None:
         try:
-            await member.send(args)
+            await member_mention.send(args)
             await typing_sleep(ctx)
-            await ctx.channel.send(f"Le enviaste un md con éxito a: {member.name}")
-            print(f"cmdMD||    {ctx.author.name} le envió un md a {member.name} diciendole: {args} a las {current_hour}")
+            await ctx.channel.send(f"Le enviaste un md con éxito a: {member_mention.name}")
+            print(f"cmdMD||    {ctx.author.name} le envió un md a {member_mention.name} diciendole: {args} a las {current_hour}")
         except:
             await typing_sleep(ctx)
             await ctx.channel.send("No se pudo enviar el dm, este comando funcion con @Mención y no con ID")       
@@ -1650,6 +1683,7 @@ async def dm(ctx, member: discord.Member, *, args=None):
 
 #---> Mensajes a canales con el bot 13<---
 @bot.command()
+@commands.has_permissions(administrator=True)
 async def mensaje(ctx, channel_id=None, *, args=None):
     '''Envia un mensaje a un canal con su ID, sintaxis #mensaje <id_del_canal> <mensaje_aqui>'''
     if channel_id != None and args != None:
@@ -1770,11 +1804,10 @@ async def kick(ctx, member: discord.Member, *, reason=None):
 @commands.has_permissions(ban_members=True)
 async def ban(ctx, member: discord.Member, *, reason=None):
     '''Banea a un usuario, requiere permisos. Argumento reason opcionable.'''
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)
-        msg = await ctx.channel.send(f"Estas seguro que quieres **banear** a {member}?")
-        await msg.add_reaction(u"\u2705")
-        await msg.add_reaction(u"\U0001F6AB")
+    await typing_sleep(ctx)
+    msg = await ctx.channel.send(f"Estas seguro que quieres **banear** a {member}?")
+    await msg.add_reaction(u"\u2705")
+    await msg.add_reaction(u"\U0001F6AB")
 
     try:
         reaction, user = await bot.wait_for("reaction_add", check=lambda reaction, user: user == ctx.author and reaction.emoji in [u"\u2705", u"\U0001F6AB"], timeout=10)
@@ -1800,6 +1833,7 @@ async def ban(ctx, member: discord.Member, *, reason=None):
             await typing_sleep(ctx)
             await ctx.channel.send(f"{member} no fue baneado asi que safo")
             print(f"cmdBan||        {member} iba a ser baneado {ctx.author.name} pero safo")
+
 
 
 #------------>  interaccion con el bot 2  <---------------
@@ -1922,8 +1956,10 @@ async def on_message(message):
     elif msg.startswith('#tuma'):
         await message.channel.send("{}".format(random.choice(listas.bardeo)))
     elif msg.startswith('#jose'):
+        await message.channel.send(word_to_emoji("jose"))
         await message.channel.send("{}".format(random.choice(listas.jopiyo)))
     elif msg.startswith('#jopi'):
+        await message.channel.send(word_to_emoji("jopi"))
         await message.channel.send("{}".format(random.choice(listas.jopiyo)))
     elif msg.startswith('#Jopi'):
         await message.channel.send("{}".format(random.choice(listas.jopiyo)))
@@ -1938,6 +1974,7 @@ async def on_message(message):
     elif msg.startswith('#aquito'): 
         await message.channel.send("{}".format(random.choice(listas.aquitocartes)))
     elif msg.startswith('#wens'): 
+        await message.channel.send(word_to_emoji("wensel"))
         await message.channel.send("{}".format(random.choice(listas.nicolas)))  
     elif msg.startswith('#ecla'): 
         await message.channel.send(word_to_emoji("ecla"))
@@ -1957,9 +1994,26 @@ async def on_message(message):
     elif msg.startswith('#sousken'):
         await message.channel.send(word_to_emoji("souskenin"))
         await message.channel.send("{}".format(random.choice(listas.asociados)))
+    elif msg.startswith('#stalker'):
+        await message.channel.send(word_to_emoji("stalker"))
+        await message.channel.send("{}".format(random.choice(listas.asociados)))
+    elif msg.startswith('#ecla'):
+        await message.channel.send(word_to_emoji("ecla"))
+        await message.channel.send("{}".format(random.choice(listas.asociados)))
+    elif msg.startswith('#komiwa'):
+        await message.channel.send(word_to_emoji("komiwa"))
+        await message.channel.send("{}".format(random.choice(listas.asociados)))
+    elif msg.startswith('#krivta'):
+        await message.channel.send(word_to_emoji("krivta"))
+        await message.channel.send("{}".format(random.choice(listas.asociados)))
+    elif msg.startswith('#fiktizio'):
+        await message.channel.send(word_to_emoji("fiktizio"))
+        await message.channel.send("{}".format(random.choice(listas.asociados)))
     elif msg.startswith('#among'):
+        await message.channel.send(word_to_emoji("amongo"))
         await message.channel.send("{}".format(random.choice(listas.amongo)))
     elif msg.startswith('#waif'):
+        await message.channel.send(word_to_emoji("waifu"))
         await message.channel.send("{}".format(random.choice(listas.waifu)))   
     elif msg.startswith('#pecetote'): 
         await message.channel.send(word_to_emoji("pecetote"))
@@ -2032,7 +2086,7 @@ async def clima(ctx, *, location: str=None):
 
 #---------> juego command <--------
 @bot.command()
-async def juego(ctx):
+async def juegos(ctx):
     '''ta te ti y otros juegos (otros juegos estan por venir)'''
     await game.LoadGames(ctx, bot)    
 
@@ -2071,10 +2125,11 @@ async def qr(ctx, *, qrstring: str=None):
 async def borrar(ctx, limit=10, member: discord.Member=None):
     '''
     Borra una cantidad determinada de mensajes, por defecto 10 mensajes pero puedes establecer una 
-    cantidad. El argumento <member> pemite borrar especificamente los mensajes de dicho miembro @mencionado
-    Por ejemplo: #borrar <cantidad_de_mensajes_que_deseas_borrar> <usuario_de_quien_borrar_mensajes>
-    #borrar a secas causara una eliminacion de 40 mensajes, #borrar 10 @usuario_c causara una eliminacion
-    de los ultimos 10 mensajes del usuario_c....
+    cantidad. 
+    El argumento <member> pemite borrar especificamente los mensajes de dicho miembro @mencionado.
+    Por ejemplo: [#borrar] <cantidad_de_mensajes_que_deseas_borrar> <usuario_de_quien_borrar_mensajes>
+    Usar el comando a secas causara una eliminacion de 10 mensajes por defecto. 
+    [#borrar] <10> <@usuario_c> causara una eliminacion de los ultimos 10 mensajes del usuario_c....
     '''
     try:
         await ctx.message.delete()  # borra el mensaje del autor al escribir el comando
@@ -2086,7 +2141,7 @@ async def borrar(ctx, limit=10, member: discord.Member=None):
         if not member:
             await ctx.channel.purge(limit=limit)
             await typing_sleep(ctx)
-            return await ctx.send(f"{limit} mensajes borrados", delete_after=12)
+            return await ctx.send(f":wastebasket: {limit} mensajes borrados", delete_after=12)
         async for m in ctx.channel.history():
             if len(msg) == limit:
                 break
@@ -2094,38 +2149,74 @@ async def borrar(ctx, limit=10, member: discord.Member=None):
                 msg.append(m)
         await ctx.channel.delete_messages(msg)
         await typing_sleep(ctx)
-        await ctx.send(f"{limit} mensajes borrados de {member.mention}", delete_after=12)
+        await ctx.send(f":wastebasket: {limit} mensajes borrados de {member.mention}", delete_after=12)
     
-    except errors.CommandInvokeError:
-        await typing_sleep(ctx)
-        await ctx.send(f"{ctx.author.name} solo es posible borrar mensajes con menos de 14 dias de antiguedad...")
+    except Exception as e:
+        # check if the msg is older than 2 weeks
+        if isinstance(e, errors.CommandInvokeError):
+            await typing_sleep(ctx)
+            await ctx.send(f":exclamation: {ctx.author.name} solo es posible borrar mensajes con menos de 14 dias de antiguedad...")
+        if isinstance(e, errors.BadArgument):
+            await typing_sleep(ctx)
+            await ctx.send(f":exclamation: {ctx.author.name} esa no es la sintaxis correcta del comando, utiliza `#help borrar`!")
+        # otherwise send the name and reason of the exception
+        else:
+            await typing_sleep(ctx)
+            await ctx.send(f":exclamation: An exception occured. Please contact the developer\n```Exception: {e}\n Reason: {e.args}```")
+
+
+@bot.command()
+async def submit(ctx, titulo, mensaje):#, archivo):
+    """
+    Argumento archivo puede ser: <json>, <csv> o <sqlite> (WIP)
+    """
+    #dict = titulo:mensaje
+    with open('json_files/testeo.json', 'r+') as pepe:
+        content = json.load(pepe)
+        if content == {}:
+            json.dump(ctx.author.name, pepe, indent=2)
+        length_json = int(len(content) + 1)
+    content[ctx.author.name][length_json] = {titulo:mensaje}
+    with open('json_files/testeo.json', 'w') as pepe: 
+        json.dump(content, pepe, indent=2)
+    await ctx.send("submit recibido", file=discord.File('json_files/testeo.json'))
+
+
+
+
 
 
 # cog loader cmd
-bot_developer_id = '485259816399536128'
+# bot_developer_id Variable is at top of file
 @bot.command()
 async def load(ctx, extension):
-    '''Loads an specific cog, developer only!'''
+    '''
+    Loads an specific cog, developer only atm! 
+    Don't include the .py extension!
+    '''
     id = str(ctx.author.id)
-    if id == f'{bot_developer_id}':
+    if id == bot_developer_id:
         bot.load_extension(f'cogs.{extension}')
         await typing_sleep(ctx)
         await ctx.send(f"{ctx.author.name} cargaste el cog {extension} con exito")
-        print(f'cmdLoad||     {ctx.author.name} cargo un cogs')
+        print(f'cmdLoad||     El cog {extension}.py fue cargado con exito')
     else:
         await typing_sleep(ctx)
         await ctx.send("Solo el desarrollador puede cargar/habilitar los cogs del bot")
 
-# cog unloader cmdf
+# cog unloader cmd
 @bot.command()
 async def unload(ctx, extension):
-    '''Unloads an specific cog, developer only!'''
+    '''
+    Unloads an specific cog, developer only!
+    Don't include the .py extension!
+    '''
     id = str(ctx.author.id)
-    if id == f'{bot_developer_id}':
+    if id == bot_developer_id:
         bot.unload_extension(f'cogs.{extension}')
         await typing_sleep(ctx)
         await ctx.send(f"{ctx.author.name} descargaste el cog {extension} con exito")
-        print(f'cmdUnload||   {ctx.author.name} descargo un cogs')
+        print(f'cmdUnload||   El cog {extension}.py fue descargado con exito')
     else:
         await typing_sleep(ctx)
         await ctx.send("Solo el desarrollador puede cargar/habilitar los cogs del bot")
@@ -2142,10 +2233,12 @@ async def ping(ctx, arg=None):
         await typing_sleep(ctx)
         await ctx.send(f"Tu ping es: {round(bot.latency * 1000)}ms\nEste ping es con respecto a mí, no con respecto a los servidores de discord!!")
 
-
+# ----> Cogs loader <----
 for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
         bot.load_extension(f'cogs.{filename[:-3]}')
 
 
 bot.run(os.getenv('TOKEN'))
+
+

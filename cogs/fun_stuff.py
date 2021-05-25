@@ -14,11 +14,11 @@ from discord.ext import commands
 from apis import permissions
 from databases import ballresponse
 from functions import printt, typing_sleep
+from listas import brawlers, campeones
 
 
 
-
-class Fun_Commands(commands.Cog):
+class FunCommands(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -221,6 +221,72 @@ class Fun_Commands(commands.Cog):
         else:
             await ctx.send(f"{slotmachine} No hay match, no ganas... 😢")
 
+    @commands.command(aliases=['dices','roll_dices','tirardados','tirar_dados','lanzardados'])
+    async def dados(self, ctx, user=None, number1=1, number2=6):
+        '''
+        Tira un dado, recomendado para decidir turnos...
+        argumento user opcional.
+        argumento number1 y number2 por defecto 1 y 6 pero son modificables
+        '''
+        if user is None:
+            user = ctx.author
+        number = random.randint(number1, number2)
+        dadosEmbed = discord.Embed(
+            title="#Dados",
+            description=f"Toco el numero {number} para {user.mention}")
+        dadosEmbed.set_thumbnail(url="https://cdn.discordapp.com/attachments/793309880861458473/842125661585276978/1f3b2.png") # dado.png
+
+        await typing_sleep(ctx)
+        await ctx.send(embed=dadosEmbed)
+        print(f"cmdDados||   A {ctx.author.name} le tocó el dado {number}")
+
+    @commands.command(aliases=['brawler_random','brawler'])
+    async def randombrawl(self, ctx):
+        '''Brawler random, recomendado primero jugar al #ppt (piedra papel o tijeras) si se requiere turnarse'''
+        await ctx.send("3...", delete_after=45.0)
+        await asyncio.sleep(0.5)
+        await ctx.send("2...", delete_after=45.0)
+        await asyncio.sleep(0.5)
+        await ctx.send("1...", delete_after=45.0)
+        await asyncio.sleep(0.5)
+        
+        embed = discord.Embed(color = discord.Colour.orange())
+        randomBrawl = random.choice(brawlers)
+        embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/793309880861458473/797964925980246066/c849eb95e858ce12cdc86cb6d4ecb36b00bbdfaa96d9973852d1421661f5aec5200.png")
+        embed.add_field(name= "Brawler Aleatorio: ", value=f"{randomBrawl}")
+        embed.set_footer(icon_url = ctx.author.avatar_url, text = f"Le tocó a {ctx.author}")
+        
+        await typing_sleep(ctx)
+        await ctx.send(embed=embed, delete_after=200.0)
+        print(f"cmdRandomBrawl|| Brawler aleatorio enviado, en la lista hay: {str(len(brawlers))}")
+
+    @commands.command(aliases=['lolchamp','randomlol','lol','campeonrandom'])
+    async def randomchamp(self, ctx):
+        '''Campeon random de lol, recomendado primero jugar al #ppt (piedra papel o tijeras) si se requiere turnarse'''
+        await ctx.send("3...", delete_after=45.0)
+        await asyncio.sleep(0.5)
+        await ctx.send("2...", delete_after=45.0)
+        await asyncio.sleep(0.5)
+        await ctx.send("1...", delete_after=45.0)
+        await asyncio.sleep(0.5)
+
+        random_int = random.randint(0, 154)
+
+        with open("databases/lol_champions.json", "r") as f:
+            key = json.load(f)
+            randomCham = key["campeones"][random_int]["campeon"]
+            randomSubt = key["campeones"][random_int]["frase"]
+            randomImag = key["campeones"][random_int]["icon"]
+            
+        embed3 = discord.Embed(title=randomCham,description=randomSubt,color = discord.Colour.orange())
+        embed3.set_thumbnail(url="https://cdn.discordapp.com/attachments/793309880861458473/797965087767396442/lol-icon.png")
+        embed3.set_image(url=randomImag)
+        embed3.set_footer(icon_url = ctx.author.avatar_url, text = f"Le tocó a {ctx.author}") 
+        
+        await typing_sleep(ctx)
+        await ctx.send(embed=embed3, delete_after=200.0)
+        print(f"cmdRandomChamp|| Campeón aleatorio enviado, en la lista hay: {str(len(campeones))}")
+
 
 def setup(bot):
-    bot.add_cog(Fun_Commands(bot))
+    bot.add_cog(FunCommands(bot))

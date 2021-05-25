@@ -706,8 +706,6 @@ images = [
   #'', #
   #'', #
 
-
-
 ]
 
 ##-----> frases del comando trivia <-----
@@ -716,24 +714,23 @@ trivias = [
     '¿Nico dijo gorda mala leche por 1ra vez? (SI / NO)',
     '¿Tobo es un machito? (SI / NO)',
     '¿Lezca es un inválido? (SI / NO)',
-    '¿La sofi tiene un OnlyFans? (SI / NO)',
+    '¿Sofi tiene un OnlyFans? (SI / NO)',
     '¿El tadeo la cuelga a 90°? (SI / NO)',
     '¿El reteke es un manco en lol? (SI / NO)',
     '¿copipedro? (SI / NO)',
     '¿El mato es un puto? (SI / NO)',
     '¿Lezca tiene chapa? (SI / NO)',
-    '¿El jose es boliviano? (SI / NO)',
-    '¿El monsa dijo la gorda come doble? (SI / NO)',
-    '¿El coppi es horrible en el brawl? (SI / NO)',
+    '¿El Jose es boliviano? (SI / NO)',
+    '¿El Monsa dijo la gorda come doble? (SI / NO)',
+    '¿El Coppi es horrible en el brawl? (SI / NO)',
     '¿La derivada del cociente de dos funciones es igual a la derivada del numerador por el denominador menos la derivada del denominador por el numerador, divididas por el cuadrado del denominador?',
     '¿los otakus no se bañan? (SI / NO)',
     '¿Alberto se lucio con la inflacion? (SI / NO)',
     '¿Al rubén lo gorrearon? (SI / NO)',
-    '¿la hora de civica es para jugar al brawl? (SI / NO)',
+    '¿la hora de civica es para jugar Brawl o CoC? (SI / NO)',
     '¿la yenny venegas se murió como dijeron por ahí? (SI / NO)',
     '¿Isreal es un estado legitimo? (SI / NO)',
     '¿A nisman lo mataron? (SI / NO )',
-    '¿espert dijo pais del orto? (SI / NO)',
     '¿Stephen Hawking logró hallar su último teorema o la pisteó mal? (SI / NO)',
     '¿copipedro pedrocopi copipedro? (copi / pedro)',
     '¿El pache es una tormenta de facha (SI / NO)?',
@@ -741,6 +738,8 @@ trivias = [
     '¿nico habilita el choquin? (SI / NO)',
     '¿seki se habilita el depto? (SI / NO)',
     '¿Kung Fu panda pelicula de mierda? (SI / NO)',
+    '¿El registro de auditoria deberia ser publico? (SI / NO)',
+
 ]
 
 ##-------> frases de la claudia <-------
@@ -784,13 +783,24 @@ botCall = [
  'soy todo oidos [tecnicamente no pero no importa]',
  'que pasa amigo',
  'que se cuece',
- 'que pasa tirriiii como diría el FACU RIVAS ',
+ 'que pasa tirriiii como diría el FACU RIVAS',
  'quéeeeeeeeeeeeeeee',
  'estoy en mantenimiento que pasa',
  'no puedo ahora no puedo',
- 'implementando funciones..',
+ 'despuesss ahora no'
+ 'no puedo, implementando funciones..',
 ]
 
+##----> frases de bienvenida SPANISH<----
+new_arrival =[
+    ':pogger: Con el arribo de',
+    ':pogger: Con la llegada de',
+    ':pogger: Con la union de',
+    ':pogger: Al unirse',
+    ':pogger: Ahora que llego',
+    ':pogger: Ahora que se unio',
+    ':pogger: Habiendo llegado',
+]
 
 ##------> frases del ruben <-------
 rubenes = [
@@ -814,7 +824,7 @@ campeones = [
     'Annie', 
     'Aphelios', 
     'Ashe',
-    'Aurelion Sol',
+    'Aurelion',
     'Azir',
     'Bardo',
     'Blitzcrank',
@@ -823,7 +833,7 @@ campeones = [
     'Caitlyn', 
     'Camille', 
     'Cassiopeia', 
-    'Cho\'Gath', 
+    "Cho'Gath", 
     'Corki', 
     'Darius', 
     'Diana', 
@@ -842,6 +852,7 @@ campeones = [
     'Gnar',
     'Gragas', 
     'Graves', 
+    'Gwen',
     'Hecarim', 
     'Heimerdinger', 
     'Illaoi', 
@@ -853,7 +864,7 @@ campeones = [
     'Jayce', 
     'Jhin', 
     'Jinx', 
-    'Kai\'Sa', 
+    "Kai'Sa", 
     'Kalista', 
     'Karma', 
     'Karthus', 
@@ -862,10 +873,10 @@ campeones = [
     'Kayle', 
     'Kayn', 
     'Kennen', 
-    'Kha\'Zix',
+    "Kha'Zix",
     'Kindred', 
     'Kled', 
-    'Kog\'Maw', 
+    "Kog'Maw", 
     'LeBlanc', 
     'Lee Sin',
     'Leona', 
@@ -874,7 +885,7 @@ campeones = [
     'Lucian', 
     'Lulu', 
     'Lux', 
-    'Master Yi',
+    'Maestro Yi',
     'Malphite', 
     'Malzahar', 
     'Maokai', 
@@ -887,7 +898,7 @@ campeones = [
     'Neeko', 
     'Nidalee', 
     'Nocturne', 
-    'Nunu & Willump', 
+    'Nunu y Willump', 
     'Olaf', 
     'Orianna', 
     'Ornn', 
@@ -898,7 +909,7 @@ campeones = [
     'Quinn', 
     'Rakan',
     'Rammus', 
-    'Rek\'Sai',
+    "Rek'Sai",
     'Rell',
     'Renekton', 
     'Rengar',
@@ -938,8 +949,9 @@ campeones = [
     'Varus',
     'Vayne',
     'Veigar',
-    'Vel\'Koz',
+    "Vel'Koz",
     'Vi',
+    'Viego'
     'Viktor',
     'Vladimir',
     'Volibear', 
@@ -1139,7 +1151,9 @@ jopiyo = [
     'idolatra a Evo Morales el jose',
     'humildad al 100%',
     'anda triste ese https://i.imgur.com/BIjI8rY.png',
-    'Tienda brawl stars usar codigo: `JopiYo`'
+    'Tienda brawl stars usar codigo: `JopiYo`',
+    'jose lolicon puto',
+    'A ese lo trolearon jaja:\nhttps://video.twimg.com/ext_tw_video/1395969359600836608/pu/vid/854x480/8IzVBXItKhdLWOet.mp4?tag=12'
 
 ]
 
@@ -1190,6 +1204,7 @@ brawlers = [ # ordered by rarity!
     'Lou',
     'Coronel Ruffs',
     'Belle',
+    'Squeak',
 
 ]
 
@@ -1315,18 +1330,18 @@ willyooc = [
 bot_statuses = [
     'con la claudia',                               #borrar si el bot es publico
     'con la hermana del pili',                      #borrar si el bot es publico
-    'con la prima del pache',                      #borrar si el bot es publico
+    #'con la prima del pache',                      #borrar si el bot es publico
     #f'en {channel_count} servers | #help',
     'comandos -> #ayuda | #help | #comandos',
+    'dolar --> #dolar',
+    '#juegos_gratis :)',
+    'meme --> #memes',
     'ser cada vez mejor',
     'GTA V',
     'running discord.py',
     'mejorar mi codigo',
     'implementar funciones',
     'choquin en lo de nico',
-    'dolar --> #dolar',
-    'meme --> #memes',
-    '#juegos_gratis :)',
     'sumar mas funciones',
     'Apex Legends',
     'Minecraft',
@@ -1334,12 +1349,15 @@ bot_statuses = [
     'Among Us',
     'osu!',
     'copipedro.exe',
-    'wish you a happy day :)',
+    'if you read this, have a great day :)',
     '(:/ ten un gran dia!',
     'Grieta del invocador',
     'depto en lo de frankito',
     'En Github!',
     'viendo un directo',
+    'good vibes only',
+    'hosted soon...',
+    'Creado por JuliTJZ#8141',
 ]
 
 #---> ASCII ART <-----
@@ -1490,9 +1508,10 @@ waifu = [
         ⣿⡿⠰⠄⠄⠄⠄⠄⠄⠄⠄⠈⠉⠩⠔⠒⠉⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠐⠘⣿
         ⣿⠃⠃⠄⠄⠄⠄⠄⠄⣀⢀⠄⠄⡀⡀⢀⣤⣴⣤⣤⣀⣀⠄⠄⠄⠄⠄⠄⠁⢹""",
 ]
+#---> ASCII ART <-----
 
 
-#----> Bros ID's <----
+#----> dict Bros ID's <----
 brosId = {
     'Tambo': 343963045682216960,
     'Monsa': 485259816399536128,

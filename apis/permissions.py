@@ -1,4 +1,5 @@
 # Original author AlexFlipnote / discord_bot.py
+# Repo: https://github.com/AlexFlipnote/discord_bot.py
 # needed in fun.py cog
 
 import discord

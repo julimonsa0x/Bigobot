@@ -4,30 +4,37 @@ Monsa's custom functions
 
 Useful functions for a main.py cleaner
 """
-# 1st function |Printt| ==> 
+# 1st function |Printt()| ==> 
 from sys import stdout
 from time import sleep
 
-# 2nd function |Get_Dolar| ==> 
+# 2nd function |Get_Dolar()| ==> 
 import requests
 
-# 3rd function Bro_Birthdays_Check| ==>
+# 3rd function |Bro_Birthdays_Check()| ==>
 from listas import brosId
 import broBdays
 
-# 4th function || ==>
-import json
+# 4th function |fibonacci()| ==>
+
+# 5th function |get_apex_data()|
+# Already imported requests library !!!
+# dotenv required by tracker.gg API
 from dotenv import load_dotenv
 import os
 load_dotenv()
 
-# 5th function || ==>
+# 6th function |typing_sleep()| ==>
 from asyncio import sleep as asyncsleep
 from random import uniform
 
-# 6th function || ==>
-# 7th function || ==>
+# 7th function |degrees_to_cardinal()| ==>
 
+# 8th function |word_to_emoji()| ==>
+
+# 9th, 10th and 11th functions, required by json_level.py
+
+# 12th function || ==>
 
 
 # ====== Variables ======
@@ -35,13 +42,13 @@ type_time = uniform(0, 2)
 
 
 
-
+# ====== Funciones ======
 # 1st Function
-def printt(string, delay=0.003):
+def printt(string, delay=0.002):
     '''
     Print a string or f-string with delay between its characters.
-    Argument delay float expected recommended 0.005 <= delay <= 0.2
-    delay 5ms between every character by default
+    Argument delay float expected recommended 0.001 <= delay <= 0.2
+    delay 2ms between every character by default
     Author: Lorenzo Campos, forked from his snake.py repl ...
     '''
     for character in string:
@@ -197,6 +204,33 @@ def word_to_emoji(word:str):
     return "".join(word_list)
 
 # 9th function
-
+async def update_data(users, user, server):
+    """Required by json_level.py"""
+    if not str(server.id) in users:
+        users[str(server.id)] = {}
+        if not str(user.id) in users[str(server.id)]:
+            users[str(server.id)][str(user.id)] = {}
+            users[str(server.id)][str(user.id)]['experience'] = 0
+            users[str(server.id)][str(user.id)]['level'] = 1
+    elif not str(user.id) in users[str(server.id)]:
+            users[str(server.id)][str(user.id)] = {}
+            users[str(server.id)][str(user.id)]['experience'] = 0
+            users[str(server.id)][str(user.id)]['level'] = 1
 
 # 10th function
+async def add_experience(users, user, exp, server):
+    """Required by json_level.py"""
+    users[str(user.guild.id)][str(user.id)]['experience'] += exp
+
+#11th function
+async def level_up(users, user, channel, server):
+    """Required by json_level.py"""
+    experience = users[str(user.guild.id)][str(user.id)]['experience']
+    lvl_start = users[str(user.guild.id)][str(user.id)]['level']
+    lvl_end = int(experience ** (1/4))
+    if str(user.guild.id) != 'pepe':
+        if lvl_start < lvl_end:
+            await channel.send('{} has leveled up to Level {}'.format(user.mention, lvl_end))
+            users[str(user.guild.id)][str(user.id)]['level'] = lvl_end
+
+# 12th function

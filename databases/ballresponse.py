@@ -14,9 +14,10 @@ ballresponse = [
   "No lo sé, tu mandas...", 
   "no... (╯°□°）╯︵ ┻━┻", 
   "no... baka",
-  "senpai, pls no ;-;"
-  "Hay que recurrir a wikipedia..."
-  "Carezco de conocimiento"
-  "copipedro"
-  "no se"
+  "senpai, pls no ;-;",
+  "Hay que recurrir a wikipedia...",
+  "Carezco de conocimiento",
+  "copipedro",
+  "no se",
+  "mmm...",
 ]

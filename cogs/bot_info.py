@@ -1,4 +1,5 @@
 # Original author AlexFlipnote / discord_bot.py
+# Repo: https://github.com/AlexFlipnote/discord_bot.py
 
 import time
 import discord
@@ -11,7 +12,7 @@ from discord.ext import commands
 from functions import printt
 
 
-class Information(commands.Cog):
+class BotInformation(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.process = psutil.Process(os.getpid())
@@ -45,4 +46,4 @@ class Information(commands.Cog):
         print(f"cmdAbout||       {ctx.author.name} just requested the info about the bot")
 
 def setup(bot):
-    bot.add_cog(Information(bot))
+    bot.add_cog(BotInformation(bot))

@@ -14,7 +14,7 @@ def get_image(dict_content: str):
         return dict_content["images"][0]
 
 
-class fb_posts(commands.Cog):
+class FbPosts(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -86,4 +86,4 @@ class fb_posts(commands.Cog):
     
 
 def setup(bot):
-    bot.add_cog(fb_posts(bot))
+    bot.add_cog(FbPosts(bot))

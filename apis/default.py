@@ -1,3 +1,6 @@
+# Original author AlexFlipnote / discord_bot.py
+# Repo: https://github.com/AlexFlipnote/discord_bot.py
+
 import time
 import json
 import discord

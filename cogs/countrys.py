@@ -12,7 +12,7 @@ from functions import typing_sleep
 import json
 
 
-class countryGuess(commands.Cog):
+class CountryGuesses(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -115,4 +115,4 @@ class countryGuess(commands.Cog):
 
 
 def setup(bot):
-    bot.add_cog(countryGuess(bot))
+    bot.add_cog(CountryGuesses(bot))

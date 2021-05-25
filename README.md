@@ -1,10 +1,28 @@
 # Bigobot
-Bot under development, every contribution is accepted and can be forked.
-Bot intended for personal discord guild, also as learning/practicing python project...
-When forked, consider using a .env key file, needed for bot token...
-ToDo: • Rewrite clean code
-      • Add more cogs
-      • Add both english and spanish support
-      • Add requirements.txt
-      • Upload to hosting 24/7
-      • Learn AsyncIO ._.
+![image](https://cdn.discordapp.com/attachments/791042478982824000/845824777313714196/bigobot_avatar_chikito.png)
+
+Bot under development, every contribution is accepted and can be forked. Bot intended for personal discord guild and educational purposes...
+
+## Running the bot.
+At the moment bot is not hosted but it will be soon. To run the bot, clone or fork the repo. Then do:
+```bash
+pip install -r requirements.txt
+``` 
+After installing libraries run file main.py using IDLE or any other python console. Mandatory Python 3.8+. If any library is remaining, just do a quick `pip install <library>`.
+
+## Required environment variables.
+For bigobot to work proper, populate a .env file with:
+- [Discord Bot Token ](https://discord.com/developers/applications) as (TOKEN)
+- [OpenWeatherMap API](https://openweathermap.org/api) as (OWM_API_KEY)
+- [Tracker.gg API](https://tracker.gg/developers/apps) as (TRN-API-KEY)
+- [Genius Lyrics API](https://genius.com/api-clients) as (GENIUS_ACCESS_TOKEN)
+
+## To-do:
+- [x] Add requirements.txt
+- [] Clean the code.
+- [] Add more cogs.
+- [] Add both english and spanish support.
+- [] Upload to hosting 24/7
+
+## Credits.
+Every file contains credits to their respective owners, Bigobot came possible to a lot of code from them, github and youtube tutorials mostly.

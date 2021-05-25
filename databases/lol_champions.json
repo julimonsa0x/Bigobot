@@ -1,0 +1,780 @@
+{
+    "campeones": [
+        {
+            "campeon": "Aatrox",
+            "frase": "La Espada de los Oscuros",
+            "icon": "https://cdn.discordapp.com/attachments/846529303743299604/846531516712484874/aatrox.png"
+        },           
+        {
+            "campeon": "Ahri",
+            "frase": "La Mujer Zorro de nueve Colas",
+            "icon": "https://cdn.discordapp.com/attachments/846529303743299604/846532345162367017/ahri.png"
+        },
+        {
+            "campeon": "Akali",
+            "frase": "La Asesina Sigilosa",
+            "icon": "https://cdn.discordapp.com/attachments/846529303743299604/846533109914927114/akali.png"
+        },
+        {
+            "campeon": "Alistar",
+            "frase": "El Minotauro",
+            "icon": "https://cdn.discordapp.com/attachments/846529303743299604/846533965162479646/alistar.png"
+        },
+        {
+            "campeon": "Amumu",
+            "frase": "La Momia Triste",
+            "icon": "https://cdn.discordapp.com/attachments/846529303743299604/846534336840597524/amumu.png"
+        },
+        {
+            "campeon": "Anivia",
+            "frase": "La Criofénix",
+            "icon": "https://cdn.discordapp.com/attachments/846529303743299604/846534360538677278/anivia.png"
+        },
+        {
+            "campeon": "Annie",
+            "frase": "La Hija de la Oscuridad",
+            "icon": "https://cdn.discordapp.com/attachments/846529303743299604/846534572254298152/annie.png"
+        },
+        {
+            "campeon": "Aphelios",
+            "frase": "El Arma de los Fieles",
+            "icon": "https://cdn.discordapp.com/attachments/846529303743299604/846534635345543208/aphelios.png"
+        },
+        {
+            "campeon": "Ashe",
+            "frase": "La Arquera de Hielo",
+            "icon": "https://cdn.discordapp.com/attachments/846529303743299604/846534729780297758/ashe.png"
+        },
+        {
+            "campeon": "Aurelion",
+            "frase": "El Forjador de Estrellas",
+            "icon": "https://cdn.discordapp.com/attachments/846529303743299604/846534825455779890/aurelionsol.png"
+        },
+        {
+            "campeon": "Azir",
+            "frase": "El Emperador de las Arenas",
+            "icon": "https://cdn.discordapp.com/attachments/846529303743299604/846534885312036864/azir.png"
+        },
+        {
+            "campeon": "Bardo",
+            "frase": "El Guardián Errante",
+            "icon": "https://cdn.discordapp.com/attachments/846529303743299604/846534962849382411/bard.png"
+        },
+        {
+            "campeon": "Blitzcrank",
+            "frase": "El Gran Gólem de Vapor",
+            "icon": "https://cdn.discordapp.com/attachments/846529303743299604/846535032477581332/blitzcrank.png"
+        },
+        {
+            "campeon": "Brand",
+            "frase": "La Venganza Ardiente",
+            "icon": "https://cdn.discordapp.com/attachments/846529303743299604/846535103064178701/brand.png"
+        },
+        {
+            "campeon": "Braum",
+            "frase": "El Corazón de Freljord",
+            "icon": "https://cdn.discordapp.com/attachments/846529303743299604/846535194941063178/braum.png"
+        },
+        {
+            "campeon": "Caitlyn",
+            "frase": "La Sheriff de Piltover",
+            "icon": "https://cdn.discordapp.com/attachments/846529303743299604/846579365491376188/caitlyn.png"
+        },
+        {
+            "campeon": "Camille",
+            "frase": "La Sombra de Acero",
+            "icon": "https://cdn.discordapp.com/attachments/846529303743299604/846579544390893568/camille.png"
+        },
+        {
+            "campeon": "Cassiopeia",
+            "frase": "El Abrazo de la Serpiente",
+            "icon": "https://cdn.discordapp.com/attachments/846529303743299604/846579569593942076/cassiopeia.png"
+        },
+        {
+            "campeon": "Cho'Gath",
+            "frase": "El terror del vacio",
+            "icon": "https://cdn.discordapp.com/attachments/846529303743299604/846579593266724874/chogath.png"
+        },
+        {
+            "campeon": "Corki",
+            "frase": "El Bombardero Osado",
+            "icon": "https://cdn.discordapp.com/attachments/846529303743299604/846580655689433118/corki.png"
+        },
+        {
+            "campeon": "Darius",
+            "frase": "La Mano de Noxus",
+            "icon": "https://cdn.discordapp.com/attachments/846529303743299604/846580923255226368/darius.png"
+        },
+        {
+            "campeon": "Diana",
+            "frase": "El Desdén de la Luna",
+            "icon": "https://cdn.discordapp.com/attachments/846529303743299604/846580951274225664/diana.png"
+        },
+        {
+            "campeon": "Draven",
+            "frase": "El Ejecutor Glorioso",
+            "icon": "https://cdn.discordapp.com/attachments/846529303743299604/846580972408799282/draven.png"
+        },
+        {
+            "campeon": "Dr. Mundo",
+            "frase": "El Loco de Zaun",
+            "icon": "https://cdn.discordapp.com/attachments/846529303743299604/846580989265313792/drmundo.png"
+        },
+        {
+            "campeon": "Ekko",
+            "frase": "El Chico que Quebró el Tiempo",
+            "icon": "https://cdn.discordapp.com/attachments/846529303743299604/846581020559409152/ekko.png"
+        },
+        {
+            "campeon": "Elise",
+            "frase": "La Reina de las Arañas",
+            "icon": "https://cdn.discordapp.com/attachments/846529303743299604/846581047982686228/elise.png"
+        },
+        {
+            "campeon": "Evelynn",
+            "frase": "El Abrazo Agónico",
+            "icon": "https://cdn.discordapp.com/attachments/846529303743299604/846581097538256896/evelynn.png"
+        },
+        {
+            "campeon": "Ezreal",
+            "frase": "El Explorador Pródigo",
+            "icon": "https://cdn.discordapp.com/attachments/846529303743299604/846581116109324298/ezreal.png"
+        },
+        {
+            "campeon": "Fiddlesticks",
+            "frase": "El Terror Ancestral",
+            "icon": "https://cdn.discordapp.com/attachments/846529303743299604/846581142056730654/fiddlesticks.png"
+        },
+        {
+            "campeon": "Fiora",
+            "frase": "La Estocada Excelsa",
+            "icon": "https://cdn.discordapp.com/attachments/846529303743299604/846581161013805076/fiora.png"
+        },
+        {
+            "campeon": "Fizz",
+            "frase": "El Gamberro de las Mareas",
+            "icon": "https://cdn.discordapp.com/attachments/846529303743299604/846581209962512384/fizz.png"
+        },
+        {
+            "campeon": "Galio",
+            "frase": "El Coloso",
+            "icon": "https://cdn.discordapp.com/attachments/846529303743299604/846581240203444224/galio.png"
+        },
+        {
+            "campeon": "Gangplank",
+            "frase": "El Azote de los Mares",
+            "icon": "https://cdn.discordapp.com/attachments/846529303743299604/846581534819221554/gangplank.png"
+        },
+        {
+            "campeon": "Garen",
+            "frase": "El Poder de Demacia",
+            "icon": "https://cdn.discordapp.com/attachments/846529303743299604/846581565160030249/garen.png"
+        },
+        {
+            "campeon": "Gnar",
+            "frase": "El Eslabón Perdido",
+            "icon": "https://cdn.discordapp.com/attachments/846529303743299604/846581585809637426/gnar.png"
+        },
+        {
+            "campeon": "Gragas",
+            "frase": "El Camorrista",
+            "icon": "https://cdn.discordapp.com/attachments/846529303743299604/846581662216486913/gragas.png"
+        },
+        {
+            "campeon": "Graves",
+            "frase": "El Forajido",
+            "icon": "https://cdn.discordapp.com/attachments/846529303743299604/846581688968413205/graves.png"
+        },
+        {
+            "campeon": "Gwen",
+            "frase": "La Costurera Consagrada",
+            "icon": "https://cdn.discordapp.com/attachments/846529303743299604/846581705636446208/gwen.png"
+        },
+        {
+            "campeon": "Hecarim",
+            "frase": "La Sombra de la Guerra",
+            "icon": "https://cdn.discordapp.com/attachments/846529303743299604/846581724526936074/hecarim.png"
+        },
+        {
+            "campeon": "Heimerdinger",
+            "frase": "El Inventor Venerado",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/heimerdinger.png"
+        },
+        {
+            "campeon": "Illaoi",
+            "frase": "La Sacerdotisa del Kraken",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/illaoi.png"
+        },
+        {
+            "campeon": "Irelia",
+            "frase": "La Danza de las Cuchillas",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/irelia.png"
+        },
+        {
+            "campeon": "Ivern",
+            "frase": "El padre arborescente",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/ivern.png"
+        },
+        {
+            "campeon": "Janna",
+            "frase": "La furia de la tormenta",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/illaoi.png"
+        },
+        {
+            "campeon": "Jarvan IV",
+            "frase": "El Ejemplo de Demacia",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/jarvaniv.png"
+        },
+        {
+            "campeon": "Jax",
+            "frase": "El maestro de armas",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/jax.png"
+        },
+        {
+            "campeon": "Jayce",
+            "frase": "El Defensor del Mañana",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/jayce.png"
+        },
+        {
+            "campeon": "Jhin",
+            "frase": "El Virtuoso",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/jhin.png"
+        },
+        {
+            "campeon": "Jinx",
+            "frase": "La Bala Perdida",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/jinx.png"
+        },
+        {
+            "campeon": "Kai'Sa",
+            "frase": "La Hija del Vacío",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/kaisa.png"
+        },
+        {
+            "campeon": "Kalista",
+            "frase": "El Espíritu de la Venganza",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/kalista.png"
+        },
+        {
+            "campeon": "Xayah",
+            "frase": "La Rebelde",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/xayah.png"
+        },
+        {
+            "campeon": "Karthus",
+            "frase": "La Voz de la Muerte",
+            "icon": "https://cdn.discordapp.com/attachments/846529303743299604/846582223247114250/karthus.png"
+        },
+        {
+            "campeon": "Karma",
+            "frase": "La Iluminada",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/karma.png"
+        },
+        {
+            "campeon": "Kassadin",
+            "frase": "El Caminante del Vacío",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/kassadin.png"
+        },
+        {
+            "campeon": "Katarina",
+            "frase": "La Cuchilla Siniestra",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/katarina.png"
+        },
+        {
+            "campeon": "Kayle",
+            "frase": "La Justa",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/kayle.png"
+        },
+        {
+            "campeon": "Kayn",
+            "frase": "La Guadaña de las Sombras",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/kayn.png"
+        },
+        {
+            "campeon": "Kennen",
+            "frase": "El Corazón de la Tempestad",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/kennen.png"
+        },
+        {
+            "campeon": "Kha'Zix",
+            "frase": "El Saqueador del Vacío",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/khazix.png"
+        },
+        {
+            "campeon": "Kindred",
+            "frase": "Los Cazadores Eternos",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/kindred.png"
+        },
+        {
+            "campeon": "Kled",
+            "frase": "El Jinete Cascarrabias",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/kled.png"
+        },
+        {
+            "campeon": "Kog'Maw",
+            "frase": "La Boca del Abismo",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/kogmaw.png"
+        },
+        {
+            "campeon": "LeBlanc",
+            "frase": "La Embaucadora",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/leblanc.png"
+        },
+        {
+            "campeon": "Lee Sin",
+            "frase": "El Monje Ciego",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/leesin.png"
+        },
+        {
+            "campeon": "Leona",
+            "frase": "El Amanecer Radiante",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/leona.png"
+        },
+        {
+            "campeon": "Lillia",
+            "frase": "El Timido Florecer",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/lillia.png"
+        },
+        {
+            "campeon": "Lissandra",
+            "frase": "La Bruja de Hielo",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/lissandra.png"
+        },
+        {
+            "campeon": "Lucian",
+            "frase": "El Destello Purificador",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/lucian.png"
+        },
+        {
+            "campeon": "Lulu",
+            "frase": "El Hada Hechicera",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/lulu.png"
+        },
+        {
+            "campeon": "Lux",
+            "frase": "La Dama Luminosa",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/lux.png"
+        },
+        {
+            "campeon": "Maestro Yi",
+            "frase": "El Espadachin Wuju",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/masteryi.png"
+        },
+        {
+            "campeon": "Malphite",
+            "frase": "El Fragmento del Monolito",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/malphite.png"
+        },{
+            "campeon": "Malzahar",
+            "frase": "El Profeta del Vacio",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/malzahar.png"
+        },
+        {
+            "campeon": "Maokai",
+            "frase": "El Treant Retorcido",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/maokai.png"
+        },
+        {
+            "campeon": "Miss Fortune",
+            "frase": "La Cazarrecompensas",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/missfortune.png"
+        },
+        {
+            "campeon": "Mordekaiser",
+            "frase": "La Pesadilla de Hierro",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/mordekaiser.png"
+        },
+        {
+            "campeon": "Morgana",
+            "frase": "La Caida",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/morgana.png"
+        },
+        {
+            "campeon": "Nami",
+            "frase": "La Invocadora de Mareas",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/nami.png"
+        },
+        {
+            "campeon": "Nasus",
+            "frase": "El Guardián de las Arenas",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/nasus.png"
+        },
+        {
+            "campeon": "Nautilus",
+            "frase": "El Titán Abisal",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/nautilus.png"
+        },
+        {
+            "campeon": "Neeko",
+            "frase": "La Camaleona Curiosa",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/neeko.png"
+        },
+        {
+            "campeon": "Nidalee",
+            "frase": "La Cazadora Bestial",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/nidalee.png"
+        },
+        {
+            "campeon": "Nocturne",
+            "frase": "La Pesadilla Eterna",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/nocturne.png"
+        },
+        {
+            "campeon": "Nunu y Willump",
+            "frase": "Un Niño y su Yeti",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/nunu.png"
+        },
+        {
+            "campeon": "Olaf",
+            "frase": "El Berserker",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/olaf.png"
+        },
+        {
+            "campeon": "Orianna",
+            "frase": "La Dama Mecánica",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/orianna.png"
+        },
+        {
+            "campeon": "Ornn",
+            "frase": "Las Llamas de la Forja",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/ornn.png"
+        },
+        {
+            "campeon": "Pantheon",
+            "frase": "La Lanza Inquebrantable",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/pantheon.png"
+        },
+        {
+            "campeon": "Poppy",
+            "frase": "La Guardiana del Martillo",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/poppy.png"
+        },
+        {
+            "campeon": "Pyke",
+            "frase": "El Destripador de los Puertos",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/pyke.png"
+        },
+        {
+            "campeon": "Qiyana",
+            "frase": "La Emperatriz de los Elementos",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/qiyana.png"
+        },
+        {
+            "campeon": "Quinn",
+            "frase": "Las Alas de Demacia",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/quinn.png"
+        },
+        {
+            "campeon": "Rakan",
+            "frase": "El Encantador",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/rakan.png"
+        },
+        {
+            "campeon": "Rammus",
+            "frase": "El Armadurillo",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/rammus.png"
+        },
+        {
+            "campeon": "Rek'Sai",
+            "frase": "La Amenaza Subterranea",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/reksai.png"
+        },
+        {
+            "campeon": "Rell",
+            "frase": "La Dama de Hierro",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/rell.png"
+        },
+        {
+            "campeon": "Renekton",
+            "frase": "El Carnicero de las Arenas",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/renekton.png"
+        },
+        {
+            "campeon": "Rengar",
+            "frase": "El Acechador Orgulloso",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/rengar.png"
+        },
+        {
+            "campeon": "Riven",
+            "frase": "La Exiliada",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/riven.png"
+        },
+        {
+            "campeon": "Rumble",
+            "frase": "La Amenaza Mecanica",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/rumble.png"
+        },
+        {
+            "campeon": "Ryze",
+            "frase": "El Hechicero Runico",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/ryze.png"
+        },
+        {
+            "campeon": "Samira",
+            "frase": "La Rosa del Desierto",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/samira.png"
+        },
+        {
+            "campeon": "Sejuani",
+            "frase": "La Furia del Norte",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/sejuani.png"
+        },
+        {
+            "campeon": "Senna",
+            "frase": "La Redentora",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/senna.png"
+        },
+        {
+            "campeon": "Seraphine",
+            "frase": "La Cantante Soñadora",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/seraphine.png"
+        },
+        {
+            "campeon": "Sett",
+            "frase": "El Jefe",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/sett.png"
+        },
+        {
+            "campeon": "Shaco",
+            "frase": "El Bufón Siniestro",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/shaco.png"
+        },
+        {
+            "campeon": "Shen",
+            "frase": "El Ojo del Crepúsculo",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/shen.png"
+        },
+        {
+            "campeon": "Shyvana",
+            "frase": "La Medio Dragón",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/shyvana.png"
+        },
+        {
+            "campeon": "Singed",
+            "frase": "El Quimico Loco",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/singed.png"
+        },
+        {
+            "campeon": "Sion",
+            "frase": "El Coloso no Muerto",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/sion.png"
+        },
+        {
+            "campeon": "Sivir",
+            "frase": "La Señora de la Batalla",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/sivir.png"
+        },
+        {
+            "campeon": "Skarner",
+            "frase": "La Vanguardia de Cristal",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/skarner.png"
+        },
+        {
+            "campeon": "Sona",
+            "frase": "La Virtuosa de las Cuerdas",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/sona.png"
+        },
+        {
+            "campeon": "Soraka",
+            "frase": "La Hija de las Estrellas",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/soraka.png"
+        },
+        {
+            "campeon": "Swain",
+            "frase": "El Gran General de Noxus",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/swain.png"
+        },
+        {
+            "campeon": "Sylas",
+            "frase": "El Desencadenado",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/sylas.png"
+        },
+        {
+            "campeon": "Syndra",
+            "frase": "La Soberana Oscura",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/syndra.png"
+        },
+        {
+            "campeon": "Tahm Kench",
+            "frase": "El Rey del Río",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/tahmkench.png"
+        },
+        {
+            "campeon": "Taliyah",
+            "frase": "La Tejedora de Piedra",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/taliyah.png"
+        },
+        {
+            "campeon": "Talon",
+            "frase": "La Sombra de la Espada",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/talon.png"
+        },
+        {
+            "campeon": "Taric",
+            "frase": "El Escudo de Valoran",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/taric.png"
+        },
+        {
+            "campeon": "Teemo",
+            "frase": "El Explorador Veloz",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/teemo.png"
+        },
+        {
+            "campeon": "Tresh",
+            "frase": "El Carcelero Implacable",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/thresh.png"
+        },
+        {
+            "campeon": "Tristana",
+            "frase": "La Artillera Yordle",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/tristana.png"
+        },
+        {
+            "campeon": "Trundle",
+            "frase": "El Rey Trol",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/trundle.png"
+        },
+        {
+            "campeon": "Tryndamere",
+            "frase": "El Rey Bárbaro",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/tryndamere.png"
+        },
+        {
+            "campeon": "Twisted Fate",
+            "frase": "El Maestro de las Cartas",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/twistedfate.png"
+        },
+        {
+            "campeon": "Twitch",
+            "frase": "La Rata Apestada",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/twitch.png"
+        },
+        {
+            "campeon": "Udyr",
+            "frase": "El Caminante Espiritual",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/udyr.png"
+        },
+        {
+            "campeon": "Urgot",
+            "frase": "La Pesadilla Mecánica",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/urgot.png"
+        },
+        {
+            "campeon": "Varus",
+            "frase": "La Flecha del Castigo",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/varus.png"
+        },
+        {
+            "campeon": "Vayne",
+            "frase": "La Cazadora Noctívaga",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/vayne.png"
+        },
+        {
+            "campeon": "Veigar",
+            "frase": "El Pequeño Maestro del Mal",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/veigar.png"
+        },
+        {
+            "campeon": "Vel'Koz",
+            "frase": "El Ojo del Vacío",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/velkoz.png"
+        },
+        {
+            "campeon": "Vi",
+            "frase": "La Agente de Piltover",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/vi.png"
+        },
+        {
+            "campeon": "Viego",
+            "frase": "El Rey Arruinado",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/viego.png"
+        },
+        {
+            "campeon": "Viktor",
+            "frase": "El Heraldo de las Máquinas",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/viktor.png"
+        },
+        {
+            "campeon1": "Vladimir",
+            "frase": "El Segador Carmesí",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/vladimir.png"
+        },
+        {
+            "campeon": "Volibear",
+            "frase": "La Tormenta Incesante",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/volibear.png"
+        },
+        {
+            "campeon": "Warwick",
+            "frase": "La Ira Descontrolada de Zaun",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/warwick.png"
+        },
+        {
+            "campeon": "Wukong",
+            "frase": "El Rey Mono",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/monkeyking.png"
+        },
+        {
+            "campeon": "Xerath",
+            "frase": "El Mago Ascendente",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/xerath.png"
+        },
+        {
+            "campeon": "Xin Zhao",
+            "frase": "El Senescal de Demacia",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/xinzhao.png"
+        },
+        {
+            "campeon": "Yasuo",
+            "frase": "La Espada sin Honor",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/yasuo.png"
+        },
+        {
+            "campeon": "Yone",
+            "frase": "El Imperecedero",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/yone.png"
+        },
+        {
+            "campeon": "Yorick",
+            "frase": "El Pastor de las Almas Perdidas",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/yorick.png"
+        },
+        {
+            "campeon": "Yuumi",
+            "frase": "La Gata Mágica",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/yuumi.png"
+        },
+        {
+            "campeon": "Zac",
+            "frase": "El Arma Secreta",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/zac.png"
+        },
+        {
+            "campeon": "Zed",
+            "frase": "El Maestro de las Sombras",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/zed.png"
+        },
+        {
+            "campeon": "Ziggs",
+            "frase": "El Experto en Hexplosivos",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/ziggs.png"
+        },
+        {
+            "campeon": "Zilean",
+            "frase": "El Guardián del Tiempo",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/zilean.png"
+        },
+        {
+            "campeon": "Zoe",
+            "frase": "El Aspecto del Crepúsculo",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/zoe.png"
+        },
+        {
+            "campeon": "Zyra",
+            "frase": "La Dama de Espinas",
+            "icon": "https://fastcdn.mobalytics.gg/assets/lol/images/dd/champions/icons/zyra.png"
+        }
+        
+    ]
+
+}

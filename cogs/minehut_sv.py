@@ -33,7 +33,7 @@ class MinehutInfo(Cog):
         )
         embed.set_thumbnail(url="https://i1.wp.com/www.craftycreations.net/wp-content/uploads/2019/08/Grass-Block-e1566147655539.png?fit=500%2C500&ssl=1")
 
-        await self.bot.send(embed=embed)  #bot.send does not works anymore now is ctx.send.....
+        await ctx.send(embed=embed)  #bot.send does not works anymore now is ctx.send.....
 
 def setup(bot):
     bot.add_cog(MinehutInfo(bot))

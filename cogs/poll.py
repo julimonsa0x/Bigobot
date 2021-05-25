@@ -43,7 +43,7 @@ class Poll(commands.Cog):
                 json.dump(scheduler_data, update_scheduler_data, indent=4)
 
     @commands.command()
-    @commands.has_permissions(administrator=True)
+    #@commands.has_permissions(administrator=True) unchecked to let everyone make polls
     async def encuesta(self, ctx, max_time: int, max_votes: int, titulo, *options):
         """ES: Crea una encuesta con los siguientes argumentos: tiempo de validez, votos maximos, titulo y opciones
         Ejemplo: #encuesta 16 3 PRUEBA si no talvez capaz. Este comando creara una encuesta de 16 minutos, con 3 vots 
@@ -705,7 +705,7 @@ class Poll(commands.Cog):
                     else:
                         pass
 
-    @tasks.loop(minutes=15)
+    @tasks.loop(minutes=10) # original minutes argument was 15
     async def poll_result(self):
         with open('.\\databases\\scheduler.json', 'r') as schedule_file:
             scheduler_data = json.load(schedule_file)
