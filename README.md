@@ -22,7 +22,7 @@ For bigobot to work proper, populate a .env file with:
 - [] Clean the code.
 - [] Add more cogs.
 - [] Add both english and spanish support.
-- [] Upload to hosting 24/7
+- [] Upload to hosting 24/7.
 
 ## Credits.
 Every file contains credits to their respective owners, Bigobot came possible to a lot of code from them, github and youtube tutorials mostly.
