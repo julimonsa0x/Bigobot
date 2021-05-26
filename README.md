@@ -1,5 +1,5 @@
 # Bigobot
-![image](https://cdn.discordapp.com/attachments/791042478982824000/845824777313714196/bigobot_avatar_chikito.png)
+![image](https://cdn.discordapp.com/attachments/793309880861458473/846617737337110528/bigobot_avatar_chikito.png)
 
 Bot under development, every contribution is accepted and can be forked. Bot intended for personal discord guild and educational purposes...
 
@@ -22,7 +22,7 @@ For bigobot to work proper, populate a .env file with:
 - [] Clean the code.
 - [] Add more cogs.
 - [] Add both english and spanish support.
-- [] Upload to hosting 24/7
+- [] Upload to hosting 24/7.
 
 ## Credits.
 Every file contains credits to their respective owners, Bigobot came possible to a lot of code from them, github and youtube tutorials mostly.

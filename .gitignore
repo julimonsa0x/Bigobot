@@ -31,6 +31,10 @@ __pycache__/main.cpython-38.pyc
 cogs/__pycache__/fortnite.cpython-38.pyc
 cogs/__pycache__/reactions.cpython-38.pyc
 databases/coppi_adverts.txt
+<<<<<<< HEAD
+=======
+invitaciones.py
+>>>>>>> 23be6da5d614d115fd22183b98592ce05d1b935f
 experimental_functions.py
 __pycache__/broBdays.cpython-38.pyc
 __pycache__/game.cpython-38.pyc
