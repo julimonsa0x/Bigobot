@@ -1,4 +1,5 @@
-#Author: DevStrikerTech
+# Author: DevStrikerTech, fully coded by him...
+# Code available at github and his youtube channel.
 import json
 import discord
 from datetime import datetime
@@ -6,7 +7,7 @@ from discord.ext import commands, tasks
 from functions import printt
 
 
-class Poll(commands.Cog):
+class Encuesta(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.emoji = ['1\u20e3', '2\u20e3', '3\u20e3', '4\u20e3', '5\u20e3',
@@ -44,7 +45,7 @@ class Poll(commands.Cog):
 
     @commands.command()
     #@commands.has_permissions(administrator=True) unchecked to let everyone make polls
-    async def encuesta(self, ctx, max_time: int, max_votes: int, titulo, *options):
+    async def crearencuesta(self, ctx, max_time: int, max_votes: int, titulo, *options):
         """ES: Crea una encuesta con los siguientes argumentos: tiempo de validez, votos maximos, titulo y opciones
         Ejemplo: #encuesta 16 3 PRUEBA si no talvez capaz. Este comando creara una encuesta de 16 minutos, con 3 vots 
         maximos, un titulo "PRUEBA" y 4 opciones "SI" "NO" "TALVEZ" "CAPAZ"
@@ -747,4 +748,4 @@ class Poll(commands.Cog):
 
 
 def setup(bot):
-    bot.add_cog(Poll(bot))
+    bot.add_cog(Encuesta(bot))

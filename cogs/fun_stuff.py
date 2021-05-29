@@ -6,15 +6,17 @@ import discord
 import secrets
 import asyncio
 import aiohttp
+from discord.ext.commands.core import command
 import requests
 import json
+from datetime import datetime
 
 from io import BytesIO
 from discord.ext import commands
 from apis import permissions
 from databases import ballresponse
 from functions import printt, typing_sleep
-from listas import brawlers, campeones
+from listas import brawlers, campeones, images, trivias, trivia_accept, trivia_decline
 
 
 
@@ -35,7 +37,6 @@ class FunCommands(commands.Cog):
         await typing_sleep(ctx)
         await ctx.send(f"🎱 **Pregunta:** {question}\n**Respuesta:** {answer}")
 
-
     @commands.command()
     @commands.cooldown(rate=1, per=1.5, type=commands.BucketType.user)
     async def pato(self, ctx):
@@ -47,7 +48,6 @@ class FunCommands(commands.Cog):
         await typing_sleep(ctx)
         await ctx.send(embed = embed)
         print(f"cmdPato||         {ctx.author.name} pidio una foto de patos")
-
 
     @commands.command()
     @commands.cooldown(rate=1, per=1.5, type=commands.BucketType.user)
@@ -286,6 +286,101 @@ class FunCommands(commands.Cog):
         await typing_sleep(ctx)
         await ctx.send(embed=embed3, delete_after=200.0)
         print(f"cmdRandomChamp|| Campeón aleatorio enviado, en la lista hay: {str(len(campeones))}")
+
+
+
+        @commands.command()
+        async def meme(self, ctx):
+            '''Memes randoms, a quien no le gustan los memes...'''
+            random_link = random.choice(images)
+        
+            if (
+                    random_link.startswith('https://video.twimg.com/ext_tw_video/') or 
+                    random_link.startswith('https://imgur') or 
+                    random_link.startswith('https://www.youtube:') or
+                    random_link.startswith('https://i.imgur') or 
+                    random_link.startswith('https://youtu')
+                ):
+                await typing_sleep(ctx)
+                await ctx.send(random_link)
+                print(f'cmdMeme||         Meme enviado a {ctx.author.name}')
+
+            else:
+                embed = discord.Embed(color = discord.Colour.red(), timestamp=datetime.utcnow())
+                embed.set_image(url = random_link)
+                await typing_sleep(ctx)
+                await ctx.send(embed = embed)
+                print(f'cmdMeme||         Meme enviado a {ctx.author.name} ')
+
+    @commands.command()
+    async def meme(self,ctx):
+        '''Memes randoms, a quien no le gustan los memes...'''
+        embed = discord.Embed(color = discord.Colour.red(), timestamp=datetime.utcnow())
+        random_link = random.choice(images)
+        if (
+                random_link.startswith('https://video.twimg.com/ext_tw_video/') or 
+                random_link.startswith('https://imgur') or 
+                random_link.startswith('https://www.youtube:') or
+                random_link.startswith('https://i.imgur') or 
+                random_link.startswith('https://youtu')
+            ):
+            await typing_sleep(ctx)
+            await ctx.send(random_link)
+            print(f'cmdMeme||         Meme enviado a {ctx.author.name}')
+
+        else:
+            embed.set_image(url = random_link)
+            await typing_sleep(ctx)
+            await ctx.send(embed = embed)
+            print(f'cmdMeme||         Meme enviado a {ctx.author.name}')
+
+    @commands.command()
+    #@commands.has_permissions(kick_members=True)    #for if you wanna limit this command usage and prevent spamming
+    async def contar(self, ctx, number: int, intervalo):
+        '''
+        El bot cuenta hasta un numero dado, puede ser re carnasa...
+        Los mensajes luego de 40 segundos se autoeliminan...
+        Argumento <number>: int | **numero hasta el cual contar**. 
+        Argumento <intervalo>: float | **velocidad a la cual contar**.
+        '''
+        i = 1
+        while i <= number:
+            async with ctx.typing():    
+                await asyncio.sleep(float(intervalo))
+                await ctx.send(f"{i}", delete_after=30.0)
+                i += 1
+
+    @commands.command()
+    async def trivia(self,  ctx):
+        '''It's trivia time!!!'''
+        await typing_sleep(ctx)
+        msg = await ctx.channel.send(random.choice(trivias))
+        await msg.add_reaction(u"\u2705")
+        await msg.add_reaction(u"\U0001F6AB")
+
+        try:
+            reaction, user = await self.bot.wait_for("reaction_add", check=lambda reaction, user: user == ctx.author and reaction.emoji in [u"\u2705", u"\U0001F6AB"], timeout=15.0)  
+            await asyncio.sleep(1)
+            await ctx.channel.send("3...", delete_after=15.0)
+            await asyncio.sleep(1)
+            await ctx.channel.send("2...", delete_after=15.0)
+            await asyncio.sleep(1)
+            await ctx.channel.send("1...", delete_after=15.0)
+
+        except asyncio.TimeoutError:
+            await typing_sleep(ctx)
+            await ctx.channel.send("Che me ignoraron la trivia (▀̿Ĺ̯▀̿ ̿) ", delete_after=35.0)
+
+        else:
+            if reaction.emoji ==  u"\u2705":
+                await typing_sleep(ctx)
+                await ctx.message.delete()
+                await ctx.channel.send(random.choice(trivia_accept), delete_after=120.0)
+
+            else:
+                await typing_sleep(ctx)
+                await ctx.message.delete()
+                await ctx.channel.send(random.choice(trivia_decline), delete_after=120.0)
 
 
 def setup(bot):

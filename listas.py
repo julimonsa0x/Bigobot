@@ -7,9 +7,11 @@ images = [
   'no hay meme, monsa arreglando mi código...',
   'no hay meme, monsa arreglando mi código...', # X2
   'no hay meme, monsa arreglando mi código...', # X3
+  'https://media.discordapp.net/attachments/793309880861458473/848071467517345802/unknown.png?width=493&height=455', # tabla de prefijos
   'https://imgur.com/a/voWCoIg', #evo morales
   'https://imgur.com/a/y13HFNP', #amongus hidden
   'https://www.youtube.com/watch?v=MXQOUHJToSg', #tenet 2 fat boi backflip
+  'https://cdn.discordapp.com/attachments/793309880861458473/796239825090117652/glock_gol.mp4', #glock_gol_festejo_futbol
   'https://cdn.discordapp.com/attachments/793309880861458473/815980486471319602/PicsArt_02-28-02.47.19.jpg', #jopiyo violador de perros
   'https://cdn.discordapp.com/attachments/793309880861458473/815980445413015612/IMG-20210301-WA0000.jpg', #CLAUDIA
   'https://cdn.discordapp.com/attachments/793309880861458473/815980445652615228/IMG-20210228-WA0009.jpg', #perro con huevos frescos
@@ -551,7 +553,6 @@ images = [
   'https://cdn.discordapp.com/attachments/793309880861458473/827035716236083241/IMG-20210325-WA0023.jpg', #MATO SACANDO LA LENGUA 
   'https://cdn.discordapp.com/attachments/793309880861458473/827391096295784489/los_pibes_estudiando.jpg', #los pibes estudiando
   'https://cdn.discordapp.com/attachments/793309880861458473/827432502977101834/Screenshot_20210401-231000.png', #te qiero
-  #'', #nico te ha transferido 1 centavo
   'https://cdn.discordapp.com/attachments/793309880861458473/828715039132614696/20200915_003430.png', #dardo amongus
   'https://cdn.discordapp.com/attachments/793309880861458473/828716836769759313/unknown.png', # tomatela puntano mato 
   'https://cdn.discordapp.com/attachments/793309880861458473/828717040323657748/Ej1A4gNXcAETFWo.png', # joystik cyberpunk 
@@ -696,16 +697,31 @@ images = [
   'https://video.twimg.com/ext_tw_video/1386098514694914049/pu/vid/480x600/shea8ZinBkOaoKtA.mp4?tag=12', # soplando velas otaku way
   'https://video.twimg.com/ext_tw_video/1386098589001203718/pu/vid/640x800/a2wEzC8GJIXXMzqC.mp4?tag=12', # pelea nivel dios 
   'https://video.twimg.com/ext_tw_video/1386100259756052482/pu/vid/640x800/6wR_-Pw9qh_1cWRn.mp4?tag=12', # periodista en el agua
+  'https://video.twimg.com/ext_tw_video/1391574780772560900/pu/vid/480x852/RqKDvAGSr2hTL5po.mp4?tag=12', # perro do a flip earrape
+  'https://video.twimg.com/ext_tw_video/1391574950155374593/pu/vid/480x480/jiwtNlxQLpBOBZ7D.mp4?tag=12', # eminem pelea anime rap
+  'https://video.twimg.com/ext_tw_video/1391575981199138816/pu/vid/320x320/CKzig0ycT8YmbmSe.mp4?tag=12', # ibai me han llamao para cenar
+  'https://youtu.be/k15Ds97PBeY', # hechos reales trolleo a jose sad
+  'https://youtu.be/k15Ds97PBeY', # hechos reales trolleo a jose sad X2
+  'https://video.twimg.com/ext_tw_video/1395969359600836608/pu/vid/640x360/LsbhuuxSHfyXx7dP.mp4?tag=12', # trolleo a jose original
+  'https://video.twimg.com/ext_tw_video/1396591911457202186/pu/vid/352x640/8h85-ev1yjqIx7yg.mp4?tag=12', # seki desubicado clase de instalaciones 
+  'https://video.twimg.com/ext_tw_video/1396591990242955274/pu/vid/640x1138/u-fj5LhULrqaembd.mp4?tag=12', # perro motociclon
+  'https://video.twimg.com/ext_tw_video/1396592751882514438/pu/vid/720x1280/5yb5VDI7MjJWSukP.mp4?tag=12', # ahi va el pesopesado nico tira a beje del carrito
+  'https://video.twimg.com/ext_tw_video/1396592429378179084/pu/vid/640x352/jpqk41VnwCwomXF8.mp4?tag=12', # golaso el poli tira al jose
+  'https://video.twimg.com/ext_tw_video/1396593100844376071/pu/vid/720x1280/hw_-a2Gy-RQZdoOB.mp4?tag=12', # copi contra mato en el csgo
+  'https://video.twimg.com/ext_tw_video/1396593965323915264/pu/vid/480x362/DD7Amh9yZ8nmtDE4.mp4?tag=12', # tipo choca y vuelca XD 
+  'https://video.twimg.com/ext_tw_video/1396594161374093312/pu/vid/320x320/RXeMGU44205hGwJP.mp4?tag=12', # pendejo se cae al charco
+  'https://video.twimg.com/ext_tw_video/1396594875169132552/pu/vid/352x640/mEiTftQdyDv38Y_1.mp4?tag=12', # copi peronista melon
+  'https://video.twimg.com/ext_tw_video/1396595247380062208/pu/vid/640x1138/uIturp6SZeR5ikef.mp4?tag=12', # gorda se muere
+  'https://video.twimg.com/ext_tw_video/1396610746088296448/pu/vid/640x1138/JCavKe8Az3sXob8l.mp4?tag=12', # feliz cumpleaños enana se cae
+  'https://video.twimg.com/ext_tw_video/1397367883685052419/pu/vid/640x1138/plXLcS5KTtFxpmL4.mp4?tag=12', # gallinas comiendo pollo al spiedo
+  'https://cdn.discordapp.com/attachments/793309880861458473/848071826520145920/amongo.jpg', # amongo mcdonals 1.4 million usd
+  'https://cdn.discordapp.com/attachments/793309880861458473/848072392786051142/unknown.png', # bromita fuego mapa
+  'https://cdn.discordapp.com/attachments/793309880861458473/848073429349695498/perro.mp4', # perro caida escalera
   #'', #
   #'', #
   #'', #
   #'', #
   #'', #
-  #'', #
-  #'', #
-  #'', #
-  #'', #
-
 ]
 
 ##-----> frases del comando trivia <-----
@@ -739,8 +755,29 @@ trivias = [
     '¿seki se habilita el depto? (SI / NO)',
     '¿Kung Fu panda pelicula de mierda? (SI / NO)',
     '¿El registro de auditoria deberia ser publico? (SI / NO)',
-
 ]
+
+## ---------> Trivia aceptada <----------
+trivia_accept = [
+    'mmm estoy seguro que si :alien:',
+    'me parece que si :kek:',
+    'confirmo :heheboi:',
+    'la mayoria dijo que si... :OK:',
+    'segun el publico si :alien: ...',
+    'digamos que si :kek:',
+    'al parecer si...',
+]
+
+## -------> Trivia declinada <--------
+trivia_decline = [
+    'mm sera che? <:bigthonk:848054389759279135>',
+    'puede ser pa?',
+    'segun los demas no...',
+    'parece que no...',
+    'al parecer no..',
+    ':exclamation: trivia declinada',
+]
+
 
 ##-------> frases de la claudia <-------
 lacla = [
@@ -1362,7 +1399,7 @@ bot_statuses = [
 
 #---> ASCII ART <-----
 amongo = [
-    """  ⠀⠀⠀⠀⠀⣠⣤⣤⣤⣤⣤⣶⣦⣤⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀
+    """   ⠀⠀⠀⠀⣠⣤⣤⣤⣤⣤⣶⣦⣤⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀
     ⠀⠀⠀⠀ ⠀⢀⣴⣿⡿⠛⠉⠙⠛⠛⠛⠛⠻⢿⣿⣷⣤⡀⠀⠀⠀⠀⠀
     ⠀⠀⠀⠀ ⠀⣼⣿⠋⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⠈⢻⣿⣿⡄⠀⠀⠀⠀
     ⠀⠀⠀⠀⠀⣸⣿⡏⠀⠀⠀⣠⣶⣾⣿⣿⣿⠿⠿⠿⢿⣿⣿⣿⣄⠀⠀⠀
@@ -1420,8 +1457,47 @@ amongo = [
     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠻⢿⣿⣿⣿⣿⣿⣿⠿⠋⠉⠛⠋⠉⠉⠁⠀⠀⠀⠀
     ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠉⠉⠁⠀⠀⠀⠀⠀⠀
     """,
+    """🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥
+    🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥
+    🟥🟥🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟥🟥
+    🟥🟥🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟥🟥
+    🟥🟥🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟥🟥
+    🟥🟥🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟥🟥
+    🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥
+    🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥
+    🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥
+    🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥
+    🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥
+    🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥
+    🟥🟥🟥🟥🟥🟥 ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎‎‎‎🟥🟥🟥🟥🟥🟥
+    🟥🟥🟥🟥🟥🟥 ‎ ‎amongo‎ ‎ ‎ ‎ 🟥🟥🟥🟥🟥🟥
+    """,
+    """⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⡾⠿⠿⠿⠿⢶⣦⣄⠀⠀⠀
+    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⠁⠀⠀⠀⣀⣀⣀⣈⣻⣷⡄⠀
+    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣾⡇⠀⠀⣾⣟⠛⠋⠉⠉⠙⠛⢷⣄⠀
+    ⠀⠀⠀⠀⠀⠀⢀⣤⣴⣶⣿⠀⠀⢸⣿⣿⣧⠀⠀⠀⠀⢀⣀⢹⡆
+    ⠀⠀⠀⠀⠀⠀⢸⡏⠀⠀⠀⠀⠀⠀⢿⣿⣿⣷⣶⣶⣿⣿⣿⣿⠃
+    ⠀⠀⠀⠀⠀⠀⣼⡇⠀⠀⠀⠀⠀⠀⠈⠻⠿⣿⣿⠿⠿⠛⢻⡇⡇
+    ⠀⠀⠀⠀⠀⢀⣿⡅⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⡇
+    ⠀⠀⠀⠀⢀⡟⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠀⠀⣿⡇
+    ⠀⠀⠀⠀⠀⣷⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣈⡇⠀⣿⠀
+    ⠀⠀⠀⠀⢰⡿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠋⠀⢸⡟⠀
+    ⠀⠀⠀⠀⣿⠃⠀⠀⢰⠛⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣾⡇⠀
+    ⠀⠀⠀⣸⡟⠀⣴⠖⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⠁⠀
+    ⠀⠀⢠⣿⠀⠸⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⡏⠀⠀
+    ⠀⢀⣾⠃⠀⠀⠈⢀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣿⠁⠀⠀
+    ⠀⣸⡟⠀⠀⠀⠀⠪⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⣧⠀⠀⠀
+    ⢰⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣤⡾⠋⠀⠀⠀
+    ⣼⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⡟⠀⠀⠀⠀⠀
+    ⣿⠁⢀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⡆⠀⣰⡿⠀⠀⠀⠀⠀⠀
+    ⣿⡆⡏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣄⠁⠀⣰⡿⠁⠀⠀⠀⠀⠀⠀
+    ⢸⣧⢈⡅⠀⠀⠀⠀⠀⠀⠀⠶⠶⠋⢀⣼⠟⠀⠀⠀⠀⠀⠀⠀⠀
+    ⠈⢻⣦⠓⠂⠀⠀⠀⠀⠀⠀⢀⣤⣾⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀
+    ⠀⠀⠙⠿⠶⣶⣤⣤⣶⡶⠿⠛⠉⠀
+    """,
 ]
 
+# light NSFW
 waifu = [
     """⠄⠄⠄⢰⣧⣼⣯⠄⣸⣠⣶⣶⣦⣾⠄⠄⠄⠄⡀⠄⢀⣿⣿⠄⠄⠄⢸⡇⠄⠄
     ⠄⠄⠄⣾⣿⠿⠿⠶⠿⢿⣿⣿⣿⣿⣦⣤⣄⢀⡅⢠⣾⣛⡉⠄⠄⠄⠸⢀⣿⠄  
@@ -1506,7 +1582,8 @@ waifu = [
         ⣿⣿⣿⠄⠄⠄⠘⣿⣿⣿⡆⢀⣈⣉⢉⣿⣿⣯⣄⡄⠄⠄⠄⠄⠄⠄⠄⠈⣿⣿
         ⣿⣿⡟⡜⠄⠄⠄⠄⠙⠿⣿⣧⣽⣍⣾⣿⠿⠛⠁⠄⠄⠄⠄⠄⠄⠄⠄⠃⢿⣿
         ⣿⡿⠰⠄⠄⠄⠄⠄⠄⠄⠄⠈⠉⠩⠔⠒⠉⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠐⠘⣿
-        ⣿⠃⠃⠄⠄⠄⠄⠄⠄⣀⢀⠄⠄⡀⡀⢀⣤⣴⣤⣤⣀⣀⠄⠄⠄⠄⠄⠄⠁⢹""",
+        ⣿⠃⠃⠄⠄⠄⠄⠄⠄⣀⢀⠄⠄⡀⡀⢀⣤⣴⣤⣤⣀⣀⠄⠄⠄⠄⠄⠄⠁⢹
+        """,
 ]
 #---> ASCII ART <-----
 

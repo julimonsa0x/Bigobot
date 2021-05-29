@@ -1,9 +1,11 @@
+# Author: Me
+
 import discord
 from discord.ext import commands
 from functions import get_apex_data, printt
 import asyncio
 
-class Apex(commands.Cog):
+class ApexData(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -189,4 +191,4 @@ class Apex(commands.Cog):
                     await msg.edit(embed=pages_list[current])
 
 def setup(bot):
-    bot.add_cog(Apex(bot))
+    bot.add_cog(ApexData(bot))

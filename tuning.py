@@ -263,73 +263,75 @@ map7 = {
     ' ' : ' '
 }'''
 
-def tunear1(s):
-    s = s.lower()
-    s_new = ""
-    for c in s:
-        if c in map1:
-            s_new += map1[c.lower()]
-        else:
-            s_new += c
-    return s_new
+def tunear(s, maplist:int):
+    if maplist == 1:
+        s = s.lower()
+        s_new = ""
+        for c in s:
+            if c in map1:
+                s_new += map1[c.lower()]
+            else:
+                s_new += c
+        return s_new
+    
+    elif maplist == 2:
+        s = s.lower()
+        s_new = ""
+        for c in s:
+            if c in map2:
+                s_new += map2[c.lower()]
+            else:
+                s_new += c
+        return s_new
 
-def tunear2(s):
-    s = s.lower()
-    s_new = ""
-    for c in s:
-        if c in map2:
-            s_new += map2[c.lower()]
-        else:
-            s_new += c
-    return s_new
+    elif maplist == 3:
+        s = s.lower()
+        s_new = ""
+        for c in s:
+            if c in map3:
+                s_new += map3[c.lower()]
+            else:
+                s_new += c
+        return s_new
 
-def tunear3(s):
-    s = s.lower()
-    s_new = ""
-    for c in s:
-        if c in map3:
-            s_new += map3[c.lower()]
-        else:
-            s_new += c
-    return s_new
+    elif maplist == 4:
+        s = s.lower()
+        s_new = ""
+        for c in s:
+            if c in map4:
+                s_new += map4[c.lower()]
+            else:
+                s_new += c
+        return s_new
 
-def tunear4(s):
-    s = s.lower()
-    s_new = ""
-    for c in s:
-        if c in map4:
-            s_new += map4[c.lower()]
-        else:
-            s_new += c
-    return s_new
+    elif maplist == 5:
+        s = s.lower()
+        s_new = ""
+        for c in s:
+            if c in map5:
+                s_new += map5[c.lower()]
+            else:
+                s_new += c
+        return s_new
 
-def tunear5(s):
-    s = s.lower()
-    s_new = ""
-    for c in s:
-        if c in map5:
-            s_new += map5[c.lower()]
-        else:
-            s_new += c
-    return s_new
+    elif maplist == 6:
+        s = s.lower()
+        s_new = ""
+        for c in s:
+            if c in map6:
+                s_new += map6[c.lower()]
+            else:
+                s_new += c
+        return s_new
 
-def tunear6(s):
-    s = s.lower()
-    s_new = ""
-    for c in s:
-        if c in map6:
-            s_new += map6[c.lower()]
-        else:
-            s_new += c
-    return s_new
+    elif maplist == 7:
+        s = s.lower()
+        s_new = ""
+        for c in s:
+            if c in map7:
+                s_new += map7[c.lower()]
+            else:
+                s_new += c
+        return s_new
 
-def tunear7(s):
-    s = s.lower()
-    s_new = ""
-    for c in s:
-        if c in map7:
-            s_new += map7[c.lower()]
-        else:
-            s_new += c
-    return s_new
 

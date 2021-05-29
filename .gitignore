@@ -31,10 +31,7 @@ __pycache__/main.cpython-38.pyc
 cogs/__pycache__/fortnite.cpython-38.pyc
 cogs/__pycache__/reactions.cpython-38.pyc
 databases/coppi_adverts.txt
-<<<<<<< HEAD
-=======
 invitaciones.py
->>>>>>> 23be6da5d614d115fd22183b98592ce05d1b935f
 experimental_functions.py
 __pycache__/broBdays.cpython-38.pyc
 __pycache__/game.cpython-38.pyc
@@ -47,3 +44,9 @@ invitaciones.py
 __pycache__/broBdays.cpython-38.pyc
 __pycache__/game.cpython-38.pyc
 __pycache__/listas.cpython-38.pyc
+apis/__pycache__/covid_api.cpython-38.pyc
+databases/covid_dataset.txt
+images/COPIPEDRO.png
+images/avatar_save2.png
+.gitignore
+images/covid_death_graph.png

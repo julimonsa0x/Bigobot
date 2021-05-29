@@ -1,7 +1,9 @@
-# REMEMBER TO USE Python 3.8.0 WHILE EDITING IN VSC
+# Edit with Python 3.8+
+# .env file required by 5 variables
+# ---------------------------------------->
 import os
 import sys
-from discord.guild import Guild  # to get python version
+from discord.guild import Guild  # to get python version ????? who modified this ahh fuck pylance...
 from dotenv import load_dotenv  # to get the .env TOKEN
 # ----------------------------------------->  # discord.py fundamentals 
 import discord
@@ -12,37 +14,29 @@ import asyncio
 # ----------------------------------------->  # Required Libraries 
 import datetime
 import json
-import math
 import random
 import re
 import time
-import urllib
 from datetime import date, datetime, time, timedelta
 from io import BytesIO
-from math import sqrt
-from time import gmtime, strftime
+from time import strftime
 #import urllib3
 from urllib import parse, request
 import aiofiles
 import aiohttp
-import certifi
-import numpy as np
+#import certifi
 import png
 import pyqrcode
 import requests
-import sympy
 import wikipedia
 #from bs4 import BeautifulSoup
 from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
-from pyqrcode import QRCode
-from pytube import extract  # for the descarga cmd
-from sympy import (Derivative, Integral, Limit, S, Symbol, diff, integrate,
-                   limit, simplify)
+
 
 #<-------------------------------------------> Custom imports
+#import broBdays
 import listas
 from listas import brosId
-import broBdays
 import tuning
 import game
 from functions import (degrees_to_cardinal, 
@@ -51,6 +45,7 @@ from functions import (degrees_to_cardinal,
                        typing_sleep,
                        word_to_emoji,
                        bro_birthdays_check,
+                       throw_error,
                        )
 
 load_dotenv()
@@ -204,7 +199,7 @@ async def on_message(msg):
             with open("databases/prefixes.json", "r") as f:
                 prefixes = json.load(f)
             pre = prefixes[str(msg.guild.id)] 
-            await msg.channel.send(f"Mi prefijo en este servidor es: {pre}\nPara cambiarlo usa: `#changeprefix`.")
+            await msg.channel.send(f"Mi prefijo en este servidor es: {pre}\nPara cambiarlo usa: `{pre}changeprefix`.")
     except Exception as e:
         pass
         #print(f"Excepcion al mencionar al bot: {e}\n{e.args}")
@@ -220,7 +215,7 @@ async def on_guild_join(guild):
     prefixes[str(guild.id)] = "#"
     with open("databases/prefixes.json", "w") as f:
         json.dump(prefixes,f, indent=2)
-
+    
     await bigo_guild_base.send("#setpadlockedinfo", delete_after=60)    
 
 @bot.event
@@ -321,11 +316,11 @@ async def set_info_channels(ctx):
         bot_chan = await bot.fetch_channel(846540959177113610)  # replace here with your copied ID
         # edit channels
         try:
-            await total_chan.edit(name=f"✔️  Miembros Totales: {total_members}")
+            await total_chan.edit(name=f"✔️ Miembros Totales: {total_members}")
             await real_chan.edit(name=f"🧍 Personas: {real_members}")
             await bot_chan.edit(name=f"🤖 Bots: {bot_members}")
         except Exception as e:
-            await ctx.send(f":exclamation: Ocurio un error al ejecutar el comando: Info detallada:\n==========\n`Excepcion:{e.with_traceback}`\n`Razon:{e.args}`", delete_after=180.0)
+            await ctx.send(f":exclamation: Ocurio un error al ejecutar el comando: Info detallada:\n==========\n`Excepcion:{e}`\n`Razon:{e.args}`\n`Traceback:{e.with_traceback}`", delete_after=180.0)
 
 @bot.command(aliases=['reqticket','pedirticket'])
 async def pedir_ticket(ctx, msg: discord.Message=None, category: discord.CategoryChannel=None):
@@ -548,38 +543,6 @@ async def advertir(ctx, member: discord.Member=None, *, reason=None):
     await ctx.send(f"{member.mention} tiene {count} {'advertencia' if first_warning else 'advertencias'}.")
     print(f"cmdAdvertir||      {ctx.author.name} advirtio a {member} por {count}° vez a las {current_hour}")
 
-@bot.command()
-#@commands.has_permissions(kick_members=True)    #for if you wanna limit this command usage and prevent spamming
-async def contar(ctx, number: int, intervalo):
-    '''
-    El bot cuenta hasta un numero dado, puede ser re carnasa...
-    Argumento <number>: int | numero hasta el cual contar. 
-    Argumento <intervalo>: float | velocidad a la cual contar.
-    '''
-    i = 1
-    while i <= number:
-        async with ctx.typing():    
-            await asyncio.sleep(float(intervalo))
-            await ctx.send(f"{i}", delete_after=30.0)
-            i += 1
-
-
-@bot.command(aliases=['cambiar_prefijo','set_prefix'])
-@commands.has_permissions(administrator = True)
-async def changeprefix(ctx, prefix):
-    """ Comando para cambiar el prefijo de activacion del bot, por defecto es # """
-    try:
-        with open("databases/prefixes.json", "r") as f:
-            prefixes = json.load(f)
-        prefixes[str(ctx.guild.id)] = prefix
-        with open("databases/prefixes.json", "w") as f:
-            json.dump(prefixes,f, indent=2)    
-        await ctx.send(f":exclamation: Mi nuevo prefijo para este servidor ahora es: {prefix}")
-    except Exception as e:
-        await typing_sleep(ctx)
-        await ctx.send(f"Al parecer no tienes los permisos necesarios para cambiar mi prefijo.\nMas info:```Excepcion:{e}\nRazon: {e.args}```")
-
-############################
 
 #-----> comando sobre info del autor <-----
 @bot.command(aliases=["autor", "dev", "desarrollador", "creador"])
@@ -606,45 +569,6 @@ async def monsa(ctx):
     await typing_sleep(ctx)
     await ctx.send(embed=embedMine)
     print(f'cmdInfoSobreMí||         Info del autor enviada a {ctx.author.name} a las {current_hour}')
-
-#---------> comando de joda tucson <--------
-@bot.command()
-async def tucson(ctx):
-    '''tucson que mas'''
-    msg = await ctx.send('tucson' + '<:doble:774509983832080385>')
-    await msg.add_reaction('<:doble:774509983832080385>')
-    print(f"{ctx.author.name} tiró la batiseñal tucson el {current_hour}") 
-
-#-----------> Comando de trivia <-------------
-@bot.command()
-async def trivia(ctx):
-    '''It's trivia time!!!'''
-    await typing_sleep(ctx)
-    msg = await ctx.channel.send("{}".format(random.choice(listas.trivias)))
-    await msg.add_reaction(u"\u2705")
-    await msg.add_reaction(u"\U0001F6AB")
-
-    try:
-        reaction, user = await bot.wait_for("reaction_add", check=lambda reaction, user: user == ctx.author and reaction.emoji in [u"\u2705", u"\U0001F6AB"], timeout=8.0)  
-        await asyncio.sleep(1)
-        await ctx.channel.send("3...")
-        await asyncio.sleep(1)
-        await ctx.channel.send("2...")
-        await asyncio.sleep(1)
-        await ctx.channel.send("1...")
-
-    except asyncio.TimeoutError:
-        await typing_sleep(ctx)
-        await ctx.channel.send("Che me ignoraron la trivia (▀̿Ĺ̯▀̿ ̿) ")
-
-    else:
-        if reaction.emoji ==  u"\u2705":
-            await typing_sleep(ctx)
-            await ctx.channel.send("Estoy seguro que sí... :alien:")
-
-        else:
-            await typing_sleep(ctx)
-            await ctx.channel.send("mmm puede ser pa?¿ ")
 
 
 #-------------> RIP command <-----------------
@@ -800,6 +724,8 @@ async def crearemoji(ctx, url_emoji=None, *, name):
     Aconsejable que la URL sea directo a una imagen y no a una pagina en si.
     '''
     if url_emoji == None:
+        await ctx.message.delete()
+        await typing_sleep(ctx)
         await ctx.send("Debes seguir esta sintaxis: #crearemoji <url> <nombre_del_emoji>")
     
     elif url_emoji != None:
@@ -817,6 +743,8 @@ async def crearemoji(ctx, url_emoji=None, *, name):
                 is_animated = True
 
             if is_animated == True:
+                await ctx.message.delete()
+                await typing_sleep(ctx)
                 await ctx.send("No pueden crearse emojis animados!")
 
             elif is_animated == False:
@@ -825,12 +753,16 @@ async def crearemoji(ctx, url_emoji=None, *, name):
                     img.save(b, format='PNG')
                     b_value = b.getvalue()
                     emoji = await guild.create_custom_emoji(image=b_value, name=name)
+                    await ctx.message.delete()
+                    await typing_sleep(ctx)
                     await ctx.send(f'Emoji creado satisfactoriamente, aquí está: <:{name}:{emoji.id}> y su id es:\n`<:{name}:{emoji.id}>`')
                     print(f"cmdCrearEmoji||     {ctx.author.name} creo el emoji custom '{name}' ")
+                
                 except Exception as e:
                     await typing_sleep(ctx)
-                    await ctx.send("Hubo un error al tratar de crear el emote, lo mas probable es que su resolucion sea mayor a 512x512... Detalles del error en canal del bigobot")
-                    exception = f"Excepcion causada:{e}\nRazon:{e.args}"
+                    await ctx.message.delete()
+                    await ctx.send("Hubo un error al tratar de crear el emote, lo mas probable es que su resolucion sea mayor a 512x512... Detalles del error enviada al canal del bigobot")
+                    exception = f"`Excepcion causada:{e}`\n`Razon:{e.args}`\n`Traceback:{e.with_traceback}`"
                     bigobot_chann = 799387331403579462
                     bigobot_channel = await bot.fetch_channel(bigobot_chann)
                     await bigobot_channel.send(exception)
@@ -852,21 +784,6 @@ async def steamcito(ctx):
     await ctx.send("https://emilianog94.github.io/Steamcito-Precios-Steam-Argentina-Impuestos-Incluidos/landing/#howto")
     print(f'cmdSteamcito||            {ctx.author.name} solicitó la web del addon Steamcito')
 
-#-------> repite conmigo CMD 8<--------
-@bot.command()
-async def repite(ctx, *, arg=None):
-    '''Repito lo que escribas y se borra en 15seg'''
-    if arg == None:
-        await typing_sleep(ctx)
-        await ctx.send("Seguido del comando, escribe lo que quieres que repita", tts=True, delete_after=15)
-        print(f'cmdRepite||       {ctx.author.name} intentó repetir sin argumentos')
-    else:
-        await typing_sleep(ctx)
-        await ctx.send(f"{str(arg)}", tts=True)
-        await ctx.message.delete()
-        print(f'cmdRepite||         {ctx.author.name} repitió "{arg}" el {current_hour}')
-
-
 
 ##############
 ############## COMANDOS DE VIDEOS RANDOMS 
@@ -877,7 +794,6 @@ async def roast(ctx):
     await typing_sleep(ctx)
     await ctx.send(random.choice(listas.roasts))
     print(f'cmdRoast||      Lamar v Franklin enviado a {ctx.author.name} a las {current_hour}')
-
 
 #---> LocuraBailandoSinPantalones vid <---
 @bot.command()
@@ -896,22 +812,8 @@ async def pistero(ctx):
 #---> TADEO 1hs EN WHEELIE vid <---
 @bot.command()
 async def tadeo(ctx):
-    '''Tadeo moto moto'''
+    '''Video del Tadeo moto moto 1 hora en bucle'''
     await ctx.send("https://youtu.be/ffoXJhzwcHQ")
-    print(f'cmdTadeo||   Video del tade enviado a {ctx.author.name} XD')
-
-#---> BESTO SPIDERMAN INTRO vid <---
-@bot.command()
-async def spider(ctx):
-    await ctx.send("https://video.twimg.com/ext_tw_video/1343355396174585858/pu/vid/720x720/jUIsR2Z0PN8C-N10.mp4?tag=10")
-    print(f'cmdTadeo||   intro de spiderman enviada a {ctx.author.name} XD')
-
-#---> golazo vid <---
-@bot.command()
-async def golaso(ctx, *, args=None):
-    '''golaso...'''
-    await ctx.send("https://cdn.discordapp.com/attachments/793309880861458473/796239825090117652/glock_gol.mp4")
-    print(f'cmdGolaso||   video del penal festejado con glock-18 para {ctx.author.name} XD')
 
 #---> MATEUS505 GALO SNIPER vid <---
 @bot.command()
@@ -940,20 +842,17 @@ async def galosniper(ctx):
 ##############
 
 
-
 #-------->COMANDOS DE AYUDA inicio<----------
 #----> menu de comandos <---- 
 @bot.command()
 async def comandos(ctx):
     '''Lista de los comandos'''
-    author = ctx.message.author
     embedCmd = discord.Embed(
         color=discord.Colour.orange(),
         title=f"Menu de comandos a tu orden {ctx.author.name} :thumbsup:",
-        description='si prefieres una ayuda mas personal, poné "#ayuda"',
+        description='Si prefieres una ayuda mas personal, escribe "#ayuda"',
         timestamp=datetime.utcnow()
     )
-    #embedCmd.set_author(name="Author", icon_url="https://i.imgur.com/T5sqleE.png")
     embedCmd.set_thumbnail(url="https://cdn.discordapp.com/attachments/793309880861458473/794724078224670750/25884936-fd9d-4627-ac55-d904eb5269cd.png") #icono del bigobot
     embedCmd.add_field(name="-->Comando #info", value="Da informacion general sobre el server", inline=False)
     embedCmd.add_field(name="-->Comando #matecomandos", value="operaciones que puede resolver el bot a detalle", inline=False)
@@ -974,6 +873,7 @@ async def comandos(ctx):
     embedCmd.set_footer(text = "Listo para ayudarte ;)/🥂")
 
     await typing_sleep(ctx)
+    await ctx.send(file=discord.File('images/comandos.png'))
     await ctx.send(embed=embedCmd)
     print(f"cmdComandos||   Comandos de ayuda enviados correctamente a {ctx.author.name} a las {current_hour}")
 
@@ -1062,99 +962,11 @@ async def ayuda(ctx):
     embed_help.set_footer(text = "Listo para ayudarte ;)/🥂", icon_url=ctx.author.avatar_url)
     
     await typing_sleep(ctx)
-    await author.send(embed=embed_help)
+    await author.send(file=discord.File('images/ayuda.png'))
+    await author.send(embed=embed_help, delete_after = 360.0)
     print(f"cmdAyuda||   Ayuda de comandos solicitada por {ctx.author.name} a las {current_hour}")
 #-------->COMANDOS DE AYUDA fin<----------
 
-
-#----> Borra mensajes a los 3 segundos 7<----
-@bot.command()
-async def temporal(ctx, *, arg):
-    '''Repite tu mensaje por 3 segundos y no queda rastro (aunque puede chusmearse con #chusmear)'''
-    #channel = 559592087054450690     #get the channel, could be useful for a channel whitelist 
-    await ctx.message.delete()
-    ## send the message
-    await typing_sleep(ctx)
-    message = await ctx.send(arg, tts=True)
-    ## wait for 3 seconds
-    await asyncio.sleep(3)  
-    ## delete the message
-    await message.delete()
-    print(f"cmdTemporal||      {ctx.author.name} borró el mensaje '{arg}' a las {current_hour}...")
-
-#-----> Chusmea los mensajes borrados <-----
-@bot.command()
-async def chusmear(ctx):
-    '''Chusmea el ultimo mensaje borrado, de cualquier canal y de cualquier usuario'''
-    try:
-        contents, author, channel_name, time = bot.sniped_messages[ctx.guild.id]
-        
-    except:
-        await ctx.channel.send("No encontré un mensaje para chusmear ◔̯◔")
-        return
-
-    embed = discord.Embed(description=contents, color=discord.Color.purple(), timestamp=time)
-    embed.set_author(name=f"{author.name}#{author.discriminator}", icon_url=author.avatar_url)
-    embed.set_footer(text=f"Borrado de : #{channel_name}")
-
-    await typing_sleep(ctx)
-    await ctx.channel.send(embed=embed)
-
-
-#----> memes y gifs 5<-----
-@bot.command()
-async def meme(ctx):
-    '''Memes randoms, a quien no le gustan los memes...'''
-    embed = discord.Embed(color = discord.Colour.red(), timestamp=datetime.utcnow())
-    random_link = random.choice(listas.images)
-    if (
-            random_link.startswith('https://video.twimg.com/ext_tw_video/') or 
-            random_link.startswith('https://imgur') or 
-            random_link.startswith('https://www.youtube:') or
-            random_link.startswith('https://i.imgur') or 
-            random_link.startswith('https://youtu')
-        ):
-        await typing_sleep(ctx)
-        await ctx.send(random_link)
-        print(f'cmdMeme||         Meme enviado a {ctx.author.name} a las {current_hour}')
-        
-    else:
-        embed.set_image(url = random_link)
-        await typing_sleep(ctx)
-        await ctx.send(embed = embed)
-        print(f'cmdMeme||         Meme enviado a {ctx.author.name} a las {current_hour}')
-
-#----> Reddit meme <----
-'''@bot.command()
-async def reddit_meme(ctx, subreddit_to_search=None):
-    EN: Searchs for a random meme in a given subreddit. 
-    subreddit r/memes by default if no subreddit is given...
-    syntax example: #reddit_meme dankmemes\n
-    ES: Busca un meme random en un subreddit dado.
-    por defecto envia memes del subreddit r/memes...
-    ejemplo: #reddit_meme MemesArgentina
-    if subreddit_to_search != None:
-        subreddit_url = f"https://www.reddit.com/r/{subreddit_to_search}.json"
-    elif subreddit_to_search == None:
-        subreddit_url = "https://www.reddit.com/r/memes.json"
-        subreddit_to_search = "memes"
-
-    async with aiohttp.ClientSession() as cs:
-        async with cs.get(subreddit_url) as resp:
-            memes = await resp.json()
-            pick_random = random.randint(0, 25)
-            embedReddit = discord.Embed(
-                title = (f"Meme/post de r/{subreddit_to_search}."),
-                color = discord.Color.purple(),
-            )
-            embedReddit.add_field(name = "***Título***", value = f'{memes["data"]["children"][pick_random]["data"]["title"]}', inline = True)
-            embedReddit.add_field(name = "***Autor***", value = f'{memes["data"]["children"][pick_random]["data"]["author"]}', inline = True)
-            embedReddit.add_field(name = "***Likes***", value = f'{memes["data"]["children"][pick_random]["data"]["score"]}', inline = True)
-            embedReddit.set_image(url=memes["data"]["children"][pick_random]["data"]["url"])
-            embedReddit.set_footer(icon_url = ctx.author.avatar_url, text = f"Meme para {ctx.author.name}")
-            await typing_sleep(ctx)
-            await ctx.send(embed = embedReddit)
-            print(f'cmdRedditMeme||         Meme enviado  {ctx.author.name} a las {current_hour}')'''
 
 #---->Juegos gratis epic <----
 @bot.command()
@@ -1170,17 +982,37 @@ async def juegos_gratis(ctx, platform=None):
 
         req = requests.get(epic_json).json()
         title1 = req['data']['Catalog']['searchStore']['elements'][0]['title']  # str
-        seller1 = req['data']['Catalog']['searchStore']['elements'][0]['seller']['name']  # str 
-        price1 = req['data']['Catalog']['searchStore']['elements'][0]['price']['totalPrice']['fmtPrice']['originalPrice']  # str
-        thumbnail1 = req['data']['Catalog']['searchStore']['elements'][0]['keyImages'][2]['url']  # str 
+        
+        if title1 == "Mistery Game":
+            seller1 = req['data']['Catalog']['searchStore']['elements'][2]['seller']['name']  # str 
+            price1 = req['data']['Catalog']['searchStore']['elements'][2]['price']['totalPrice']['fmtPrice']['originalPrice']  # str
+        else:
+            seller1 = req['data']['Catalog']['searchStore']['elements'][0]['seller']['name']  # str 
+            price1 = req['data']['Catalog']['searchStore']['elements'][0]['price']['totalPrice']['fmtPrice']['originalPrice']  # str
+        
+        try:
+            thumbnail1 = req['data']['Catalog']['searchStore']['elements'][0]['keyImages'][2]['url']  # str 
+        except IndexError:
+            thumbnail1 =  req['data']['Catalog']['searchStore']['elements'][0]['keyImages'][0]['url']  # str    
+        
         try:
             effectiveDate1 = f"Desde: {str(req['data']['Catalog']['searchStore']['elements'][0]['effectiveDate'])[:10]}, hasta: {str(req['data']['Catalog']['searchStore']['elements'][0]['price']['lineOffers'][0]['appliedRules'][0]['endDate'])[:10]}"
         except IndexError:
             effectiveDate1 = f"Fecha de validez desconocida :("
 
-        title2 =  req['data']['Catalog']['searchStore']['elements'][1]['title']
-        title3 =  req['data']['Catalog']['searchStore']['elements'][2]['title']
-        title4 =  req['data']['Catalog']['searchStore']['elements'][3]['title']
+        try:
+            title2 =  req['data']['Catalog']['searchStore']['elements'][1]['title']
+        except IndexError:
+            title2 = ":exclamation: No pude encontrar el proximo juego gratis"
+        try:
+            title3 =  req['data']['Catalog']['searchStore']['elements'][2]['title']
+        except IndexError:
+            title3 = ":exclamation: No pude encontrar el proximo juego gratis"
+        try:
+            title4 =  req['data']['Catalog']['searchStore']['elements'][3]['title']
+        except IndexError:
+            title4 = ":exclamation: No pude encontrar el proximo juego gratis"
+
         embedGame1 = discord.Embed(
                 title = f'**Juegos gratis actuales en {platform}**',
                 description = f'[Reclamar juego]({epic_free_games_web})',
@@ -1198,10 +1030,11 @@ async def juegos_gratis(ctx, platform=None):
         embedGame2.add_field(name = f"Luego de {title1}:", value = f"{title2}")
         embedGame2.add_field(name = f"Luego de {title2}:", value = f"{title3}")
         embedGame2.add_field(name = f"Luego de {title3}:", value = f"{title4}")
+        
         await typing_sleep(ctx)
-        await ctx.send(embed = embedGame1)
-        await ctx.send(embed = embedGame2)
-        await ctx.send(f"Eso es todo por ahora {ctx.author.name}!")
+        await ctx.send(embed = embedGame1, delete_after=360.0)
+        await ctx.send(embed = embedGame2, delete_after=360.0)
+        await ctx.send(f"Eso es todo por ahora {ctx.author.name}!", delete_after=360.0)
         print(f'cmdJuegosGratis||         Juego gratis por {ctx.author.name} a las {current_hour}')
 
 
@@ -1212,25 +1045,6 @@ async def willy(ctx):
     await typing_sleep(ctx)
     await ctx.send(random.choice(listas.willyooc))
     print(f'cmdWilly||      Willy OOC enviado a {ctx.author.name} a las {current_hour}')
-
-
-#--------> buscar vids de yt 3<-------
-@bot.command()
-async def youtube(ctx, *, search):
-    '''Busca un video de youtube y miralo, en discord android / ios se abre la app youtube'''
-    query_string = parse.urlencode({'search_query': search})
-    html_content = request.urlopen('http://www.youtube.com/results?' + query_string)
-    search_results = re.findall('/watch\?v=(.{11})', html_content.read().decode())
-    #print(search_results)
-    await typing_sleep(ctx)
-    await ctx.send('https://youtube.com/watch?v=' + search_results[0])
-    print(f'cmdYoutube|| {ctx.author.name} buscó el video {search} en yt')
-
-@youtube.error
-async def youtube_error(ctx, error):
-    if isinstance(error, commands.MissingRequiredArgument):
-        await ctx.send("Seguido del comando debes introducir el nomber del video a buscar")
-        await ctx.send("Recuerda que si quieres ver la sintaxis especfica de un comando puedes recurrir a **#help <#comando>** y\npara ver todos los comandos puedes recurrir a **#help** o **#ayuda** / **#comandos**")
 
 #------> buscar en wikipedia <------
 @bot.command()
@@ -1264,362 +1078,6 @@ async def wiki_error(ctx, error):
         await ctx.send("Para una búsqueda correcta debes seguir la sintaxis **#wiki <lenguaje> <tu_busqueda>**. Para buscar en inglés -> en | Para buscar en español -> es | (símbolo del lenguaje)")
         await ctx.send("Recuerda que si quieres ver la sintaxis especfica de un comando puedes recurrir a **#help <#comando>** y\npara ver todos los comandos puedes recurrir a **#help** o **#ayuda** / **#comandos**")
         print(f"cmdWiki||     {ctx.author.name} falló al buscar en wikipedia por falta de argumentos")
-
-#----> Descargar YT Videos <-----
-@bot.command()
-async def descarga(ctx, url=None):   
-    '''Introduce una url de un video de YT y se te redirigirá
-    a otra pagina para descargar tal video en .mp3 o .mp4...
-    '''
-    if url != None:
-        id = extract.video_id(url)
-        downl_url = f"https://www.y2mate.com/es/convert-youtube/{id}"
-        await typing_sleep(ctx)
-        await ctx.send(f"Aqui esta el video listo para ser descargado: {downl_url}")
-        print(f"cmdDescarga||            {ctx.author.name} descargo un video...")                
-    else:
-        await typing_sleep(ctx)
-        await ctx.send("No se pudo convertir con exito el video...")
-        print(f"cmdDescarga||            {ctx.author.name} no pudo descargar un video...")     
-
-###------------- Comandos de conversiones Inicio ---------->>>>
-
-#----> Convertir de binario a decimal <----
-#https://parzibyte.me/blog/2020/12/05/python-convertir-binario-decimal/
-@bot.command()
-async def bin_a_dec(ctx, binary: str):
-    '''Convierte un binario dado, a decimal'''
-    posicion = 0
-    decimal = 0
-    # Invertir la cadena porque debemos recorrerla de derecha a izquierda
-    binario = binary[::-1]
-    for digito in binario:
-        # Elevar 2 a la posición actual
-        multiplicador = 2**posicion
-        decimal += int(digito) * multiplicador
-        posicion += 1
-    await typing_sleep(ctx)    
-    await ctx.send(f"El binario: {binary} en decimal es: {decimal}")
-
-
-# ---> Convertir de decimal a binario <---
-# from geeksforgeeks
-@bot.command()
-async def dec_a_bin(ctx, decimal: int):
-    '''Convierte un decimal dado, a binario'''
-    bin_result = bin(decimal).replace("0b", "")
-    bin_result2 = bin(decimal)[2:]
-    print(bin_result2)
-    await typing_sleep(ctx)
-    await ctx.send(f"El decimal {decimal} en binario es: {bin_result}")
-
-
-# ----> Convertir de HEX a decimal <----
-# from geeks for geeks
-@bot.command()
-async def hex_a_dec(ctx, hex: str):
-    '''Convierte un Hexadecimal dado, a decimal'''
-    dec_result = int(hex, 16) 
-    dec_result = str(dec_result)
-    await typing_sleep(ctx)
-    await ctx.send(f"El hexadecimal {hex} en decimal es: {dec_result}")
-
-
-# ---> Convertir de decimal a HEX <---
-@bot.command()
-async def dec_a_hex(ctx, decimal: int):
-    '''Convierte un decimal dado, a hexadecimal'''
-    hex_result = hex(int(decimal))[2:].upper()
-    await typing_sleep(ctx)
-    await ctx.send(f"El decimal {decimal} en hexadecimal es: {hex_result}")
-
-
-# ---> Convertir decimal a romano <----
-# from a spanish youtube channel, ep 751 i remember...
-@bot.command()
-async def num_a_rom(ctx, numero: int):
-    '''
-    Convierte numeros enteros a numerales romanos
-    el numero debe ser menor a 4000, caso contrario 
-    mostrara resultados no validos...
-    '''
-
-    numero_inicial = numero
-
-    numeros = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1]
-    numerales = ['M', 'CM', 'D', 
-                'CD', 'C', 'XC', 
-                'L', 'XL', 'X', 
-                'IX', 'V', 'IV', 'I']
-
-    numeral = ''
-    i = 0
-
-    if numero > 3999:
-        await typing_sleep(ctx)
-        await ctx.send("Actualmente no es posible convertir numeros mayores a 3999\npara esto se requieren caracteres especiales :(")
-    
-    elif numero <= 3999:
-        while numero > 0:
-            for _ in range(numero // numeros[i]):
-                numeral += numerales[i]
-                numero -= numeros[i]
-            i += 1
-
-    await typing_sleep(ctx)
-    await ctx.send(f"El numero {numero_inicial} en romano es {numeral}")
-
-###------------- Comandos de conversiones Final ------------>>>>
-################################################################
-###-------------- Operaciones Matemáticas inicio------------>>>>
-#---------> suma <---------
-@bot.command()
-async def suma(ctx, num1: int, num2: int):
-    '''Suma dos numeros que introduzcas, deben estar separados
-    a modo de ejemplo: #suma 1 5 -----> 6
-    '''
-    sumResult = num1 + num2
-    await typing_sleep(ctx)
-    await ctx.send("Resultado de la suma: ```{}``` " .format(sumResult))
-    print(f'cmdSuma||   {ctx.author.name} sumó {num1} con {num2} ---> {sumResult} a las {current_hour}')
-
-#---------> Resta no hay jaja <---------
-@bot.command()
-async def resta(ctx, num1: int, num2: int):
-    '''Resta dos numeros, deben estar separados
-    a modo de ejemplo: #resta 20 15
-    '''
-    await typing_sleep(ctx)
-    await ctx.send(random.choice(listas.intentoResta))
-    print(f'cmdResta||  {ctx.author.name} intentó restar jaja')
-
-#----> multiplicacion  <----
-@bot.command()
-async def mult(ctx, num1: int, num2: int):
-    '''Multiplica dos numeros que introduzcas'''
-    multResult = num1 * num2
-    await typing_sleep(ctx)
-    await ctx.send(" Resultado del producto: ```{}``` " .format(multResult))
-    print(f'cmdMult||   {ctx.author.name} multiplicó {num1} y {num2} ---> {multResult} a las {current_hour}')
-
-#----> division <----
-@bot.command()
-async def division(ctx, num1: int, num2: int):
-    '''Divide dos numeros que introduzcas'''
-    divQuotient = (num1 // num2)
-    divRemain = (num1 % num2)
-    await typing_sleep(ctx)
-    await ctx.send(f"El cociente da {divQuotient} y el resto queda {divRemain}")
-    print(f'cmdDivision|| {ctx.author.name} dividió {num1} sobre {num2} ---> {divQuotient} | {divRemain} a las {current_hour}')
-
-#----> potenciación y radicación  <----
-@bot.command()
-async def pot(ctx, num1: int, num2: int):
-    '''El 1er numero que introduzcas a la potencia del 2do
-    ejemplo: #pot 3 3 ----> 3 al cubo ---> 27
-    '''
-    potResult = num1 ** num2
-    await typing_sleep(ctx)
-    await ctx.send("Resultado: ```{}``` " .format(potResult))
-    print(f'cmdPot||    {ctx.author.name} potenció/radicó {num1} a la {num2} ---> {potResult} a las {current_hour}')
-
-#----> BASKARA <----
-@bot.command()
-async def bask(ctx, numOne: float, numTwo: float, numThree: float):
-    '''Introduce los coeficientes de la funcion con su respectivo signo!
-    ejemplo de sintaxis con la siguiente ecuacion ---> 5X² - 20X +15
-    #bask +5 -20 +15 ----> x1 = 3, x2 = 1 
-    '''
-    # Formula----------------->>> complexBaskEcuation = int((numTwo**2)-4*numOne*numThree) 
-    # Formula----------------->>> realBaskEcuation = str(f"{numOne}x^2 {numTwo}x {numThree}"   
-    if ((numTwo**2)-4*numOne*numThree) < 0:
-        complexBaskEcuation = int((numTwo**2)-4*numOne*numThree)
-        await typing_sleep(ctx)
-        await ctx.send("La solución de la ecuación es con numeros complejos :(")
-        print(f'La ecuación de {ctx.author.name} es compleja: "{complexBaskEcuation}"')
-        
-    else:
-        realBaskEcuation = str(f"{numOne}x^2 {numTwo}x {numThree}")
-        root1 = ((-numTwo)+(numTwo**2-(4*numOne*numThree))**0.5)/(2*numOne)   # Raíz positiva
-        root2 = ((-numTwo)-(numTwo**2-(4*numOne*numThree))**0.5)/(2*numOne)   # Raíz negativa
-        await typing_sleep(ctx)
-        await ctx.send(" Parte positiva: ```{}``` " .format(root1))
-        await ctx.send(" Parte negativa: ```{}``` " .format(root2))
-        print(f'cmdBask||       {ctx.author.name} halló raices con éxito para la ecuación {realBaskEcuation} ----> {root1} y {root2} a las {current_hour}')
-
-@bask.error
-async def bask_error(ctx, error):
-    if isinstance(error, commands.MissingRequiredArgument):
-        await ctx.send("Debes seguir la sintáxis #bask <coeficiente cuadratico> <coeficiente lineal> <termino independiente> \ncon sus respectivos signos...")
-        await ctx.send('https://cdn.discordapp.com/attachments/793309880861458473/804126063880830996/how_to_bask.png')
-        await ctx.send("Recuerda que si quieres ver la sintaxis especfica de un comando puedes recurrir a **#help <#comando>** y\npara ver todos los comandos puedes recurrir a **#help** o **#ayuda** / **#comandos**")
-        print(f"cmdBask||     {ctx.author.name} quiso baskarear el {current_hour}")
-
-#-------> Raíz cuadrada <-------
-@bot.command()
-async def raiz(ctx, num1: int): 
-    '''La raiz cuadrada de un numero que introduzcas'''  
-    sqrtResult = np.sqrt(num1)   
-    await typing_sleep(ctx)
-    await ctx.send("Resultado de la raíz: ```{}``` " .format(sqrtResult))
-    print(f'cmdSqrt|| {ctx.author.name} halló la raíz cuadrada de {num1}, ---> {sqrtResult} a las {current_hour}')
-
-
-##-------> Seno de un ángulo <-------
-@bot.command()
-async def seno(ctx, num1: int):
-    '''El seno de un grado que introduzcas'''
-    sinResult = math.sin(math.radians(num1)) 
-    await typing_sleep(ctx)
-    await ctx.send("Resultado: ```{}``` " .format(sinResult))
-    print(f'cmdPot||    {ctx.author.name} halló el seno de {num1} ---> {sinResult} a las {current_hour}')
-
-#-------> Coseno de un ángulo <-------
-@bot.command()
-async def coseno(ctx, num1: int):
-    '''El coseno de un grado que introduzcas'''
-    cosResult = math.cos(math.radians(num1)) 
-    await typing_sleep(ctx)
-    await ctx.send("Resultado: ```{}``` " .format(cosResult))
-    print(f'cmdPot||    {ctx.author.name} halló el coseno de {num1} ---> {cosResult} a las {current_hour}')
-
- #----> Tangente de un ángulo <----
-
-#------> Tangente de un ángulo <------
-@bot.command()
-async def tangente(ctx, num1: int):
-    '''La tangente de un grado que introduzcas'''
-    tanResult = math.tan(math.radians(num1)) 
-    await typing_sleep(ctx)
-    await ctx.send("Resultado: ```{}``` " .format(tanResult))
-    print(f'cmdPot||    {ctx.author.name} halló la tangente de {num1} ---> {tanResult} a las {current_hour}')
-
-#------> Hipotenusa de dos catetos <------
-@bot.command()
-async def hipotenusa(ctx, num1: int, num2: int):
-    '''Calcula la hipotenusa de dos numeros que introduzcas'''
-    hipResult = math.hypot(num1, num2) 
-    await typing_sleep(ctx)
-    await ctx.send("Resultado: ```{}``` " .format(hipResult))
-    print(f'cmdPot||    {ctx.author.name} halló la tangente de {num1} ---> {hipResult} a las {current_hour}')
-
-
-#-----> Límites <----
-@bot.command()
-async def limite(ctx, function=None, var=None, point=None):
-    '''Halla el limite de una funcion cuando tiende a un punto dado
-    escribe el comando a secas para ver un ejemplo mas a detalle!
-    '''
-    if function != None and var != None and point != None:
-        function:str 
-        var:str
-        point:int
-        limitResult = limit(function, var, point)
-        await typing_sleep(ctx)
-        await ctx.channel.send(f"El límite cuando {function} tiende a {point} es: {limitResult}")
-        print(f"{ctx.author.name} halló el límite de {function} ---> {limitResult} a las {current_hour}")
-    
-    else:
-        await typing_sleep(ctx)
-        await ctx.channel.send(f"Debes seguir la sintaxis #limite[funcion], [variable], [punto] ")
-        await ctx.channel.send(f"{ctx.author.name} mira este ejemplo con *x²-8x+5*")
-        await ctx.channel.send(f"La entrada debe ser escrita así: ``` x**2-8*x+5 x 10 ```")
-        await ctx.channel.send(f"Ignora el formateo de texto automatico de discord, en cuanto escribes esa funcion se te convertirá en ``` x*2-8x+5 x 10 ```")
-        await ctx.channel.send(f"Esto no es posible de evitar debido a que está implementado de manera predeterminada en discord pero el bot aun asi te dará el resultado correcto :thumbsup:")
-        await ctx.channel.send(f"Por ultimo recordar que esto no pasa solo en esta funcion, ocurre cuando un texto esta encerrado con asteriscos (se convierte en cursiva)")
-        embed = discord.Embed()
-        embed.set_image(url="https://cdn.discordapp.com/attachments/793309880861458473/797301871374237766/teoriadelimites.jpg")
-        #embed.set_image(url="attachment://teoriadelimites.jpg")   #estas 2 lineas seran necesarias
-        #image = discord.File("teoriadelimites.jpg")               #si se quiere usar archivo local
-        await ctx.send(embed=embed)                               #embed no necesario por el momento
-        await ctx.channel.send(f"Salida: ``` 25 ```")
-        print(f"{ctx.author.name} falló al querer calcular un límite a las {current_hour}")
-    
-
-#----> Derivadas <----
-@bot.command()
-async def derivada(ctx, function=None):
-    '''Halla la derivada de una funcion escribe el
-    comando a secas para ver un ejemplo mas a detalle!
-    '''
-    if function != None:
-        fx = str(function)
-        x = Symbol('x')
-        ddxResult = simplify(diff(fx, x))
-        await typing_sleep(ctx)
-        await ctx.channel.send(f"La derivada de {function} es: ```{ddxResult}```")
-        print(f"{ctx.author.name} halló la derivada de {function} ---> {ddxResult} a las {current_hour}")
-    
-    else:
-        await typing_sleep(ctx)
-        await ctx.channel.send(f"Debes seguir la sintaxis #derivada[funcion]")
-        await ctx.channel.send(f"{ctx.author.name} mira este ejemplo con *x²-10x")
-        await ctx.channel.send(f"Entrada x²-10x: Debe ser ingresada así ``` x**2-10*x ```")
-        await ctx.channel.send(f"Ignora el formateo de texto automatico de discord, en cuanto escribes esa funcion se te convertirá en ``` x*2-10x ```, tu solo dale enter por mas que se haya cambiado")
-        await ctx.channel.send(f"Esto no es posible de evitar debido a que está implementado de manera predeterminada en discord pero el bot aun asi te dará el resultado correcto :thumbsup:")
-        await ctx.channel.send(f"Por ultimo recordar que esto no pasa solo en esta funcion, ocurre en cualquier texto encerrado con asteriscos (se convierte en cursiva)")
-        await ctx.channel.send(f"Salida: ``` 2*x-10 ```")
-        print(f"{ctx.author.name} falló al querer calcular una derivada a las {current_hour}")
-
-#----> Integrales <----
-@bot.command()
-async def integral(ctx, function=None, dif1=None, dif2=None):
-    '''Halla la integral de una funcion, sintaxis #integral <funcion>. Recuerda que para multiplicar debe usarse * y para elevar (potencias) debe usarse **'''
-    if function != None and dif1 == None and dif2 == None:
-        fx = str(function)
-        x = Symbol('x')
-        intResult = Integral(fx, x).doit()
-        await typing_sleep(ctx)
-        await ctx.channel.send(f"La integral indefinida de {function} es:")
-        await ctx.channel.send(f"``` {intResult} ```")
-        print(f"{ctx.author.name} halló la integral indef. de {function} ---> {intResult} a las {current_hour}")
-    
-    elif function != None and dif1 != None and dif2 != None:
-        fx = str(function)
-        x = Symbol('x')
-        a = int(dif1)
-        b = int(dif2)
-        intResult = Integral(fx, (x, a, b)).doit()
-        await typing_sleep(ctx)
-        await ctx.channel.send(f"La integral definida de {function} es:")
-        await ctx.channel.send(f"``` {intResult} ```")
-        print(f"{ctx.author.name} halló la integral def. de {function} ---> {intResult} a las {current_hour}")
-
-    else:
-        await typing_sleep(ctx)
-        await ctx.channel.send(f"Debes seguir la sintaxis #integral[funcion]")
-        await ctx.channel.send(f"{ctx.author.name} mira este ejemplo con x³-6x indefinido")
-        await ctx.channel.send(f"Entrada x³-6x: Debe ser ingresada así ``` x**3-6*x ```")
-        await ctx.channel.send(f"Ignora el formateo de texto automatico de discord, en cuanto escribes esa funcion se te convertirá en x*3-6x, tu solo dale enter por mas que se haya cambiado")
-        await ctx.channel.send(f"Esto no es posible de evitar debido a que está implementado de manera predeterminada en discord pero el bot aun asi te dará el resultado correcto :thumbsup:")
-        await ctx.channel.send(f"Por ultimo recordar que esto no pasa solo en esta funcion, ocurre en cualquier texto encerrado con asteriscos (se convierte en cursiva)")
-        await ctx.channel.send(f"Salida (x⁴/4)-(3x²): ``` (x**4)/4-(3*x**2) ```")
-        embedIndef = discord.Embed()
-        embedIndef.set_image(url="https://cdn.discordapp.com/attachments/793309880861458473/798420481828585504/how_to_int_indef.png")
-        await ctx.send(embed=embedIndef)        
-        await ctx.channel.send(f"-------------->")
-        
-        await ctx.channel.send(f"Ahora va un ejemplo con x³-6x definido de 0 a 3")
-        await ctx.channel.send(f"Entrada x³-6x: Debe ser ingresada así ``` x**3-6*x 0 3```")
-        await ctx.channel.send(f"Salida: ``` -27/4 ```")
-        embedDef = discord.Embed()
-        embedDef.set_image(url="https://cdn.discordapp.com/attachments/793309880861458473/798420477713973269/how_to_int_def.png")
-        await ctx.send(embed=embedDef)                               
-        print(f"{ctx.author.name} falló al querer calcular una derivada a las {current_hour}")
-
-#----> Fibonacci <-----
-@bot.command()
-async def fib(ctx, number: int):
-    '''Encuentra el enésimo numero de fibonacci'''
-    if number == None:
-        await typing_sleep(ctx)
-        await ctx.send("Debes ingresar un numero")
-    
-    elif number != None:
-        await typing_sleep(ctx)
-        result = functions.fibonacci(number)
-        await ctx.send(f"El enesimo numero {number} en la sucesion de fibonacci es: {result}")
-        print(f"{ctx.author.name} encontro el {number}esimo numero de fibonacci: {result}")
 
 
 #------------------------------------------>>>>>
@@ -1700,64 +1158,34 @@ async def mensaje(ctx, channel_id=None, *, args=None):
         await ctx.channel.send("Debes proporcionar una ID de un canal, seguido del mensaje a enviar!")
         print(f"cmdMensaje||       {ctx.author.name} falló al enviar un mensaje")
 
-@bot.command()
+@bot.command(aliases=['tunearletras','messletters','changefont'])
 async def tunear(ctx, order: int, *, args=None,):
-    '''Tunea un texto, la sintaxis es #tunear <orden> <el_texto_que_quieras_tunear>, siendo el orden un numero del 1 al 7 (distintas fuentes)'''
-    if args != None and order == 1:
-        myThiccString = tuning.tunear1(args.replace("#tunear", ""))
-        await typing_sleep(ctx)
-        await ctx.send(myThiccString)
-        print(f"cmdTunear1||        {ctx.author.name} tuneó un texto el {current_hour}")
+    '''
+    Tunea un texto, la sintaxis es #[tunear] <orden> <el_texto_que_quieras_tunear>. 
+    El orden debe ser un numero del 1 al 7 (distintas fuentes)
+    '''
+    
+    try:
+        if args != None:
+            myThiccString = tuning.tunear(args.replace("#tunear", ""), order)
+            await typing_sleep(ctx)
+            await ctx.send(myThiccString)
+            print(f"cmdTunear1||        {ctx.author.name} tuneó un texto el {current_hour}")
 
-    elif args != None and order == 2:
-        myThiccString = tuning.tunear2(args.replace("#tunear", ""))
-        await typing_sleep(ctx)
-        await ctx.send(myThiccString)
-        print(f"cmdTunear2||        {ctx.author.name} tuneó un texto el {current_hour}")
+        elif args is None and order is None:
+            await typing_sleep(ctx)    
+            await ctx.send("Seguido del comando debes introducir un orden (1 a 6) seguido del texto a tunear", delete_after=60.0)
+            await ctx.send("A modo de ejemplo: **#tunear 4 textodepruebacopipedro**", delete_after=60.0)
+            print(f"cmdTunear||        {ctx.author.name} falló al tunear un texto el {current_hour}")
 
-    elif args != None and order == 3:
-        await typing_sleep(ctx)
-        myThiccString = tuning.tunear3(args.replace("#tunear", ""))
-        await ctx.send(myThiccString)
-        print(f"cmdTunear3||        {ctx.author.name} tuneó un texto el {current_hour}")
-
-    elif args != None and order == 4:
-        await typing_sleep(ctx)
-        myThiccString = tuning.tunear4(args.replace("#tunear", ""))
-        await ctx.send(myThiccString)
-        print(f"cmdTunear4||        {ctx.author.name} tuneó un texto el {current_hour}")
-
-    elif args != None and order == 5:
-        await typing_sleep(ctx)
-        myThiccString = tuning.tunear5(args.replace("#tunear", ""))
-        await ctx.send(myThiccString)
-        print(f"cmdTunear5||        {ctx.author.name} tuneó un texto el {current_hour}")
-
-    elif args != None and order == 6:
-        await typing_sleep(ctx)
-        myThiccString = tuning.tunear6(args.replace("#tunear", ""))
-        await ctx.send(myThiccString)
-        print(f"cmdTunear6||        {ctx.author.name} tuneó un texto el {current_hour}")
-
-    elif args != None and order == 7:
-        await typing_sleep(ctx)
-        myThiccString = tuning.tunear7(args.replace("#tunear", ""))
-        await ctx.send(myThiccString)
-        print(f"cmdTunear6||        {ctx.author.name} tuneó un texto el {current_hour}")
-
-    #else:
-    elif args == None and order == None:
-        await typing_sleep(ctx)
-        #args == None and order == None        
-        await ctx.send("Seguido del comando debes introducir un orden (1 a 6) seguido del texto a tunear")
-        await ctx.send("A modo de ejemplo: **#tunear 4 textodepruebacopipedro**")
-        print(f"cmdTunear||        {ctx.author.name} falló al tunear un texto el {current_hour}")
-
-@tunear.error
-async def tunear_error(ctx, error):
-    if isinstance(error, commands.MissingRequiredArgument):
-        await ctx.send("Debes seguir la sintáxis #tunear <orden> <texto a tunear> siendo el orden un número del 1 al 7")
-        await ctx.send("Recuerda que si quieres ver la sintaxis especfica de un comando puedes recurrir a **#help <#comando>** y\npara ver todos los comandos puedes recurrir a **#help** o **#ayuda** / **#comandos**")
+    except Exception as e:
+        if isinstance(e, commands.MissingRequiredArgument):
+            await typing_sleep(ctx)
+            await ctx.send("Debes seguir la sintáxis #tunear <orden> <texto a tunear> siendo el orden un número del 1 al 7", delete_after=130.0)
+            await ctx.send("Recuerda que si quieres ver la sintaxis especfica de un comando puedes recurrir a **#help <#comando>** y para ver todos los comandos puedes recurrir a **#help** o **#ayuda** / **#comandos**", delete_after=150.0)
+        else:
+            await typing_sleep(ctx)
+            await throw_error(ctx=ctx, e=e)
 
 #----------> Kick Command <---------
 @bot.command()
@@ -1765,11 +1193,10 @@ async def tunear_error(ctx, error):
 async def kick(ctx, member: discord.Member, *, reason=None):
     '''Kick a un usuario, requiere permisos'''
 
-    async with ctx.typing():    
-        await asyncio.sleep(type_time)
-        msg = await ctx.channel.send(f"Estas seguro que quieres kickear a {member}?")
-        await msg.add_reaction(u"\u2705") # emoji OK
-        await msg.add_reaction(u"\U0001F6AB") # emoji NO
+    await typing_sleep(ctx)
+    msg = await ctx.channel.send(f"Estas seguro que quieres kickear a {member}?")
+    await msg.add_reaction(u"\u2705") # emoji OK
+    await msg.add_reaction(u"\U0001F6AB") # emoji NO
 
     try:
         reaction, user = await bot.wait_for("reaction_add", check=lambda reaction, user: user == ctx.author and reaction.emoji in [u"\u2705", u"\U0001F6AB"], timeout=10)
@@ -1795,8 +1222,6 @@ async def kick(ctx, member: discord.Member, *, reason=None):
             await typing_sleep(ctx)
             await ctx.channel.send(f"{member} no fue kickeado y safó...")
             print(f"cmdKick||      {member} iba a ser kickeado {ctx.author.name} pero safo")
-
-
 
 #----------> Ban Command <---------
 @bot.command()
@@ -1832,7 +1257,6 @@ async def ban(ctx, member: discord.Member, *, reason=None):
             await typing_sleep(ctx)
             await ctx.channel.send(f"{member} no fue baneado asi que safo")
             print(f"cmdBan||        {member} iba a ser baneado {ctx.author.name} pero safo")
-
 
 
 #------------>  interaccion con el bot 2  <---------------
@@ -2115,9 +1539,9 @@ async def qr(ctx, *, qrstring: str=None):
     elif qrstring != None:
         url = pyqrcode.create(qrstring)
         url.png('images/qr.png', scale=6)  # saves qr image
+        await ctx.message.delete()
         await typing_sleep(ctx)
         await ctx.send(f'{ctx.author.mention} aca esta tu QR', file=discord.File('images/qr.png'))
-        #await ctx.send(file=discord.File('images/qr.png'))
             
 # ---------> Purge messages of a mentioned user <--------
 @bot.command()
@@ -2161,8 +1585,8 @@ async def borrar(ctx, limit=10, member: discord.Member=None):
         # otherwise send the name and reason of the exception
         else:
             await typing_sleep(ctx)
-            await ctx.send(f":exclamation: An exception occured. Please contact the developer\n```Exception: {e}\n Reason: {e.args}```")
-
+            await ctx.send(f":exclamation:  Hubo un error al ejecutar el comando. Info detallada:")
+            await ctx.send(f"`Excepcion: {e}`\n`Razon: {e.args}`\n`Traceback: {e.with_traceback}`")
 
 @bot.command()
 async def submit(ctx, titulo, mensaje):#, archivo):
@@ -2172,17 +1596,13 @@ async def submit(ctx, titulo, mensaje):#, archivo):
     #dict = titulo:mensaje
     with open('json_files/testeo.json', 'r+') as pepe:
         content = json.load(pepe)
-        if content == {}:
+        if content is None:
             json.dump(ctx.author.name, pepe, indent=2)
         length_json = int(len(content) + 1)
     content[ctx.author.name][length_json] = {titulo:mensaje}
     with open('json_files/testeo.json', 'w') as pepe: 
         json.dump(content, pepe, indent=2)
     await ctx.send("submit recibido", file=discord.File('json_files/testeo.json'))
-
-
-
-
 
 
 # cog loader cmd

@@ -1,3 +1,5 @@
+# Author: Me
+
 import discord
 from discord.ext import commands
 from facebook_scraper import get_posts
@@ -27,20 +29,22 @@ class FbPosts(commands.Cog):
     @commands.command()
     async def fb_post(self, ctx, post_amount:int=1):
         """
-        Comando para devolver un embed con contenidos de posts de la EPET 14
-        Argumento <post_amount>, numero entre 1 y 10, aconsejable >2
-        Aproximadamente, 2 a 3 posts/embeds x post_amount.
+        Comando para devolver un embed con contenidos de posts de la EPET 14 por defecto.
+        Argumento <post_amount>, numero entre 1 y 10, aconsejable >2,  por defecto 1
+        Aproximadamente, 2 a 3 posts/embeds x <post_amount>.
 
         Por favor no spamear el comando, mucho menos con argumento <post_amount> 
         elevado en numero ya que se corre el riesgo de quedar inutil (el comando)
         por parte de facebook (politicas de uso relacionadas con el scraping de robots)
                 
-        Command to return a rich content embed of facebook EPET 14 posts.
-        Argument <post_amount>:int (default 1), max 10 posts.
+        Command to return a rich content embed of facebook EPET 14 posts by default.
+        Argument <post_amount>:int (default 1), max 10 posts, recommended >2.
         Approximately, 2-3 posts per page.
         """
         
-        postt = get_posts('EPET-14-Institucional-312214785790856', pages=post_amount, extra_info=True, options={"comments": True})
+        EPET_PAGE = 'EPET-14-Institucional-312214785790856'
+
+        postt = get_posts(EPET_PAGE, pages=post_amount, extra_info=True, options={"comments": True})
         for i in range(post_amount):
             
             await typing_sleep(ctx)
@@ -81,7 +85,7 @@ class FbPosts(commands.Cog):
                     await ctx.send(embed=post_embed)
                 except Exception as e:
                     await typing_sleep(ctx)
-                    await ctx.send(f"=========\nAn exception \n'*{e}*' occured. Content: ```{e.args}```\n=========")
+                    await ctx.send(f"=========\nAn exception occured:\n'*{e}*'\nContent: ```{e.args}```\nWith traceback:```{e.with_traceback}```\n=========")
                     
     
 

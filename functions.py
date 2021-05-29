@@ -29,10 +29,13 @@ from asyncio import sleep as asyncsleep
 from random import uniform
 
 # 7th function |degrees_to_cardinal()| ==>
+# No libraries required.
 
 # 8th function |word_to_emoji()| ==>
+# No libraries required.
 
 # 9th, 10th and 11th functions, required by json_level.py
+# No libraries required.
 
 # 12th function || ==>
 
@@ -152,7 +155,7 @@ def fibonacci(n: int):
 
 # 5th function
 def get_apex_data(platform: str, username: str):
-    """ Used in cogs/Apex.py, expects two arguments(platform and user)"""
+    """Used in cogs/Apex.py, expects two arguments(platform and user). API from tracker.gg"""
     tail = f'profile/{platform}/{username}'
     apex_req = requests.get(
         f"https://public-api.tracker.gg/v2/apex/standard/{tail}", 
@@ -234,3 +237,7 @@ async def level_up(users, user, channel, server):
             users[str(user.guild.id)][str(user.id)]['level'] = lvl_end
 
 # 12th function
+async def throw_error(ctx, e: Exception):
+    """ A custom function to easily send exceptions info """
+    await ctx.send(f":exclamation:  Hubo un error al ejecutar el comando. Info detallada:")
+    await ctx.send(f"`Excepcion: {e}`\n`Razon: {e.args}`\n`Traceback: {e.with_traceback}`")

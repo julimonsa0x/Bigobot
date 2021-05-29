@@ -1,4 +1,4 @@
-#julimonsa
+# Author: Me
 
 import discord
 from discord.ext import commands
