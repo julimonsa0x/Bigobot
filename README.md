@@ -16,6 +16,7 @@ For bigobot to work proper, populate a .env file with:
 - [OpenWeatherMap API](https://openweathermap.org/api) as (OWM_API_KEY)
 - [Tracker.gg API](https://tracker.gg/developers/apps) as (TRN-API-KEY)
 - [Genius Lyrics API](https://genius.com/api-clients) as (GENIUS_ACCESS_TOKEN)
+- Instagram login credentials if desired instagram command to work properly. 
 
 ## To-do:
 - [x] Add requirements.txt

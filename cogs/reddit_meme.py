@@ -35,6 +35,15 @@ class RedditMeme(commands.Cog):
             subreddit_url = "https://www.reddit.com/r/memes.json"
             subreddit_to_search = "memes"
 
+
+        # to-do:
+        #   - make request withouth json method
+        #   - if req.status_code is valid (200 n others)
+        #       - save the json in databases/reddit_json
+        #       - use one meme per command and pop used one
+        #   - if req.status_code is not valid
+        #       sorry bout that but thats the end...
+
         try:
             memes = requests.get(subreddit_url).json()
 

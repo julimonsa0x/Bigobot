@@ -65,7 +65,7 @@ class Instagram(commands.Cog):
                         ext = filename[-4:]
 
                         # get the title from the saved .txt
-                        with open(f"{nombre}/{filename[:-4]}.txt", "r") as f:
+                        with open(f"{nombre}/{filename[:-4]}.txt", "r", encoding='utf8') as f:
                             title = f.readlines()
 
                         file = discord.File(f"{nombre}/{filename}", filename=f"{nombre}{ext}")

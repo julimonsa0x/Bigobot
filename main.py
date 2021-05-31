@@ -34,12 +34,10 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
 
 
 #<-------------------------------------------> Custom imports
-#import broBdays
-import listas
-from listas import brosId
-import tuning
+import apis.listas
+import apis.tuning
 import game
-from functions import (degrees_to_cardinal, 
+from apis.functions import (degrees_to_cardinal, 
                        get_dolar, 
                        printt,
                        typing_sleep,
@@ -185,7 +183,7 @@ async def change_presence():
     # wait 35 secs. to start the change_presence loop...
     await asyncio.sleep(35)
     while not bot.is_closed():
-        status = random.choice(listas.bot_statuses)
+        status = random.choice(apis.listas.bot_statuses)
         await bot.change_presence(activity=discord.Game(name=status))
         await asyncio.sleep(10)
     
@@ -271,7 +269,7 @@ async def on_member_join(member):
         if guild_id == member.guild.id:
             channel_id, message = bot.welcome_channels[guild_id]
             await bot.get_guild(guild_id).get_channel(channel_id).send(f"{message} {member.mention}")
-            await bot.get_guild(guild_id).get_channel(channel_id).send(f"{listas.new_arrival} {member.mention} somos {len(set(bot.get_all_members()))} miembros!")
+            await bot.get_guild(guild_id).get_channel(channel_id).send(f"{apis.listas.new_arrival} {member.mention} somos {len(set(bot.get_all_members()))} miembros!")
             return
 
 @bot.event # alphascript cmd
@@ -290,7 +288,6 @@ async def on_message_delete(message):
 
 
 ############################################################################
-
 #### -------------->>>>  Acá comienzan los comandos  <<<<-------------- ####
 @bot.command(aliases=['padlocked','set_padlocked','setpadlockedinfo','set_padlocked_info'])
 @commands.has_permissions(administrator=True)
@@ -792,7 +789,7 @@ async def steamcito(ctx):
 async def roast(ctx):
     '''Lamar roasts Franklin trending videos...'''
     await typing_sleep(ctx)
-    await ctx.send(random.choice(listas.roasts))
+    await ctx.send(random.choice(apis.listas.roasts))
     print(f'cmdRoast||      Lamar v Franklin enviado a {ctx.author.name} a las {current_hour}')
 
 #---> LocuraBailandoSinPantalones vid <---
@@ -914,32 +911,6 @@ async def moar(ctx):
     await ctx.send(embed=embedMoar)
     print(f"cmdMoar||      Mas interacciones enviadas correctamente a {ctx.author.name} a las {current_hour}")
 
-#menu #matecomandos para las operaciones que puede hacer el bot
-@bot.command()
-async def matecomandos(ctx):
-    '''Comandos sobre matematicas'''
-    author = ctx.message.author
-    embedMates = discord.Embed(
-        color=discord.Colour.dark_blue(),
-        title="Estas son las matemáticas que conoce el bot",
-        timestamp=datetime.utcnow()
-    )
-    embedMates.set_thumbnail(url="https://cdn.discordapp.com/attachments/793309880861458473/794724078224670750/25884936-fd9d-4627-ac55-d904eb5269cd.png") #icono del bigobot
-    embedMates.add_field(name="Suma   #suma", value="Para sumar dos números escribe: *#sum A B*", inline=True)
-    embedMates.add_field(name="Resta   #resta", value="no flaco/a no hay comando de resta volve a la primaria de última", inline=True)
-    embedMates.add_field(name="Multiplicación  #mult", value="Para multiplicar dos números escribe: *#mult A B*", inline=True)
-    embedMates.add_field(name="División  #division", value="Para dividir dos números escribe: *#division A B*", inline=True)
-    embedMates.add_field(name="Potenciacion y Radicación  #pot", value="Para Potencias y Raíces, escribe: *#pot A B* a modo de ejemplo #pot **2** **3** = *8*, #pot **10** **-3** = *0.001*", inline=True)
-    embedMates.add_field(name="Ecuaciones de 2° grado - Baskara  #bask", value="Escribe los tres coeficientes con respectivos signos así: *#bask A B C*, te devolverá raíz positiva y raíz negativa de la ecuación", inline=True)
-    embedMates.add_field(name="Raíz cuadrada  #raiz", value="Para hallar la raíz de número escribe: *#raiz A*", inline=True) 
-    embedMates.add_field(name="Calcular Límites", value="Para calcular límites con #limite sigue esta sintaxis: (función, variable, punto). Entonces para calcular el límite de f(x) cuando x tiende a 0, debemos escribir: (f(x), x, 0), Puede optar por #help limite", inline=True) 
-    embedMates.add_field(name="Calcular Derivadas", value="Para calcular derivadas sigue esta sintaxis: (función, variable, punto). Entonces para calcular el límite de f(x) cuando x tiende a 0, debemos escribir: (f(x), x, 0), Puede optar por #help derivada", inline=True)
-    embedMates.add_field(name="Calcular Integrales", value="Para calcular integrales sigue esta sintaxis: (función, variable, punto). Entonces para calcular el límite de f(x) cuando x tiende a 0, debemos escribir: (f(x), x, 0), Puede optar por #help integral", inline=True)
-    
-    await typing_sleep(ctx)
-    await ctx.send(embed=embedMates)
-    print(f"{ctx.author.name} solicitó los comandos matemáticos")
-
     
 @bot.command()
 async def ayuda(ctx):
@@ -966,118 +937,6 @@ async def ayuda(ctx):
     await author.send(embed=embed_help, delete_after = 360.0)
     print(f"cmdAyuda||   Ayuda de comandos solicitada por {ctx.author.name} a las {current_hour}")
 #-------->COMANDOS DE AYUDA fin<----------
-
-
-#---->Juegos gratis epic <----
-@bot.command()
-async def juegos_gratis(ctx, platform=None):
-    """Comando que muestra los juegos gratis de la Epic Store por defecto. Uplay y mas plataformas por venir"""
-    if platform != None:
-        await ctx.send(f"{ctx.author.name} actualmente el comando esta en desarrollo y solo es soportada la plataforma de epic games...")
-
-    elif platform == None:
-        platform = 'epic'
-        epic_json = "https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions?locale=en-US&country=US&allowCountries=US"
-        epic_free_games_web = 'https://www.epicgames.com/store/es-ES/free-games'
-
-        req = requests.get(epic_json).json()
-        title1 = req['data']['Catalog']['searchStore']['elements'][0]['title']  # str
-        
-        if title1 == "Mistery Game":
-            seller1 = req['data']['Catalog']['searchStore']['elements'][2]['seller']['name']  # str 
-            price1 = req['data']['Catalog']['searchStore']['elements'][2]['price']['totalPrice']['fmtPrice']['originalPrice']  # str
-        else:
-            seller1 = req['data']['Catalog']['searchStore']['elements'][0]['seller']['name']  # str 
-            price1 = req['data']['Catalog']['searchStore']['elements'][0]['price']['totalPrice']['fmtPrice']['originalPrice']  # str
-        
-        try:
-            thumbnail1 = req['data']['Catalog']['searchStore']['elements'][0]['keyImages'][2]['url']  # str 
-        except IndexError:
-            thumbnail1 =  req['data']['Catalog']['searchStore']['elements'][0]['keyImages'][0]['url']  # str    
-        
-        try:
-            effectiveDate1 = f"Desde: {str(req['data']['Catalog']['searchStore']['elements'][0]['effectiveDate'])[:10]}, hasta: {str(req['data']['Catalog']['searchStore']['elements'][0]['price']['lineOffers'][0]['appliedRules'][0]['endDate'])[:10]}"
-        except IndexError:
-            effectiveDate1 = f"Fecha de validez desconocida :("
-
-        try:
-            title2 =  req['data']['Catalog']['searchStore']['elements'][1]['title']
-        except IndexError:
-            title2 = ":exclamation: No pude encontrar el proximo juego gratis"
-        try:
-            title3 =  req['data']['Catalog']['searchStore']['elements'][2]['title']
-        except IndexError:
-            title3 = ":exclamation: No pude encontrar el proximo juego gratis"
-        try:
-            title4 =  req['data']['Catalog']['searchStore']['elements'][3]['title']
-        except IndexError:
-            title4 = ":exclamation: No pude encontrar el proximo juego gratis"
-
-        embedGame1 = discord.Embed(
-                title = f'**Juegos gratis actuales en {platform}**',
-                description = f'[Reclamar juego]({epic_free_games_web})',
-                color = discord.Color.purple(),
-                timestamp = datetime.utcnow()
-            )
-        embedGame1.add_field(name = "***Título***", value = title1, inline = False)
-        embedGame1.add_field(name = "***Desarrolladora***", value = seller1, inline = True)
-        embedGame1.add_field(name = "***Precio original***", value = f"{price1}USD, consultar #dolar", inline = False)
-        embedGame1.add_field(name = "***Vigencia***", value = effectiveDate1, inline = True)
-        embedGame1.set_image(url=thumbnail1)
-        embedGame1.set_footer(icon_url = ctx.author.avatar_url, text = f"Requested by {ctx.author.name}")
-
-        embedGame2 = discord.Embed(title="Proximos juegos gratuitos",color=discord.Color.purple())
-        embedGame2.add_field(name = f"Luego de {title1}:", value = f"{title2}")
-        embedGame2.add_field(name = f"Luego de {title2}:", value = f"{title3}")
-        embedGame2.add_field(name = f"Luego de {title3}:", value = f"{title4}")
-        
-        await typing_sleep(ctx)
-        await ctx.send(embed = embedGame1, delete_after=360.0)
-        await ctx.send(embed = embedGame2, delete_after=360.0)
-        await ctx.send(f"Eso es todo por ahora {ctx.author.name}!", delete_after=360.0)
-        print(f'cmdJuegosGratis||         Juego gratis por {ctx.author.name} a las {current_hour}')
-
-
-#--> videos out of context willy <--
-@bot.command()
-async def willy(ctx):
-    '''videos del willy out of context, un cago de risa...'''
-    await typing_sleep(ctx)
-    await ctx.send(random.choice(listas.willyooc))
-    print(f'cmdWilly||      Willy OOC enviado a {ctx.author.name} a las {current_hour}')
-
-#------> buscar en wikipedia <------
-@bot.command()
-async def wiki(ctx, lang:str='es', *, search):
-    """
-    Busca en wikipedia, lenguaje español por defecto. 
-    para buscar en un lenguaje especifico introduce las iniciales del lenguaje
-    ejemplo sintaxis: #wiki <lang> <tu busqueda>
-    ejemplo 2: #wiki elon musk (al ignorar el 2do parametro "lang", busca por defecto en español)
-    ejemplo 3: #wiki fr google (fr buscara en frances...)
-    """
-    wikipedia.set_lang(f"{lang}")
-    result = wikipedia.summary(f"{search}")   
-    if len(result) <= 2000:
-        await typing_sleep(ctx)
-        await ctx.send(f"```{result}```")
-        print(f"cmdWikipedia||   {ctx.author.name} buscó en wikipedia: {search} el {current_hour}")
-        print(f" longitud de result : {len(result)} ")
-
-    else:
-        wikipedia.set_lang(f"{lang}")
-        result = wikipedia.summary(f"{search}")
-        result = result[:1996] + "..."
-        await typing_sleep(ctx)
-        await ctx.send(f"```{result}```")
-        print(f"cmdWikipedia||   {ctx.author.name} buscó en wikipedia: {search} el {current_hour}\nlongitud de result: {len(result)}\n lenguaje: {lang}\n---")
-
-@wiki.error
-async def wiki_error(ctx, error):
-    if isinstance(error, commands.MissingRequiredArgument):
-        await ctx.send("Para una búsqueda correcta debes seguir la sintaxis **#wiki <lenguaje> <tu_busqueda>**. Para buscar en inglés -> en | Para buscar en español -> es | (símbolo del lenguaje)")
-        await ctx.send("Recuerda que si quieres ver la sintaxis especfica de un comando puedes recurrir a **#help <#comando>** y\npara ver todos los comandos puedes recurrir a **#help** o **#ayuda** / **#comandos**")
-        print(f"cmdWiki||     {ctx.author.name} falló al buscar en wikipedia por falta de argumentos")
 
 
 #------------------------------------------>>>>>
@@ -1159,20 +1018,28 @@ async def mensaje(ctx, channel_id=None, *, args=None):
         print(f"cmdMensaje||       {ctx.author.name} falló al enviar un mensaje")
 
 @bot.command(aliases=['tunearletras','messletters','changefont'])
-async def tunear(ctx, order: int, *, args=None,):
+async def tunear(ctx, orden: int, *, args=None,):
     '''
     Tunea un texto, la sintaxis es #[tunear] <orden> <el_texto_que_quieras_tunear>. 
     El orden debe ser un numero del 1 al 7 (distintas fuentes)
+    • Orden 1: Letras Arabes creo.
+    • Orden 2: Letras cursiva solo minuscula
+    • Orden 3: Alfabeto en cursiva completo
+    • Orden 4: Letras invertidas 
+    • Orden 5: Letras minusculas italica 
+    • Orden 6: Letras mayusculas grandes
+    • Orden 7: Letras dentro de circulos
+    • Orden 8: Alfabeto Math Serif Bold
     '''
     
     try:
         if args != None:
-            myThiccString = tuning.tunear(args.replace("#tunear", ""), order)
+            myThiccString = apis.tuning.tunear(args.replace("#tunear", ""), orden)
             await typing_sleep(ctx)
             await ctx.send(myThiccString)
             print(f"cmdTunear1||        {ctx.author.name} tuneó un texto el {current_hour}")
 
-        elif args is None and order is None:
+        elif args is None and orden is None:
             await typing_sleep(ctx)    
             await ctx.send("Seguido del comando debes introducir un orden (1 a 6) seguido del texto a tunear", delete_after=60.0)
             await ctx.send("A modo de ejemplo: **#tunear 4 textodepruebacopipedro**", delete_after=60.0)
@@ -1181,7 +1048,7 @@ async def tunear(ctx, order: int, *, args=None,):
     except Exception as e:
         if isinstance(e, commands.MissingRequiredArgument):
             await typing_sleep(ctx)
-            await ctx.send("Debes seguir la sintáxis #tunear <orden> <texto a tunear> siendo el orden un número del 1 al 7", delete_after=130.0)
+            await ctx.send("Debes seguir la sintáxis #tunear <orden>, prueba con #help tunear para mas info.", delete_after=130.0)
             await ctx.send("Recuerda que si quieres ver la sintaxis especfica de un comando puedes recurrir a **#help <#comando>** y para ver todos los comandos puedes recurrir a **#help** o **#ayuda** / **#comandos**", delete_after=150.0)
         else:
             await typing_sleep(ctx)
@@ -1210,7 +1077,7 @@ async def kick(ctx, member: discord.Member, *, reason=None):
         if reaction.emoji ==  u"\u2705":
             await typing_sleep(ctx)      
             embed = discord.Embed(
-                title=f"Kickeado porque {random.choice(listas.frases)}",
+                title=f"Kickeado porque {random.choice(apis.listas.frases)}",
                 colour=0x2859B8,
                 description=f"{member.mention} fue kickeado del server."
             )
@@ -1245,7 +1112,7 @@ async def ban(ctx, member: discord.Member, *, reason=None):
         if reaction.emoji ==  u"\u2705":
             await typing_sleep(ctx)      
             embed = discord.Embed(
-                title=f"Baneado porque {random.choice(listas.frases)}",
+                title=f"Baneado porque {random.choice(apis.listas.frases)}",
                 colour=0x2859B8,
                 description=f"{member.mention} fue **baneado** del server."
             )
@@ -1278,65 +1145,65 @@ async def on_message(message):
     if message.author == bot.user: #bot.user: changed from "client.user:"
         return
     if msg.startswith('#che'):
-        await message.channel.send("{}".format(random.choice(listas.botCall)))
+        await message.channel.send("{}".format(random.choice(apis.listas.botCall)))
     if msg.startswith('#bot'):
-        await message.channel.send("{}".format(random.choice(listas.botCall)))
+        await message.channel.send("{}".format(random.choice(apis.listas.botCall)))
     if msg.startswith('#bigobot'):
-        await message.channel.send("{}".format(random.choice(listas.botCall)))
+        await message.channel.send("{}".format(random.choice(apis.listas.botCall)))
     if msg.startswith('#copibot'):
-        await message.channel.send("{}".format(random.choice(listas.botCall)))
+        await message.channel.send("{}".format(random.choice(apis.listas.botCall)))
     elif msg.startswith('#ey'):
-        await message.channel.send("{}".format(random.choice(listas.botCall)))
+        await message.channel.send("{}".format(random.choice(apis.listas.botCall)))
     elif msg.startswith('#tevenin'):
-        await message.channel.send("{}".format(random.choice(listas.botCall)))
+        await message.channel.send("{}".format(random.choice(apis.listas.botCall)))
     elif msg.startswith('#capo'):
-        await message.channel.send("{}".format(random.choice(listas.botCall)))
+        await message.channel.send("{}".format(random.choice(apis.listas.botCall)))
     elif msg.startswith('#claudia'):
         await message.channel.send(word_to_emoji("claudia"))
-        await message.channel.send("{}".format(random.choice(listas.lacla)))
+        await message.channel.send("{}".format(random.choice(apis.apis.listas.lacla)))
     elif msg.startswith('#flaco'):
-        await message.channel.send("{}".format(random.choice(listas.botCall)))
+        await message.channel.send("{}".format(random.choice(apis.apis.listas.botCall)))
     elif msg.startswith('#ruben'):
         await message.channel.send(word_to_emoji("ruben"))
-        await message.channel.send("{}".format(random.choice(listas.rubenes)))
+        await message.channel.send("{}".format(random.choice(apis.apis.listas.rubenes)))
     elif msg.startswith('#pibe'):
-        await message.channel.send("{}".format(random.choice(listas.botCall)))
+        await message.channel.send("{}".format(random.choice(apis.apis.listas.botCall)))
     elif msg.startswith('#rubén'):
-        await message.channel.send("{}".format(random.choice(listas.rubenes)))
+        await message.channel.send("{}".format(random.choice(apis.apis.listas.rubenes)))
     elif msg.startswith('#nico'):
         await message.channel.send(word_to_emoji("nico"))
-        await message.channel.send("{}".format(random.choice(listas.nicolas)))
+        await message.channel.send("{}".format(random.choice(apis.apis.listas.nicolas)))
     elif msg.startswith('#seki'):
         await message.channel.send(word_to_emoji("seki"))
-        await message.channel.send("{}".format(random.choice(listas.sekiam)))
+        await message.channel.send("{}".format(random.choice(apis.apis.listas.sekiam)))
     elif msg.startswith('#franc'):
-        await message.channel.send("{}".format(random.choice(listas.sekiam)))
+        await message.channel.send("{}".format(random.choice(apis.apis.listas.sekiam)))
     elif msg.startswith('#franki'):
-        await message.channel.send("{}".format(random.choice(listas.sekiam)))
+        await message.channel.send("{}".format(random.choice(apis.apis.listas.sekiam)))
     elif msg.startswith('#copi'):
         await message.channel.send(word_to_emoji("copi"))
         await message.channel.send(word_to_emoji("pedro"))
     elif msg.startswith('#hola'):
-        await message.channel.send("{}".format(random.choice(listas.botCall)))
+        await message.channel.send("{}".format(random.choice(apis.apis.listas.botCall)))
     elif msg.startswith('#Hola'):
-        await message.channel.send("{}".format(random.choice(listas.botCall)))
+        await message.channel.send("{}".format(random.choice(apis.apis.listas.botCall)))
     elif msg.startswith('#claudio'):
         await message.channel.send('ese está en plaza huincul')
     elif msg.startswith('#hentai'):
         await message.channel.send('sos pajin eh :alien:')
     elif msg.startswith('#mato'):
         await message.channel.send(word_to_emoji("mato"))
-        await message.channel.send("{}".format(random.choice(listas.matote)))
+        await message.channel.send("{}".format(random.choice(apis.apis.listas.matote)))
     elif msg.startswith('#matu'):
-        await message.channel.send("{}".format(random.choice(listas.matote)))
+        await message.channel.send("{}".format(random.choice(apis.apis.listas.matote)))
     elif msg.startswith('#Mato'):
-        await message.channel.send("{}".format(random.choice(listas.matote)))
+        await message.channel.send("{}".format(random.choice(apis.apis.listas.matote)))
     elif msg.startswith('#lezca'):
         await message.channel.send(word_to_emoji("lezca"))
-        await message.channel.send("{}".format(random.choice(listas.inválido)))
+        await message.channel.send("{}".format(random.choice(apis.apis.listas.inválido)))
     elif msg.startswith('#lesca'):
         await message.channel.send(word_to_emoji("lesca"))
-        await message.channel.send("{}".format(random.choice(listas.inválido)))
+        await message.channel.send("{}".format(random.choice(apis.apis.listas.inválido)))
     elif msg.startswith('#firu'):
         await message.channel.send(word_to_emoji("firu"))
         await message.channel.send("wof wof xd")
@@ -1358,86 +1225,86 @@ async def on_message(message):
         await message.channel.send('un capo')
     elif msg.startswith('#tambo'):
         await message.channel.send(word_to_emoji("tambo"))
-        await message.channel.send("{}".format(random.choice(listas.tamborindegui)))
+        await message.channel.send("{}".format(random.choice(apis.listas.tamborindegui)))
     elif msg.startswith('#tobo'):
         await message.channel.send(word_to_emoji("tobo"))
-        await message.channel.send("{}".format(random.choice(listas.tamborindegui)))
+        await message.channel.send("{}".format(random.choice(apis.listas.tamborindegui)))
     elif msg.startswith('#pepo'):
         await message.channel.send('ese tambien es puto')
     elif msg.startswith('#puto'):
-        await message.channel.send("{}".format(random.choice(listas.bardeo)))
+        await message.channel.send("{}".format(random.choice(apis.listas.bardeo)))
     elif msg.startswith('#tonto'):
-        await message.channel.send("{}".format(random.choice(listas.bardeo)))
+        await message.channel.send("{}".format(random.choice(apis.listas.bardeo)))
     elif msg.startswith('#trolo'):
-        await message.channel.send("{}".format(random.choice(listas.bardeo)))
+        await message.channel.send("{}".format(random.choice(apis.listas.bardeo)))
     elif msg.startswith('#gil'):
-        await message.channel.send("{}".format(random.choice(listas.bardeo)))
+        await message.channel.send("{}".format(random.choice(apis.listas.bardeo)))
     elif msg.startswith('#forro'):
-        await message.channel.send("{}".format(random.choice(listas.bardeo)))
+        await message.channel.send("{}".format(random.choice(apis.listas.bardeo)))
     elif msg.startswith('#bigote'):
-        await message.channel.send("{}".format(random.choice(listas.bardeo)))
+        await message.channel.send("{}".format(random.choice(apis.listas.bardeo)))
     elif msg.startswith('#tuma'):
-        await message.channel.send("{}".format(random.choice(listas.bardeo)))
+        await message.channel.send("{}".format(random.choice(apis.listas.bardeo)))
     elif msg.startswith('#jose'):
         await message.channel.send(word_to_emoji("jose"))
-        await message.channel.send("{}".format(random.choice(listas.jopiyo)))
+        await message.channel.send("{}".format(random.choice(apis.listas.jopiyo)))
     elif msg.startswith('#jopi'):
         await message.channel.send(word_to_emoji("jopi"))
-        await message.channel.send("{}".format(random.choice(listas.jopiyo)))
+        await message.channel.send("{}".format(random.choice(apis.listas.jopiyo)))
     elif msg.startswith('#Jopi'):
-        await message.channel.send("{}".format(random.choice(listas.jopiyo)))
+        await message.channel.send("{}".format(random.choice(apis.listas.jopiyo)))
     elif msg.startswith('#Nico'): 
         await message.channel.send(word_to_emoji("nico"))
-        await message.channel.send("{}".format(random.choice(listas.nicolas)))
+        await message.channel.send("{}".format(random.choice(apis.listas.nicolas)))
     elif msg.startswith('#reteke'): 
         await message.channel.send(word_to_emoji("reteke"))
-        await message.channel.send("{}".format(random.choice(listas.aquitocartes)))
+        await message.channel.send("{}".format(random.choice(apis.listas.aquitocartes)))
     elif msg.startswith('#rtk'): 
-        await message.channel.send("{}".format(random.choice(listas.aquitocartes)))
+        await message.channel.send("{}".format(random.choice(apis.listas.aquitocartes)))
     elif msg.startswith('#aquito'): 
-        await message.channel.send("{}".format(random.choice(listas.aquitocartes)))
+        await message.channel.send("{}".format(random.choice(apis.listas.aquitocartes)))
     elif msg.startswith('#wens'): 
         await message.channel.send(word_to_emoji("wensel"))
-        await message.channel.send("{}".format(random.choice(listas.nicolas)))  
+        await message.channel.send("{}".format(random.choice(apis.listas.nicolas)))  
     elif msg.startswith('#ecla'): 
         await message.channel.send(word_to_emoji("ecla"))
-        await message.channel.send("{}".format(random.choice(listas.asociados)))
+        await message.channel.send("{}".format(random.choice(apis.listas.asociados)))
     elif msg.startswith('#beje'): 
         await message.channel.send(word_to_emoji("beje"))
-        await message.channel.send("{}".format(random.choice(listas.asociados)))
+        await message.channel.send("{}".format(random.choice(apis.listas.asociados)))
     elif msg.startswith('#sofi'): 
         await message.channel.send(word_to_emoji("sofi"))
-        await message.channel.send("{}".format(random.choice(listas.sofia)))
+        await message.channel.send("{}".format(random.choice(apis.listas.sofia)))
     elif msg.startswith('#araragi'):
-        await message.channel.send("{}".format(random.choice(listas.asociados)))
+        await message.channel.send("{}".format(random.choice(apis.listas.asociados)))
     elif msg.startswith('#dante'):
-        await message.channel.send("{}".format(random.choice(listas.asociados)))
+        await message.channel.send("{}".format(random.choice(apis.listas.asociados)))
     elif msg.startswith('#masilo'):
-        await message.channel.send("{}".format(random.choice(listas.asociados)))
+        await message.channel.send("{}".format(random.choice(apis.listas.asociados)))
     elif msg.startswith('#sousken'):
         await message.channel.send(word_to_emoji("souskenin"))
-        await message.channel.send("{}".format(random.choice(listas.asociados)))
+        await message.channel.send("{}".format(random.choice(apis.listas.asociados)))
     elif msg.startswith('#stalker'):
         await message.channel.send(word_to_emoji("stalker"))
-        await message.channel.send("{}".format(random.choice(listas.asociados)))
+        await message.channel.send("{}".format(random.choice(apis.listas.asociados)))
     elif msg.startswith('#ecla'):
         await message.channel.send(word_to_emoji("ecla"))
-        await message.channel.send("{}".format(random.choice(listas.asociados)))
+        await message.channel.send("{}".format(random.choice(apis.listas.asociados)))
     elif msg.startswith('#komiwa'):
         await message.channel.send(word_to_emoji("komiwa"))
-        await message.channel.send("{}".format(random.choice(listas.asociados)))
+        await message.channel.send("{}".format(random.choice(apis.listas.asociados)))
     elif msg.startswith('#krivta'):
         await message.channel.send(word_to_emoji("krivta"))
-        await message.channel.send("{}".format(random.choice(listas.asociados)))
+        await message.channel.send("{}".format(random.choice(apis.listas.asociados)))
     elif msg.startswith('#fiktizio'):
         await message.channel.send(word_to_emoji("fiktizio"))
-        await message.channel.send("{}".format(random.choice(listas.asociados)))
+        await message.channel.send("{}".format(random.choice(apis.listas.asociados)))
     elif msg.startswith('#among'):
         await message.channel.send(word_to_emoji("amongo"))
-        await message.channel.send("{}".format(random.choice(listas.amongo)))
+        await message.channel.send("{}".format(random.choice(apis.listas.amongo)))
     elif msg.startswith('#waif'):
         await message.channel.send(word_to_emoji("waifu"))
-        await message.channel.send("{}".format(random.choice(listas.waifu)))   
+        await message.channel.send("{}".format(random.choice(apis.listas.waifu)))   
     elif msg.startswith('#pecetote'): 
         await message.channel.send(word_to_emoji("pecetote"))
         await message.channel.send("rey de reyes")
@@ -1448,14 +1315,6 @@ async def on_message(message):
         await channel.send('<:copi:770818273217609758>')
         return
 
-    '''
-    spamsentences = ["#meme", "copipedro"]
-    for i in range(len(spamsentences)):
-        if spamsentences[i] in message.content:
-            await asyncio.sleep(15) 
-            for j in range(5):
-                await message.channel.send("Bajá un cambio amigo no spam que se enoja el tambo...")
-    '''
 
 
 #-----------------> Clima comando <-----------------

@@ -1,3 +1,5 @@
+# Author: Some commands with their respective owners, others written by me.
+
 import discord
 from discord.ext import commands
 from random import choice
@@ -17,6 +19,31 @@ class MateComandos(commands.Cog):
     @commands.Cog.listener()
     async def on_ready():
         printt("Cog de matecomandos listo")
+
+
+    @commands.command()
+    async def matecomandos(self, ctx):
+        '''Comandos sobre matematicas'''
+        embedMates = discord.Embed(
+            color=discord.Colour.dark_blue(),
+            title="Estas son las matemáticas que conoce el bot"
+        )
+        embedMates.set_thumbnail(url="https://cdn.discordapp.com/attachments/793309880861458473/794724078224670750/25884936-fd9d-4627-ac55-d904eb5269cd.png") #icono del bigobot
+        embedMates.add_field(name="Suma   #suma", value="Para sumar dos números escribe: *#sum A B*", inline=True)
+        embedMates.add_field(name="Resta   #resta", value="no flaco/a no hay comando de resta volve a la primaria de última", inline=True)
+        embedMates.add_field(name="Multiplicación  #mult", value="Para multiplicar dos números escribe: *#mult A B*", inline=True)
+        embedMates.add_field(name="División  #division", value="Para dividir dos números escribe: *#division A B*", inline=True)
+        embedMates.add_field(name="Potenciacion y Radicación  #pot", value="Para Potencias y Raíces, escribe: *#pot A B* a modo de ejemplo #pot **2** **3** = *8*, #pot **10** **-3** = *0.001*", inline=True)
+        embedMates.add_field(name="Ecuaciones de 2° grado - Baskara  #bask", value="Escribe los tres coeficientes con respectivos signos así: *#bask A B C*, te devolverá raíz positiva y raíz negativa de la ecuación", inline=True)
+        embedMates.add_field(name="Raíz cuadrada  #raiz", value="Para hallar la raíz de número escribe: *#raiz A*", inline=True) 
+        embedMates.add_field(name="Calcular Límites", value="Para calcular límites con #limite sigue esta sintaxis: (función, variable, punto). Entonces para calcular el límite de f(x) cuando x tiende a 0, debemos escribir: (f(x), x, 0), Puede optar por #help limite", inline=True) 
+        embedMates.add_field(name="Calcular Derivadas", value="Para calcular derivadas sigue esta sintaxis: (función, variable, punto). Entonces para calcular el límite de f(x) cuando x tiende a 0, debemos escribir: (f(x), x, 0), Puede optar por #help derivada", inline=True)
+        embedMates.add_field(name="Calcular Integrales", value="Para calcular integrales sigue esta sintaxis: (función, variable, punto). Entonces para calcular el límite de f(x) cuando x tiende a 0, debemos escribir: (f(x), x, 0), Puede optar por #help integral", inline=True)
+
+        await typing_sleep(ctx)
+        await ctx.send(embed=embedMates)
+        print(f"{ctx.author.name} solicitó los comandos matemáticos")
+
 
     #----> Convertir de binario a decimal <----
     #https://parzibyte.me/blog/2020/12/05/python-convertir-binario-decimal/
@@ -102,11 +129,11 @@ class MateComandos(commands.Cog):
 
         await typing_sleep(ctx)
         await ctx.send(f"El numero **{numero_inicial}** en romano es **{numeral}**")
-
     ###------------- Comandos de conversiones Final ------------>>>>
+    
     ################################################################
+    
     ###-------------- Operaciones Matemáticas inicio------------>>>>
-    #---------> suma <---------
     @commands.command()
     async def suma(ctx, num1: int, num2: int):
         '''Suma dos numeros que introduzcas, deben estar separados
@@ -117,7 +144,6 @@ class MateComandos(commands.Cog):
         await ctx.send("Resultado de la suma: ```{}``` " .format(sumResult))
         print(f'cmdSuma||   {ctx.author.name} sumó {num1} con {num2} ---> {sumResult}')
 
-    #---------> Resta no hay jaja <---------
     @commands.command()
     async def resta(ctx, num1: int, num2: int):
         '''Resta dos numeros, deben estar separados
@@ -127,16 +153,14 @@ class MateComandos(commands.Cog):
         await ctx.send(choice(intentoResta))
         print(f'cmdResta||  {ctx.author.name} intentó restar jaja')
 
-    #----> multiplicacion  <----
     @commands.command()
     async def mult(ctx, num1: int, num2: int):
         '''Multiplica dos numeros que introduzcas'''
         multResult = num1 * num2
         await typing_sleep(ctx)
         await ctx.send(" Resultado del producto: ```{}``` " .format(multResult))
-        print(f'cmdMult||   {ctx.author.name} multiplicó {num1} y {num2} ---> {multResult}')
+        print(f'cmdMult||   {ctx.author.name} multiplicó dos numeros')
 
-    #----> division <----
     @commands.command()
     async def division(ctx, num1: int, num2: int):
         '''Divide dos numeros que introduzcas'''
@@ -146,19 +170,19 @@ class MateComandos(commands.Cog):
         await ctx.send(f"El cociente da {divQuotient} y el resto queda {divRemain}")
         print(f'cmdDivision|| {ctx.author.name} dividió {num1} sobre {num2} ---> {divQuotient} | {divRemain}')
 
-    #----> potenciación y radicación  <----
-    @commands.command()
+    @commands.command(aliases=['potencia','elevar'])
     async def pot(ctx, num1: int, num2: int):
-        '''El 1er numero que introduzcas a la potencia del 2do
+        '''
+        El 1er numero que introduzcas a la potencia del 2do
         ejemplo: #pot 3 3 ----> 3 al cubo ---> 27
+        ejemplo 2 #pot 3 0.1
         '''
         potResult = num1 ** num2
         await typing_sleep(ctx)
         await ctx.send("Resultado: ```{}``` " .format(potResult))
-        print(f'cmdPot||    {ctx.author.name} potenció/radicó {num1} a la {num2} ---> {potResult}')
+        print(f'cmdPot||    {ctx.author.name} potenció un numero')
 
-    #----> BASKARA <----
-    @commands.command()
+    @commands.command(aliases=['baskara','bascara'])
     async def bask(ctx, numOne: float, numTwo: float, numThree: float):
         '''Introduce los coeficientes de la funcion con su respectivo signo!
         ejemplo de sintaxis con la siguiente ecuacion ---> 5X² - 20X +15
@@ -188,8 +212,6 @@ class MateComandos(commands.Cog):
                     await ctx.send("Recuerda que si quieres ver la sintaxis especfica de un comando puedes recurrir a **#help <#comando>** ypara ver todos los comandos puedes recurrir a **#help** o **#ayuda** / **#comandos**")
                     print(f"cmdBask||     {ctx.author.name} quiso baskarear")
 
-
-    #-------> Raíz cuadrada <-------
     @commands.command()
     async def raiz(ctx, num1: int): 
         '''La raiz cuadrada de un numero que introduzcas'''  
@@ -198,8 +220,6 @@ class MateComandos(commands.Cog):
         await ctx.send("Resultado de la raíz: ```{}``` " .format(sqrtResult))
         print(f'cmdSqrt|| {ctx.author.name} halló la raíz cuadrada de {num1}, ---> {sqrtResult}')
 
-
-    ##-------> Seno de un ángulo <-------
     @commands.command()
     async def seno(ctx, num1: int):
         '''El seno de un grado que introduzcas'''
@@ -208,7 +228,6 @@ class MateComandos(commands.Cog):
         await ctx.send("Resultado: ```{}``` " .format(sinResult))
         print(f'cmdPot||    {ctx.author.name} halló el seno de {num1} ---> {sinResult}')
 
-    #-------> Coseno de un ángulo <-------
     @commands.command()
     async def coseno(ctx, num1: int):
         '''El coseno de un grado que introduzcas'''
@@ -217,7 +236,6 @@ class MateComandos(commands.Cog):
         await ctx.send("Resultado: ```{}``` " .format(cosResult))
         print(f'cmdPot||    {ctx.author.name} halló el coseno de {num1} ---> {cosResult}')
 
-    #------> Tangente de un ángulo <------
     @commands.command()
     async def tangente(ctx, num1: int):
         '''La tangente de un grado que introduzcas'''
@@ -226,7 +244,6 @@ class MateComandos(commands.Cog):
         await ctx.send("Resultado: ```{}``` " .format(tanResult))
         print(f'cmdPot||    {ctx.author.name} halló la tangente de {num1} ---> {tanResult}')
 
-    #------> Hipotenusa de dos catetos <------
     @commands.command()
     async def hipotenusa(ctx, num1: int, num2: int):
         '''Calcula la hipotenusa de dos numeros que introduzcas'''
@@ -236,7 +253,6 @@ class MateComandos(commands.Cog):
         print(f'cmdPot||    {ctx.author.name} halló la tangente de {num1} ---> {hipResult}')
 
 
-    #-----> Límites <----
     @commands.command()
     async def limite(ctx, function=None, var=None, point=None):
         '''Halla el limite de una funcion cuando tiende a un punto dado
@@ -268,7 +284,6 @@ class MateComandos(commands.Cog):
             print(f"{ctx.author.name} falló al querer calcular un límite")
         
 
-    #----> Derivadas <----
     @commands.command()
     async def derivada(ctx, function=None):
         '''Halla la derivada de una funcion escribe el
@@ -293,7 +308,7 @@ class MateComandos(commands.Cog):
             await ctx.channel.send(f"Salida: ``` 2*x-10 ```")
             print(f"{ctx.author.name} falló al querer calcular una derivada")
 
-    #----> Integrales <----
+
     @commands.command()
     async def integral(ctx, function=None, dif1=None, dif2=None):
         '''Halla la integral de una funcion, sintaxis #integral <funcion>. Recuerda que para multiplicar debe usarse * y para elevar (potencias) debe usarse **'''
@@ -339,7 +354,7 @@ class MateComandos(commands.Cog):
             await ctx.send(embed=embedDef)                               
             print(f"{ctx.author.name} falló al querer calcular una derivada")
 
-    #----> Fibonacci <-----
+
     @commands.command()
     async def fib(ctx, number: int):
         '''Encuentra el enésimo numero de fibonacci'''
@@ -352,14 +367,6 @@ class MateComandos(commands.Cog):
             result = fibonacci(number)
             await ctx.send(f"El enesimo numero {number} en la sucesion de fibonacci es: {result}")
             print(f"{ctx.author.name} encontro el {number}esimo numero de fibonacci: {result}")
-
-
-
-
-
-
-
-
 
 
 def setup(bot):

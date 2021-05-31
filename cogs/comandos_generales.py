@@ -12,11 +12,11 @@ from time import strftime
 import json
 from pytube import extract  # required by the descarga cmd
 from asyncio import sleep
+import wikipedia
 
 from functions import (bro_birthdays_check,  # required by usuario command
                         typing_sleep,
-                        printt,
-                      )
+                        printt,)
 
 
 class ComandosGenerales(commands.Cog):
@@ -268,6 +268,40 @@ class ComandosGenerales(commands.Cog):
 
         await typing_sleep(ctx)
         await ctx.channel.send(embed=embed)
+
+    @commands.command(aliases=['wikipedia'])
+    async def wiki(self, ctx, lang:str='es', *, search):
+        """
+        Busca en wikipedia, lenguaje español por defecto. 
+        para buscar en un lenguaje especifico introduce las iniciales del lenguaje
+        ejemplo sintaxis: #wiki <lang> <tu busqueda>
+        ejemplo 2: #wiki elon musk (al ignorar el 2do parametro "lang", busca por defecto en español)
+        ejemplo 3: #wiki fr google (fr buscara en frances...)
+        """
+        try:
+            wikipedia.set_lang(f"{lang}")
+            result = wikipedia.summary(f"{search}")   
+            if len(result) <= 2000:
+                await typing_sleep(ctx)
+                await ctx.send(f"```{result}```")
+                print(f"cmdWikipedia||     {ctx.author.name} buscó en wikipedia: {search}")
+                print(f" longitud de result : {len(result)} ")
+
+            else:
+                wikipedia.set_lang(f"{lang}")
+                result = wikipedia.summary(f"{search}")
+                result = result[:1996] + "..."
+                await typing_sleep(ctx)
+                await ctx.send(f"```{result}```")
+                print(f"cmdWikipedia||     {ctx.author.name} buscó en wikipedia: {search}")
+
+        except Exception as e:
+            if isinstance(e, commands.MissingRequiredArgument):
+                await ctx.send("Para una búsqueda correcta debes seguir la sintaxis **#wiki <lenguaje> <tu_busqueda>**. Para buscar en inglés -> en | Para buscar en español -> es | (símbolo del lenguaje)")
+                await ctx.send("Recuerda que si quieres ver la sintaxis especfica de un comando puedes recurrir a **#help <#comando>** y\npara ver todos los comandos puedes recurrir a **#help** o **#ayuda** / **#comandos**")
+                print(f"cmdWiki||     {ctx.author.name} falló al buscar en wikipedia por falta de argumentos")
+            else:
+                print(e)
 
 
 def setup(bot):

@@ -16,7 +16,13 @@ from discord.ext import commands
 from apis import permissions
 from databases import ballresponse
 from functions import printt, typing_sleep
-from listas import brawlers, campeones, images, trivias, trivia_accept, trivia_decline
+from listas import (brawlers, 
+                    campeones, 
+                    images, 
+                    trivias, 
+                    trivia_accept, 
+                    trivia_decline, 
+                    willyooc)
 
 
 
@@ -272,7 +278,7 @@ class FunCommands(commands.Cog):
 
         random_int = random.randint(0, 154)
 
-        with open("databases/lol_champions.json", "r") as f:
+        with open("databases/lol_champions.json", "r", encoding='utf8') as f:
             key = json.load(f)
             randomCham = key["campeones"][random_int]["campeon"]
             randomSubt = key["campeones"][random_int]["frase"]
@@ -335,7 +341,8 @@ class FunCommands(commands.Cog):
             print(f'cmdMeme||         Meme enviado a {ctx.author.name}')
 
     @commands.command()
-    #@commands.has_permissions(kick_members=True)    #for if you wanna limit this command usage and prevent spamming
+    #@commands.has_permissions(kick_members=True)
+    #for if you wanna limit this command usage and prevent spamming
     async def contar(self, ctx, number: int, intervalo):
         '''
         El bot cuenta hasta un numero dado, puede ser re carnasa...
@@ -351,7 +358,7 @@ class FunCommands(commands.Cog):
                 i += 1
 
     @commands.command()
-    async def trivia(self,  ctx):
+    async def trivia(self, ctx):
         '''It's trivia time!!!'''
         await typing_sleep(ctx)
         msg = await ctx.channel.send(random.choice(trivias))
@@ -381,6 +388,13 @@ class FunCommands(commands.Cog):
                 await typing_sleep(ctx)
                 await ctx.message.delete()
                 await ctx.channel.send(random.choice(trivia_decline), delete_after=120.0)
+
+    @commands.command()
+    async def willy(self, ctx):
+        '''videos del willy out of context, un cago de risa...'''
+        await typing_sleep(ctx)
+        await ctx.send(random.choice(willyooc))
+        print(f'cmdWilly||      Willy OOC enviado a {ctx.author.name}')
 
 
 def setup(bot):
