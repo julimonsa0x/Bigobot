@@ -22,7 +22,9 @@ pytube==10.6.1
 regex==2021.3.17
 requests==2.25.1
 sympy==1.7.1
+timeago==1.0.13
 translate==3.5.0
+typed-dotenv==1.0.1
 urllib3==1.26.2
 virtualenv==20.4.4
 wikipedia==1.4.0
