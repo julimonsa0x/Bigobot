@@ -5,7 +5,7 @@ import requests
 import json
 from datetime import datetime
 
-from functions import printt, typing_sleep, throw_error 
+from apis.functions import printt, typing_sleep, throw_error 
 
 
 EPIC_JSON = "https://store-site-backend-static.ak.epicgames.com/freeGamesPromotions?locale=en-US&country=US&allowCountries=US"

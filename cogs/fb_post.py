@@ -3,8 +3,7 @@
 import discord
 from discord.ext import commands
 from facebook_scraper import get_posts
-from functions import printt
-from functions import typing_sleep
+from apis.functions import typing_sleep, printt
 
 
 def get_image(dict_content: str):

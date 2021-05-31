@@ -9,7 +9,7 @@ import re
 from instaloader.structures import Post, Profile
 from instaloader import Instaloader
 
-from functions import printt, typing_sleep
+from apis.functions import printt, typing_sleep
 
 load_dotenv()
 ##########################################

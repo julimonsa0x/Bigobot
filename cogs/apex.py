@@ -2,7 +2,7 @@
 
 import discord
 from discord.ext import commands
-from functions import get_apex_data, printt
+from apis.functions import get_apex_data, printt
 import asyncio
 
 class ApexData(commands.Cog):

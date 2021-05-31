@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 from translate import Translator
 
-from functions import printt, typing_sleep, throw_error
+from apis.functions import printt, typing_sleep, throw_error
 
 
 class Traductor(commands.Cog):

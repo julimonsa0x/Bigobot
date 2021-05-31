@@ -5,7 +5,7 @@ import discord
 from discord.ext import commands
 from discord.ext.commands import Cog
 import requests
-from functions import printt
+from apis.functions import printt
 
 
 class MinehutInfo(Cog):	

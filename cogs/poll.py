@@ -4,7 +4,7 @@ import json
 import discord
 from datetime import datetime
 from discord.ext import commands, tasks
-from functions import printt
+from apis.functions import printt
 
 
 class Encuesta(commands.Cog):

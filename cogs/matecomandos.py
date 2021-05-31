@@ -8,8 +8,8 @@ import math
 from sympy import (Derivative, Integral, Limit, S, Symbol, diff, integrate,
                    limit, simplify)
 
-from functions import printt, typing_sleep, fibonacci
-from listas import intentoResta
+from apis.functions import printt, typing_sleep, fibonacci
+from apis.listas import intentoResta
 
 
 class MateComandos(commands.Cog):

@@ -14,7 +14,7 @@ from pytube import extract  # required by the descarga cmd
 from asyncio import sleep
 import wikipedia
 
-from functions import (bro_birthdays_check,  # required by usuario command
+from apis.functions import (bro_birthdays_check,  # required by usuario command
                         typing_sleep,
                         printt,)
 

@@ -15,8 +15,8 @@ from io import BytesIO
 from discord.ext import commands
 from apis import permissions
 from databases import ballresponse
-from functions import printt, typing_sleep
-from listas import (brawlers, 
+from apis.functions import printt, typing_sleep
+from apis.listas import (brawlers, 
                     campeones, 
                     images, 
                     trivias, 

@@ -6,7 +6,7 @@ import pandas as pd
 from datetime import datetime
 from matplotlib import pyplot
 from apis.covid_api import covid_api_request
-from functions import printt, typing_sleep
+from apis.functions import printt, typing_sleep
 
 
 class Covid(commands.Cog):

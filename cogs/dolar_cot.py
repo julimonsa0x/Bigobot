@@ -3,7 +3,7 @@ import discord
 from discord.colour import Color
 from discord.ext import commands
 import requests
-from functions import printt, typing_sleep
+from apis.functions import printt, typing_sleep
 
 DOLAR_URL = "https://www.dolarsi.com/api/api.php?type=valoresprincipales"
 DOLAR_THUMBNAIL = "https://cdn.discordapp.com/attachments/793309880861458473/801587601474715648/dollar.png"

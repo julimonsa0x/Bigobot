@@ -3,7 +3,7 @@ import discord
 from discord.ext import commands
 from PIL import Image, ImageFont, ImageDraw
 from apis.fortnite_api import fortnite_api_request
-from functions import printt
+from apis.functions import printt
 
 
 class Fortnite(commands.Cog):

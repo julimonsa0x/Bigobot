@@ -4,8 +4,7 @@ Requires GENIUS_ACCESS_TOKEN .env
 import discord
 from discord.ext import commands
 import lyricsgenius
-from functions import printt
-from functions import typing_sleep
+from apis.functions import typing_sleep, printt
 
 import os
 from dotenv import load_dotenv  # to get the .env TOKEN

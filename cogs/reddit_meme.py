@@ -3,7 +3,7 @@ from discord.ext import commands
 import random
 import requests
 
-from functions import typing_sleep, printt
+from apis.functions import typing_sleep, printt
 
 class RedditMeme(commands.Cog):
     def __init__(self, bot):

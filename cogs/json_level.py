@@ -4,8 +4,8 @@ from discord.ext import commands
 import json
 
 from main import bigo_guild_base, bigo_guild_id
-from functions import typing_sleep, printt
-import functions
+from apis.functions import typing_sleep, printt
+import apis.functions
 
 class LevelSystem(commands.Cog):      
     def __init__(self, bot):
@@ -77,9 +77,9 @@ class LevelSystem(commands.Cog):
             except Exception as e:
                 pass
                 #printt('====| !! Hubo un error al escribir en la base de datos de niveles !!')
-            await functions.update_data(users, message.author,message.guild)
-            await functions.add_experience(users, message.author, 4, message.guild)
-            await functions.level_up(users, message.author,message.channel, message.guild)
+            await apis.functions.update_data(users, message.author,message.guild)
+            await apis.functions.add_experience(users, message.author, 4, message.guild)
+            await apis.functions.level_up(users, message.author,message.channel, message.guild)
 
             with open('databases/level.json','w') as f:
                 json.dump(users, f, indent=4)

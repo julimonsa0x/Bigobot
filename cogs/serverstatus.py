@@ -7,7 +7,7 @@ from discord.ext.commands import Cog
 import requests
 from asyncio import sleep
 from random import uniform
-from functions import printt
+from apis.functions import printt
 
 
 class ServerInfo(Cog):	
