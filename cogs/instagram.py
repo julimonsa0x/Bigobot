@@ -14,8 +14,11 @@ from apis.functions import printt, typing_sleep
 load_dotenv()
 ##########################################
 
+user_agent_str = 'Mozilla'
+
+
 # instantiate base class.
-insta = Instaloader(user_agent='chrome')
+insta = Instaloader(user_agent=user_agent_str)
 
 # Required login for most of the commands
 # Consider saving credentials inside .env
