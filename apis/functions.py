@@ -63,7 +63,7 @@ def printt(string, delay=0.002):
 
 # 2nd function
 def get_dolar(key):
-    """Used in dolar cmd""" 
+    """Used in dolar cmd [DEPRECATED BY dolar_cot COG]""" 
     DOLAR_URL = 'https://www.dolarsi.com/api/api.php?type=valoresprincipales'
     dolar_json = requests.get(DOLAR_URL).json()
 

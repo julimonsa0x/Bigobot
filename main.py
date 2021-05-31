@@ -1,4 +1,4 @@
-# Edit with Python 3.8+
+# Python version 3.8.10
 # .env file required by 5 variables
 # ---------------------------------------->
 import os
@@ -156,8 +156,8 @@ async def on_ready():
     printt(f" Con un total de {len(set(bot.get_all_members()))} miembros <¬", 0.001)
     printt(' |            author: JuliTJZ             |', 0.001)
     printt(' |          created : 23/12/2020          |', 0.001)
-    printt(' |        last updated: dd/mm/2021        |', 0.001)
-    printt(f' |      Python: 3.8.0, Oct 14 2019        |', 0.001)
+    printt(' |        last updated: 31/05/2021        |', 0.001)
+    printt(f' |      Python: 3.8.10, Oct 14 2019       |', 0.001)
     printt(f' |          Discord.py:  {discord.__version__}            |', 0.001)
     printt('---------------------------------------------------->>>', 0.001)
 

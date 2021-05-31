@@ -2,12 +2,11 @@
 
 import discord
 from discord.ext import commands
-from functions import printt
 from asyncio import sleep
 
 from random import uniform
 from random import choice
-from apis.functions import typing_sleep
+from apis.functions import typing_sleep, printt
 
 import json
 

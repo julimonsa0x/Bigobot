@@ -1,7 +1,7 @@
 import json
 import urllib.request
 
-from functions import printt
+from apis.functions import printt
 
 def covid_api_request(endpoint):
     try:
