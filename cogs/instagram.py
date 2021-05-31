@@ -15,7 +15,7 @@ load_dotenv()
 ##########################################
 
 # instantiate base class.
-insta = Instaloader()
+insta = Instaloader(user_agent='chrome')
 
 # Required login for most of the commands
 # Consider saving credentials inside .env
