@@ -55,7 +55,7 @@ class Covid(commands.Cog):
         if dev:
             with open("databases/covid_dataset.txt","w") as covidfile:
                 for i in data_set:
-                    covidfile.writelines(str(i))
+                    covidfile.writelines(str(i) + "\n")
             await ctx.send(file=discord.File("databases/covid_dataset.txt"))
         print(f"CovidCmd||       Grafico sobre covid en {country} para {ctx.author.name}")
 

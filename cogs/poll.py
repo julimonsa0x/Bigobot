@@ -47,7 +47,7 @@ class Encuesta(commands.Cog):
     #@commands.has_permissions(administrator=True) unchecked to let everyone make polls
     async def crearencuesta(self, ctx, max_time: int, max_votes: int, titulo, *options):
         """ES: Crea una encuesta con los siguientes argumentos: tiempo de validez, votos maximos, titulo y opciones
-        Ejemplo: `#encuesta 16 3 PRUEBA si no talvez capaz`. Este comando creara una encuesta de 16 minutos, con 3 votos 
+        Ejemplo: `#encuesta 15 3 PRUEBA si no talvez capaz`. Este comando creara una encuesta de 16 minutos, con 3 votos 
         maximos, un titulo "PRUEBA" y 4 opciones "SI" "NO" "TALVEZ" "CAPAZ"
         """
         if len(options) > 10:
@@ -730,8 +730,8 @@ class Encuesta(commands.Cog):
                 if int(calc_minutes) > item[1]['scheduler_time'] or poll_outcome[1] >= item[1]['max_vote']:
                     if str(message.id) in poll_data:
                         await channel.send(
-                            f':tada: **{poll_outcome[0]}** has won **{message.embeds[0].title}** poll '
-                            f'with **{poll_outcome[1]}** votes!')
+                            f':tada: **{poll_outcome[0]}** ha ganado **{message.embeds[0].title}** encuesta '
+                            f'con **{poll_outcome[1]}** votos!')
                         print(f"cmdEncuesta||      La encuesta {poll_outcome[0]} ha sido elegida por mayoria con {poll_outcome[1]} votos!")
 
                         # Remove poll

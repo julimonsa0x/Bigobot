@@ -197,7 +197,10 @@ async def on_message(msg):
             with open("databases/prefixes.json", "r") as f:
                 prefixes = json.load(f)
             pre = prefixes[str(msg.guild.id)] 
-            await msg.channel.send(f"Mi prefijo en este servidor es: {pre}\nPara cambiarlo usa: `{pre}changeprefix`.")
+            await msg.channel.send(
+                f"Mi prefijo en este servidor es: {pre}\nPara cambiarlo usa: `{pre}changeprefix`.", 
+                delete_after=30.0
+            )
     except Exception as e:
         pass
         #print(f"Excepcion al mencionar al bot: {e}\n{e.args}")
