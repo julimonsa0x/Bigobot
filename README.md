@@ -1,7 +1,7 @@
 # Bigobot
 ![image](https://cdn.discordapp.com/attachments/793309880861458473/846617737337110528/bigobot_avatar_chikito.png)
 
-Bot under development, every contribution is accepted and can be forked. Bot intended for personal discord guild and educational purposes. The code contains a high level of spanglish code because I'm still learning :|
+Bot under development, every contribution is accepted and can be forked. Bot intended for personal discord guild and educational purposes. The code contains a high level of spanglish because I'm still learning :|
 
 ## Running the bot.
 At the moment bot is not hosted but it will be soon. To run the bot, clone or fork the repo. Then do:

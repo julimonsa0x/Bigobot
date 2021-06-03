@@ -170,7 +170,7 @@ class ComandosGenerales(commands.Cog):
 
     @commands.command(aliases=['quien','user','user_info','member_info',''])
     @commands.guild_only()
-    async def quien(self, ctx, member: discord.Member = None):
+    async def usuario(self, ctx, member: discord.Member = None):
         '''Informacion sobre @Mencion'''
         if member is None:
             await typing_sleep(ctx)
@@ -352,7 +352,7 @@ class ComandosGenerales(commands.Cog):
     
     api_key = os.getenv('OWM_API_KEY')
     @commands.command()
-    async def clima(ctx, *, location: str=None):
+    async def clima(self, ctx, *, location: str=None):
         '''Clima de la ubicacion que introduzcas'''
         if location == None:
             await ctx.send('Debes seguir la sintaxis #clima <ubicacion>')
