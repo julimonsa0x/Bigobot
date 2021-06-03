@@ -203,7 +203,7 @@ async def feliz_jueves():
         # if today IS thursday send message
         # and wait for a whole week to resend
         if today_int == 3:
-            await general_bigos(f"**Feliz Jueves**\nhttps://cdn.discordapp.com/attachments/793309880861458473/849848243662618644/Feliz_Jueves.mp4")
+            await general_bigos.send(f"**Feliz Jueves**\nhttps://cdn.discordapp.com/attachments/793309880861458473/849848243662618644/Feliz_Jueves.mp4")
             await asyncio.sleep(60 * 60 * 24 * 7)
 
 bot.loop.create_task(feliz_jueves())
