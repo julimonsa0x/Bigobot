@@ -2,6 +2,7 @@
 # Stuff modified and added by me.
 # Repo: https://github.com/AlexFlipnote/discord_bot.py
 
+import os
 import discord
 from discord.ext import commands
 import re
@@ -10,13 +11,17 @@ from io import BytesIO
 from apis import default
 from time import strftime
 import json
+import secrets
 from pytube import extract  # required by the descarga cmd
 from asyncio import sleep
 import wikipedia
+import pyqrcode
+import requests
 
 from apis.functions import (bro_birthdays_check,  # required by usuario command
                         typing_sleep,
-                        printt,)
+                        printt,
+                        degrees_to_cardinal)
 
 
 class ComandosGenerales(commands.Cog):
@@ -69,7 +74,28 @@ class ComandosGenerales(commands.Cog):
         embed = discord.Embed(colour=user.top_role.colour.value)
         embed.set_thumbnail(url=user.avatar_url)
         embed.description = f"**{user}** se unió a **{ctx.guild.name}**\n{default.date(user.joined_at)}"
+        
+        await typing_sleep(ctx)
+        await ctx.message.delete()
         await ctx.send(embed=embed)
+    
+    @commands.command()
+    async def password(self, ctx, nbytes: int = 18):
+        """ 
+        Comando que genera una contraseña segura y te la envia por md.
+        El bot no guarda las contraseñas, esto puede ser verificado en el repositorio del bigobot.
+        La misma es una cadena de texto URL-safe aleatoria y tendra una cantidad `nbytes` de bytes.
+        La encriptacion utilizada es Base64, por ende en promedio cada byte resulta en 1,3 caracteres.
+        """
+        if nbytes not in range(3, 1401):
+            await typing_sleep(ctx)
+            return await ctx.send("El argumento **nbytes** debe ser un numero entre 3 y 1301!")
+        if hasattr(ctx, "guild") and ctx.guild is not None:
+            await typing_sleep(ctx)
+            await ctx.send(f"Te mandare un mensaje con la contraseña generada  **{ctx.author.name}**")
+        await typing_sleep(ctx)
+        await ctx.author.send(f"🎁 **Esta es tu contraseña:**\n`{secrets.token_urlsafe(nbytes)}`", delete_after=60.0)
+        await ctx.author.send(f"Recuerda guardarla en un lugar seguro, estos mensajes se autoeliminaran en 1 minuto", delete_after=60.0)
 
     @commands.command()
     @commands.guild_only()
@@ -144,7 +170,7 @@ class ComandosGenerales(commands.Cog):
 
     @commands.command(aliases=['quien','user','user_info','member_info',''])
     @commands.guild_only()
-    async def usuario(self, ctx, member: discord.Member = None):
+    async def quien(self, ctx, member: discord.Member = None):
         '''Informacion sobre @Mencion'''
         if member is None:
             await typing_sleep(ctx)
@@ -229,7 +255,7 @@ class ComandosGenerales(commands.Cog):
 
     @commands.command()
     async def repite(self, ctx, *, arg=None):
-        ''' Repito lo que escribas '''
+        ''' Repito lo que escribas, con tts. '''
         if arg == None:
             await typing_sleep(ctx)
             await ctx.send("Seguido del comando, escribe lo que quieres que repita", tts=True, delete_after=20.0)
@@ -303,6 +329,99 @@ class ComandosGenerales(commands.Cog):
             else:
                 print(e)
 
+    @commands.command(aliases=['codigoqr'])
+    async def qr(self, ctx, *, qrstring: str=None):
+        '''
+        ES: Crea y devuelve el QR de un texto, puede ser un texto cualquiera, URL, etc. 
+        No funciona con imagenes y otro tipo de archivos, solamente texto.
+        EN: Creates and returns a QR code of any text, images are not supported...'''
+        if qrstring == None:
+            await typing_sleep(ctx)
+            await ctx.send(f'{ctx.author.mention} debes seguir la sintaxis #qr <texto a convertir> \n Solo funciona con textos, ej: urls, links, etc., no con numeros...')
+            await sleep(15)
+            await ctx.channel.purge(limit=2)  # elimina los 2 mensajes anteriores...
+        
+        elif qrstring != None:
+            url = pyqrcode.create(qrstring)
+            url.png('images/qr.png', scale=6)  # saves qr image
+            await ctx.message.delete()
+            await typing_sleep(ctx)
+            await ctx.send(f'{ctx.author.mention} aca esta tu QR', file=discord.File('images/qr.png'))
+
+        # openweathermap api key sensible stored in .env 
+    
+    api_key = os.getenv('OWM_API_KEY')
+    @commands.command()
+    async def clima(ctx, *, location: str=None):
+        '''Clima de la ubicacion que introduzcas'''
+        if location == None:
+            await ctx.send('Debes seguir la sintaxis #clima <ubicacion>')
+        elif location != None:
+            location = str(location.lower())
+            weather_url = f'http://api.openweathermap.org/data/2.5/weather?q={location}&appid={api_key}&units=metric' # change metric for imperial if u prefer degrees in farenheit
+            try:
+                # get the json 
+                weather_json = requests.get(weather_url).json() 
+                embed_weather = discord.Embed(
+                        title=f'Clima en {location} ',
+                        description=f'Asi esta el clima en {location}.',
+                        color=discord.Colour.gold())
+                if weather_json['weather'][0]['main'] == 'Clouds':
+                        actual_state = "https://cdn.discordapp.com/attachments/793309880861458473/804835639669030942/cloudy.png"
+                        weather_traduction = "Nubes."
+                elif weather_json['weather'][0]['main'] == 'Clear':
+                        actual_state = "https://cdn.discordapp.com/attachments/793309880861458473/804835642999046144/soleado.png"
+                        weather_traduction = "Despejado."
+                elif weather_json['weather'][0]['main'] == 'Rain':
+                    actual_state = "https://cdn.discordapp.com/attachments/793309880861458473/804835641904726016/lluvia.png"
+                    weather_traduction = "Lluvia."
+                
+                # populate the json
+                wind_direction = degrees_to_cardinal(weather_json['wind']['deg'])
+                embed_weather.add_field(name="Estado", value=f"{weather_traduction}", inline=False)
+                embed_weather.add_field(name="Temperatura", value=f"{weather_json['main']['temp']} °C", inline=False)
+                embed_weather.add_field(name="Sensacion termica", value=f"{weather_json['main']['feels_like']} °C", inline=False)
+                embed_weather.add_field(name="Temperatura minima", value=f"{weather_json['main']['temp_min']} °C", inline=False)
+                embed_weather.add_field(name="Temperatura maxima", value=f"{weather_json['main']['temp_max']} °C", inline=False)
+                embed_weather.add_field(name="Presion", value=f"{weather_json['main']['pressure']} mbar", inline=False)
+                embed_weather.add_field(name="Humedad", value=f"{weather_json['main']['humidity']} %", inline=False)
+                embed_weather.add_field(name="Velocidad del viento", value=f"{weather_json['wind']['speed']} km/h", inline=False)
+                embed_weather.add_field(name="Direccion del viento", value=f"{wind_direction}", inline=False)
+                embed_weather.set_thumbnail(url=f"{actual_state}")
+                
+                await typing_sleep(ctx)
+                await ctx.send(embed=embed_weather)
+                print(f'cmdClima||        {ctx.author.name} solicito el clima en {location}')
+
+            except KeyError:
+                await typing_sleep(ctx)
+                error_embed = discord.Embed(title='Hubo un error', description=f'No fue posible encontrar el clima para {location}...')
+                await ctx.send(embed=error_embed)
+                print(f'cmdClima||        {ctx.author.name} fallo al solicitar el clima de {location}')
+
+    @commands.command(aliases=["monsa", "dev", "desarrollador", "creador"])
+    async def autor(self, ctx):
+        '''Info sobre mi autor'''
+        embedMine = discord.Embed(
+            title="Acerca de mi",
+            color=discord.Color.blurple()
+        )
+        embedMine.set_author(name="Juli Monsa", url="https://www.steamcommunity.com/id/JuliMonsa", icon_url="https://cdn.discordapp.com/attachments/793309880861458473/797528089726418974/yo_quien_mas.png")
+        embedMine.add_field(name="Canal YT:", value=f" https://www.youtube.com/channel/UCeQLgYEcEj9PteUzWWa2bRA", inline= False)
+        embedMine.add_field(name="Perfil de Steam:", value=f" https://www.steamcommunity.com/id/JuliMonsa", inline= False)
+        embedMine.add_field(name="Github:", value=f" https://github.com/julimonsa0x", inline= False)
+        embedMine.add_field(name="Telegram:", value=f" @julimonsa0x", inline= False)
+        embedMine.add_field(name="Discord:", value=f" JuliTJZ#2364", inline= False)
+        embedMine.add_field(name="Instagram: ", value=f" @0xjulimonsa", inline= False)
+        embedMine.add_field(name="Replit:", value=f" https://repl.it/@julimonsa0x", inline= False)
+        #embedMine.add_field(name="Página de", value=f"", inline= False)
+        embedMine.set_thumbnail(url="https://i.imgur.com/mmF8hSX.png")  # ETHER ADDRESS 
+        embedMine.set_footer(icon_url = ctx.author.avatar_url, text = f"Solicitud de {ctx.author.name}")
+        
+        await ctx.message.delete()
+        await typing_sleep(ctx)
+        await ctx.send(embed=embedMine)
+        print(f'cmdInfoSobreMí||         Info del autor enviada a {ctx.author.name}')
 
 def setup(bot):
     bot.add_cog(ComandosGenerales(bot))

@@ -26,9 +26,7 @@ import aiofiles
 import aiohttp
 #import certifi
 import png
-import pyqrcode
 import requests
-import wikipedia
 #from bs4 import BeautifulSoup
 from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
 
@@ -71,6 +69,8 @@ bot = commands.Bot(command_prefix=get_prefix, intents=intents)
 bigo_guild_id = 559592087054450690  # if bot is public, call the var "base_guild_id"
 bigo_guild_base = bot.fetch_guild(bigo_guild_id)  # if bot is public, call the var "base_guild"
 
+bigos = 559592087641915433
+general_bigos = bot.fetch_guild(bigos)
 
 # --------> Bot en marcha <-------
 @bot.event 
@@ -169,6 +169,7 @@ async def on_ready():
 
 
     # Populate prefixes.json for every joined guild
+    # prefixes.json must be an empty json by default
     for guild in bot.guilds:
         with open("databases/prefixes.json", "r") as f:
             prefixes = json.load(f)
@@ -186,21 +187,44 @@ async def change_presence():
         status = random.choice(apis.listas.bot_statuses)
         await bot.change_presence(activity=discord.Game(name=status))
         await asyncio.sleep(10)
-    
+
+async def feliz_jueves():
+    await bot.wait_until_ready()  
+    await asyncio.sleep(60)  # wait for 1 min to start the weekly reminder
+
+    while not bot.is_closed():
+        today_int = datetime.today().weekday()
+        
+        # if today is not thursday 
+        # wait for a day and try again
+        if not today_int == 3:
+            await asyncio.sleep(60 * 60 * 24)
+        
+        # if today IS thursday send message
+        # and wait for a whole week to resend
+        if today_int == 3:
+            await general_bigos.send("https://cdn.discordapp.com/attachments/793309880861458473/849848243662618644/Feliz_Jueves.mp4")
+            await asyncio.sleep(60 * 60 * 24 * 7)
+
+bot.loop.create_task(feliz_jueves())
 bot.loop.create_task(change_presence())
 
 ##### ----------------->>>>  Comienzo de eventos  <<<<---------------- #####
 @bot.event
 async def on_message(msg):
     try:
-        if bot.user.mentioned_in(msg) or bot.user.mentioned_in(msg.content) or msg.split()[0] == bot.user:
+        if msg.split()[0] == bot.user:
+            
             with open("databases/prefixes.json", "r") as f:
                 prefixes = json.load(f)
+            
             pre = prefixes[str(msg.guild.id)] 
+            
             await msg.channel.send(
                 f"Mi prefijo en este servidor es: {pre}\nPara cambiarlo usa: `{pre}changeprefix`.", 
                 delete_after=30.0
             )
+    
     except Exception as e:
         pass
         #print(f"Excepcion al mencionar al bot: {e}\n{e.args}")
@@ -217,7 +241,8 @@ async def on_guild_join(guild):
     with open("databases/prefixes.json", "w") as f:
         json.dump(prefixes,f, indent=2)
     
-    await bigo_guild_base.send("#setpadlockedinfo", delete_after=60)    
+    # when joined auto-send and set padlocked info
+    await guild.send("#setpadlockedinfo", delete_after=30)    
 
 @bot.event
 async def on_raw_reaction_add(payload):
@@ -544,32 +569,6 @@ async def advertir(ctx, member: discord.Member=None, *, reason=None):
     print(f"cmdAdvertir||      {ctx.author.name} advirtio a {member} por {count}° vez a las {current_hour}")
 
 
-#-----> comando sobre info del autor <-----
-@bot.command(aliases=["autor", "dev", "desarrollador", "creador"])
-async def monsa(ctx):
-    '''Info sobre mi autor'''
-    embedMine = discord.Embed(
-        title="Acerca de mi",
-        timestamp = datetime.utcnow(),
-        color=discord.Color.blurple())
-    
-    #embedMine.set_author(name="Juli Monsa", icon_url="https://cdn.discordapp.com/attachments/793309880861458473/797528089726418974/yo_quien_mas.png")
-    embedMine.set_author(name="Juli Monsa", url="https://www.steamcommunity.com/id/JuliMonsa", icon_url="https://cdn.discordapp.com/attachments/793309880861458473/797528089726418974/yo_quien_mas.png")
-    embedMine.add_field(name="Canal YT:", value=f" https://www.youtube.com/channel/UCeQLgYEcEj9PteUzWWa2bRA", inline= False)
-    embedMine.add_field(name="Perfil de Steam:", value=f" https://www.steamcommunity.com/id/JuliMonsa", inline= False)
-    embedMine.add_field(name="Github:", value=f" https://github.com/julimonsa0x", inline= False)
-    embedMine.add_field(name="Replit:", value=f" https://repl.it/@julimonsa0x", inline= False)
-    embedMine.add_field(name="Telegram:", value=f" @julimonsa0x", inline= False)
-    embedMine.add_field(name="Discord:", value=f" JuliTJZ#8141", inline= False)
-    #embedMine.add_field(name="Página de", value=f"", inline= False)
-    #embedMine.add_field(name="Página de", value=f"", inline= False)
-    embedMine.set_thumbnail(url="https://i.imgur.com/mmF8hSX.png")  # ETHER ADDRESS 
-    embedMine.set_footer(icon_url = ctx.author.avatar_url, text = f"Solicitud de {ctx.author.name}")
-    
-    await typing_sleep(ctx)
-    await ctx.send(embed=embedMine)
-    print(f'cmdInfoSobreMí||         Info del autor enviada a {ctx.author.name} a las {current_hour}')
-
 
 #-------------> RIP command <-----------------
 @bot.command()
@@ -785,68 +784,11 @@ async def steamcito(ctx):
     print(f'cmdSteamcito||            {ctx.author.name} solicitó la web del addon Steamcito')
 
 
-##############
-############## COMANDOS DE VIDEOS RANDOMS 
-#---> Lamar roasts Franklin vid <---
-@bot.command()
-async def roast(ctx):
-    '''Lamar roasts Franklin trending videos...'''
-    await typing_sleep(ctx)
-    await ctx.send(random.choice(apis.listas.roasts))
-    print(f'cmdRoast||      Lamar v Franklin enviado a {ctx.author.name} a las {current_hour}')
-
-#---> LocuraBailandoSinPantalones vid <---
-@bot.command()
-async def locurabailando(ctx):
-    '''Locura bailando...'''
-    await ctx.send("http://youtu.be/tvvGVZpnOMA")
-    print(f'cmdLocura...||  Video del locurabailando a {ctx.author.name}')
-
-#---> gordoPistero vid <---
-@bot.command()
-async def pistero(ctx):
-    '''Gordo pistero'''
-    await ctx.send("https://video.twimg.com/ext_tw_video/1327280070113644545/pu/vid/332x640/MuugcrrqHBQwQgSo.mp4?tag=1")
-    print(f'cmdLocura...|| Video del gordopistero enviado a {ctx.author.name} a las {current_hour}')
-
-#---> TADEO 1hs EN WHEELIE vid <---
-@bot.command()
-async def tadeo(ctx):
-    '''Video del Tadeo moto moto 1 hora en bucle'''
-    await ctx.send("https://youtu.be/ffoXJhzwcHQ")
-
-#---> MATEUS505 GALO SNIPER vid <---
-@bot.command()
-async def galosniper(ctx):
-    ''' PLEASE DO NOT ! '''
-    embedGalo = discord.Embed(
-        title="galo sniper",
-        description="galo sniper",
-        color=discord.Color.red()
-    )
-    embedGalo.add_field(name="10 FATOS SOBRE MATEUS505 CARVALHO DO SANTOS", value=None, inline=False)
-    embedGalo.add_field(name="FATO 1: ¿NOME DO MATEUS 505?", value="MATEO 505 CARVALHO DO SANTOS")
-    embedGalo.add_field(name="FATO 2: ¿QUANTOS ANOS VOCE TEM?", value="20 ANOS", inline=False)
-    embedGalo.add_field(name="FATO 3: ¿QUAL SEU MEME FAVORITO?", value="GALO SNIPER")
-    embedGalo.add_field(name="FATO 4: ¿QUAL SEU PERSONAGEM FAVORITO?", value="GALO SNIPER", inline=False)
-    embedGalo.add_field(name="FATO 5: ¿QUAL SEU FILME FAVORITO", value="GALO SNIPER AMERICANO")
-    embedGalo.add_field(name="FATO 6: ¿QUAL SEU ANIME FAVORITO", value="GALO SNIPER SHIPPUDEN", inline=False)
-    embedGalo.add_field(name="FATO 7: ¿QUAL SUA COR FAVORITA", value="BRANCO do GALO SNIPER")
-    embedGalo.add_field(name="FATO 8: ¿QUAL o SEU INSTAGRAM", value="GALO SNIPER", inline=False)
-    embedGalo.add_field(name="FATO 9: ¿QUAL SEU MELHOR AMIGO DA INFANCIA?", value="GALO SNIPER")
-    embedGalo.add_field(name="FATO 10: ¿QUAL SEU ANIMAL FAVORITO?", value="Spoky ???? SNIPER", inline=False)
-    await ctx.send(embed=embedGalo)
-    await ctx.send("https://www.youtube.com/watch?v=cwiVlpW7-XM")
-    print(f'cmdGaloSniper|| Video del GALOSNIPER enviado a {ctx.author.name} XD')
-############## FIN DE VIDEOS DE COMANDOS RANDOMS
-##############
-
-
 #-------->COMANDOS DE AYUDA inicio<----------
 #----> menu de comandos <---- 
 @bot.command()
 async def comandos(ctx):
-    '''Lista de los comandos'''
+    ''' Lista casi completa de los comandos del bigobot '''
     embedCmd = discord.Embed(
         color=discord.Colour.orange(),
         title=f"Menu de comandos a tu orden {ctx.author.name} :thumbsup:",
@@ -854,21 +796,15 @@ async def comandos(ctx):
         timestamp=datetime.utcnow()
     )
     embedCmd.set_thumbnail(url="https://cdn.discordapp.com/attachments/793309880861458473/794724078224670750/25884936-fd9d-4627-ac55-d904eb5269cd.png") #icono del bigobot
-    embedCmd.add_field(name="-->Comando #info", value="Da informacion general sobre el server", inline=False)
+    embedCmd.add_field(name="Recordatorio sobre uso el bigobot", value="Los comandos son sensibles a las mayusculas, no es lo mismo `#meme` que `#MEME`...", inline=False)
+    embedCmd.add_field(name="-->Categoria #ofertas", value="Busca ofertas de juegos en 5 distintas plataformas, accede a la lista completa con **#help OfertasJuegos** ", inline=False)
     embedCmd.add_field(name="-->Comando #matecomandos", value="operaciones que puede resolver el bot a detalle", inline=False)
-    embedCmd.add_field(name="-->Comando #reacciona, #...", value="Este y muchos otros comandos en ----> #moar", inline=False)
-    embedCmd.add_field(name="-->Comando  *#youtube*", value="Busca un video que coincida", inline=False)
+    embedCmd.add_field(name="-->Categoria  #dolar_cot", value="Busca la cotizacion del dolar y calcula el dolar tarjeta (ideal para compras online, incluyendo impuestos). Accede a la lista completa con **#help DolarCotizacion**", inline=False)
+    embedCmd.add_field(name="-->Categoria  #comandos_generales", value="Diversos comandos multipropositos como `#avatar`, `#info`, `#usuario`, `#youtube`, `#repite` y mas. Accede a la lista completa con **#help ComandosGenerales**", inline=False)
+    embedCmd.add_field(name="-->Categoria  #fun_stuff", value="Comandos varios divertidos, acceder a la lista completa con **#help FunCommands**", inline=False)
+    embedCmd.add_field(name="-->Comando  #help", value="Lista de todas las categorias y todos los comandos", inline=False)
     embedCmd.add_field(name="-->Comando  #ping", value="Muestra tu latencia con respecto al bot", inline=False)
-    embedCmd.add_field(name="-->Comando  #meme", value="Muestra memes randoms", inline=False)
-    embedCmd.add_field(name="-->Comando  #quien", value="Muestra información sobre un miembro del server", inline=False)
-    embedCmd.add_field(name="-->Comando  #temporal", value="Escribe un mensaje y se borra a los 3 segundos.", inline=False)
-    embedCmd.add_field(name="-->Comando  #repite", value="El bot repite tus palabras como un pelotudo + tts=True", inline=False)
-    embedCmd.add_field(name="-->Comando  #dados", value="Tira un dado con resultado del 1 al 6", inline=False)
-    embedCmd.add_field(name="-->Comando  #md <id> <mensaje>", value="Envía un mensaje a un usuario con el bot con *#md <id del usuario> <tu mensaje>*, si no conoces su id usá *#quien <usuario>* ", inline=False)
-    embedCmd.add_field(name="-->Comando  #dolar", value="te muestra la cotización del dolar blue un capo el bot", inline=False)
-    embedCmd.add_field(name="-->Comando  #randomchamp", value="Te muestra un campeón random de LOL", inline=False)
-    embedCmd.add_field(name="-->Comando  #randombrawl", value="Te muestra un brawler random de BS", inline=False)
-    embedCmd.add_field(name="-->Comando  #help", value="Lista de todos y cada uno de los comandos", inline=False)
+    embedCmd.add_field(name="-->Comando #reacciona, #...", value="Este y muchos otros comandos en ----> #moar", inline=False)
     embedCmd.add_field(name="-->Sugerencia", value="Comandos detallados por seccion con #ayuda", inline=False)
     embedCmd.set_footer(text = "Listo para ayudarte ;)/🥂")
 
@@ -877,42 +813,43 @@ async def comandos(ctx):
     await ctx.send(embed=embedCmd)
     print(f"cmdComandos||   Comandos de ayuda enviados correctamente a {ctx.author.name} a las {current_hour}")
 
-#menu #moar para las "interacciones" del bot
+# menu #moar para las "interacciones" del bot
+# comando especifico para Los Bigotazos
 @bot.command()
 async def moar(ctx): 
     '''Comandos no mencionados en #comandos'''
-    author = ctx.message.author
-    embedMoar = discord.Embed(
-        color=discord.Colour.green(),
-        title="Estas son las demás interacciones del bot",
-        timestamp=datetime.utcnow()
-    )
-    embedMoar.set_thumbnail(url="https://cdn.discordapp.com/attachments/793309880861458473/794724078224670750/25884936-fd9d-4627-ac55-d904eb5269cd.png") #icono del bigobot
-    embedMoar.add_field(name="Interacción #mato", value="El bot interacciona/habla", inline=False)
-    embedMoar.add_field(name="Interacción #rubén", value="El bot interacciona/habla", inline=False)
-    embedMoar.add_field(name="Interacción #claudia", value="El bot interacciona/habla", inline=False)
-    embedMoar.add_field(name="Interacción #lezca", value="El bot interacciona/habla", inline=False)
-    embedMoar.add_field(name="Interacción #lesca", value="El bot interacciona/habla", inline=False)
-    embedMoar.add_field(name="Interacción #nico", value="El bot interacciona/habla", inline=False)
-    embedMoar.add_field(name="Interacción #seki", value="El bot interacciona/habla", inline=False)
-    embedMoar.add_field(name="Interacción #ey", value="El bot interacciona/habla", inline=False)
-    embedMoar.add_field(name="Interacción #flaco", value="El bot interacciona/habla", inline=False)
-    embedMoar.add_field(name="Interacción #che", value="El bot interacciona/habla", inline=False)
-    embedMoar.add_field(name="Interacción #copi", value="El bot interacciona/habla", inline=False)
-    embedMoar.add_field(name="Interacción #tevenin", value="El bot interacciona/habla", inline=False)
-    embedMoar.add_field(name="Interacción #hola", value="El bot interacciona/habla", inline=False)
-    embedMoar.add_field(name="Interacción #firu", value="El bot interacciona/habla", inline=False)
-    embedMoar.add_field(name="Interacción #pepo", value="El bot interacciona/habla", inline=False)
-    embedMoar.add_field(name="Interacción #pistero", value="El bot interacciona/habla", inline=False)
-    embedMoar.add_field(name="Comando  #tadeo", value="que mas puede ser, que se te ocurre osea...", inline=False)
-    embedMoar.add_field(name="Comando  #galosniper", value="galo sniper", inline=False)
-    embedMoar.add_field(name="Comando  #willy", value="willy out of context", inline=False)
-    embedMoar.add_field(name="Comando  #locurabailando", value="muestra *locurabailandosinpantalones.mp4* ", inline=False)
-    embedMoar.add_field(name="y muchos mas", value="Simplemente probá con los nombres de los bros o con otra cosa, sin olvidar el prefijo #", inline=False)
-    
-    await typing_sleep(ctx)
-    await ctx.send(embed=embedMoar)
-    print(f"cmdMoar||      Mas interacciones enviadas correctamente a {ctx.author.name} a las {current_hour}")
+    if ctx.guild == bigo_guild_base or ctx.guild == bigo_guild_id:
+        embedMoar = discord.Embed(
+            color=discord.Colour.green(),
+            title="Estas son las demás interacciones del bot",
+            timestamp=datetime.utcnow()
+        )
+        embedMoar.set_thumbnail(url="https://cdn.discordapp.com/attachments/793309880861458473/794724078224670750/25884936-fd9d-4627-ac55-d904eb5269cd.png") #icono del bigobot
+        embedMoar.add_field(name="Interacción #mato", value="El bot interacciona/habla", inline=False)
+        embedMoar.add_field(name="Interacción #rubén", value="El bot interacciona/habla", inline=False)
+        embedMoar.add_field(name="Interacción #claudia", value="El bot interacciona/habla", inline=False)
+        embedMoar.add_field(name="Interacción #lezca", value="El bot interacciona/habla", inline=False)
+        embedMoar.add_field(name="Interacción #lesca", value="El bot interacciona/habla", inline=False)
+        embedMoar.add_field(name="Interacción #nico", value="El bot interacciona/habla", inline=False)
+        embedMoar.add_field(name="Interacción #seki", value="El bot interacciona/habla", inline=False)
+        embedMoar.add_field(name="Interacción #ey", value="El bot interacciona/habla", inline=False)
+        embedMoar.add_field(name="Interacción #flaco", value="El bot interacciona/habla", inline=False)
+        embedMoar.add_field(name="Interacción #che", value="El bot interacciona/habla", inline=False)
+        embedMoar.add_field(name="Interacción #copi", value="El bot interacciona/habla", inline=False)
+        embedMoar.add_field(name="Interacción #tevenin", value="El bot interacciona/habla", inline=False)
+        embedMoar.add_field(name="Interacción #hola", value="El bot interacciona/habla", inline=False)
+        embedMoar.add_field(name="Interacción #firu", value="El bot interacciona/habla", inline=False)
+        embedMoar.add_field(name="Interacción #pepo", value="El bot interacciona/habla", inline=False)
+        embedMoar.add_field(name="Interacción #pistero", value="El bot interacciona/habla", inline=False)
+        embedMoar.add_field(name="Comando  #tadeo", value="que mas puede ser, que se te ocurre osea...", inline=False)
+        embedMoar.add_field(name="Comando  #galosniper", value="galo sniper", inline=False)
+        embedMoar.add_field(name="Comando  #willy", value="willy out of context", inline=False)
+        embedMoar.add_field(name="Comando  #locurabailando", value="muestra *locurabailandosinpantalones.mp4* ", inline=False)
+        embedMoar.add_field(name="y muchos mas", value="Simplemente probá con los nombres de los bros o con otra cosa, sin olvidar el prefijo #", inline=False)
+        
+        await typing_sleep(ctx)
+        await ctx.send(embed=embedMoar)
+        print(f"cmdMoar||      Mas interacciones enviadas correctamente a {ctx.author.name} a las {current_hour}")
 
     
 @bot.command()
@@ -932,7 +869,7 @@ async def ayuda(ctx):
     embed_help.add_field(name="--> Comandos para admins ", value="#advertir, #advertencias, #kick, #ban, #set_canal_bienvenida, #set_canal_despedida, #pedir_ticket, #rol_reaccion, #setdelay", inline=False)
     embed_help.add_field(name="--> Comandos matemáticos", value="#matecomandos", inline=False)
     embed_help.add_field(name="--> Comandos de conversion", value="#bin_a_dec, #dec_a_bin, #hex_a_dec, #dec_a_hex, #num_a_rom", inline=False)
-    embed_help.add_field(name="--> Ayuda de un comando especifico", value="#help <comando>, a modo de ejemplo si quieres ver la ayuda del comando #descarga, seria: #help <descarga>...")
+    embed_help.add_field(name="--> Ayuda de un comando especifico", value="#help <comando>, a modo de ejemplo si quieres ver la ayuda del comando #descarga, seria: `#help descarga`...")
     embed_help.set_footer(text = "Listo para ayudarte ;)/🥂", icon_url=ctx.author.avatar_url)
     
     await typing_sleep(ctx)
@@ -1020,43 +957,6 @@ async def mensaje(ctx, channel_id=None, *, args=None):
         await ctx.channel.send("Debes proporcionar una ID de un canal, seguido del mensaje a enviar!")
         print(f"cmdMensaje||       {ctx.author.name} falló al enviar un mensaje")
 
-@bot.command(aliases=['tunearletras','messletters','changefont'])
-async def tunear(ctx, orden: int, *, args=None,):
-    '''
-    Tunea un texto, la sintaxis es #[tunear] <orden> <el_texto_que_quieras_tunear>. 
-    El orden debe ser un numero del 1 al 7 (distintas fuentes)
-    • Orden 1: Letras Arabes creo.
-    • Orden 2: Letras cursiva solo minuscula
-    • Orden 3: Alfabeto en cursiva completo
-    • Orden 4: Letras invertidas 
-    • Orden 5: Letras minusculas italica 
-    • Orden 6: Letras mayusculas grandes
-    • Orden 7: Letras dentro de circulos
-    • Orden 8: Alfabeto Math Serif Bold
-    '''
-    
-    try:
-        if args != None:
-            myThiccString = apis.tuning.tunear(args.replace("#tunear", ""), orden)
-            await typing_sleep(ctx)
-            await ctx.send(myThiccString)
-            print(f"cmdTunear1||        {ctx.author.name} tuneó un texto el {current_hour}")
-
-        elif args is None and orden is None:
-            await typing_sleep(ctx)    
-            await ctx.send("Seguido del comando debes introducir un orden (1 a 6) seguido del texto a tunear", delete_after=60.0)
-            await ctx.send("A modo de ejemplo: **#tunear 4 textodepruebacopipedro**", delete_after=60.0)
-            print(f"cmdTunear||        {ctx.author.name} falló al tunear un texto el {current_hour}")
-
-    except Exception as e:
-        if isinstance(e, commands.MissingRequiredArgument):
-            await typing_sleep(ctx)
-            await ctx.send("Debes seguir la sintáxis #tunear <orden>, prueba con #help tunear para mas info.", delete_after=130.0)
-            await ctx.send("Recuerda que si quieres ver la sintaxis especfica de un comando puedes recurrir a **#help <#comando>** y para ver todos los comandos puedes recurrir a **#help** o **#ayuda** / **#comandos**", delete_after=150.0)
-        else:
-            await typing_sleep(ctx)
-            await throw_error(ctx=ctx, e=e)
-
 #----------> Kick Command <---------
 @bot.command()
 @commands.has_permissions(kick_members=True)
@@ -1129,7 +1029,7 @@ async def ban(ctx, member: discord.Member, *, reason=None):
             print(f"cmdBan||        {member} iba a ser baneado {ctx.author.name} pero safo")
 
 
-#------------>  interaccion con el bot 2  <---------------
+#------------>  interaccion con el bot   <---------------
 @bot.listen('on_message')
 async def on_message(message):
     msg = message.content
@@ -1319,56 +1219,6 @@ async def on_message(message):
         return
 
 
-
-#-----------------> Clima comando <-----------------
-
-# openweathermap api key sensible stored in .env 
-api_key = os.getenv('OWM_API_KEY')
-@bot.command()
-async def clima(ctx, *, location: str=None):
-    '''Clima de la ubicacion que introduzcas'''
-    if location == None:
-        await ctx.send('Debes seguir la sintaxis #clima <ubicacion>')
-    elif location != None:
-        location = str(location.lower())
-        weather_url = f'http://api.openweathermap.org/data/2.5/weather?q={location}&appid={api_key}&units=metric' # change metric for imperial if u prefer degrees in farenheit
-        try:
-            weather_json = requests.get(weather_url).json() 
-            await typing_sleep(ctx)
-            embed_weather = discord.Embed(
-                    title=f'Clima en {location} ',
-                    description=f'Asi esta el clima en {location}.',
-                    color=discord.Colour.gold(),
-                    timestamp = datetime.utcnow())
-            if weather_json['weather'][0]['main'] == 'Clouds':
-                    actual_state = "https://cdn.discordapp.com/attachments/793309880861458473/804835639669030942/cloudy.png"
-                    weather_traduction = "Nubes."
-            elif weather_json['weather'][0]['main'] == 'Clear':
-                    actual_state = "https://cdn.discordapp.com/attachments/793309880861458473/804835642999046144/soleado.png"
-                    weather_traduction = "Despejado."
-            elif weather_json['weather'][0]['main'] == 'Rain':
-                actual_state = "https://cdn.discordapp.com/attachments/793309880861458473/804835641904726016/lluvia.png"
-                weather_traduction = "Lluvia."
-            wind_direction = degrees_to_cardinal(weather_json['wind']['deg'])
-            embed_weather.add_field(name="Estado", value=f"{weather_traduction}", inline=False)
-            embed_weather.add_field(name="Temperatura", value=f"{weather_json['main']['temp']} °C", inline=False)
-            embed_weather.add_field(name="Sensacion termica", value=f"{weather_json['main']['feels_like']} °C", inline=False)
-            embed_weather.add_field(name="Temperatura minima", value=f"{weather_json['main']['temp_min']} °C", inline=False)
-            embed_weather.add_field(name="Temperatura maxima", value=f"{weather_json['main']['temp_max']} °C", inline=False)
-            embed_weather.add_field(name="Presion", value=f"{weather_json['main']['pressure']} mbar", inline=False)
-            embed_weather.add_field(name="Humedad", value=f"{weather_json['main']['humidity']} %", inline=False)
-            embed_weather.add_field(name="Velocidad del viento", value=f"{weather_json['wind']['speed']} km/h", inline=False)
-            embed_weather.add_field(name="Direccion del viento", value=f"{wind_direction}", inline=False)
-            embed_weather.set_thumbnail(url=f"{actual_state}")
-            await ctx.send(embed=embed_weather)
-            print(f'cmdClima||        {ctx.author.name} solicito el clima en {location} a las {current_hora}')
-
-        except KeyError:
-            await typing_sleep(ctx)
-            error_embed = discord.Embed(title='Hubo un error', description=f'No fue posible encontrar el clima para {location}...')
-            await ctx.send(embed=error_embed)
-            print(f'cmdClima||        {ctx.author.name} fallo al solicitar el clima de {location}')
-
 #---------> juego command <--------
 @bot.command()
 async def juegos(ctx):
@@ -1387,23 +1237,6 @@ async def ppt(ctx, member : discord.Member=None):
         print("An attribute error seems to have appeared but just ignore it and continue! :)")
 #-------> juego command end <------
 
-@bot.command()
-async def qr(ctx, *, qrstring: str=None):
-    '''ES: Crea y devuelve el QR de un texto, puede ser un texto cualquiera, URL, etc. No 
-    funciona con imagenes y otro tipo de archivos
-    EN: Creates and returns a QR code of any text, images are not supported...'''
-    if qrstring == None:
-        await typing_sleep(ctx)
-        await ctx.send(f'{ctx.author.mention} debes seguir la sintaxis #qr <texto a convertir> \n Solo funciona con textos, ej: urls, links, etc., no con numeros...')
-        await asyncio.sleep(15)
-        await ctx.channel.purge(limit=2)  # elimina los 2 mensajes anteriores...
-    
-    elif qrstring != None:
-        url = pyqrcode.create(qrstring)
-        url.png('images/qr.png', scale=6)  # saves qr image
-        await ctx.message.delete()
-        await typing_sleep(ctx)
-        await ctx.send(f'{ctx.author.mention} aca esta tu QR', file=discord.File('images/qr.png'))
             
 # ---------> Purge messages of a mentioned user <--------
 @bot.command()
@@ -1521,5 +1354,3 @@ for filename in os.listdir('./cogs'):
 
 
 bot.run(os.getenv('TOKEN'))
-
-

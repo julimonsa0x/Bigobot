@@ -79,7 +79,7 @@ class Encuesta(commands.Cog):
                         embed.add_field(name=name, value=value, inline=inline)
 
                     message = await ctx.send(embed=embed)
-                    print(f"cmdEncuesta||      {ctx.author.name} ha creado la encuesta {titulo} con {len(options)}, {max_votes} votos maximos y finaliza en {max_time}")
+                    print(f"cmdEncuesta||      {ctx.author.name} ha creado la encuesta {titulo} con {len(options)}, {max_votes} votos maximos y finaliza en {int(max_time) / 60} horas")
 
                     for item in self.emoji[:len(options)]:
                         await message.add_reaction(item)
@@ -259,7 +259,7 @@ class Encuesta(commands.Cog):
 
                     update_embed = discord.Embed(title=message.embeds[0].title,
                                                  description=f':stopwatch: '
-                                                             f'Poll will end in **{time_counter} minute**!',
+                                                             f'La encuesta terminara en **{time_counter} minutos**!',
                                                  colour=0xFF0000)
 
                     update_embed.set_thumbnail(url=message.embeds[0].thumbnail.url)
@@ -730,7 +730,7 @@ class Encuesta(commands.Cog):
                 if int(calc_minutes) > item[1]['scheduler_time'] or poll_outcome[1] >= item[1]['max_vote']:
                     if str(message.id) in poll_data:
                         await channel.send(
-                            f':tada: **{poll_outcome[0]}** ha ganado **{message.embeds[0].title}** encuesta '
+                            f':tada: La opcion**{poll_outcome[0]}** ha ganado la encuesta **{message.embeds[0].title}** '
                             f'con **{poll_outcome[1]}** votos!')
                         print(f"cmdEncuesta||      La encuesta {poll_outcome[0]} ha sido elegida por mayoria con {poll_outcome[1]} votos!")
 

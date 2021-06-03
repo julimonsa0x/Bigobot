@@ -3,7 +3,6 @@
 
 import random
 import discord
-import secrets
 import asyncio
 import aiohttp
 from discord.ext.commands.core import command
@@ -15,14 +14,16 @@ from io import BytesIO
 from discord.ext import commands
 from apis import permissions
 from databases import ballresponse
-from apis.functions import printt, typing_sleep
+import apis.tuning
+from apis.functions import printt, typing_sleep, throw_error
 from apis.listas import (brawlers, 
                     campeones, 
                     images, 
                     trivias, 
                     trivia_accept, 
                     trivia_decline, 
-                    willyooc)
+                    willyooc,
+                    roasts)
 
 
 
@@ -51,6 +52,7 @@ class FunCommands(commands.Cog):
         duck_url = r.json()["url"]
         embed = discord.Embed(color = discord.Colour.dark_gold())
         embed.set_image(url = duck_url)
+        await ctx.message.delete()
         await typing_sleep(ctx)
         await ctx.send(embed = embed)
         print(f"cmdPato||         {ctx.author.name} pidio una foto de patos")
@@ -79,8 +81,9 @@ class FunCommands(commands.Cog):
     async def f(self, ctx, *, text: commands.clean_content = None):
         """ Press #F to pay respect """
         hearts = ["❤", "💛", "💚", "💙", "💜"]
-        reason = f"for **{text}** " if text else ""
+        reason = f"por:\n `**{text}**` " if text else ""
         await typing_sleep(ctx)
+        await ctx.message.delete()
         await ctx.send(f"**{ctx.author.name}** le ha pagado respetos {reason}{random.choice(hearts)}")
 
     @commands.command()
@@ -118,25 +121,11 @@ class FunCommands(commands.Cog):
         """
         EN: Everything you type after reverse will of course, be reversed
         ES: Lo que escribas se da vuelta, aunque es recomendable usar #tunear 4 <tu_texto>
+        Para mas informacion utiliza **#help tunear** 
         """
         t_rev = text[::-1].replace("@", "@\u200B").replace("&", "&\u200B")
         await typing_sleep(ctx)
         await ctx.send(f"🔁 {t_rev}")
-
-    @commands.command()
-    async def password(self, ctx, nbytes: int = 18):
-        """ Generates a random password string for you
-        This returns a random URL-safe text string, containing nbytes random bytes.
-        The text is Base64 encoded, so on average each byte results in approximately 1.3 characters.
-        """
-        if nbytes not in range(3, 1401):
-            await typing_sleep(ctx)
-            return await ctx.send("El argumento **nbytes** debe ser un numero entre 3 y 1301!")
-        if hasattr(ctx, "guild") and ctx.guild is not None:
-            await typing_sleep(ctx)
-            await ctx.send(f"Te mandare un mensaje con la contraseña generada  **{ctx.author.name}**")
-        await typing_sleep(ctx)
-        await ctx.author.send(f"🎁 **Esta es tu contraseña:**\n{secrets.token_urlsafe(nbytes)}")
 
     @commands.command()
     async def rating(self, ctx, *, thing: commands.clean_content):
@@ -293,31 +282,6 @@ class FunCommands(commands.Cog):
         await ctx.send(embed=embed3, delete_after=200.0)
         print(f"cmdRandomChamp|| Campeón aleatorio enviado, en la lista hay: {str(len(campeones))}")
 
-
-
-        @commands.command()
-        async def meme(self, ctx):
-            '''Memes randoms, a quien no le gustan los memes...'''
-            random_link = random.choice(images)
-        
-            if (
-                    random_link.startswith('https://video.twimg.com/ext_tw_video/') or 
-                    random_link.startswith('https://imgur') or 
-                    random_link.startswith('https://www.youtube:') or
-                    random_link.startswith('https://i.imgur') or 
-                    random_link.startswith('https://youtu')
-                ):
-                await typing_sleep(ctx)
-                await ctx.send(random_link)
-                print(f'cmdMeme||         Meme enviado a {ctx.author.name}')
-
-            else:
-                embed = discord.Embed(color = discord.Colour.red(), timestamp=datetime.utcnow())
-                embed.set_image(url = random_link)
-                await typing_sleep(ctx)
-                await ctx.send(embed = embed)
-                print(f'cmdMeme||         Meme enviado a {ctx.author.name} ')
-
     @commands.command()
     async def meme(self,ctx):
         '''Memes randoms, a quien no le gustan los memes...'''
@@ -346,9 +310,10 @@ class FunCommands(commands.Cog):
     async def contar(self, ctx, number: int, intervalo):
         '''
         El bot cuenta hasta un numero dado, puede ser re carnasa...
-        Los mensajes luego de 40 segundos se autoeliminan...
+        Los mensajes luego de 30 segundos se autoeliminan...
         Argumento <number>: int | **numero hasta el cual contar**. 
-        Argumento <intervalo>: float | **velocidad a la cual contar**.
+        Argumento <intervalo>: float | **velocidad a la cual contar en segundos**.
+        Ejemplo: `#contar 50 0.5` -> el bot contara hasta el 50 a velocidad de 1/2 segundo
         '''
         i = 1
         while i <= number:
@@ -395,6 +360,101 @@ class FunCommands(commands.Cog):
         await typing_sleep(ctx)
         await ctx.send(random.choice(willyooc))
         print(f'cmdWilly||      Willy OOC enviado a {ctx.author.name}')
+
+    @commands.command(aliases=['tunearletras','messletters','changefont'])
+    async def tunear(self, ctx, orden: int, *, args=None,):
+        '''
+        Tunea un texto, la sintaxis es #[tunear] <orden> <el_texto_que_quieras_tunear>. 
+        El orden debe ser un numero del 1 al 7 (distintas fuentes)
+        • Orden 1: Letras Arabes creo.
+        • Orden 2: Letras cursiva solo minuscula
+        • Orden 3: Alfabeto en cursiva completo
+        • Orden 4: Letras invertidas 
+        • Orden 5: Letras minusculas italica 
+        • Orden 6: Letras mayusculas grandes
+        • Orden 7: Letras dentro de circulos
+        • Orden 8: Alfabeto Math Serif Bold
+        '''
+        
+        try:
+            if args != None:
+                myThiccString = apis.tuning.tunear(args.replace("#tunear", ""), orden)
+                await typing_sleep(ctx)
+                await ctx.send(myThiccString)
+                print(f"cmdTunear1||        {ctx.author.name} tuneó un texto")
+
+            elif args is None and orden is None:
+                await typing_sleep(ctx)    
+                await ctx.send("Seguido del comando debes introducir un orden (1 a 6) seguido del texto a tunear", delete_after=60.0)
+                await ctx.send("A modo de ejemplo: **#tunear 4 textodepruebacopipedro**", delete_after=60.0)
+                print(f"cmdTunear||        {ctx.author.name} falló al tunear un texto")
+
+        except Exception as e:
+            if isinstance(e, commands.MissingRequiredArgument):
+                await typing_sleep(ctx)
+                await ctx.send("Debes seguir la sintáxis #tunear <orden>, prueba con #help tunear para mas info.", delete_after=130.0)
+                await ctx.send("Recuerda que si quieres ver la sintaxis especfica de un comando puedes recurrir a **#help <#comando>** y para ver todos los comandos puedes recurrir a **#help** o **#ayuda** / **#comandos**", delete_after=150.0)
+            else:
+                await typing_sleep(ctx)
+                await throw_error(ctx=ctx, e=e)
+
+
+    ##############
+    ############## COMANDOS DE VIDEOS RANDOMS 
+    #---> Lamar roasts Franklin vid <---
+    @commands.command()
+    async def roast(self, ctx):
+        '''Lamar roasts Franklin trending videos...'''
+        await typing_sleep(ctx)
+        await ctx.send(random.choice(roasts))
+        print(f'cmdRoast||      Lamar v Franklin enviado a {ctx.author.name}')
+
+    #---> LocuraBailandoSinPantalones vid <---
+    @commands.command()
+    async def locurabailando(self, ctx):
+        '''Locura bailando...'''
+        await ctx.send("http://youtu.be/tvvGVZpnOMA")
+        print(f'cmdLocura...||  Video del locurabailando a {ctx.author.name}')
+
+    #---> gordoPistero vid <---
+    @commands.command()
+    async def pistero(self, ctx):
+        '''Gordo pistero'''
+        await ctx.send("https://video.twimg.com/ext_tw_video/1327280070113644545/pu/vid/332x640/MuugcrrqHBQwQgSo.mp4?tag=1")
+        print(f'cmdLocura...|| Video del gordopistero enviado a {ctx.author.name}')
+
+    #---> TADEO 1hs EN WHEELIE vid <---
+    @commands.command()
+    @commands.has_permissions(administrator=True)
+    async def tadeo(self, ctx):
+        '''Video del Tadeo moto moto 1 hora en bucle'''
+        await ctx.send("https://youtu.be/ffoXJhzwcHQ")
+
+    #---> MATEUS505 GALO SNIPER vid <---
+    @commands.command()
+    async def galosniper(self, ctx):
+        ''' PLEASE DO NOT ! '''
+        embedGalo = discord.Embed(
+            title="galo sniper",
+            description="galo sniper",
+            color=discord.Color.red()
+        )
+        embedGalo.add_field(name="10 FATOS SOBRE MATEUS505 CARVALHO DO SANTOS", value=None, inline=False)
+        embedGalo.add_field(name="FATO 1: ¿NOME DO MATEUS 505?", value="MATEO 505 CARVALHO DO SANTOS")
+        embedGalo.add_field(name="FATO 2: ¿QUANTOS ANOS VOCE TEM?", value="20 ANOS", inline=False)
+        embedGalo.add_field(name="FATO 3: ¿QUAL SEU MEME FAVORITO?", value="GALO SNIPER")
+        embedGalo.add_field(name="FATO 4: ¿QUAL SEU PERSONAGEM FAVORITO?", value="GALO SNIPER", inline=False)
+        embedGalo.add_field(name="FATO 5: ¿QUAL SEU FILME FAVORITO", value="GALO SNIPER AMERICANO")
+        embedGalo.add_field(name="FATO 6: ¿QUAL SEU ANIME FAVORITO", value="GALO SNIPER SHIPPUDEN", inline=False)
+        embedGalo.add_field(name="FATO 7: ¿QUAL SUA COR FAVORITA", value="BRANCO do GALO SNIPER")
+        embedGalo.add_field(name="FATO 8: ¿QUAL o SEU INSTAGRAM", value="GALO SNIPER", inline=False)
+        embedGalo.add_field(name="FATO 9: ¿QUAL SEU MELHOR AMIGO DA INFANCIA?", value="GALO SNIPER")
+        embedGalo.add_field(name="FATO 10: ¿QUAL SEU ANIMAL FAVORITO?", value="Spoky ???? SNIPER", inline=False)
+        await ctx.send(embed=embedGalo)
+        await ctx.send("https://www.youtube.com/watch?v=cwiVlpW7-XM")
+        print(f'cmdGaloSniper||   Video del GALOSNIPER enviado a {ctx.author.name} XD')
+    ############## FIN DE VIDEOS DE COMANDOS RANDOMS
+    ##############
 
 
 def setup(bot):

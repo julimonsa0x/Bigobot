@@ -83,7 +83,7 @@ class Instagram(commands.Cog):
                         instaEmbed.set_footer(icon_url=f"{ctx.author.avatar_url}",text=f"Peticion de {ctx.author.name}")
 
                         # send the post
-                        await ctx.message_delete()
+                        await ctx.message.delete()
                         await typing_sleep(ctx)
                         await ctx.send(embed=instaEmbed, file=file)
 

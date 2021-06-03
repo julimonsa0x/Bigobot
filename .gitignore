@@ -50,3 +50,9 @@ images/COPIPEDRO.png
 images/avatar_save2.png
 .gitignore
 images/covid_death_graph.png
+experimental_functions.py
+__pycache__/broBdays.cpython-38.pyc
+__pycache__/game.cpython-38.pyc
+__pycache__/listas.cpython-38.pyc
+__pycache__/main.cpython-38.pyc
+experimental_functions.py

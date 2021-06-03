@@ -47,7 +47,7 @@ type_time = uniform(0, 2)
 
 # ====== Funciones ======
 # 1st Function
-def printt(string, delay=0.002):
+def printt(string, delay=0.002) -> str: 
     '''
     Print a string or f-string with delay between its characters.
     Argument delay float expected recommended 0.001 <= delay <= 0.2

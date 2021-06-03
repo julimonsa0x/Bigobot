@@ -21,7 +21,7 @@ class Traductor(commands.Cog):
         Traduce un texto de un idioma, a otro idioma que quieras.
         Los argumentos <de_idioma> y <a_idioma> deben ser del tipo: 
         <es>, <en>, <fr>, <br>, <jp>, etc.
-        A modo de ejemplo, se quiere traducir `hello how are you` a español
+        A modo de ejemplo, se quiere traducir hello how are you a español
         Se sigue la sintaxis: #traducir es en hello how are you
         •   -----------------------------------------------------------   •
         ES: Las traducciones pueden no ser del todo ciertas!!!

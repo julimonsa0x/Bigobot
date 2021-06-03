@@ -54,8 +54,11 @@ class Covid(commands.Cog):
         await ctx.send(file=discord.File('images\\covid_death_graph.png'))
         if dev:
             with open("databases/covid_dataset.txt","w") as covidfile:
+                no_repeat = []
                 for i in data_set:
-                    covidfile.writelines(str(i) + "\n")
+                    if i not in no_repeat:
+                        covidfile.writelines(str(i) + "\n")
+                    no_repeat.append(str(i))
             await ctx.send(file=discord.File("databases/covid_dataset.txt"))
         print(f"CovidCmd||       Grafico sobre covid en {country} para {ctx.author.name}")
 

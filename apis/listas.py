@@ -717,29 +717,42 @@ images = [
   'https://cdn.discordapp.com/attachments/793309880861458473/848071826520145920/amongo.jpg', # amongo mcdonals 1.4 million usd
   'https://cdn.discordapp.com/attachments/793309880861458473/848072392786051142/unknown.png', # bromita fuego mapa
   'https://cdn.discordapp.com/attachments/793309880861458473/848073429349695498/perro.mp4', # perro caida escalera
-  #'', #
-  #'', #
-  #'', #
-  #'', #
-  #'', #
+  'https://cdn.discordapp.com/attachments/793309880861458473/848273502163173396/unknown.png', # el poli abriendo la mayonesa
+  'https://cdn.discordapp.com/attachments/793309880861458473/848431496007647252/Screenshot_20210530-015814-098.png', # el novio le robo el chip
+  'https://cdn.discordapp.com/attachments/793309880861458473/848431496477933629/Screenshot_20210530-015732-194.png', # messi y el kun almorzando :D
+  'https://cdn.discordapp.com/attachments/793309880861458473/848431645887037440/Screenshot_20210529-113619-368.png', # graduacion del perro
+  'https://cdn.discordapp.com/attachments/793309880861458473/848818766874673212/Screenshot_20210531-040112-881.png', # bob esponja clase
+  'https://cdn.discordapp.com/attachments/793309880861458473/848818767157133312/Screenshot_20210530-210939-607.png', # feliz cumple seba spam
+  'https://cdn.discordapp.com/attachments/793309880861458473/848818766551842873/Screenshot_20210531-0359232.png', # mi hijo con su novia meme se siente bendecida
+  'https://cdn.discordapp.com/attachments/793309880861458473/848818767420588032/Screenshot_20210530-210912-283.png', # phineas besando waifu geometricamente imposible
+  'https://cdn.discordapp.com/attachments/793309880861458473/848818767717990400/Screenshot_20210530-174543-596.png', # play 2 startup
+  'https://cdn.discordapp.com/attachments/793309880861458473/848818961206083604/Screenshot_20210530-131652-077.png', # espert cobrando el aguinaldo
+  'https://cdn.discordapp.com/attachments/793309880861458473/848818961709006848/Screenshot_20210530-030658-128.png', # que auto en terraza edificio
+  'https://cdn.discordapp.com/attachments/793309880861458473/848818961978228746/Screenshot_20210530-030643-800.png', # policia vs perro
+  'https://cdn.discordapp.com/attachments/793309880861458473/849809342731780126/E26FuaEXIAIwSU-.png', # profe mat elimino a crack renal
+  'https://cdn.discordapp.com/attachments/793309880861458473/849809379455795230/9k.png', # mentalidad de tiburon 1
+  'https://cdn.discordapp.com/attachments/793309880861458473/849809424520183828/602d61a803bbb.png', # mentalidad de tiburon 2
+  'https://cdn.discordapp.com/attachments/793309880861458473/849841041501716550/unknown.png' # wensel vs coppi en discord
+  'https://cdn.discordapp.com/attachments/793309880861458473/849868448771211264/unknown.png', # copi y pili contra mato
+  'https://cdn.discordapp.com/attachments/793309880861458473/848431671077896232/IMG-20210529-WA0009.jpg', # seki haciendo panqueques 
+  '', # 
 ]
 
 ##-----> frases del comando trivia <-----
 trivias = [
-    '¿La claudia es una puta? (SI / NO)',
-    '¿Nico dijo gorda mala leche por 1ra vez? (SI / NO)',
+    '¿Nico dijo g*rda mala leche por 1ra vez? (SI / NO)',
     '¿Tobo es un machito? (SI / NO)',
     '¿Lezca es un inválido? (SI / NO)',
     '¿Sofi tiene un OnlyFans? (SI / NO)',
     '¿El tadeo la cuelga a 90°? (SI / NO)',
     '¿El reteke es un manco en lol? (SI / NO)',
     '¿copipedro? (SI / NO)',
-    '¿El mato es un puto? (SI / NO)',
+    '¿El mato es un p*to? (SI / NO)',
     '¿Lezca tiene chapa? (SI / NO)',
     '¿El Jose es boliviano? (SI / NO)',
-    '¿El Monsa dijo la gorda come doble? (SI / NO)',
+    '¿El Monsa dijo la g*rda come doble? (SI / NO)',
     '¿El Coppi es horrible en el brawl? (SI / NO)',
-    '¿La derivada del cociente de dos funciones es igual a la derivada del numerador por el denominador menos la derivada del denominador por el numerador, divididas por el cuadrado del denominador?',
+    '¿La derivada del cociente de dos funciones es igual a la derivada del numerador por el denominador menos la derivada del denominador por el numerador, divididas por el cuadrado del denominador? (SI/NO)',
     '¿los otakus no se bañan? (SI / NO)',
     '¿Alberto se lucio con la inflacion? (SI / NO)',
     '¿Al rubén lo gorrearon? (SI / NO)',
@@ -753,7 +766,7 @@ trivias = [
     '¿Alberto peor gestión desde la fundacion del virreinato del rio de la plata? (SI / SI)',
     '¿nico habilita el choquin? (SI / NO)',
     '¿seki se habilita el depto? (SI / NO)',
-    '¿Kung Fu panda pelicula de mierda? (SI / NO)',
+    '¿Kung Fu panda una pelicula de mierda? (SI / NO)',
     '¿El registro de auditoria deberia ser publico? (SI / NO)',
 ]
 
@@ -781,13 +794,13 @@ trivia_decline = [
 
 ##-------> frases de la claudia <-------
 lacla = [
-    'gorda puta nooo que dije',
     'la picante de parque',
     'la vieja del lezca',
-    'https://cdn.discordapp.com/attachments/793309880861458473/815980445413015612/IMG-20210301-WA0000.jpg', #CLAUDIA'
+    'https://cdn.discordapp.com/attachments/793309880861458473/815980445413015612/IMG-20210301-WA0000.jpg', # FOTO DE CLAUDIA'
     'no la invoques porfavor',
-    'cagaste...',
+    'listo cagaste...',
     'le mete los cuernos al ruben esa...',
+    'g*rda puta nooo que dije',
 ]
 
 
