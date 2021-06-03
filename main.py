@@ -69,8 +69,6 @@ bot = commands.Bot(command_prefix=get_prefix, intents=intents)
 bigo_guild_id = 559592087054450690  # if bot is public, call the var "base_guild_id"
 bigo_guild_base = bot.fetch_guild(bigo_guild_id)  # if bot is public, call the var "base_guild"
 
-bigos = 559592087641915433
-general_bigos = bot.fetch_channel(bigos)
 
 # --------> Bot en marcha <-------
 @bot.event 
@@ -203,6 +201,8 @@ async def feliz_jueves():
         # if today IS thursday send message
         # and wait for a whole week to resend
         if today_int == 3:
+            # fetch the general Los Bigotazos text channel and send
+            general_bigos = await bot.fetch_channel(559592087641915433)
             await general_bigos.send(f"**Feliz Jueves**\nhttps://cdn.discordapp.com/attachments/793309880861458473/849848243662618644/Feliz_Jueves.mp4")
             await asyncio.sleep(60 * 60 * 24 * 7)
 
