@@ -200,6 +200,7 @@ async def feliz_jueves():
 
         # if today is not thursday, wait 24hs.
         if not today_int == 3:
+            print("Hoy no es jueves, esperando 24hs...")
             await asyncio.sleep(60 * 60 * 24)
         
         # if today IS thursday send message
@@ -215,7 +216,7 @@ async def feliz_jueves():
                     print("enviado con exito el feliz jueves mañanero semanal")
 
                 except Exception as e:
-                    print(f"Hubo un error al enviar el feliz jueves semanal: Excepcion:{e}\nCausa:{e.__cause__}\nTracebak{e.with_traceback}")
+                    print(f"Hubo un error al enviar el feliz jueves semanal: Excepcion:{e}\nCausa:{e.__cause__}\nTracebak{e.with_traceback()}")
                 
                 # wait for a whole week now
                 await asyncio.sleep(60 * 60 * 24 * 7)
@@ -227,7 +228,7 @@ bot.loop.create_task(change_presence())
 @bot.event
 async def on_message(msg):
     try:
-        if msg.split()[0] == bot.user:
+        if (msg.split()[0] == bot.user) or (bot.user in msg.content):
             
             with open("databases/prefixes.json", "r") as f:
                 prefixes = json.load(f)
@@ -324,7 +325,14 @@ async def on_member_remove(member):
 
 @bot.event # alphascript cmd
 async def on_message_delete(message): 
-    bot.sniped_messages[message.guild.id] = (message.content, message.author, message.channel.name, message.created_at)
+    try:
+        bot.sniped_messages[message.guild.id] = (message.content, message.author, message.channel.name, message.created_at)
+    except Exception as e:
+        # ignora las excepciones del bigobot provenientes de un MD.
+        if isinstance(e, AttributeError):
+            pass
+        else:
+            print(f"El bot detecto un error debido a un mensaje borrado.\nExcepcion:{e}\nTraceback:{e.with_traceback()}\nArgs:{e.args}")
 ##### --------------->>>>  Finalizacion de eventos  <<<<-------------- #####
 ############################################################################
 
@@ -359,7 +367,7 @@ async def set_info_channels(ctx):
             await real_chan.edit(name=f"🧍 Personas: {real_members}")
             await bot_chan.edit(name=f"🤖 Bots: {bot_members}")
         except Exception as e:
-            await ctx.send(f":exclamation: Ocurio un error al ejecutar el comando: Info detallada:\n==========\n`Excepcion:{e}`\n`Razon:{e.args}`\n`Traceback:{e.with_traceback}`", delete_after=180.0)
+            await ctx.send(f":exclamation: Ocurio un error al ejecutar el comando: Info detallada:\n==========\n`Excepcion:{e}`\n`Razon:{e.args}`\n`Traceback:{e.with_traceback()}`", delete_after=180.0)
 
 @bot.command(aliases=['reqticket','pedirticket'])
 async def pedir_ticket(ctx, msg: discord.Message=None, category: discord.CategoryChannel=None):
@@ -775,7 +783,7 @@ async def crearemoji(ctx, url_emoji=None, *, name):
                     await typing_sleep(ctx)
                     await ctx.message.delete()
                     await ctx.send("Hubo un error al tratar de crear el emote, lo mas probable es que su resolucion sea mayor a 512x512... Detalles del error enviada al canal del bigobot")
-                    exception = f"`Excepcion causada:{e}`\n`Razon:{e.args}`\n`Traceback:{e.with_traceback}`"
+                    exception = f"`Excepcion causada:{e}`\n`Razon:{e.args}`\n`Traceback:{e.with_traceback()}`"
                     bigobot_chann = 799387331403579462
                     bigobot_channel = await bot.fetch_channel(bigobot_chann)
                     await bigobot_channel.send(exception)
@@ -1246,9 +1254,9 @@ async def ppt(ctx, member : discord.Member=None):
         await game.ppt(ctx, bot, member=member)
     except AttributeError as e:
         await typing_sleep(ctx)
-        await ctx.send("An exception occurred :disappointed:")
-        await ctx.send(f"```{e.args}```")
-        print("An attribute error seems to have appeared but just ignore it and continue! :)")
+        await ctx.send("Hubo un error :disappointed:")
+        await ctx.send(f"```Excepcion:{e}\n\nTraceback:{e.with_traceback()}\n\nCausa:{e.args}```")
+        print("pptCmd||        Ocurrio un error en el comando ppt considera echar un ojo")
 #-------> juego command end <------
 
             
@@ -1295,7 +1303,7 @@ async def borrar(ctx, limit=10, member: discord.Member=None):
         else:
             await typing_sleep(ctx)
             await ctx.send(f":exclamation:  Hubo un error al ejecutar el comando. Info detallada:")
-            await ctx.send(f"`Excepcion: {e}`\n`Razon: {e.args}`\n`Traceback: {e.with_traceback}`")
+            await ctx.send(f"`Excepcion: {e}`\n`Razon: {e.args}`\n`Traceback: {e.with_traceback()}`")
 
 @bot.command()
 async def submit(ctx, titulo, mensaje):#, archivo):
