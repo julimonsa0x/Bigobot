@@ -1,7 +1,11 @@
+# Author: Me
+# Insta credentials: Mine, consider changing then
+# otherwise command will not work properly...
+
 import discord
 from discord.colour import Color
 from discord.ext import commands
-from asyncio import sleep
+from asyncio import sleep as asyncsleep
 
 import os
 from dotenv import load_dotenv
@@ -60,17 +64,24 @@ class Instagram(commands.Cog):
 
             # search for the downloaded file
             for filename in os.listdir(f'./{nombre}'):
-                # check if filename is compatible:
+                
+                # check if filename is compatible
                 if os.path.getsize(f"{nombre}/{filename}") < 8388607:
                     if filename.endswith('.jpg') or filename.endswith('.mp4') or filename.endswith('.png'):
 
                         # get the extension
                         ext = filename[-4:]
 
+                        # try if exists to
                         # get the title from the saved .txt
-                        with open(f"{nombre}/{filename[:-4]}.txt", "r", encoding='utf8') as f:
-                            title = f.readlines()
+                        try:
+                            with open(f"{nombre}/{filename[:-4]}.txt", "r", encoding='utf8') as f:
+                                title = f.readlines()
+                        # except title is empty...
+                        except:
+                            title = "Post sin titulo"
 
+                        
                         file = discord.File(f"{nombre}/{filename}", filename=f"{nombre}{ext}")
 
                         # create the embed
@@ -78,7 +89,7 @@ class Instagram(commands.Cog):
                             title = "Post descargado",
                             description = f"**Titulo del post**:\n{''.join(title)}"
                         )
-                        instaEmbed.set_thumbnail(url="https://media.discordapp.net/attachments/793309880861458473/847642387601686528/3b21c7efd2ba9c119fb8d361acacc31d.png?width=410&height=410")
+                        instaEmbed.set_thumbnail(url="https://media.discordapp.net/attachments/793309880861458473/847642387601686528/3b21c7efd2ba9c119fb8d361acacc31d.png?width=410&height=410")  # insta logo
                         instaEmbed.set_image(url=f"attachment://{filename}")
                         instaEmbed.set_footer(icon_url=f"{ctx.author.avatar_url}",text=f"Peticion de {ctx.author.name}")
 
@@ -86,6 +97,26 @@ class Instagram(commands.Cog):
                         await ctx.message.delete()
                         await typing_sleep(ctx)
                         await ctx.send(embed=instaEmbed, file=file)
+
+                        # after sending the post, delete every file saved
+                        await asyncsleep(15)
+                        if os.path.exists(f"{nombre}/{filename}.txt"):
+                            os.remove(f"{nombre}/{filename}.txt")
+                        else:
+                            pass
+                        if os.path.exists(f"{nombre}/{filename}.jpg"):
+                            os.remove(f"{nombre}/{filename}.jpg")
+                        else:
+                            pass 
+                        if os.path.exists(f"{nombre}/{filename}.mp4"):
+                            os.remove(f"{nombre}/{filename}.mp4")
+                        else:
+                            pass
+                        if os.path.exists(f"{nombre}/{filename}.json"):
+                            os.remove(f"{nombre}/{filename}.json")
+                        else:
+                            pass
+
 
         except Exception as e:
             await ctx.send(f"Ocurrio un error al intentar de descargar un post de instagram...\nExcepcion: `{e}`\nTraceback: `{e.with_traceback}`")

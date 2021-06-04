@@ -1,5 +1,6 @@
 # Python version 3.8.10
 # .env file required by 5 variables
+# read readme.md before starting
 # ---------------------------------------->
 import os
 import sys
@@ -161,9 +162,9 @@ async def on_ready():
 
     # connected message to "bigobot-testing" of Los Bigotazos
     channel = bot.get_channel(799387331403579462)
-    await channel.send(f' :white_check_mark:  Connected at {current_hora}!')
+    await channel.send(f' :white_check_mark:  Connected at {current_hora} UTC')
     channel2 = bot.get_channel(791042478982824000)
-    await channel2.send(f' :white_check_mark:  Connected at {current_hora}!')
+    await channel2.send(f' :white_check_mark:  Connected at {current_hora} UTC')
 
 
     # Populate prefixes.json for every joined guild
@@ -191,20 +192,33 @@ async def feliz_jueves():
     await asyncio.sleep(60)  # wait for 1 min to start the weekly reminder
 
     while not bot.is_closed():
-        today_int = datetime.today().weekday()
-        
-        # if today is not thursday 
-        # wait for a day and try again
+
+        today_int = datetime.today().weekday()  # range 0 - 6 
+        is_sent = str(date.today())  # YYYY-MM-DD
+
+        sent_dict = {is_sent:"false"}
+
+        # if today is not thursday, wait 24hs.
         if not today_int == 3:
             await asyncio.sleep(60 * 60 * 24)
         
         # if today IS thursday send message
         # and wait for a whole week to resend
         if today_int == 3:
-            # fetch the general Los Bigotazos text channel and send
-            general_bigos = await bot.fetch_channel(559592087641915433)
-            await general_bigos.send(f"**Feliz Jueves**\nhttps://cdn.discordapp.com/attachments/793309880861458473/849848243662618644/Feliz_Jueves.mp4")
-            await asyncio.sleep(60 * 60 * 24 * 7)
+            if sent_dict[is_sent] == "false":
+                
+                general_bigos = await bot.fetch_channel(559592087641915433)
+                
+                try:
+                    await general_bigos.send(f"**Feliz Jueves**\nhttps://cdn.discordapp.com/attachments/793309880861458473/849848243662618644/Feliz_Jueves.mp4")
+                    sent_dict[is_sent] = "true"
+                    print("enviado con exito el feliz jueves mañanero semanal")
+
+                except Exception as e:
+                    print(f"Hubo un error al enviar el feliz jueves semanal: Excepcion:{e}\nCausa:{e.__cause__}\nTracebak{e.with_traceback}")
+                
+                # wait for a whole week now
+                await asyncio.sleep(60 * 60 * 24 * 7)
 
 bot.loop.create_task(feliz_jueves())
 bot.loop.create_task(change_presence())
