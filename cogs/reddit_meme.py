@@ -71,7 +71,7 @@ class RedditMeme(commands.Cog):
         except Exception as e:
             await typing_sleep(ctx)
             await ctx.send(f"Hubo un error al tratar de buscar un meme de reddit, puede ser por error del propio comando o muchas peticiones a los servidores de reddit. Info del error enviada al canal del bigobot.")
-            exception = f"==========\n`Excepcion causada:{e}`\n`Traceback:{e.with_traceback}`\n`Razon:{e.args}`\n`Peticion: {str(memes)[:75]}`=========="
+            exception = f"==========\n`Excepcion causada:{e}`\n`Traceback:{e.with_traceback()}`\n`Razon:{e.args}`\n`Peticion: {str(memes)[:75]}`=========="
             bigobot_chann = 799387331403579462
             bigobot_channel = await self.bot.fetch_channel(bigobot_chann)
             await bigobot_channel.send(exception)

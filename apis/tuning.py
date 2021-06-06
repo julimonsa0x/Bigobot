@@ -312,11 +312,10 @@ def tunear(s, maplist:int):
         return s_new
 
     elif maplist == 3:
-        s = s.lower()
         s_new = ""
         for c in s:
             if c in map3:
-                s_new += map3[c.lower()]
+                s_new += map3[c]
             else:
                 s_new += c
         return s_new
@@ -362,11 +361,10 @@ def tunear(s, maplist:int):
         return s_new
 
     elif maplist == 8:
-        s = s.lower()
         s_new = ""
         for c in s:
             if c in map8:
-                s_new += map8[c.lower()]
+                s_new += map8[c]
             else:
                 s_new += c
         return s_new

@@ -77,7 +77,7 @@ class DolarCotizacion(commands.Cog):
 
             embed=discord.Embed(
                 title=":repeat: Conversion de pesos a dolares", 
-                description=f" :dollar: | **{amount}** ARS valen **{final}** USD", 
+                description=f" :dollar: | **{amount}** USD valen **{final}** ARS", 
                 Color= discord.Colour.green()
             )
             embed.set_thumbnail(url=DOLAR_THUMBNAIL)

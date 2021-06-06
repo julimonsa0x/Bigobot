@@ -36,7 +36,7 @@ class CountryGuesses(commands.Cog):
         rand_fake_guess_2 = choice(list(countrys.items()))[1]  #:str index the tuple, only country's name is required
         country_code = country_tuple[0]
         country_name = country_tuple[1]  #:str
-        print(f"selected country is: {country_tuple}")
+        # print(f"selected country is: {country_tuple}")
 
 
         countrys_list.append(country_name)

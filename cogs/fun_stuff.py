@@ -420,7 +420,7 @@ class FunCommands(commands.Cog):
     @commands.command()
     async def pistero(self, ctx):
         '''Gordo pistero'''
-        await ctx.send("https://video.twimg.com/ext_tw_video/1327280070113644545/pu/vid/332x640/MuugcrrqHBQwQgSo.mp4?tag=1")
+        await ctx.send("https://cdn.discordapp.com/attachments/793309880861458473/850956075892998175/gordo_pistero_en_moto_con_cancion_brasilena.mp4")
         print(f'cmdLocura...|| Video del gordopistero enviado a {ctx.author.name}')
 
     #---> TADEO 1hs EN WHEELIE vid <---
