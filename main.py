@@ -32,7 +32,7 @@ import requests
 #from bs4 import BeautifulSoup
 from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
 from discord_slash import SlashCommand
-from discord_components import DiscordComponents, Button, ButtonStyle, InteractionType, components
+from discord_components import DiscordComponents, Button, ButtonStyle, InteractionType
 
 
 #<-------------------------------------------> Custom imports
