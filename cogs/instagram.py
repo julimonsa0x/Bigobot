@@ -63,14 +63,14 @@ class Instagram(commands.Cog):
             await typing_sleep(ctx)
 
             # search for the downloaded file
-            for filename in os.listdir(f'./{nombre}'):
-                
+            for filename in os.listdir(f'./{nombre}'):      
                 # check if filename is compatible
                 if os.path.getsize(f"{nombre}/{filename}") < 8388607:
                     if filename.endswith('.jpg') or filename.endswith('.mp4') or filename.endswith('.png'):
 
                         # get the extension
                         ext = filename[-4:]
+                        print(f"Extension del archivo ---> {ext}")
 
                         # try if exists to
                         # get the title from the saved .txt
@@ -83,6 +83,7 @@ class Instagram(commands.Cog):
 
                         
                         file = discord.File(f"{nombre}/{filename}", filename=f"{nombre}{ext}")
+
 
                         # create the embed
                         instaEmbed = discord.Embed(
@@ -100,26 +101,29 @@ class Instagram(commands.Cog):
 
                         # after sending the post, delete every file saved
                         await asyncsleep(15)
-                        if os.path.exists(f"{nombre}/{filename}.txt"):
-                            os.remove(f"{nombre}/{filename}.txt")
-                        else:
-                            pass
-                        if os.path.exists(f"{nombre}/{filename}.jpg"):
-                            os.remove(f"{nombre}/{filename}.jpg")
-                        else:
-                            pass 
-                        if os.path.exists(f"{nombre}/{filename}.mp4"):
-                            os.remove(f"{nombre}/{filename}.mp4")
-                        else:
-                            pass
-                        if os.path.exists(f"{nombre}/{filename}.json"):
-                            os.remove(f"{nombre}/{filename}.json")
-                        else:
-                            pass
+                        try:    
+                            if os.path.exists(f"{nombre}/{filename}.txt"):
+                                os.remove(f"{nombre}/{filename}.txt")
+                            else:
+                                pass
+                            if os.path.exists(f"{nombre}/{filename}.jpg"):
+                                os.remove(f"{nombre}/{filename}.jpg")
+                            else:
+                                pass 
+                            if os.path.exists(f"{nombre}/{filename}.mp4"):
+                                os.remove(f"{nombre}/{filename}.mp4")
+                            else:
+                                pass
+                            if os.path.exists(f"{nombre}/{filename}.json"):
+                                os.remove(f"{nombre}/{filename}.json")
+                            else:
+                                pass
+                        except Exception as e:
+                            print(f"Ocurrio un error al tratar de borrar los archivos descargados \n---> Excepcion:{e}\n---> Traceback:{e.with_traceback()}\n---> Args:{e.args}")
 
 
         except Exception as e:
-            await ctx.send(f"Ocurrio un error al intentar de descargar un post de instagram...\nExcepcion: `{e}`\nTraceback: `{e.with_traceback}`")
+            await ctx.send(f"Ocurrio un error al intentar de descargar un post de instagram...\nExcepcion: `{e}`\n\nTraceback: `{e.with_traceback()}`")
 
 
 

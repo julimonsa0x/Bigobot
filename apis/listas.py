@@ -702,6 +702,7 @@ images = [
   'https://video.twimg.com/ext_tw_video/1391575981199138816/pu/vid/320x320/CKzig0ycT8YmbmSe.mp4?tag=12', # ibai me han llamao para cenar
   'https://youtu.be/k15Ds97PBeY', # hechos reales trolleo a jose sad
   'https://youtu.be/k15Ds97PBeY', # hechos reales trolleo a jose sad X2
+  'https://youtu.be/k15Ds97PBeY', # hechos reales trolleo a jose sad X3
   'https://video.twimg.com/ext_tw_video/1395969359600836608/pu/vid/640x360/LsbhuuxSHfyXx7dP.mp4?tag=12', # trolleo a jose original
   'https://video.twimg.com/ext_tw_video/1396591911457202186/pu/vid/352x640/8h85-ev1yjqIx7yg.mp4?tag=12', # seki desubicado clase de instalaciones 
   'https://video.twimg.com/ext_tw_video/1396591990242955274/pu/vid/640x1138/u-fj5LhULrqaembd.mp4?tag=12', # perro motociclon
@@ -735,7 +736,61 @@ images = [
   'https://cdn.discordapp.com/attachments/793309880861458473/849841041501716550/unknown.png' # wensel vs coppi en discord
   'https://cdn.discordapp.com/attachments/793309880861458473/849868448771211264/unknown.png', # copi y pili contra mato
   'https://cdn.discordapp.com/attachments/793309880861458473/848431671077896232/IMG-20210529-WA0009.jpg', # seki haciendo panqueques 
-  '', # 
+  'https://media.discordapp.net/attachments/793309880861458473/849868448771211264/unknown.png?width=184&height=134', # el de abajo es un mamaguevo copi y mato
+  'https://media.discordapp.net/attachments/793309880861458473/849874658936487985/unknown.png?width=508&height=498', # que se vaya a la verga tu abuelo
+  'https://media.discordapp.net/attachments/793309880861458473/849874778054590464/unknown.png?width=507&height=498', # perro endemoniado 
+  'https://media.discordapp.net/attachments/793309880861458473/849874869537341470/unknown.png?width=454&height=498', # instalo lol
+  'https://media.discordapp.net/attachments/793309880861458473/849874920179499018/unknown.png?width=459&height=498', # samsung chica perro
+  'https://media.discordapp.net/attachments/793309880861458473/849875008036798466/unknown.png?width=474&height=497', # la situacion
+  'https://media.discordapp.net/attachments/793309880861458473/849875103949127681/unknown.png?width=518&height=497', # relatores de futbol
+  'https://media.discordapp.net/attachments/793309880861458473/849875350372352019/unknown.png?width=409&height=498', # crypto investor
+  'https://media.discordapp.net/attachments/793309880861458473/849875589379653642/unknown.png?width=511&height=498', # humor negro hulk
+  'https://media.discordapp.net/attachments/793309880861458473/849875898991116288/unknown.png?width=460&height=498', # anal o oral
+  'https://media.discordapp.net/attachments/793309880861458473/849875947117346866/unknown.png?width=511&height=490', # durmiendo y te prenden la luz del cuarto
+  'https://media.discordapp.net/attachments/793309880861458473/849876181393473536/unknown.png?width=548&height=436', # sangre alemana
+  'https://media.discordapp.net/attachments/793309880861458473/850148809941319700/unknown.png?width=438&height=129', # sokene vs copi hijo
+  'https://media.discordapp.net/attachments/793309880861458473/850243623403388959/Screenshot_20210604-022002-998.png?width=436&height=498', # poli vs lezcano
+  'https://media.discordapp.net/attachments/793309880861458473/850243623403388959/Screenshot_20210604-022002-998.png?width=436&height=498', # poli vs lezcano X2
+  'https://media.discordapp.net/attachments/793309880861458473/850243623693975572/Screenshot_20210604-020904-533.png?width=404&height=497', # sobrinos tio hijo deputa
+  'https://media.discordapp.net/attachments/793309880861458473/850244476055322674/IMG_20210603_171752_568.jpg?width=235&height=497', # lemon pie de sofi X2
+  'https://media.discordapp.net/attachments/793309880861458473/850244476055322674/IMG_20210603_171752_568.jpg?width=235&height=497', # lemon pie de sofi
+  'https://media.discordapp.net/attachments/793309880861458473/850244599989403648/Screenshot_20210603-134320-713.png?width=499&height=498', # como que danza kuduro no es el himno oficial de brasil???
+  'https://media.discordapp.net/attachments/793309880861458473/850244600367284224/Screenshot_20210603-130507-996.png?width=507&height=497', # noes por presumir
+  'https://media.discordapp.net/attachments/793309880861458473/850244704381435945/dildo.jpg?width=442&height=497', # dildo de metal
+  'https://media.discordapp.net/attachments/793309880861458473/850252094887297064/Screenshot_20210604-025753-952.png?width=542&height=498', # engineers at 2024
+  'https://media.discordapp.net/attachments/793309880861458473/850540320692502559/unknown.png?width=463&height=465', # nico truco
+  'https://media.discordapp.net/attachments/793309880861458473/850540342323314748/unknown.png?width=399&height=397', # jose truco
+  'https://media.discordapp.net/attachments/793309880861458473/850552138663854080/unknown.png?width=375&height=221', # mi amigo copi y su familia
+  'https://cdn.discordapp.com/attachments/793309880861458473/850808437709602836/fuego.mp4', # tipo en tarro de fuego 
+  'https://media.discordapp.net/attachments/793309880861458473/850811817647013919/23f7fc128a6c784182f1a624896db0c8.jpg?width=675&height=348', # quietito mi rey ni la vas a sentir
+  'https://images-ext-2.discordapp.net/external/pgee5m1FQFlpOjrQNr-ALSGI9P7pXmFZW5EIY457tD8/https/i.ytimg.com/vi/V1bFr2SWP1I/hqdefault.jpg?width=432&height=324', # el gordo que canta somewhere else in the rainbow
+  'https://media.discordapp.net/attachments/793309880861458473/850861395468746762/mile.png?width=356&height=312', # pecetito broma mile = mileche
+  'https://media.discordapp.net/attachments/793309880861458473/850941914185465886/unknown.png?width=226&height=114', # boli truco
+  'https://media.discordapp.net/attachments/793309880861458473/850941914185465886/unknown.png?width=226&height=114', # boli truco X2
+  'https://media.discordapp.net/attachments/793309880861458473/850947676945252362/unknown.png?width=133&height=119', # chico monster jose
+  'https://media.discordapp.net/attachments/793309880861458473/851618776532254720/unknown.png?width=186&height=236', # puto el que transmite
+  'https://media.discordapp.net/attachments/793309880861458473/851618815515426819/unknown.png?width=508&height=314', # tambo videollamada deforme
+  'https://media.discordapp.net/attachments/793309880861458473/851619166443405312/ba8.png?width=323&height=430', # saludo panas
+  'https://media.discordapp.net/attachments/793309880861458473/851665806961147914/aaa.jpg?width=451&height=497', # chica samsung
+  'https://media.discordapp.net/attachments/793309880861458473/851665807191572490/bbb.jpg?width=525&height=498', # para pensar señores
+  'https://media.discordapp.net/attachments/793309880861458473/851665807191572490/bbb.jpg?width=525&height=498', # para pensar señores X2
+  'https://media.discordapp.net/attachments/793309880861458473/851665807360000020/Screenshot_20210607-224338-668.png?width=936&height=497', # el que me ataque es gay
+  'https://media.discordapp.net/attachments/793309880861458473/851665807842607144/Screenshot_20210607-224127-898.png?width=521&height=497', # messi no me salio niguno zurdo
+  'https://media.discordapp.net/attachments/793309880861458473/851665808241197116/Screenshot_20210607-211114-677.png?width=702&height=498', # oveja rap
+  'https://media.discordapp.net/attachments/793309880861458473/851665881138069564/Screenshot_20210607-152403-763.png?width=406&height=498', # despues de tanto cuerno
+  'https://media.discordapp.net/attachments/793309880861458473/851665881477545994/Screenshot_20210607-130149-875.png?width=669&height=498', # el estado te cuida
+  'https://media.discordapp.net/attachments/793309880861458473/851665881708363826/Screenshot_20210607-020741-356.png?width=448&height=497', # gracias google musculoso
+  'https://media.discordapp.net/attachments/793309880861458473/851665881964609566/Screenshot_20210607-020435-612.png?width=663&height=497', # el exito es como los pedos
+  'https://media.discordapp.net/attachments/793309880861458473/851665881964609566/Screenshot_20210607-020435-612.png?width=663&height=497', # el exito es como los pedos X2
+  'https://media.discordapp.net/attachments/793309880861458473/851666015350816788/IMG-20210607-WA0001.jpg?width=670&height=498', # jaja se rie
+  'https://media.discordapp.net/attachments/793309880861458473/851666015620300820/Screenshot_20210606-171037-014.png?width=506&height=497', # total due 6k usd nusr et
+  'https://media.discordapp.net/attachments/793309880861458473/851666015942869002/IMG-20210606-WA0020.jpg?width=280&height=498', # jose stella artois
+  'https://media.discordapp.net/attachments/793309880861458473/851666016727334922/20210606_141300.jpg?width=373&height=498', # nword electrico
+  'https://media.discordapp.net/attachments/793309880861458473/851666016961953813/IMG-20210605-WA0030.jpg?width=498&height=498', # tenet moto
+  'https://media.discordapp.net/attachments/793309880861458473/851666017137459240/Screenshot_20210605-183319-729.png?width=484&height=498', # samsung girl vs re village girl
+  #'', #
+
+
 ]
 
 ##-----> frases del comando trivia <-----
@@ -1378,13 +1433,13 @@ willyooc = [
 
 #---> status custom del bot <---
 bot_statuses = [
-    'con la claudia',                               #borrar si el bot es publico
-    'con la hermana del pili',                      #borrar si el bot es publico
+    'con la claudia',
+    #'con la hermana del pili',                      #borrar si el bot es publico
     #'con la prima del pache',                      #borrar si el bot es publico
     #f'en {channel_count} servers | #help',
     'comandos -> #ayuda | #help | #comandos',
-    'dolar --> #dolar',
-    '#juegos_gratis :)',
+    'dolar --> #dolar y #calculardolar',
+    '#juegos_gratis :) +info con #help juegos_gratis',
     'meme --> #memes',
     'ser cada vez mejor',
     'GTA V',
@@ -1406,8 +1461,9 @@ bot_statuses = [
     'En Github!',
     'viendo un directo',
     'good vibes only',
-    'hosted soon...',
-    'Creado por JuliTJZ#8141',
+    'hosteado en heroku 24/7',
+    'Creado por JuliTJZ#2364',
+    'por y para los bigos',
 ]
 
 #---> ASCII ART <-----
@@ -1426,7 +1482,7 @@ amongo = [
     ⠀⣿⣿⠀⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⠀⠀
     ⠀⢿⣿⡆⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⡇⠀⠀
     ⠀⠸⣿⣧⡀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⠃⠀⠀
-    ⠀⠀⠛⢿⣿⣿⣿⣿⣇⠀⠀⠀⠀⠀⣰⣿⣿⣷⣶⣶⣶⣶⠶⠀⢠⠀⠀⠀
+    ⠀⠀⠛⢿⣿⣿⣿⣿⣇⠀⠀⠀⠀⠀⣰⣿⣿⣷⣶⣶⣶⣶⠶⠀⢠⠀⠀
     ⠀⠀⠀⠀⠀⠀⠀⣿⣿⠀⠀⠀⠀⠀⣿⣿⡇⠀⣽⣿⡏⠁⠀⠀⢸⣿⡇⠀⠀⠀
     ⠀⠀⠀⠀⠀⠀⠀⣿⣿⠀⠀⠀⠀⠀⣿⣿⡇⠀⢹⣿⡆⠀⠀⠀⣸⣿⠇⠀⠀⠀
     ⠀⠀⠀⠀⠀⠀⠀⢿⣿⣦⣄⣀⣠⣴⣿⣿⠁⠀⠈⠻⣿⣿⣿⣿⡿⠏⠀⠀⠀⠀

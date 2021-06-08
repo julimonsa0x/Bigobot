@@ -56,3 +56,7 @@ __pycache__/game.cpython-38.pyc
 __pycache__/listas.cpython-38.pyc
 __pycache__/main.cpython-38.pyc
 experimental_functions.py
+cogs/__pycache__/covid19.cpython-38.pyc
+cogs/__pycache__/fortnite.cpython-38.pyc
+cogs/__pycache__/minehut_sv.cpython-38.pyc
+cogs/__pycache__/serverstatus.cpython-38.pyc

@@ -423,5 +423,11 @@ class ComandosGenerales(commands.Cog):
         await ctx.send(embed=embedMine)
         print(f'cmdInfoSobreMí||         Info del autor enviada a {ctx.author.name}')
 
+    @commands.command()
+    async def steamcito(self, ctx):   
+        '''Extension para steam que te muestra los precios con impuestos finales'''
+        await typing_sleep(ctx)    
+        await ctx.send("https://emilianog94.github.io/Steamcito-Precios-Steam-Argentina-Impuestos-Incluidos/landing/#howto")
+
 def setup(bot):
     bot.add_cog(ComandosGenerales(bot))

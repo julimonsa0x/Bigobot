@@ -11,6 +11,7 @@ import discord
 from discord.ext import commands, tasks
 from discord.ext.commands import Bot, errors
 from discord.utils import get
+#import DiscordUtils ---- > pip install
 import asyncio
 # ----------------------------------------->  # Required Libraries 
 import datetime
@@ -30,6 +31,8 @@ import png
 import requests
 #from bs4 import BeautifulSoup
 from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
+from discord_slash import SlashCommand
+from discord_buttons import *
 
 
 #<-------------------------------------------> Custom imports
@@ -58,6 +61,7 @@ bot_developer_id = '485259816399536128' # that's me.
 
 intents = discord.Intents.all() 
 
+
 def get_prefix(bot, mssg):
     with open("databases/prefixes.json", "r") as f:
         prefixes = json.load(f)
@@ -65,6 +69,8 @@ def get_prefix(bot, mssg):
     return prefixes[str(mssg.guild.id)]
 
 bot = commands.Bot(command_prefix=get_prefix, intents=intents)
+slash = SlashCommand(bot, sync_commands=True)
+ddb = DiscordButton(bot)
 
 
 bigo_guild_id = 559592087054450690  # if bot is public, call the var "base_guild_id"
@@ -257,7 +263,7 @@ async def on_guild_join(guild):
         json.dump(prefixes,f, indent=2)
     
     # when joined auto-send and set padlocked info
-    await guild.send("#setpadlockedinfo", delete_after=30)    
+    await guild.send("#setpadlockedinfo", delete_after=20)    
 
 @bot.event
 async def on_raw_reaction_add(payload):
@@ -797,13 +803,43 @@ async def crearemoji_error(ctx, error):
     else:
         pass
 
-#--------> Steamcito Addon link <--------
+
+@slash.slash(description="Comando de prueba")
+async def testcmd(ctx):
+    await ctx.send("Working!")
+
+
+@slash.slash(description="comando test buttons")
+async def testButtonss(ctx):
+    m = await ctx.send(
+        buttons = [
+            Button(style=ButtonStyle.blue, label="Click to test response"),
+            Button(style=ButtonStyle.url, label="Repositorio", url="https://github.com/julimonsa0x/Bigobot"),
+            Button(style=ButtonStyle.url, label="Invitame a tu sv", url="https://discord.com/api/oauth2/authorize?client_id=788950461884792854&permissions=8&scope=bot%20applications.commands"),
+        ],
+    )
+    res = await ddb.wait_for_button_click(m)
+    await res.respond(
+        type=InteractionType.ChannelMessageWithSource,
+        content=f":white_check_mark: {res.button.label} has been clicked!"
+    )
+
+
+# mismo comando pero con bot.command() decorator
 @bot.command()
-async def steamcito(ctx):   
-    '''Extension util para steam'''
-    await typing_sleep(ctx)    
-    await ctx.send("https://emilianog94.github.io/Steamcito-Precios-Steam-Argentina-Impuestos-Incluidos/landing/#howto")
-    print(f'cmdSteamcito||            {ctx.author.name} solicitó la web del addon Steamcito')
+async def testButton(ctx):
+    m = await ctx.send(
+        buttons = [
+            Button(style=ButtonStyle.blue, label="Click to test response"),
+            Button(style=ButtonStyle.url, label="Repositorio", url="https://github.com/julimonsa0x/Bigobot"),
+            Button(style=ButtonStyle.url, label="Invitame a tu sv", url="https://discord.com/api/oauth2/authorize?client_id=788950461884792854&permissions=8&scope=bot%20applications.commands"),
+        ],
+    )
+    res = await ddb.wait_for_button_click(m)
+    await res.respond(
+        type=InteractionType.ChannelMessageWithSource,
+        content=f":white_check_mark: {res.button.label} has been clicked!"
+    )
 
 
 #-------->COMANDOS DE AYUDA inicio<----------
@@ -1281,7 +1317,7 @@ async def borrar(ctx, limit=10, member: discord.Member=None):
         if not member:
             await ctx.channel.purge(limit=limit)
             await typing_sleep(ctx)
-            return await ctx.send(f":wastebasket: {limit} mensajes borrados", delete_after=12)
+            return await ctx.send(f":wastebasket: {limit} mensaje(s) borrado(s)", delete_after=10)
         async for m in ctx.channel.history():
             if len(msg) == limit:
                 break
@@ -1306,20 +1342,17 @@ async def borrar(ctx, limit=10, member: discord.Member=None):
             await ctx.send(f"`Excepcion: {e}`\n`Razon: {e.args}`\n`Traceback: {e.with_traceback()}`")
 
 @bot.command()
-async def submit(ctx, titulo, mensaje):#, archivo):
+async def submit(ctx, titulo, mensaje, log=False):
     """
-    Argumento archivo puede ser: <json>, <csv> o <sqlite> (WIP)
+    Argument log if true shows whole log
     """
-    #dict = titulo:mensaje
-    with open('json_files/testeo.json', 'r+') as pepe:
+    with open('json_files/testeo.json', 'r') as pepe:
         content = json.load(pepe)
-        if content is None:
-            json.dump(ctx.author.name, pepe, indent=2)
-        length_json = int(len(content) + 1)
-    content[ctx.author.name][length_json] = {titulo:mensaje}
-    with open('json_files/testeo.json', 'w') as pepe: 
-        json.dump(content, pepe, indent=2)
-    await ctx.send("submit recibido", file=discord.File('json_files/testeo.json'))
+    content[titulo] = mensaje
+    with open('json_files/testeo.json', '2') as pepePepe:
+        json.dump(content, pepePepe, indent=2)
+    if log:
+        await ctx.send(file=discord.File("json_files/testeo.json", filename="Submit.json"))
 
 
 # cog loader cmd
