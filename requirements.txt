@@ -35,4 +35,4 @@ wikipedia==1.4.0
 instaloader==4.7.1
 jokeapi==0.2.11
 discord-py-slash-command==1.2.2
-discord-buttons==0.5
+discord-components==0.5.3

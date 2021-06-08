@@ -32,7 +32,7 @@ import requests
 #from bs4 import BeautifulSoup
 from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
 from discord_slash import SlashCommand
-from discord_buttons import *
+from discord_components import DiscordComponents, Button, ButtonStyle, InteractionType, components
 
 
 #<-------------------------------------------> Custom imports
@@ -70,7 +70,7 @@ def get_prefix(bot, mssg):
 
 bot = commands.Bot(command_prefix=get_prefix, intents=intents)
 slash = SlashCommand(bot, sync_commands=True)
-ddb = DiscordButton(bot)
+ddb = DiscordComponents(bot)
 
 
 bigo_guild_id = 559592087054450690  # if bot is public, call the var "base_guild_id"
@@ -812,17 +812,18 @@ async def testcmd(ctx):
 @slash.slash(description="comando test buttons")
 async def testButtonss(ctx):
     m = await ctx.send(
-        buttons = [
+        components = [
             Button(style=ButtonStyle.blue, label="Click to test response"),
             Button(style=ButtonStyle.url, label="Repositorio", url="https://github.com/julimonsa0x/Bigobot"),
             Button(style=ButtonStyle.url, label="Invitame a tu sv", url="https://discord.com/api/oauth2/authorize?client_id=788950461884792854&permissions=8&scope=bot%20applications.commands"),
         ],
     )
-    res = await ddb.wait_for_button_click(m)
-    await res.respond(
-        type=InteractionType.ChannelMessageWithSource,
-        content=f":white_check_mark: {res.button.label} has been clicked!"
-    )
+    res = await bot.wait_for("button_click")
+    if res.channel == ctx.message.chanel:
+        await res.respond(
+            type=InteractionType.ChannelMessageWithSource,
+            content=f":white_check_mark: {res.button.label} has been clicked!"
+        )
 
 
 # mismo comando pero con bot.command() decorator
