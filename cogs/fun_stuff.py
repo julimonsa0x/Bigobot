@@ -283,9 +283,9 @@ class FunCommands(commands.Cog):
         print(f"cmdRandomChamp|| Campeón aleatorio enviado, en la lista hay: {str(len(campeones))}")
 
     @commands.command()
-    async def meme(self,ctx):
+    async def meme(self, ctx):
         '''Memes randoms, a quien no le gustan los memes...'''
-        embed = discord.Embed(color = discord.Colour.red(), timestamp=datetime.utcnow())
+        embedMeme = discord.Embed(color = discord.Colour.red(), timestamp=datetime.utcnow())
         random_link = random.choice(images)
         if (
                 random_link.startswith('https://video.twimg.com/ext_tw_video/') or 
@@ -295,13 +295,13 @@ class FunCommands(commands.Cog):
                 random_link.startswith('https://youtu')
             ):
             await typing_sleep(ctx)
-            await ctx.send(random_link)
+            await ctx.send(f"{random_link}")
             print(f'cmdMeme||         Meme enviado a {ctx.author.name}')
 
         else:
-            embed.set_image(url = random_link)
+            embedMeme.set_image(url = random_link)
             await typing_sleep(ctx)
-            await ctx.send(embed = embed)
+            await ctx.send(embed=f"{embedMeme}")
             print(f'cmdMeme||         Meme enviado a {ctx.author.name}')
 
     @commands.command()
