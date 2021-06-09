@@ -817,8 +817,8 @@ async def testButtonss(ctx):
         components = [
             [
                 Button(style=1, label="click test"),
-                Button(style=ButtonStyle.url, label="Repositorio", url="https://github.com/julimonsa0x/Bigobot"),
-                Button(style=ButtonStyle.url, label="Invitame a tu sv :robot:", url="https://discord.com/api/oauth2/authorize?client_id=788950461884792854&permissions=8&scope=bot%20applications.commands"),
+                Button(style=ButtonStyle.URL, label="Repositorio", url="https://github.com/julimonsa0x/Bigobot"),
+                Button(style=ButtonStyle.URL, label="Invitame a tu sv :robot:", url="https://discord.com/api/oauth2/authorize?client_id=788950461884792854&permissions=8&scope=bot%20applications.commands"),
             ],
         ]
     )
@@ -839,8 +839,8 @@ async def testButton(ctx):
         components = [
             [
                 Button(style=1, label="click test"),
-                Button(style=ButtonStyle.url, label="Repositorio", url="https://github.com/julimonsa0x/Bigobot"),
-                Button(style=ButtonStyle.url, label="Invitame a tu sv :robot:", url="https://discord.com/api/oauth2/authorize?client_id=788950461884792854&permissions=8&scope=bot%20applications.commands"),
+                Button(style=ButtonStyle.URL, label="Repositorio", url="https://github.com/julimonsa0x/Bigobot"),
+                Button(style=ButtonStyle.URL, label="Invitame a tu sv :robot:", url="https://discord.com/api/oauth2/authorize?client_id=788950461884792854&permissions=8&scope=bot%20applications.commands"),
             ],
         ]
     )
@@ -863,7 +863,7 @@ async def comandos(ctx):
         color=discord.Colour.orange(),
         title=f"Menu de comandos a tu orden {ctx.author.name} :thumbsup:",
         description='Si prefieres una ayuda mas personal, escribe "#ayuda"',
-        timestamp=datetime.utcnow()
+        timestamp=ctx.message.created_at
     )
     embedCmd.set_thumbnail(url="https://cdn.discordapp.com/attachments/793309880861458473/794724078224670750/25884936-fd9d-4627-ac55-d904eb5269cd.png") #icono del bigobot
     embedCmd.add_field(name="Recordatorio sobre uso el bigobot", value="Los comandos son sensibles a las mayusculas, no es lo mismo `#meme` que `#MEME`...", inline=False)
@@ -1361,19 +1361,24 @@ async def submit(ctx, titulo:str, mensaje:str, log=False):
     """
     4th argument log if true shows whole log, default False.
     """
-    if not os.path.exists("json_files/submit_data"):
+    if not os.path.exists("json_files/submit_data.json"):
         with open('json_files/submit_data.json', 'w', encoding="utf8") as fil:
             fil.write("{}")
 
     if log:
-        await ctx.send(file=discord.File("json_files/testeo.json", filename="Submit.json"))
+        await ctx.send(file=discord.File("json_files/submit_data.json", filename="submit_data.json"))
 
     if titulo and mensaje:
-        with open('json_files/submit_data.json', 'r', encoding="utf8") as pepe:
-            content = json.load(pepe)
-        content[titulo] = mensaje
-        with open('json_files/submit_data.json', 'w', encoding="utf8") as pepePepe:
-            json.dump(content, pepePepe, indent=2)
+        try:
+            with open('json_files/submit_data.json', 'r', encoding="utf8") as pepe:
+                content = json.load(pepe)
+            content[titulo] = mensaje
+            with open('json_files/submit_data.json', 'w', encoding="utf8") as pepePepe:
+                json.dump(content, pepePepe, indent=2)
+            await typing_sleep(ctx)
+            await ctx.send(" :white_check_mark: datos guardados correctamente!")
+        except:
+            await ctx.send("hubo un error con el comando /submit")
     else:
         await typing_sleep(ctx)
         await ctx.send("Faltan argumentos para el comando, utiliza `#help submit` para ver los argumentos que espera la función")

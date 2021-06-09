@@ -103,7 +103,8 @@ class RedditMeme(commands.Cog):
             )
 
             embed.set_image(url=url)
-            embed.set_footer(text="meme listo! :clinking_glass:", icon_url=REDDIT_ICON)
+            embed.set_footer(text="Este es el meme :champagne_glass:", icon_url=REDDIT_ICON)
+            await typing_sleep(ctx)
             await ctx.send(embed=embed)
 
 def setup(bot):
