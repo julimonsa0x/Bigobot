@@ -36,3 +36,6 @@ instaloader==4.7.1
 jokeapi==0.2.11
 discord-py-slash-command==1.2.2
 discord-components==0.5.3
+asyncpraw==7.2.0
+asyncprawcore==2.0.1
+update-checker==0.18.0

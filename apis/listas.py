@@ -1171,12 +1171,18 @@ bardeo = [
     'no te paseees',
     'no me hagas calentar',
     'no te hagas el copado que te arruino',
-    'no bardies que te averiguo la IP, los puertos, tu dirección MAC junto con la ubicación y en 2 minutos estás en la deep web, estás avisado',
+    'no bardies que te averiguo la IP, los puertos del router, tu dirección MAC junto con la ubicación y en 2 minutos estás en la deep web, estás avisado',
     'vos puto',
-    'tranqui fieraaa',
+    'chupala vos gil',
     'sos vos',
     'baja un cambio que te pasa',
     'vos gil',
+    'vos gil',  # x2
+    'sobala puto',
+    'no bardies que el ramon se enoja',
+    'vos que sos el gil que bardea',
+    'malagradecido',
+    'shh',
 ]
 
 ##--------> frases mato <---------

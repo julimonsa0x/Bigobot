@@ -1,9 +1,21 @@
+# Author: Me (try block)
+#         and
+#         elixss_ (except block)
+#           -> Asyncpraw tutorial: Meme command in discord.py | tutorial from youtube
+
 import discord
 from discord.ext import commands
+import asyncpraw
 import random
 import requests
 
+from dotenv import load_dotenv
+from os import getenv
+load_dotenv()
+
 from apis.functions import typing_sleep, printt
+REDDIT_ICON = 'https://media.discordapp.net/attachments/793309880861458473/852006681126895666/toppng.com-reddit-logo-reddit-icon-698x698.png?width=498&height=498'
+
 
 class RedditMeme(commands.Cog):
     def __init__(self, bot):
@@ -26,7 +38,8 @@ class RedditMeme(commands.Cog):
         •
         EN: Searchs for a random meme in a given subreddit. 
         subreddit r/memes by default if no subreddit is given...
-        syntax example: #reddit_meme dankmemes\n        
+        syntax example: #reddit_meme dankmemes
+        Please do not spam the command, thanks.
         """
         
         if subreddit_to_search != None:
@@ -34,15 +47,6 @@ class RedditMeme(commands.Cog):
         elif subreddit_to_search == None:
             subreddit_url = "https://www.reddit.com/r/memes.json"
             subreddit_to_search = "memes"
-
-
-        # to-do:
-        #   - make request withouth json method
-        #   - if req.status_code is valid (200 n others)
-        #       - save the json in databases/reddit_json
-        #       - use one meme per command and pop used one
-        #   - if req.status_code is not valid
-        #       sorry bout that but thats the end...
 
         try:
             memes = requests.get(subreddit_url).json()
@@ -68,15 +72,39 @@ class RedditMeme(commands.Cog):
             await typing_sleep(ctx)
             await ctx.send(embed = embedReddit)
             print(f'cmdRedditMeme||         Meme enviado a {ctx.author.name}')
-        except Exception as e:
-            await typing_sleep(ctx)
-            await ctx.send(f"Hubo un error al tratar de buscar un meme de reddit, puede ser por error del propio comando o muchas peticiones a los servidores de reddit. Info del error enviada al canal del bigobot.")
-            exception = f"==========\n`Excepcion causada:{e}`\n`Traceback:{e.with_traceback()}`\n`Razon:{e.args}`\n`Peticion: {str(memes)[:75]}`=========="
-            bigobot_chann = 799387331403579462
-            bigobot_channel = await self.bot.fetch_channel(bigobot_chann)
-            await bigobot_channel.send(exception)
+        except:
+            printt("====| El 1er metodo para extraer memes fallo, usando el 2do metodo")
+            
+            reddit = asyncpraw.Reddit(
+                client_id = getenv('CLIENT_ID'),
+                client_secret = getenv('CLIENT_SECRET'),
+                username= 'JuliTJZ',
+                password = getenv('REDDIT_PASSWORD'),
+                user_agent = 'app:bigobot/user:JuliTJZ'
+            )
 
+            subreddit = await reddit.subreddit(subreddit_to_search)
+            all_subs = []
+            top = subreddit.top(limit=350)
 
+            async for submission in top:
+                all_subs.append(submission)
+
+            random_sub = random.choice(all_subs)
+
+            name = random_sub.title
+            url = random_sub.url
+
+            embed = discord.Embed(
+                title=f'__{name}__',
+                colour=discord.Color.purple(),
+                timestamp = ctx.message.created_at,
+                url=url
+            )
+
+            embed.set_image(url=url)
+            embed.set_footer(text="meme listo! :clinking_glass:", icon_url=REDDIT_ICON)
+            await ctx.send(embed=embed)
 
 def setup(bot):
     bot.add_cog(RedditMeme(bot))

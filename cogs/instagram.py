@@ -119,11 +119,11 @@ class Instagram(commands.Cog):
                             else:
                                 pass
                         except Exception as e:
-                            print(f"Ocurrio un error al tratar de borrar los archivos descargados \n---> Excepcion:{e}\n---> Traceback:{e.with_traceback()}\n---> Args:{e.args}")
+                            print(f"Ocurrio un error al tratar de borrar los archivos descargados \n---> Excepcion:{e}\n---> Traceback:{e.with_traceback(e)}\n---> Args:{e.args}")
 
 
         except Exception as e:
-            await ctx.send(f"Ocurrio un error al intentar de descargar un post de instagram...\nExcepcion: `{e}`\n\nTraceback: `{e.with_traceback()}`")
+            await ctx.send(f"Ocurrio un error al intentar de descargar un post de instagram...\nExcepcion: `{e}`\n\nTraceback: `{e.with_traceback(e)}`")
 
 
 

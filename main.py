@@ -11,7 +11,7 @@ import discord
 from discord.ext import commands, tasks
 from discord.ext.commands import Bot, errors
 from discord.utils import get
-#import DiscordUtils ---- > pip install
+#import DiscordUtils ---- > pip install but not required yet
 import asyncio
 # ----------------------------------------->  # Required Libraries 
 import datetime
@@ -70,7 +70,6 @@ def get_prefix(bot, mssg):
 
 bot = commands.Bot(command_prefix=get_prefix, intents=intents)
 slash = SlashCommand(bot, sync_commands=True)
-ddb = DiscordComponents(bot)
 
 
 bigo_guild_id = 559592087054450690  # if bot is public, call the var "base_guild_id"
@@ -79,7 +78,10 @@ bigo_guild_base = bot.fetch_guild(bigo_guild_id)  # if bot is public, call the v
 
 # --------> Bot en marcha <-------
 @bot.event 
-async def on_ready():    
+async def on_ready():
+    
+    ddb = DiscordComponents(bot)
+    
     bot.reaction_roles = []
     bot.welcome_channels = {} # store like {guild_id : (channel_id, message)}
     bot.goodbye_channels = {}
@@ -206,7 +208,7 @@ async def feliz_jueves():
 
         # if today is not thursday, wait 24hs.
         if not today_int == 3:
-            print("Hoy no es jueves, esperando 24hs...")
+            print("====| Hoy no es jueves, esperando 24hs...")
             await asyncio.sleep(60 * 60 * 24)
         
         # if today IS thursday send message
@@ -219,10 +221,10 @@ async def feliz_jueves():
                 try:
                     await general_bigos.send(f"**Feliz Jueves**\nhttps://cdn.discordapp.com/attachments/793309880861458473/849848243662618644/Feliz_Jueves.mp4")
                     sent_dict[is_sent] = "true"
-                    print("enviado con exito el feliz jueves mañanero semanal")
+                    print("====| Enviado con exito el feliz jueves mañanero semanal!")
 
                 except Exception as e:
-                    print(f"Hubo un error al enviar el feliz jueves semanal: Excepcion:{e}\nCausa:{e.__cause__}\nTracebak{e.with_traceback()}")
+                    print(f"!!!Hubo un error al enviar el feliz jueves semanal: Excepcion:{e}\nCausa:{e.__cause__}\nTracebak{e.with_traceback()}")
                 
                 # wait for a whole week now
                 await asyncio.sleep(60 * 60 * 24 * 7)
@@ -813,34 +815,43 @@ async def testcmd(ctx):
 async def testButtonss(ctx):
     m = await ctx.send(
         components = [
-            Button(style=ButtonStyle.blue, label="Click to test response"),
-            Button(style=ButtonStyle.url, label="Repositorio", url="https://github.com/julimonsa0x/Bigobot"),
-            Button(style=ButtonStyle.url, label="Invitame a tu sv", url="https://discord.com/api/oauth2/authorize?client_id=788950461884792854&permissions=8&scope=bot%20applications.commands"),
-        ],
+            [
+                Button(style=1, label="click test"),
+                Button(style=ButtonStyle.url, label="Repositorio", url="https://github.com/julimonsa0x/Bigobot"),
+                Button(style=ButtonStyle.url, label="Invitame a tu sv :robot:", url="https://discord.com/api/oauth2/authorize?client_id=788950461884792854&permissions=8&scope=bot%20applications.commands"),
+            ],
+        ]
     )
-    res = await bot.wait_for("button_click")
-    if res.channel == ctx.message.chanel:
-        await res.respond(
-            type=InteractionType.ChannelMessageWithSource,
-            content=f":white_check_mark: {res.button.label} has been clicked!"
-        )
+    while True:
+        interaction = await bot.wait_for("button_click")
+        if interaction.channel == ctx.message.channel:
+            await interaction.respond(
+                #type=InteractionType.ChannelMessageWithSource,
+                content=f":white_check_mark: {interaction.button.label} has been clicked!"
+            )
+            await ctx.send(":white_check_mark: another message! ")
 
 
 # mismo comando pero con bot.command() decorator
 @bot.command()
 async def testButton(ctx):
     m = await ctx.send(
-        buttons = [
-            Button(style=ButtonStyle.blue, label="Click to test response"),
-            Button(style=ButtonStyle.url, label="Repositorio", url="https://github.com/julimonsa0x/Bigobot"),
-            Button(style=ButtonStyle.url, label="Invitame a tu sv", url="https://discord.com/api/oauth2/authorize?client_id=788950461884792854&permissions=8&scope=bot%20applications.commands"),
-        ],
+        components = [
+            [
+                Button(style=1, label="click test"),
+                Button(style=ButtonStyle.url, label="Repositorio", url="https://github.com/julimonsa0x/Bigobot"),
+                Button(style=ButtonStyle.url, label="Invitame a tu sv :robot:", url="https://discord.com/api/oauth2/authorize?client_id=788950461884792854&permissions=8&scope=bot%20applications.commands"),
+            ],
+        ]
     )
-    res = await ddb.wait_for_button_click(m)
-    await res.respond(
-        type=InteractionType.ChannelMessageWithSource,
-        content=f":white_check_mark: {res.button.label} has been clicked!"
-    )
+    while True:
+        interaction = await bot.wait_for("button_click")
+        if interaction.channel == ctx.message.channel:
+            await interaction.respond(
+                #type=InteractionType.ChannelMessageWithSource,
+                content=f":white_check_mark: {interaction.button.label} has been clicked!"
+            )
+            await ctx.send(":white_check_mark: another message! ")
 
 
 #-------->COMANDOS DE AYUDA inicio<----------
@@ -1104,7 +1115,7 @@ async def on_message(message):
         else:
             await channel.send('🧉' + '<:copi:770818273217609758>' + '<:doble:774509983832080385>')
             return
-    if message.author == bot.user: #bot.user: changed from "client.user:"
+    if message.author == bot.user:  # to ignore bot messages
         return
     if msg.startswith('#che'):
         await message.channel.send("{}".format(random.choice(apis.listas.botCall)))
@@ -1194,6 +1205,8 @@ async def on_message(message):
     elif msg.startswith('#pepo'):
         await message.channel.send('ese tambien es puto')
     elif msg.startswith('#puto'):
+        await message.channel.send("{}".format(random.choice(apis.listas.bardeo)))
+    elif msg.startswith('Chupala bigob') or msg.startswith('chupala bigob'):
         await message.channel.send("{}".format(random.choice(apis.listas.bardeo)))
     elif msg.startswith('#tonto'):
         await message.channel.send("{}".format(random.choice(apis.listas.bardeo)))
@@ -1342,18 +1355,29 @@ async def borrar(ctx, limit=10, member: discord.Member=None):
             await ctx.send(f":exclamation:  Hubo un error al ejecutar el comando. Info detallada:")
             await ctx.send(f"`Excepcion: {e}`\n`Razon: {e.args}`\n`Traceback: {e.with_traceback()}`")
 
-@bot.command()
-async def submit(ctx, titulo, mensaje, log=False):
+
+@slash.slash(description="comando de prueba para submit")
+async def submit(ctx, titulo:str, mensaje:str, log=False):
     """
-    Argument log if true shows whole log
+    4th argument log if true shows whole log, default False.
     """
-    with open('json_files/testeo.json', 'r') as pepe:
-        content = json.load(pepe)
-    content[titulo] = mensaje
-    with open('json_files/testeo.json', '2') as pepePepe:
-        json.dump(content, pepePepe, indent=2)
+    if not os.path.exists("json_files/submit_data"):
+        with open('json_files/submit_data.json', 'w', encoding="utf8") as fil:
+            fil.write("{}")
+
     if log:
         await ctx.send(file=discord.File("json_files/testeo.json", filename="Submit.json"))
+
+    if titulo and mensaje:
+        with open('json_files/submit_data.json', 'r', encoding="utf8") as pepe:
+            content = json.load(pepe)
+        content[titulo] = mensaje
+        with open('json_files/submit_data.json', 'w', encoding="utf8") as pepePepe:
+            json.dump(content, pepePepe, indent=2)
+    else:
+        await typing_sleep(ctx)
+        await ctx.send("Faltan argumentos para el comando, utiliza `#help submit` para ver los argumentos que espera la función")
+
 
 
 # cog loader cmd
