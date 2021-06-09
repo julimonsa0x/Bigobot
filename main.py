@@ -812,11 +812,11 @@ async def testcmd(ctx):
 
 
 @slash.slash(description="comando test buttons")
-async def testButtonss(ctx):
+async def testButtons(ctx):
     m = await ctx.send(
         components = [
             [
-                Button(style=1, label="click test"),
+                Button(style=ButtonStyle.blue, label="click test"),
                 Button(style=ButtonStyle.URL, label="Repositorio", url="https://github.com/julimonsa0x/Bigobot"),
                 Button(style=ButtonStyle.URL, label="Invitame a tu sv :robot:", url="https://discord.com/api/oauth2/authorize?client_id=788950461884792854&permissions=8&scope=bot%20applications.commands"),
             ],
@@ -838,7 +838,7 @@ async def testButton(ctx):
     m = await ctx.send(
         components = [
             [
-                Button(style=1, label="click test"),
+                Button(style=ButtonStyle.blue, label="click test"),
                 Button(style=ButtonStyle.URL, label="Repositorio", url="https://github.com/julimonsa0x/Bigobot"),
                 Button(style=ButtonStyle.URL, label="Invitame a tu sv :robot:", url="https://discord.com/api/oauth2/authorize?client_id=788950461884792854&permissions=8&scope=bot%20applications.commands"),
             ],
