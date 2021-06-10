@@ -209,7 +209,7 @@ async def feliz_jueves():
         # if json doesnt exists, create it.
         if not os.path.exists("json_files/felizjueves.json"):
             with open('json_files/felizjueves.json', 'w', encoding="utf8") as thu:
-                thu.write("{is_sent:false}")
+                json.dump("{is_sent:false}", thu, indent=2)
         
         # read the json to check if already sent
         with open('json_files/felizjueves.json', 'r', encoding="utf8") as thur:
@@ -217,7 +217,7 @@ async def feliz_jueves():
         is_sent = content["is_sent"]
 
         today_int = datetime.today().weekday()  # range 0 - 6 
-        is_sent = str(date.today())  # YYYY-MM-DD
+        #date_sent = str(date.today())  # YYYY-MM-DD
 
         # if today is not thursday, wait 24hs.
         if not today_int == 3:
