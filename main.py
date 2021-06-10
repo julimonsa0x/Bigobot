@@ -209,7 +209,7 @@ async def feliz_jueves():
         # if json doesnt exists, create it.
         if not os.path.exists("json_files/felizjueves.json"):
             with open('json_files/felizjueves.json', 'w', encoding="utf8") as thu:
-                json.dump("{is_sent:false}", thu, indent=2)
+                json.dump(r"{is_sent:false}", thu, indent=2)
         
         # read the json to check if already sent
         with open('json_files/felizjueves.json', 'r', encoding="utf8") as thur:
