@@ -214,7 +214,7 @@ async def feliz_jueves():
         # read the json to check if already sent
         with open('json_files/felizjueves.json', 'r', encoding="utf8") as thur:
             content = json.load(thur)
-        is_sent = content["is_sent"]
+        is_sent = content[0]
 
         today_int = datetime.today().weekday()  # range 0 - 6 
         #date_sent = str(date.today())  # YYYY-MM-DD
@@ -860,12 +860,10 @@ async def testButtons(ctx):
 async def testButton(ctx):
     m = await ctx.send(
         components = [
-            [
-                Button(style=ButtonStyle.blue, label="click test"),
-                Button(style=ButtonStyle.URL, label="Repositorio", url="https://github.com/julimonsa0x/Bigobot"),
-                Button(style=ButtonStyle.URL, label="Invitame a tu sv :robot:", url="https://discord.com/api/oauth2/authorize?client_id=788950461884792854&permissions=8&scope=bot%20applications.commands"),
-            ],
-        ],
+            Button(style=ButtonStyle.blue, label="click test"),
+            Button(style=ButtonStyle.URL, label="Repositorio", url="https://github.com/julimonsa0x/Bigobot"),
+            Button(style=ButtonStyle.URL, label="Invitame a tu sv :robot:", url="https://discord.com/api/oauth2/authorize?client_id=788950461884792854&permissions=8&scope=bot%20applications.commands"),
+        ]
     )
     while True:
         interaction = await bot.wait_for("button_click")
@@ -873,7 +871,7 @@ async def testButton(ctx):
             type=InteractionType.ChannelMessageWithSource,
             content=f":white_check_mark: {interaction.button.label} has been clicked!"
         )
-        await ctx.send(":white_check_mark: another message! ")
+        await ctx.send(":white_check_mark:")
 
 
 #-------->COMANDOS DE AYUDA inicio<----------
