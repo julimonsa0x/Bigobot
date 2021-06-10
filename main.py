@@ -214,7 +214,7 @@ async def feliz_jueves():
         # read the json to check if already sent
         with open('json_files/felizjueves.json', 'r', encoding="utf8") as thur:
             content = json.load(thur)
-        is_sent = content["is_sent"]
+        is_sent = content[0]
 
         today_int = datetime.today().weekday()  # range 0 - 6 
         #date_sent = str(date.today())  # YYYY-MM-DD

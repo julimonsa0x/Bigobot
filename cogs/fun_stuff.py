@@ -301,7 +301,7 @@ class FunCommands(commands.Cog):
 
         else:
             embedMeme = discord.Embed(color = discord.Colour.red())
-            embedMeme.set_image(url = random_link)
+            embedMeme.set_image(url=str(random_link))
             await typing_sleep(ctx)
             await ctx.send(embed=embedMeme)
             print(f'cmdMeme||         Meme enviado a {ctx.author.name}')
