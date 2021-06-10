@@ -31,7 +31,7 @@ import png
 import requests
 #from bs4 import BeautifulSoup
 from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
-from discord_slash import SlashCommand
+from discord_slash import SlashCommand, SlashContext
 from discord_components import DiscordComponents, Button, ButtonStyle, InteractionType
 
 
@@ -69,7 +69,7 @@ def get_prefix(bot, mssg):
     return prefixes[str(mssg.guild.id)]
 
 bot = commands.Bot(command_prefix=get_prefix, intents=intents)
-slash = SlashCommand(bot, sync_commands=True)
+slash = SlashCommand(bot, sync_commands=True, sync_on_cog_reload=True)
 
 
 bigo_guild_id = 559592087054450690  # if bot is public, call the var "base_guild_id"
@@ -130,8 +130,23 @@ async def on_ready():
             bot.ticket_configs[int(data[0])] = [int(data[1]), int(data[2]), int(data[3])]
     #alphascript cmd
 
-    #bot.warnings
     for guild in bot.guilds:
+        # Populate prefixes.json for every joined guild
+        # prefixes.json must be an empty json by default
+        with open("databases/prefixes.json", "r") as f:
+            prefixes = json.load(f)
+        prefixes[str(guild.id)] = "#"
+        with open("databases/prefixes.json", "w") as f:
+            json.dump(prefixes,f, indent=2)
+        print(f"Added the prefix `#` to {guild.name}!")
+        
+        # populate the joined_guilds apis.listas 
+        try:
+            apis.listas.joined_guilds.append(guild)
+        except:
+            pass
+
+        # last, bot warnings.
         async with aiofiles.open(f"databases/{guild.id}.txt", mode="r") as file:
             lines = await file.readlines()
 
@@ -163,7 +178,7 @@ async def on_ready():
     printt(f" Con un total de {len(set(bot.get_all_members()))} miembros <¬", 0.001)
     printt(' |            author: JuliTJZ             |', 0.001)
     printt(' |          created : 23/12/2020          |', 0.001)
-    printt(' |        last updated: 31/05/2021        |', 0.001)
+    printt(' |        last updated: 10/06/2021        |', 0.001)
     printt(f' |      Python: 3.8.10, Oct 14 2019       |', 0.001)
     printt(f' |          Discord.py:  {discord.__version__}            |', 0.001)
     printt('---------------------------------------------------->>>', 0.001)
@@ -174,16 +189,6 @@ async def on_ready():
     channel2 = bot.get_channel(791042478982824000)
     await channel2.send(f' :white_check_mark:  Connected at {current_hora} UTC')
 
-
-    # Populate prefixes.json for every joined guild
-    # prefixes.json must be an empty json by default
-    for guild in bot.guilds:
-        with open("databases/prefixes.json", "r") as f:
-            prefixes = json.load(f)
-        prefixes[str(guild.id)] = "#"
-        with open("databases/prefixes.json", "w") as f:
-            json.dump(prefixes,f, indent=2)
-        print(f"Added the prefix `#` to {guild.name}!")
 
 ##------> Statuses del Bot <--------
 async def change_presence():
@@ -201,10 +206,18 @@ async def feliz_jueves():
 
     while not bot.is_closed():
 
+        # if json doesnt exists, create it.
+        if not os.path.exists("json_files/felizjueves.json"):
+            with open('json_files/felizjueves.json', 'w', encoding="utf8") as thu:
+                thu.write("{is_sent:false}")
+        
+        # read the json to check if already sent
+        with open('json_files/felizjueves.json', 'r', encoding="utf8") as thur:
+            content = json.load(thur)
+        is_sent = content["is_sent"]
+
         today_int = datetime.today().weekday()  # range 0 - 6 
         is_sent = str(date.today())  # YYYY-MM-DD
-
-        sent_dict = {is_sent:"false"}
 
         # if today is not thursday, wait 24hs.
         if not today_int == 3:
@@ -214,13 +227,17 @@ async def feliz_jueves():
         # if today IS thursday send message
         # and wait for a whole week to resend
         if today_int == 3:
-            if sent_dict[is_sent] == "false":
+            if (is_sent == "false") or (is_sent is False):
                 
                 general_bigos = await bot.fetch_channel(559592087641915433)
                 
                 try:
-                    await general_bigos.send(f"**Feliz Jueves**\nhttps://cdn.discordapp.com/attachments/793309880861458473/849848243662618644/Feliz_Jueves.mp4")
-                    sent_dict[is_sent] = "true"
+                    felizjuevesEmbed = discord.Embed(title=" :tada: **Feliz Jueves** :partying_face:")
+                    felizjuevesEmbed.set_image(url='https://cdn.discordapp.com/attachments/793309880861458473/849848243662618644/Feliz_Jueves.mp4')
+                    await general_bigos.send(embed=felizjuevesEmbed)
+                    with open('json_files/felizjueves.json', 'w', encoding="utf8") as thursd:
+                        content["is_sent"] = True
+                        json.dump(content, thursd, indent=2)
                     print("====| Enviado con exito el feliz jueves mañanero semanal!")
 
                 except Exception as e:
@@ -232,6 +249,7 @@ async def feliz_jueves():
 bot.loop.create_task(feliz_jueves())
 bot.loop.create_task(change_presence())
 
+############################################################################
 ##### ----------------->>>>  Comienzo de eventos  <<<<---------------- #####
 @bot.event
 async def on_message(msg):
@@ -264,6 +282,13 @@ async def on_guild_join(guild):
     with open("databases/prefixes.json", "w") as f:
         json.dump(prefixes,f, indent=2)
     
+    # when bot joins a guild automatically 
+    # append guild to lsit
+    try:
+        apis.listas.joined_guilds.append(guild)
+    except:
+        pass
+
     # when joined auto-send and set padlocked info
     await guild.send("#setpadlockedinfo", delete_after=20)    
 
@@ -347,7 +372,7 @@ async def on_message_delete(message):
 
 ############################################################################
 #### -------------->>>>  Acá comienzan los comandos  <<<<-------------- ####
-@bot.command(aliases=['padlocked','set_padlocked','setpadlockedinfo','set_padlocked_info'])
+@bot.command(aliases=['setpadlocked','setpadlockedinfo'])
 @commands.has_permissions(administrator=True)
 async def set_info_channels(ctx):
     """
@@ -807,8 +832,8 @@ async def crearemoji_error(ctx, error):
 
 
 @slash.slash(description="Comando de prueba")
-async def testcmd(ctx):
-    await ctx.send("Working!")
+async def testcmd(ctx: SlashContext):
+    await ctx.send(content="Working!")
 
 
 @slash.slash(description="comando test buttons")
@@ -820,19 +845,17 @@ async def testButtons(ctx):
                 Button(style=ButtonStyle.URL, label="Repositorio", url="https://github.com/julimonsa0x/Bigobot"),
                 Button(style=ButtonStyle.URL, label="Invitame a tu sv :robot:", url="https://discord.com/api/oauth2/authorize?client_id=788950461884792854&permissions=8&scope=bot%20applications.commands"),
             ],
-        ]
+        ],
     )
     while True:
         interaction = await bot.wait_for("button_click")
-        if interaction.channel == ctx.message.channel:
-            await interaction.respond(
-                #type=InteractionType.ChannelMessageWithSource,
-                content=f":white_check_mark: {interaction.button.label} has been clicked!"
-            )
-            await ctx.send(":white_check_mark: another message! ")
+        await interaction.respond(
+            type=InteractionType.ChannelMessageWithSource,
+            content=f":white_check_mark: {interaction.button.label} has been clicked!"
+        )
+        await ctx.send(content=" :white_check_mark: another message!")
 
 
-# mismo comando pero con bot.command() decorator
 @bot.command()
 async def testButton(ctx):
     m = await ctx.send(
@@ -842,16 +865,15 @@ async def testButton(ctx):
                 Button(style=ButtonStyle.URL, label="Repositorio", url="https://github.com/julimonsa0x/Bigobot"),
                 Button(style=ButtonStyle.URL, label="Invitame a tu sv :robot:", url="https://discord.com/api/oauth2/authorize?client_id=788950461884792854&permissions=8&scope=bot%20applications.commands"),
             ],
-        ]
+        ],
     )
     while True:
         interaction = await bot.wait_for("button_click")
-        if interaction.channel == ctx.message.channel:
-            await interaction.respond(
-                #type=InteractionType.ChannelMessageWithSource,
-                content=f":white_check_mark: {interaction.button.label} has been clicked!"
-            )
-            await ctx.send(":white_check_mark: another message! ")
+        await interaction.respond(
+            type=InteractionType.ChannelMessageWithSource,
+            content=f":white_check_mark: {interaction.button.label} has been clicked!"
+        )
+        await ctx.send(":white_check_mark: another message! ")
 
 
 #-------->COMANDOS DE AYUDA inicio<----------
@@ -1365,9 +1387,6 @@ async def submit(ctx, titulo:str, mensaje:str, log=False):
         with open('json_files/submit_data.json', 'w', encoding="utf8") as fil:
             fil.write("{}")
 
-    if log:
-        await ctx.send(file=discord.File("json_files/submit_data.json", filename="submit_data.json"))
-
     if titulo and mensaje:
         try:
             with open('json_files/submit_data.json', 'r', encoding="utf8") as pepe:
@@ -1375,13 +1394,14 @@ async def submit(ctx, titulo:str, mensaje:str, log=False):
             content[titulo] = mensaje
             with open('json_files/submit_data.json', 'w', encoding="utf8") as pepePepe:
                 json.dump(content, pepePepe, indent=2)
-            await typing_sleep(ctx)
-            await ctx.send(" :white_check_mark: datos guardados correctamente!")
+            if log:
+                await ctx.send(file=discord.File("json_files/submit_data.json", filename="submit_data.json"))
+            await ctx.send(content=" :white_check_mark: datos guardados correctamente!")
         except:
-            await ctx.send("hubo un error con el comando /submit")
+            await ctx.send(content="Hubo un error con el comando /submit")
     else:
         await typing_sleep(ctx)
-        await ctx.send("Faltan argumentos para el comando, utiliza `#help submit` para ver los argumentos que espera la función")
+        await ctx.send(content="Faltan argumentos para el comando, utiliza `#help submit` para ver los argumentos que espera la función")
 
 
 

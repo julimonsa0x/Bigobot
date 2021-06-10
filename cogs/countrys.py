@@ -69,7 +69,7 @@ class CountryGuesses(commands.Cog):
         correct_country = discord.Embed(title="*Correcto*  ✨  🎉  🥳", color=discord.Colour.green())
         fake_country = discord.Embed(title="*Incorrecto*  😔", color=discord.Colour.red()).add_field(name=f"El pais correcto era:", value=country_name)
 
-
+        await ctx.message.delete()
         msg = await ctx.send(embed=embed)
         await msg.add_reaction("1️⃣")
         await msg.add_reaction("2️⃣")
@@ -114,7 +114,8 @@ class CountryGuesses(commands.Cog):
         # except block triggered when timeout.
         except:
             await typing_sleep(ctx)
-            await msg.edit(embed=timeoutEmbed)
+            await msg.delete()
+            await ctx.send(embed = timeoutEmbed, delete_after=15.0)
 
         filee.close()
 

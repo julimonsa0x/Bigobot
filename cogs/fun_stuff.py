@@ -317,13 +317,11 @@ class FunCommands(commands.Cog):
                 random_link.startswith('https://i.imgur') or 
                 random_link.startswith('https://youtu')
             ):
-                await typing_sleep(ctx)
                 await ctx.send(content=f"{random_link}")
 
         else:
             embedMeme = discord.Embed(color = discord.Colour.red())
             embedMeme.set_image(url = random_link)
-            await typing_sleep(ctx)
             await ctx.send(content="meme salido del horno", embeds=[embedMeme])
 
 
