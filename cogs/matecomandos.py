@@ -48,7 +48,7 @@ class MateComandos(commands.Cog):
     #----> Convertir de binario a decimal <----
     #https://parzibyte.me/blog/2020/12/05/python-convertir-binario-decimal/
     @commands.command()
-    async def bin_a_dec(ctx, binary: str):
+    async def bin_a_dec(self, ctx, binary: str):
         '''Convierte un binario dado, a decimal'''
         posicion = 0
         decimal = 0
@@ -66,7 +66,7 @@ class MateComandos(commands.Cog):
     # ---> Convertir de decimal a binario <---
     # from geeksforgeeks
     @commands.command()
-    async def dec_a_bin(ctx, decimal: int):
+    async def dec_a_bin(self, ctx, decimal: int):
         '''Convierte un decimal dado, a binario'''
         bin_result = bin(decimal).replace("0b", "")
         bin_result2 = bin(decimal)[2:]
@@ -78,7 +78,7 @@ class MateComandos(commands.Cog):
     # ----> Convertir de HEX a decimal <----
     # from geeks for geeks
     @commands.command()
-    async def hex_a_dec(ctx, hex: str):
+    async def hex_a_dec(self, ctx, hex: str):
         '''Convierte un Hexadecimal dado, a decimal'''
         dec_result = int(hex, 16) 
         dec_result = str(dec_result)
@@ -88,7 +88,7 @@ class MateComandos(commands.Cog):
 
     # ---> Convertir de decimal a HEX <---
     @commands.command()
-    async def dec_a_hex(ctx, decimal: int):
+    async def dec_a_hex(self, ctx, decimal: int):
         '''Convierte un decimal dado, a hexadecimal'''
         hex_result = hex(int(decimal))[2:].upper()
         await typing_sleep(ctx)
@@ -98,7 +98,7 @@ class MateComandos(commands.Cog):
     # ---> Convertir decimal a romano <----
     # from a spanish youtube channel, ep 751 i remember...
     @commands.command()
-    async def num_a_rom(ctx, numero: int):
+    async def num_a_rom(self, ctx, numero: int):
         '''
         Convierte numeros enteros a numerales romanos
         el numero debe ser menor a 4000, caso contrario 
@@ -135,9 +135,9 @@ class MateComandos(commands.Cog):
     
     ###-------------- Operaciones Matemáticas inicio------------>>>>
     @commands.command()
-    async def suma(ctx, num1: int, num2: int):
+    async def suma(self, ctx, num1: int, num2: int):
         '''Suma dos numeros que introduzcas, deben estar separados
-        a modo de ejemplo: #suma 1 5 -----> 6
+        a modo de ejemplo: *#suma 1 5 -----> 6*
         '''
         sumResult = num1 + num2
         await typing_sleep(ctx)
@@ -145,16 +145,16 @@ class MateComandos(commands.Cog):
         print(f'cmdSuma||   {ctx.author.name} sumó {num1} con {num2} ---> {sumResult}')
 
     @commands.command()
-    async def resta(ctx, num1: int, num2: int):
+    async def resta(self, ctx, num1: int, num2: int):
         '''Resta dos numeros, deben estar separados
         a modo de ejemplo: #resta 20 15
         '''
         await typing_sleep(ctx)
         await ctx.send(choice(intentoResta))
-        print(f'cmdResta||  {ctx.author.name} intentó restar jaja')
+        print(f'cmdResta||     {ctx.author.name} intentó restar jaja')
 
-    @commands.command()
-    async def mult(ctx, num1: int, num2: int):
+    @commands.command(aliases=['multiplicar'])
+    async def mult(self, ctx, num1: int, num2: int):
         '''Multiplica dos numeros que introduzcas'''
         multResult = num1 * num2
         await typing_sleep(ctx)
@@ -162,7 +162,7 @@ class MateComandos(commands.Cog):
         print(f'cmdMult||   {ctx.author.name} multiplicó dos numeros')
 
     @commands.command()
-    async def division(ctx, num1: int, num2: int):
+    async def division(self, ctx, num1: int, num2: int):
         '''Divide dos numeros que introduzcas'''
         divQuotient = (num1 // num2)
         divRemain = (num1 % num2)
@@ -171,7 +171,7 @@ class MateComandos(commands.Cog):
         print(f'cmdDivision|| {ctx.author.name} dividió {num1} sobre {num2} ---> {divQuotient} | {divRemain}')
 
     @commands.command(aliases=['potencia','elevar'])
-    async def pot(ctx, num1: int, num2: int):
+    async def pot(self, ctx, num1: int, num2: int):
         '''
         El 1er numero que introduzcas a la potencia del 2do
         ejemplo: #pot 3 3 ----> 3 al cubo ---> 27
@@ -182,8 +182,8 @@ class MateComandos(commands.Cog):
         await ctx.send("Resultado: ```{}``` " .format(potResult))
         print(f'cmdPot||    {ctx.author.name} potenció un numero')
 
-    @commands.command(aliases=['baskara','bascara'])
-    async def bask(ctx, numOne: float, numTwo: float, numThree: float):
+    @commands.command(aliases=['baskara'])
+    async def bask(self, ctx, numOne: float, numTwo: float, numThree: float):
         '''Introduce los coeficientes de la funcion con su respectivo signo!
         ejemplo de sintaxis con la siguiente ecuacion ---> 5X² - 20X +15
         #bask +5 -20 +15 ----> x1 = 3, x2 = 1 
@@ -213,7 +213,7 @@ class MateComandos(commands.Cog):
                     print(f"cmdBask||     {ctx.author.name} quiso baskarear")
 
     @commands.command()
-    async def raiz(ctx, num1: int): 
+    async def raiz(self, ctx, num1: int): 
         '''La raiz cuadrada de un numero que introduzcas'''  
         sqrtResult = numpy_sqrt(num1)   
         await typing_sleep(ctx)
@@ -221,7 +221,7 @@ class MateComandos(commands.Cog):
         print(f'cmdSqrt|| {ctx.author.name} halló la raíz cuadrada de {num1}, ---> {sqrtResult}')
 
     @commands.command()
-    async def seno(ctx, num1: int):
+    async def seno(self, ctx, num1: int):
         '''El seno de un grado que introduzcas'''
         sinResult = math.sin(math.radians(num1)) 
         await typing_sleep(ctx)
@@ -229,7 +229,7 @@ class MateComandos(commands.Cog):
         print(f'cmdPot||    {ctx.author.name} halló el seno de {num1} ---> {sinResult}')
 
     @commands.command()
-    async def coseno(ctx, num1: int):
+    async def coseno(self, ctx, num1: int):
         '''El coseno de un grado que introduzcas'''
         cosResult = math.cos(math.radians(num1)) 
         await typing_sleep(ctx)
@@ -237,7 +237,7 @@ class MateComandos(commands.Cog):
         print(f'cmdPot||    {ctx.author.name} halló el coseno de {num1} ---> {cosResult}')
 
     @commands.command()
-    async def tangente(ctx, num1: int):
+    async def tangente(self, ctx, num1: int):
         '''La tangente de un grado que introduzcas'''
         tanResult = math.tan(math.radians(num1)) 
         await typing_sleep(ctx)
@@ -245,7 +245,7 @@ class MateComandos(commands.Cog):
         print(f'cmdPot||    {ctx.author.name} halló la tangente de {num1} ---> {tanResult}')
 
     @commands.command()
-    async def hipotenusa(ctx, num1: int, num2: int):
+    async def hipotenusa(self, ctx, num1: int, num2: int):
         '''Calcula la hipotenusa de dos numeros que introduzcas'''
         hipResult = math.hypot(num1, num2) 
         await typing_sleep(ctx)
@@ -254,7 +254,7 @@ class MateComandos(commands.Cog):
 
 
     @commands.command()
-    async def limite(ctx, function=None, var=None, point=None):
+    async def limite(self, ctx, function=None, var=None, point=None):
         '''Halla el limite de una funcion cuando tiende a un punto dado
         escribe el comando a secas para ver un ejemplo mas a detalle!
         '''
@@ -285,7 +285,7 @@ class MateComandos(commands.Cog):
         
 
     @commands.command()
-    async def derivada(ctx, function=None):
+    async def derivada(self, ctx, function=None):
         '''Halla la derivada de una funcion escribe el
         comando a secas para ver un ejemplo mas a detalle!
         '''
@@ -310,7 +310,7 @@ class MateComandos(commands.Cog):
 
 
     @commands.command()
-    async def integral(ctx, function=None, dif1=None, dif2=None):
+    async def integral(self, ctx, function=None, dif1=None, dif2=None):
         '''Halla la integral de una funcion, sintaxis #integral <funcion>. Recuerda que para multiplicar debe usarse * y para elevar (potencias) debe usarse **'''
         if function != None and dif1 == None and dif2 == None:
             fx = str(function)
@@ -356,7 +356,7 @@ class MateComandos(commands.Cog):
 
 
     @commands.command()
-    async def fib(ctx, number: int):
+    async def fib(self, ctx, number: int):
         '''Encuentra el enésimo numero de fibonacci'''
         if number == None:
             await typing_sleep(ctx)

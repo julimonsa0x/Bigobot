@@ -26,6 +26,8 @@ from apis.listas import (brawlers,
                     roasts)
 
 
+from discord_slash import cog_ext, SlashContext
+
 
 class FunCommands(commands.Cog):
     def __init__(self, bot):
@@ -285,7 +287,6 @@ class FunCommands(commands.Cog):
     @commands.command()
     async def meme(self, ctx):
         '''Memes randoms, a quien no le gustan los memes...'''
-        embedMeme = discord.Embed(color = discord.Colour.red(), timestamp=datetime.utcnow())
         random_link = random.choice(images)
         if (
                 random_link.startswith('https://video.twimg.com/ext_tw_video/') or 
@@ -294,15 +295,37 @@ class FunCommands(commands.Cog):
                 random_link.startswith('https://i.imgur') or 
                 random_link.startswith('https://youtu')
             ):
-            await typing_sleep(ctx)
-            await ctx.send(f"{random_link}")
-            print(f'cmdMeme||         Meme enviado a {ctx.author.name}')
+                await typing_sleep(ctx)
+                await ctx.send(f"{random_link}")
+                print(f'cmdMeme||         Meme enviado a {ctx.author.name}')
 
         else:
+            embedMeme = discord.Embed(color = discord.Colour.red())
             embedMeme.set_image(url = random_link)
             await typing_sleep(ctx)
-            await ctx.send(embed=f"{embedMeme}")
+            await ctx.send(embed=embedMeme)
             print(f'cmdMeme||         Meme enviado a {ctx.author.name}')
+
+
+    @cog_ext.cog_slash(name="slashmeme", description="meme pero con slash --> /")
+    async def slashmeme(self, ctx: SlashContext):
+        random_link = random.choice(images)
+        if (
+                random_link.startswith('https://video.twimg.com/ext_tw_video/') or 
+                random_link.startswith('https://imgur') or 
+                random_link.startswith('https://www.youtube:') or
+                random_link.startswith('https://i.imgur') or 
+                random_link.startswith('https://youtu')
+            ):
+                await typing_sleep(ctx)
+                await ctx.send(content=f"{random_link}")
+
+        else:
+            embedMeme = discord.Embed(color = discord.Colour.red())
+            embedMeme.set_image(url = random_link)
+            await typing_sleep(ctx)
+            await ctx.send(content="meme salido del horno", embeds=[embedMeme])
+
 
     @commands.command()
     #@commands.has_permissions(kick_members=True)

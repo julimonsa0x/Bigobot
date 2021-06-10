@@ -103,8 +103,11 @@ class RedditMeme(commands.Cog):
             )
 
             embed.set_image(url=url)
-            embed.set_footer(text="Este es el meme :champagne_glass:", icon_url=REDDIT_ICON)
+            embed.set_footer(text="Este es el meme 🥂:", icon_url=REDDIT_ICON)
+            
             await typing_sleep(ctx)
+            await ctx.message.delete()
+            await ctx.send("Usando el segundo metodo del comando ya que el primer metodo retorna error 429", delete_after=10.0)
             await ctx.send(embed=embed)
 
 def setup(bot):

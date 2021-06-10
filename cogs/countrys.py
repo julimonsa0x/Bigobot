@@ -61,6 +61,10 @@ class CountryGuesses(commands.Cog):
         embed.add_field(name="*Opcion 3*", value=f"{choice3}", inline=False)
         embed.set_footer(text="Reacciona a los emotes de abajo")
         
+        timeoutEmbed = discord.Embed(
+            title=" :alarm_clock: **Te quedaste sin tiempo**",
+            description="Intenta otra vez"
+        )
 
         correct_country = discord.Embed(title="*Correcto*  ✨  🎉  🥳", color=discord.Colour.green())
         fake_country = discord.Embed(title="*Incorrecto*  😔", color=discord.Colour.red()).add_field(name=f"El pais correcto era:", value=country_name)
@@ -74,7 +78,11 @@ class CountryGuesses(commands.Cog):
 
         # check for user reaction to emotes.
         try:
-            reaction, user = await self.bot.wait_for("reaction_add", check=lambda reaction, user: user == ctx.author and reaction.emoji in ["1️⃣", "2️⃣", "3️⃣"], timeout=15)
+            reaction, user = await self.bot.wait_for(
+                "reaction_add",
+                check=lambda reaction, user: user == ctx.author and reaction.emoji in ["1️⃣", "2️⃣", "3️⃣"], 
+                timeout=15
+            )
             if reaction.emoji == "1️⃣":
                 if choice1 not in country_tuple:
                     await typing_sleep(ctx)
@@ -103,12 +111,10 @@ class CountryGuesses(commands.Cog):
                     await ctx.send(embed=correct_country)
         
         
-        # except block
-        except Exception as e:
+        # except block triggered when timeout.
+        except:
             await typing_sleep(ctx)
-            await ctx.send("An exception occurred, try again !")
-            await ctx.send(f"Exception: ```{e.args}```") 
-
+            await msg.edit(embed=timeoutEmbed)
 
         filee.close()
 
