@@ -788,8 +788,20 @@ images = [
   'https://media.discordapp.net/attachments/793309880861458473/851666016727334922/20210606_141300.jpg?width=373&height=498', # nword electrico
   'https://media.discordapp.net/attachments/793309880861458473/851666016961953813/IMG-20210605-WA0030.jpg?width=498&height=498', # tenet moto
   'https://media.discordapp.net/attachments/793309880861458473/851666017137459240/Screenshot_20210605-183319-729.png?width=484&height=498', # samsung girl vs re village girl
-  #'', #
-
+  'https://media.discordapp.net/attachments/793309880861458473/852575918224048138/Screenshot_20210610-122758-354.png?width=457&height=498', # alberto bolivianos
+  'https://media.discordapp.net/attachments/793309880861458473/852575918731034644/Screenshot_20210610-122727-601.png?width=613&height=498', # alberto meme
+  'https://media.discordapp.net/attachments/793309880861458473/852575918996193280/Screenshot_20210610-122636-116.png?width=823&height=498', # lamento boliviano alberto
+  'https://media.discordapp.net/attachments/793309880861458473/852575919481946162/Screenshot_20210610-122310-329.png?width=475&height=498', # alberto y pedro sanchez 
+  'https://media.discordapp.net/attachments/793309880861458473/852575919808708658/Screenshot_20210610-121923-061.png?width=434&height=498', # tipa en espejo chabon gordo
+  'https://media.discordapp.net/attachments/793309880861458473/852575920183443526/Screenshot_20210610-121848-590.png?width=403&height=498', # chabona caida escalera 
+  'https://media.discordapp.net/attachments/793309880861458473/852576055134126130/PicsArt_06-10-02.16.49.jpg?width=230&height=498', # el poli en los megustas del presi
+  'https://media.discordapp.net/attachments/793309880861458473/852576055414751332/Screenshot_20210609-211242-985.png?width=598&height=498', # waifus en pileta
+  'https://media.discordapp.net/attachments/793309880861458473/852743305724035133/Screenshot_20210610-162923-727.png?width=639&height=498', # los chilenos los trajo un tsunami
+  'https://media.discordapp.net/attachments/793309880861458473/852743306106372146/Screenshot_20210610-162910-256.png?width=528&height=498', # brazuca vs mexicano meme alberto
+  'https://media.discordapp.net/attachments/793309880861458473/852764300069961788/unknown.png', # wensel machito lava los platos
+  'https://media.discordapp.net/attachments/793309880861458473/852764300069961788/unknown.png', # wensel machito lava los platos X2
+  'https://media.discordapp.net/attachments/793309880861458473/852764300069961788/unknown.png', # wensel machito lava los platos X3
+ 
 
 ]
 
@@ -898,13 +910,13 @@ botCall = [
 
 ##----> frases de bienvenida SPANISH<----
 new_arrival =[
-    ':pogger: Con el arribo de',
-    ':pogger: Con la llegada de',
-    ':pogger: Con la union de',
-    ':pogger: Al unirse',
-    ':pogger: Ahora que llego',
-    ':pogger: Ahora que se unio',
-    ':pogger: Habiendo llegado',
+    'Con el arribo de',
+    'Con la llegada de',
+    'Con la union de',
+    'Al unirse',
+    'Ahora que llego',
+    'Ahora que se unio',
+    'Habiendo llegado',
 ]
 
 ##------> frases del ruben <-------

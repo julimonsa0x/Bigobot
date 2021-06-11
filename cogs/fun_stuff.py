@@ -284,31 +284,8 @@ class FunCommands(commands.Cog):
         await ctx.send(embed=embed3, delete_after=200.0)
         print(f"cmdRandomChamp|| Campeón aleatorio enviado, en la lista hay: {str(len(campeones))}")
 
-    @commands.command()
-    async def meme(self, ctx):
-        '''Memes randoms, a quien no le gustan los memes...'''
-        random_link = random.choice(images)
-        if (
-                random_link.startswith('https://video.twimg.com/ext_tw_video/') or 
-                random_link.startswith('https://imgur') or 
-                random_link.startswith('https://www.youtube:') or
-                random_link.startswith('https://i.imgur') or 
-                random_link.startswith('https://youtu')
-            ):
-                await typing_sleep(ctx)
-                await ctx.send(f"{random_link}")
-                print(f'cmdMeme||         Meme enviado a {ctx.author.name}')
-
-        else:
-            embedMeme = discord.Embed(title='meme',color = discord.Colour.red())
-            embedMeme.set_image(url=str(random_link))
-            await typing_sleep(ctx)
-            await ctx.send(embed=embedMeme)
-            print(f'cmdMeme||         Meme enviado a {ctx.author.name}')
-
-
-    @cog_ext.cog_slash(name="slashmeme", description="meme pero con slash --> /")
-    async def slashmeme(self, ctx: SlashContext):
+    @cog_ext.cog_slash(name="meme", description="a quien no le gustan los memes?")
+    async def meme(self, ctx: SlashContext):
         random_link = random.choice(images)
         if (
                 random_link.startswith('https://video.twimg.com/ext_tw_video/') or 
@@ -323,7 +300,6 @@ class FunCommands(commands.Cog):
             embedMeme = discord.Embed(color = discord.Colour.red())
             embedMeme.set_image(url = str(random_link))
             await ctx.send(content="meme salido del horno", embeds=[embedMeme])
-
 
     @commands.command()
     #@commands.has_permissions(kick_members=True)

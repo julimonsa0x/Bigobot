@@ -209,7 +209,8 @@ async def feliz_jueves():
         # if json doesnt exists, create it.
         if not os.path.exists("json_files/felizjueves.json"):
             with open('json_files/felizjueves.json', 'w', encoding="utf8") as thu:
-                json.dump('{"is_sent":false}', thu, indent=2)
+                content = '{"is_sent":false}'
+                json.dump(content, thu, indent=2)
         
         # read the json to check if already sent
         with open('json_files/felizjueves.json', 'r', encoding="utf8") as thur:
@@ -344,9 +345,16 @@ async def on_member_join(member):
     for guild_id in bot.welcome_channels:
         if guild_id == member.guild.id:
             channel_id, message = bot.welcome_channels[guild_id]
-            await bot.get_guild(guild_id).get_channel(channel_id).send(f"{message} {member.mention}")
-            await bot.get_guild(guild_id).get_channel(channel_id).send(f"{apis.listas.new_arrival} {member.mention} somos {len(set(bot.get_all_members()))} miembros!")
-            return
+            cur_chan_members = len(bot.get_guild(guild_id).members)
+            current_channel = bot.get_guild(guild_id).get_channel(channel_id)
+            arrival = random.choice(apis.listas.new_arrival)
+            try:
+                await current_channel.send(f"{message} {member.mention}")
+                await current_channel.send(f"{arrival} {member.mention} somos {cur_chan_members} miembros!")
+                await current_channel.send(f"Recuerda explorar mis comandos con `#ayuda` o `#comandos`")
+                return
+            except Exception as e:
+                printt(f"Hubo un error al mandar el mensaje de bienvenida: {e}\nTraceback{e.with_traceback}")
 
 @bot.event # alphascript cmd
 async def on_member_remove(member):
@@ -1440,15 +1448,15 @@ async def unload(ctx, extension):
 
 
 # ---> ping con latencia  4<----
-@bot.command()
+@slash.slash(description='Muestra el ping del bot')
 async def ping(ctx, arg=None):
     '''Muestra tu ping con respecto al bot'''
     if arg == "pong":
         await typing_sleep(ctx)
-        await ctx.send("ah chistoso")
+        await ctx.send(content="ah chistoso")
     else:
         await typing_sleep(ctx)
-        await ctx.send(f"Tu ping es: {round(bot.latency * 1000)}ms\nEste ping es con respecto a mí, no con respecto a los servidores de discord!!")
+        await ctx.send(content=f"Mi ping es: {round(bot.latency * 1000)}ms")
 
 # ----> Cogs loader <----
 for filename in os.listdir('./cogs'):
