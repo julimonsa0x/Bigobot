@@ -641,7 +641,7 @@ async def rip(ctx, member:discord.Member=None):
     if not member:
         member = ctx.author
 
-    rip = Image.open(r"C:\Users\Juli\Desktop\Python Code\Prueba2\images\rip.jpg")
+    rip = Image.open("images/rip.jpg")
 
     asset = member.avatar_url_as(size=128)
     data = BytesIO(await asset.read())
@@ -654,7 +654,7 @@ async def rip(ctx, member:discord.Member=None):
     rip.save('images/prip.jpg')
 
     # then we add the dead date
-    rip_image = Image.open(r"C:\Users\Juli\Desktop\Python Code\Prueba2\images\prip.jpg")  
+    rip_image = Image.open("images/prip.jpg")  
     lapiz = ImageDraw.Draw(rip_image)
     font_lapida = ImageFont.truetype(r'fonts/Roboto-Black.ttf', size = 25) 
     ripped_user = member.name
@@ -666,7 +666,7 @@ async def rip(ctx, member:discord.Member=None):
 
     await typing_sleep(ctx)
     await ctx.send(file = discord.File(r'images/prip2.jpg'))
-    print(f'cmdRip||          {ctx.author.name} ripeo a {member} el {current_hour}')
+    print(f'cmdRip||          {ctx.author.name} ripeo a {member}')
 
 
 #############
@@ -742,14 +742,14 @@ async def profile(ctx, user: discord.Member = None):
     if user == None:
         user = ctx.author
 
-    image = Image.open(r"C:\Users\Juli\Desktop\Python Code\Prueba2\images\profile.jpg")       #ORIGINAL ONE PS4
+    image = Image.open("images/profile.jpg")       #ORIGINAL ONE PS4
     img = image.resize((900, 500))                                                         #ORIGINAL ONE PS4
     #image = Image.open(r"C:\Users\Juli\Desktop\Python Code\Prueba2\images\demo_city.png")       # USING DEMO_CITY, no .resize
 
     idraw = ImageDraw.Draw(img)      #ORIGINAL ONE PS4
     #idraw = ImageDraw.Draw(image)   # USING DEMO_CITY 
-    title = ImageFont.truetype(r'fonts/Roboto-Black.ttf', size = 60)      # Title fonts
-    subtitle = ImageFont.truetype(r'fonts/Roboto-Bold.ttf', size = 40)     # Subtitle fonts
+    title = ImageFont.truetype('fonts/Roboto-Black.ttf', size = 60)      # Title fonts
+    subtitle = ImageFont.truetype('fonts/Roboto-Bold.ttf', size = 40)     # Subtitle fonts
 
     name = user.name
     namename = "En el server desde: " + user.joined_at.strftime("%d/%m/%Y")
@@ -1452,10 +1452,8 @@ async def unload(ctx, extension):
 async def ping(ctx, arg=None):
     '''Muestra tu ping con respecto al bot'''
     if arg == "pong":
-        await typing_sleep(ctx)
         await ctx.send(content="ah chistoso")
     else:
-        await typing_sleep(ctx)
         await ctx.send(content=f"Mi ping es: {round(bot.latency * 1000)}ms")
 
 # ----> Cogs loader <----

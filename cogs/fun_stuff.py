@@ -302,7 +302,7 @@ class FunCommands(commands.Cog):
                 await ctx.send(content=f"{random_link}")
 
         else:
-            embedMeme = discord.Embed(color = discord.Colour.red())
+            embedMeme = discord.Embed(title='meme random cortesia del bigobot',color = discord.Colour.red())
             embedMeme.set_image(url = str(random_link))
             await ctx.send(content="meme salido del horno", embeds=[embedMeme])
 
