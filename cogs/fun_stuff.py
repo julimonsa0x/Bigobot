@@ -23,7 +23,8 @@ from apis.listas import (brawlers,
                     trivia_accept, 
                     trivia_decline, 
                     willyooc,
-                    roasts)
+                    roasts,
+                    brawlers_images)
 
 
 from discord_slash import cog_ext, SlashContext
@@ -247,14 +248,18 @@ class FunCommands(commands.Cog):
         await ctx.send("1...", delete_after=45.0)
         await asyncio.sleep(0.5)
         
-        embed = discord.Embed(color = discord.Colour.orange())
         randomBrawl = random.choice(brawlers)
+        order = brawlers.index(randomBrawl)
+        imageBrawl = brawlers_images[order]
+
+        embed = discord.Embed(color = discord.Colour.orange())
         embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/793309880861458473/797964925980246066/c849eb95e858ce12cdc86cb6d4ecb36b00bbdfaa96d9973852d1421661f5aec5200.png")
-        embed.add_field(name= "Brawler Aleatorio: ", value=f"{randomBrawl}")
+        embed.set_image(url=imageBrawl)
+        embed.add_field(name= "**Brawler Aleatorio:**", value=f"**{randomBrawl}**")
         embed.set_footer(icon_url = ctx.author.avatar_url, text = f"Le tocó a {ctx.author}")
         
         await typing_sleep(ctx)
-        await ctx.send(embed=embed, delete_after=200.0)
+        await ctx.send(embed=embed, delete_after=100.0)
         print(f"cmdRandomBrawl|| Brawler aleatorio enviado, en la lista hay: {str(len(brawlers))}")
 
     @commands.command(aliases=['lolchamp','randomlol','lol','campeonrandom'])
@@ -281,7 +286,7 @@ class FunCommands(commands.Cog):
         embed3.set_footer(icon_url = ctx.author.avatar_url, text = f"Le tocó a {ctx.author}") 
         
         await typing_sleep(ctx)
-        await ctx.send(embed=embed3, delete_after=200.0)
+        await ctx.send(embed=embed3, delete_after=100.0)
         print(f"cmdRandomChamp|| Campeón aleatorio enviado, en la lista hay: {str(len(campeones))}")
 
     @cog_ext.cog_slash(name="meme", description="a quien no le gustan los memes?")
