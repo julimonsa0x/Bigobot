@@ -69,7 +69,7 @@ class LevelSystem(commands.Cog):
             pass
 
         if not message.author.bot:
-            print('====| Mensaje obtenido para level.json...')
+            #print('====| Mensaje obtenido para level.json...')
             try:
                 with open('databases/level.json','r') as f:
                     users = json.load(f)

@@ -233,7 +233,7 @@ async def level_up(users, user, channel, server):
     lvl_end = int(experience ** (1/4))
     if str(user.guild.id) != 'pepe':
         if lvl_start < lvl_end:
-            await channel.send('{} has leveled up to Level {}'.format(user.mention, lvl_end))
+            await channel.send('{} ha ascendido al nivel {} !'.format(user.mention, lvl_end), delete_after=15.0)
             users[str(user.guild.id)][str(user.id)]['level'] = lvl_end
 
 # 12th function
