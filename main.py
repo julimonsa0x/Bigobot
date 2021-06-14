@@ -844,28 +844,8 @@ async def testcmd(ctx: SlashContext):
     await ctx.send(content="Working!")
 
 
-@slash.slash(description="comando test buttons")
-async def testButtons(ctx):
-    m = await ctx.send(
-        components = [
-            [
-                Button(style=ButtonStyle.blue, label="click test"),
-                Button(style=ButtonStyle.URL, label="Repositorio", url="https://github.com/julimonsa0x/Bigobot"),
-                Button(style=ButtonStyle.URL, label="Invitame a tu sv :robot:", url="https://discord.com/api/oauth2/authorize?client_id=788950461884792854&permissions=8&scope=bot%20applications.commands"),
-            ],
-        ],
-    )
-    while True:
-        interaction = await bot.wait_for("button_click")
-        await interaction.respond(
-            type=InteractionType.ChannelMessageWithSource,
-            content=f":white_check_mark: {interaction.button.label} has been clicked!"
-        )
-        await ctx.send(content=" :white_check_mark: another message!")
-
-
 @bot.command()
-async def testButton(ctx):
+async def testButtons(ctx):
     m = await ctx.send(
         components = [
             Button(style=ButtonStyle.blue, label="click test"),
@@ -874,12 +854,18 @@ async def testButton(ctx):
         ]
     )
     while True:
-        interaction = await bot.wait_for("button_click")
-        await interaction.respond(
-            type=InteractionType.ChannelMessageWithSource,
-            content=f":white_check_mark: {interaction.button.label} has been clicked!"
-        )
-        await ctx.send(":white_check_mark:")
+        res = await bot.wait_for("button_click")
+        if "repo" in res.component.label.lower():
+            await res.respond(type=6)
+            await ctx.send(content=f" :white_check_mark: {res.button.label} has been clicked!")
+        
+        elif "invitame" in res.component.label.lower():
+            await res.respond(type=6)
+            await ctx.send(" :white_check_mark: Ahora podre unirme a tu servidor!")
+    
+        elif "click" in res.component.label.lower():
+            await res.respond(type=6)
+            await ctx.send(content=" :white_check_mark: another message!")
 
 
 #-------->COMANDOS DE AYUDA inicio<----------
