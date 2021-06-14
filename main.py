@@ -18,10 +18,10 @@ import datetime
 import json
 import random
 import re
-import time
+#import time
 from datetime import date, datetime, time, timedelta
 from io import BytesIO
-from time import strftime
+from time import strftime, sleep
 #import urllib3
 from urllib import parse, request
 import aiofiles
@@ -209,13 +209,17 @@ async def feliz_jueves():
         # if json doesnt exists, create it.
         if not os.path.exists("json_files/felizjueves.json"):
             with open('json_files/felizjueves.json', 'w', encoding="utf8") as thu:
-                content = '{"is_sent":false}'
+                content = '{["is_sent":false]}'
                 json.dump(content, thu, indent=2)
         
         # read the json to check if already sent
-        with open('json_files/felizjueves.json', 'r', encoding="utf8") as thur:
-            content = json.load(thur)
-        is_sent = content["is_sent"]
+        try:
+            with open('json_files/felizjueves.json', 'r', encoding="utf8") as thur:
+                content = json.load(thur)
+            is_sent = content[0]
+            print(f"====| Imprimiendo lo cargado del json: {is_sent}")
+        except Exception as e:
+            print(f"====| Hubo un error al cargar los datos del json del feliz jueves\nExcepcion:{e} - Causa:{e.__cause__} - Traceback:{e.__annotations__}")
 
         today_int = datetime.today().weekday()  # range 0 - 6 
         #date_sent = str(date.today())  # YYYY-MM-DD
@@ -242,7 +246,7 @@ async def feliz_jueves():
                     print("====| Enviado con exito el feliz jueves mañanero semanal!")
 
                 except Exception as e:
-                    print(f"!!!Hubo un error al enviar el feliz jueves semanal: Excepcion:{e}\nCausa:{e.__cause__}\nTracebak{e.with_traceback()}")
+                    print(f"!!!Hubo un error al enviar el feliz jueves semanal: Excepcion:{e}\nCausa:{e.__cause__}\nTraceback{e.with_traceback}")
                 
                 # wait for a whole week now
                 await asyncio.sleep(60 * 60 * 24 * 7)
@@ -847,11 +851,13 @@ async def testcmd(ctx: SlashContext):
 @bot.command()
 async def testButtons(ctx):
     m = await ctx.send(
+        "testButtons",
         components = [
+            Button(style=ButtonStyle.red, label="disabled button", disabled=True),
             Button(style=ButtonStyle.blue, label="click test"),
             Button(style=ButtonStyle.URL, label="Repositorio", url="https://github.com/julimonsa0x/Bigobot"),
             Button(style=ButtonStyle.URL, label="Invitame a tu sv :robot:", url="https://discord.com/api/oauth2/authorize?client_id=788950461884792854&permissions=8&scope=bot%20applications.commands"),
-        ]
+        ],
     )
     while True:
         res = await bot.wait_for("button_click")
