@@ -209,8 +209,8 @@ async def feliz_jueves():
         # if json doesnt exists, create it.
         if not os.path.exists("json_files/felizjueves.json"):
             with open('json_files/felizjueves.json', 'w', encoding="utf8") as thu:
-                content = '{["is_sent":false]}'
-                json.dump(content, thu, indent=2)
+                thu.write('{["is_sent":false]}')
+
         
         # read the json to check if already sent
         try:
@@ -1366,27 +1366,33 @@ async def borrar(ctx, limit=10, member: discord.Member=None):
             limit = int(limit)     
         except:
             return await ctx.send(content='Se requiere de un numero para el limite de mensajes a borrar!' + '\n' + 'recuerda seguir la sintaxis `#borrar <cantidad de mensajes a borrar>')
+        
         if not member:
             if borrar_bool:
                 await ctx.channel.purge(limit=limit)
                 await typing_sleep(ctx)
+                await butn.delete()
                 return await ctx.send(content=f" :wastebasket: {limit} mensaje(s) borrado(s)", delete_after=10.0)
             else:
                 await typing_sleep(ctx)
                 await ctx.send(content="Ningun mensaje eliminado", delete_after=10.0)
+        
         async for m in ctx.channel.history():
             if len(msg) == limit:
                 break
             if m.author == member:
                 msg.append(m)
+        
         if member != None:
             if borrar_bool:
                 await ctx.channel.delete_messages(msg)
                 await typing_sleep(ctx)
+                await butn.delete()s
                 await ctx.send(content=f" :wastebasket: {limit} mensajes borrados de {member.mention}", delete_after=10.0)
         else:
-            await typing_sleep(ctx)
-            await ctx.send(content="Ningun mensaje eliminado", delete_after=10.0)
+            if not borrar_bool:
+                await typing_sleep(ctx)
+                await ctx.send(content="Ningun mensaje eliminado", delete_after=10.0)
             
         
     except Exception as e:
