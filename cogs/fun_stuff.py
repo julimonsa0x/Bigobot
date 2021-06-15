@@ -238,7 +238,7 @@ class FunCommands(commands.Cog):
         await ctx.send(embed=dadosEmbed)
         print(f"cmdDados||   A {ctx.author.name} le tocó el dado {number}")
 
-    @commands.command(aliases=['brawler_random','brawler'])
+    @commands.command(description="Aparece un brawler random")
     async def randombrawl(self, ctx):
         '''Brawler random, recomendado primero jugar al #ppt (piedra papel o tijeras) si se requiere turnarse'''
         await ctx.send("3...", delete_after=45.0)
@@ -262,14 +262,14 @@ class FunCommands(commands.Cog):
         await ctx.send(embed=embed, delete_after=100.0)
         print(f"cmdRandomBrawl|| Brawler aleatorio enviado, en la lista hay: {str(len(brawlers))}")
 
-    @commands.command(aliases=['lolchamp','randomlol','lol','campeonrandom'])
-    async def randomchamp(self, ctx):
+    @cog_ext.cog_slash(description="Aparece un campeon random del lol")
+    async def randomchamp(self, ctx: SlashContext):
         '''Campeon random de lol, recomendado primero jugar al #ppt (piedra papel o tijeras) si se requiere turnarse'''
-        await ctx.send("3...", delete_after=45.0)
+        await ctx.send("3...", delete_after=35.0)
         await asyncio.sleep(0.5)
-        await ctx.send("2...", delete_after=45.0)
+        await ctx.send("2...", delete_after=35.0)
         await asyncio.sleep(0.5)
-        await ctx.send("1...", delete_after=45.0)
+        await ctx.send("1...", delete_after=35.0)
         await asyncio.sleep(0.5)
 
         random_int = random.randint(0, 154)
@@ -285,8 +285,7 @@ class FunCommands(commands.Cog):
         embed3.set_image(url=randomImag)
         embed3.set_footer(icon_url = ctx.author.avatar_url, text = f"Le tocó a {ctx.author}") 
         
-        await typing_sleep(ctx)
-        await ctx.send(embed=embed3, delete_after=100.0)
+        await ctx.send(content="Este es el campeon", embeds=[embed3])
         print(f"cmdRandomChamp|| Campeón aleatorio enviado, en la lista hay: {str(len(campeones))}")
 
     @cog_ext.cog_slash(name="meme", description="a quien no le gustan los memes?")

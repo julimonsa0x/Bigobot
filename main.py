@@ -1367,6 +1367,8 @@ async def borrar(ctx, limit=10, member: discord.Member=None):
         except:
             return await ctx.send(content='Se requiere de un numero para el limite de mensajes a borrar!' + '\n' + 'recuerda seguir la sintaxis `#borrar <cantidad de mensajes a borrar>')
         
+        checksent=[]
+
         if not member:
             if borrar_bool:
                 await ctx.channel.purge(limit=limit)
@@ -1376,6 +1378,7 @@ async def borrar(ctx, limit=10, member: discord.Member=None):
             else:
                 await typing_sleep(ctx)
                 await ctx.send(content="Ningun mensaje eliminado", delete_after=10.0)
+                checksent.append("pepe")
         
         async for m in ctx.channel.history():
             if len(msg) == limit:
@@ -1387,10 +1390,10 @@ async def borrar(ctx, limit=10, member: discord.Member=None):
             if borrar_bool:
                 await ctx.channel.delete_messages(msg)
                 await typing_sleep(ctx)
-                await butn.delete()s
+                await butn.delete()
                 await ctx.send(content=f" :wastebasket: {limit} mensajes borrados de {member.mention}", delete_after=10.0)
         else:
-            if not borrar_bool:
+            if (not borrar_bool) and (checksent == []):
                 await typing_sleep(ctx)
                 await ctx.send(content="Ningun mensaje eliminado", delete_after=10.0)
             
@@ -1410,7 +1413,7 @@ async def borrar(ctx, limit=10, member: discord.Member=None):
             await ctx.send(f"`Excepcion: {e}`\n\n`Razon: {e.args}`\n\n`Traceback: {e.with_traceback}`\n\n`Causa:{e.__cause__}`")
 
 
-@slash.slash(description="comando de prueba para submit")
+@slash.slash(description="comando de prueba, carga datos a un .json")
 async def submit(ctx, titulo:str, mensaje:str, log=False):
     """
     4th argument log if true shows whole log, default False.
