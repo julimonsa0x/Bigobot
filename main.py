@@ -1353,10 +1353,12 @@ async def borrar(ctx, limit=10, member: discord.Member=None):
         )
         res = await bot.wait_for("button_click")
         if "cancelar" in res.component.label.lower():
-            await res.respond(type=4)  # ???????
+            await res.respond(type=6)  # ???????
+            await ctx.send(".", delete_after=0.5)
             borrar_bool = False
         elif "borrar" in res.component.label.lower():
-            await res.respond(type=4)  # ???????
+            await res.respond(type=6)  # ???????
+            await ctx.send(".", delete_after=0.5)
             borrar_bool = True
         
         msg = []
