@@ -1331,55 +1331,6 @@ async def ppt(ctx, member : discord.Member=None):
 #-------> juego command end <------
 
 
-# ---> trying to purge with slash <---
-# ---------> Purge messages of a mentioned user <--------
-@slash.slash(description="Borra una cantidad de mensajes")
-async def slashBorrar(ctx, limit=10, member: discord.Member=None):
-    '''
-    Borra una cantidad determinada de mensajes, por defecto 10 mensajes pero puedes establecer una 
-    cantidad. 
-    El argumento <member> pemite borrar especificamente los mensajes de dicho miembro @mencionado.
-    Por ejemplo: [#borrar] <cantidad_de_mensajes_que_deseas_borrar> <usuario_de_quien_borrar_mensajes>
-    Usar el comando a secas causara una eliminacion de 10 mensajes por defecto. 
-    [#borrar] <10> <@usuario_c> causara una eliminacion de los ultimos 10 mensajes del usuario_c....
-    '''
-    try:
-        await ctx.message.delete()  # borra el mensaje del autor al escribir el comando
-        msg = []
-        try:
-            limit = int(limit)     
-        except:
-            return await ctx.send(content='Se requiere de un numero para el limite de mensajes a borrar!' + '\n' + 'recuerda seguir la sintaxis #borrar **<cantidad de mensajes a borrar>**')
-        if not member:
-            await ctx.channel.purge(limit=limit)
-            await typing_sleep(ctx)
-            return await ctx.send(content=f":wastebasket: {limit} mensaje(s) borrado(s)", delete_after=10)
-        async for m in ctx.channel.history():
-            if len(msg) == limit:
-                break
-            if m.author == member:
-                msg.append(m)
-        await ctx.channel.delete_messages(msg)
-        await typing_sleep(ctx)
-        await ctx.send(content=f":wastebasket: {limit} mensajes borrados de {member.mention}", delete_after=12)
-    
-    except Exception as e:
-        # check if the msg is older than 2 weeks
-        if isinstance(e, errors.CommandInvokeError):
-            await typing_sleep(ctx)
-            await ctx.send(content=f":exclamation: {ctx.author.name} solo es posible borrar mensajes con menos de 14 dias de antiguedad...")
-        if isinstance(e, errors.BadArgument):
-            await typing_sleep(ctx)
-            await ctx.send(content=f":exclamation: {ctx.author.name} esa no es la sintaxis correcta del comando, utiliza `#help borrar`!")
-        # otherwise send the name and reason of the exception
-        else:
-            await typing_sleep(ctx)
-            await ctx.send(content=f":exclamation:  Hubo un error al ejecutar el comando. Info detallada:")
-            await ctx.send(content=f"`Excepcion: {e}`\n\n`Razon: {e.args}`\n\n`Traceback: {e.with_traceback}`\n\n`Causa:{e.__cause__}`")
-
-
-
-
 # ---------> Purge messages of a mentioned user <--------
 @bot.command()
 async def borrar(ctx, limit=10, member: discord.Member=None):
@@ -1391,10 +1342,10 @@ async def borrar(ctx, limit=10, member: discord.Member=None):
     Usar el comando a secas causara una eliminacion de 10 mensajes por defecto. 
     [#borrar] <10> <@usuario_c> causara una eliminacion de los ultimos 10 mensajes del usuario_c....
     '''
+    await ctx.message.delete()
     try:
-        await ctx.message.delete()  # borra el mensaje del autor al escribir el comando
         
-        butn = await ctx.send(f"**Estas seguro que quieres borrar {limit} mensajes**",
+        butn = await ctx.send(f"**Estas seguro que quieres borrar {limit} mensajes?**",
             components = [
                 Button(style=ButtonStyle.blue, label="Cancelar y no borrar"),
                 Button(style=ButtonStyle.red, label="Borrar"),
@@ -1402,35 +1353,38 @@ async def borrar(ctx, limit=10, member: discord.Member=None):
         )
         res = await bot.wait_for("button_click")
         if "cancelar" in res.component.label.lower():
+            await res.respond(type=4)  # ???????
             borrar_bool = False
         elif "borrar" in res.component.label.lower():
+            await res.respond(type=4)  # ???????
             borrar_bool = True
         
         msg = []
         try:
             limit = int(limit)     
         except:
-            return await ctx.send('Se requiere de un numero para el limite de mensajes a borrar!' + '\n' + 'recuerda seguir la sintaxis `#borrar <cantidad de mensajes a borrar>')
+            return await ctx.send(content='Se requiere de un numero para el limite de mensajes a borrar!' + '\n' + 'recuerda seguir la sintaxis `#borrar <cantidad de mensajes a borrar>')
         if not member:
             if borrar_bool:
                 await ctx.channel.purge(limit=limit)
                 await typing_sleep(ctx)
-                return await ctx.send(f":wastebasket: {limit} mensaje(s) borrado(s)", delete_after=10)
+                return await ctx.send(content=f" :wastebasket: {limit} mensaje(s) borrado(s)", delete_after=10.0)
             else:
                 await typing_sleep(ctx)
-                await ctx.send("Ningun mensaje eliminado", delete_after=10.0)
+                await ctx.send(content="Ningun mensaje eliminado", delete_after=10.0)
         async for m in ctx.channel.history():
             if len(msg) == limit:
                 break
             if m.author == member:
                 msg.append(m)
-        if borrar_bool:
-            await ctx.channel.delete_messages(msg)
-            await typing_sleep(ctx)
-            await ctx.send(f":wastebasket: {limit} mensajes borrados de {member.mention}", delete_after=12)
+        if member != None:
+            if borrar_bool:
+                await ctx.channel.delete_messages(msg)
+                await typing_sleep(ctx)
+                await ctx.send(content=f" :wastebasket: {limit} mensajes borrados de {member.mention}", delete_after=10.0)
         else:
             await typing_sleep(ctx)
-            await ctx.send("Ningun mensaje eliminado", delete_after=10.0)
+            await ctx.send(content="Ningun mensaje eliminado", delete_after=10.0)
             
         
     except Exception as e:
