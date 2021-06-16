@@ -845,7 +845,7 @@ async def crearemoji_error(ctx, error):
 @slash.slash(description="Invitame a tu servidor!")
 async def invitame(ctx: SlashContext):
     inv = await ctx.send(
-        "testButtons",
+        content="Invitacion",
         components = [
             Button(
                 style=ButtonStyle.URL, 
