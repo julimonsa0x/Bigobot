@@ -180,7 +180,7 @@ class FunCommands(commands.Cog):
             emoji = "💔"
         await ctx.send(content=f"**{user.name}** is **{hot:.2f}%** hot {emoji}")
 
-    @cog_ext.cog_slash(aliases=["slots", "bet"])
+    @cog_ext.cog_slash(description="simula una maquina tragaperras, ideal para turnos.")
     async def slot(self, ctx):
         """ Gira la maquina tragaperras, util para decisiones de turnos """
         emojis = "🍎🍊🍐🍋🍉🍇🍓🍒"

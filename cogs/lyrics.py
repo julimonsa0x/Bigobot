@@ -4,7 +4,9 @@ Requires GENIUS_ACCESS_TOKEN .env
 import discord
 from discord.ext import commands
 import lyricsgenius
-from apis.functions import typing_sleep, printt
+from apis.functions import printt
+
+from discord_slash import cog_ext, SlashContext
 
 import os
 from dotenv import load_dotenv  # to get the .env TOKEN
@@ -19,28 +21,30 @@ class Lyrics(commands.Cog):
     async def on_ready(self):
 	    printt("cog de lyrics listo")
 
-    @commands.command(aliases=['letras','liricas','buscar_letras', 'search_lyrics'])
-    async def lyrics(self, ctx, artist_name: str, *, song_name):
+    @cog_ext.cog_slash(description="Busca las letras de una cancion. Argumento artista debe ser de una sola palabra")
+    async def lyrics(self, ctx: SlashContext, artista: str, *, cancion):
         """
         #lyrics, #letras, #buscar_letras, todos sirven igual.
         Se sube un archivo .txt para que sea mas facil su lectura. 
         Argumento 1 <artist_name>: nombre del artista.
         Argumento 2 <song_name>: nombre de la cancion.
-        Using lyricsgenius==3.0.1 searchs lyrics by song and artist.
         """
         genius = lyricsgenius.Genius(os.getenv('GENIUS_ACCESS_TOKEN'))
-        song = genius.search_song(artist=artist_name, title=song_name)
+        song = genius.search_song(artist=artista, title=cancion)
         
-        with open(f'databases/{song_name[:7]}_lyrics.txt', 'w', encoding='utf-8') as file:
+        with open(f'databases/{cancion[:7]}_lyrics.txt', 'w', encoding='utf-8') as file:
             file.write(song.lyrics)
             printt("Lyrics saved successfully")
         
-        await typing_sleep(ctx)
-        await ctx.send(f"***Letras para {song_name}***")
-        await ctx.send(file=discord.File(f'databases/{song_name[:7]}_lyrics.txt'))
-        #printt(f"=== Beginning ===", delay=0.075)
-        #printt(str(song.lyrics))
-        #printt(f"====== End ======", delay=0.075)
+        await ctx.send(
+            content=f"Mostrando Letras para **{cancion}**", 
+            file=discord.File(f'databases/{cancion[:7]}_lyrics.txt')
+        )
+        
+        # to check the song lyrics from shell
+        # printt(f"=== Beginning ===", delay=0.075)
+        # printt(str(song.lyrics))
+        # printt(f"====== End ======", delay=0.075)
     
 
 def setup(bot):

@@ -13,16 +13,16 @@ import re
 from instaloader.structures import Post, Profile
 from instaloader import Instaloader
 
-from apis.functions import printt, typing_sleep
+from apis.functions import printt
+
+from discord_slash import cog_ext, SlashContext
 
 load_dotenv()
 ##########################################
 
-user_agent_str = 'Mozilla'
-
 
 # instantiate base class.
-insta = Instaloader(user_agent=user_agent_str)
+insta = Instaloader(user_agent='Mozilla')
 
 # Required login for most of the commands
 # Consider saving credentials inside .env
@@ -50,8 +50,8 @@ class Instagram(commands.Cog):
     async def on_ready(self):
         printt("cog de instagram listo")
 
-    @commands.command()
-    async def descargar_post(self, ctx, url:str, nombre:str):
+    @cog_ext.cog_slash(description="descarga un post de insta. 1er arg url. 2do arg nombre para el archivo")
+    async def descargar_post(self, ctx: SlashContext, url:str, nombre:str):
         """
         Descarga un post de instagram de una cuenta publica 
         junto al nombre que le quieras poner al archivo.
@@ -60,8 +60,6 @@ class Instagram(commands.Cog):
         """
         try:
             save_post(url, nombre)
-            await typing_sleep(ctx)
-
             # search for the downloaded file
             for filename in os.listdir(f'./{nombre}'):      
                 # check if filename is compatible
@@ -96,8 +94,7 @@ class Instagram(commands.Cog):
 
                         # send the post
                         await ctx.message.delete()
-                        await typing_sleep(ctx)
-                        await ctx.send(embed=instaEmbed, file=file)
+                        await ctx.send(content="Aqui esta el post", embed=instaEmbed, file=file)
 
                         # after sending the post, delete every file saved
                         await asyncsleep(15)
@@ -123,7 +120,7 @@ class Instagram(commands.Cog):
 
 
         except Exception as e:
-            await ctx.send(f"Ocurrio un error al intentar de descargar un post de instagram...\nExcepcion: `{e}`\n\nTraceback: `{e.with_traceback(e)}`")
+            await ctx.send(content=f"Ocurrio un error al intentar de descargar un post de instagram...\nExcepcion: `{e}`\n\nTraceback: `{e.with_traceback(e)}`")
 
 
 
