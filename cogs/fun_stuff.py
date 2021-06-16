@@ -218,11 +218,12 @@ class FunCommands(commands.Cog):
     @cog_ext.cog_slash(description="Aparece un brawler random")
     async def randombrawl(self, ctx: SlashContext):
         '''Brawler random, recomendado primero jugar al #ppt (piedra papel o tijeras) si se requiere turnarse'''
-        msg = await ctx.send("1...")
+        # countdown
+        firstMsg = await ctx.send(embed=discord.Embed(title="1..."))
         await asyncio.sleep(0.5)
-        await msg.edit("2...")
+        await firstMsg.edit(embed=discord.Embed(title="2..."))
         await asyncio.sleep(0.5)
-        await msg.edit("3...", delete_after=30.0)
+        await firstMsg.edit(embed=discord.Embed(title="3..."))
         await asyncio.sleep(0.5)
         
         randomBrawl = random.choice(brawlers)
@@ -236,17 +237,19 @@ class FunCommands(commands.Cog):
         embed.set_footer(icon_url = ctx.author.avatar_url, text = f"Le tocó a {ctx.author}")
         
         await ctx.send(content="Este es el brawler", embeds=[embed], delete_after=50.0)
+        await asyncio.sleep(30.0)
+        await firstMsg.delete()
         print(f"cmdRandomBrawl|| Brawler aleatorio enviado, en la lista hay: {str(len(brawlers))}")
 
     @cog_ext.cog_slash(description="Aparece un campeon random del lol")
     async def randomchamp(self, ctx: SlashContext):
         '''Campeon random de lol, recomendado primero jugar al #ppt (piedra papel o tijeras) si se requiere turnarse'''
         # countdown
-        msg = await ctx.send("1...")
+        msg = await ctx.send(embed=discord.Embed(title="1..."))
         await asyncio.sleep(0.5)
-        await msg.edit("2...")
+        await msg.edit(embed=discord.Embed(title="2..."))
         await asyncio.sleep(0.5)
-        await msg.edit("3...", delete_after=30.0)
+        await msg.edit(embed=discord.Embed(title="3..."))
         await asyncio.sleep(0.5)
 
         random_int = random.randint(0, 154)
@@ -263,6 +266,8 @@ class FunCommands(commands.Cog):
         embed3.set_footer(icon_url = ctx.author.avatar_url, text = f"Le tocó a {ctx.author}") 
         
         await ctx.send(content="Este es el campeon", embeds=[embed3], delete_after=50.0)
+        await asyncio.sleep(30.0)
+        await msg.delete()
         print(f"cmdRandomChamp|| Campeón aleatorio enviado, en la lista hay: {str(len(campeones))}")
 
     @cog_ext.cog_slash(name="meme", description="a quien no le gustan los memes?")

@@ -31,8 +31,12 @@ import png
 import requests
 #from bs4 import BeautifulSoup
 from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
-from discord_slash import SlashCommand, SlashContext
-from discord_components import DiscordComponents, Button, ButtonStyle, InteractionType
+
+
+from discord_slash import SlashCommand, SlashContext  # slash commands
+from discord_slash.utils.manage_commands import create_permission  # to createa permissions
+from discord_slash.model import SlashCommandPermissionType  # required when creating permissions
+from discord_components import DiscordComponents, Button, ButtonStyle  # buttons 
 
 
 #<-------------------------------------------> Custom imports
@@ -57,7 +61,7 @@ now = datetime.now()
 current_hora = now.strftime("%H:%M:%S")
 current_hour = now.strftime("%d/%m/%Y, %H:%M:%S")  # mm/dd/YY H:M:S format
    
-bot_developer_id = '485259816399536128' # that's me.
+bot_developer_id = ('485259816399536128', '852732703770017842')
 
 intents = discord.Intents.all() 
 
@@ -457,9 +461,12 @@ async def ticket_menu(ctx):
         await ctx.channel.send(embed=embed)
         #alphascript cmd
 
-@bot.command(aliases=['emoterol','rol_emote','rol_reaction','rol_react','rolreaction'])
-@commands.has_permissions(administrator=True)
-async def rol_reaccion(ctx, role: discord.Role=None, msg: discord.Message=None, emoji=None):
+@slash.slash(description="Comando para crear roles raccionable.")
+@slash.permission(guild_id=bigo_guild_id, 
+                  permissions=[
+                   create_permission(559592215295557634, SlashCommandPermissionType.ROLE, True)
+                  ])
+async def rol_reaccion(ctx: SlashContext, role: discord.Role=None, msg: discord.Message=None, emoji=None):
     '''
     Creas un mensaje reaccionable para un determinado rol, quien reaccione a dicho mensaje obtendra tal rol 
     ejemplo de uso: #rol_reaccion Consiglieres 836026898584829963 :thumbsup: 
@@ -473,19 +480,16 @@ async def rol_reaccion(ctx, role: discord.Role=None, msg: discord.Message=None, 
                 emoji_utf = emoji.encode("utf-8")
                 await file.write(f"{role.id} {msg.id} {emoji_utf}\n") # TO_DO: improve file.write poor detailed content 
 
-            await typing_sleep(ctx)
-            await ctx.channel.send("Reacción definida con éxito :thumbsup:")
+            await ctx.channel.send(content="Reacción definida con éxito :thumbsup:")
             print(f"cmdSetReaccion||       {ctx.author.name} definió la reaccion para el rol: {role}")
         
         except discord.errors.Forbidden:
-            await typing_sleep(ctx)
-            await ctx.send(f"Lo siento {ctx.author.name} pero no tienes permisos suficientes para realizar esta accion")
+            await ctx.send(content=f"Lo siento {ctx.author.name} pero no tienes permisos suficientes para realizar esta accion")
 
     else:
-        await typing_sleep(ctx)
-        await ctx.send("Argumentos no válidos, debe ser de la forma #comando <nombre del rol> <id del mensaje a reaccionar> <emoji>")
-        await ctx.send("La idea de este comando es fijar un mensaje para que sea reaccionado y así obtener el rol asignado")
-        await ctx.send(f"{ctx.author.mention} ten en cuenta que el nombre del rol debe ser identico al rol")
+        await ctx.send(content="Argumentos no válidos, debe ser de la forma #comando <nombre del rol> <id del mensaje a reaccionar> <emoji>")
+        await ctx.send(content="La idea de este comando es fijar un mensaje para que sea reaccionado y así obtener el rol asignado")
+        await ctx.send(content=f"{ctx.author.mention} ten en cuenta que el nombre del rol debe ser identico al rol")
         print(f"cmdSetReaccion||          {ctx.author.name} falló al definir una reaccion para un rol")
 
 @bot.command()
@@ -548,12 +552,15 @@ async def set_canal_despedida(ctx, new_channel: discord.TextChannel=None, *, mes
         await ctx.channel.send("No incluiste el nombre del canal o el mensaje a setear...")
         print(f"cmdCanaldeDespedida||    {ctx.author.name} falló al setear un canal de Despedida...")
 
-@bot.command()
-@commands.has_permissions(administrator=True)
-async def advertencias(ctx, member: discord.Member=None):
+@slash.slash(description="Comando para leer las advertencias de un usuario, si las hay.")
+@slash.permission(guild_id=bigo_guild_id, 
+                  permissions=[
+                   create_permission(559592215295557634, SlashCommandPermissionType.ROLE, True)
+                  ])
+async def advertencias(ctx: SlashContext, member: discord.Member=None):
     '''Muestra las advertencias de un @usuario'''
     if member is None:
-        return await ctx.send("No he podido encontrar a ese miembro u olvidaste mencionarlo")
+        return await ctx.send(content="No he podido encontrar a ese miembro u olvidaste mencionarlo")
     
     embed = discord.Embed(title=f"Mostrando advertencias de {member.name}", description="", colour=discord.Colour.red())
     try:
@@ -563,27 +570,22 @@ async def advertencias(ctx, member: discord.Member=None):
             embed.description += f"**Advertencia(s)  {i}**, dadas por {admin.mention}, razón: *'{reason}'*.\n"
             i += 1
 
-        await ctx.send(embed=embed)
+        await ctx.send(content="Mostrando advertencias", embed=embed)
 
     except KeyError: # no warnings
-        await ctx.send("Este usuario no cuenta con advertencias :thumbsup:")
+        await ctx.send(content="Este usuario no cuenta con advertencias :thumbsup:")
         
-@bot.command()
-@commands.has_permissions(administrator=True)
-async def advertir(ctx, member: discord.Member=None, *, reason=None):
-    '''
-    Advierte a un usuario junto a una razon, ideal para moderadores. 
-    Comando experimental y no funcional al 100%
-    Requerido permiso de administracion para poder usar el comando.
-    '''
-    warned =  member.id
-    warner = ctx.author.id
-    
+@slash.slash(description="Comando para dar advertencias a usuarios, solo admins pueden usar este comando")
+@slash.permission(guild_id=bigo_guild_id, 
+                  permissions=[
+                   create_permission(559592215295557634, SlashCommandPermissionType.ROLE, True)
+                  ])
+async def advertir(ctx: SlashContext, member: discord.Member=None, *, reason=None):  
     if member is None:
-        return await ctx.send("No he podido encontrar a ese miembro u olvidaste mencionarlo.")
+        return await ctx.send(content="No he podido encontrar a ese miembro u olvidaste mencionarlo.")
         
     if reason is None:
-        return await ctx.send("Olvidaste la razón por la cual advertir a este usuario.")
+        return await ctx.send(content="Olvidaste la razón por la cual advertir a este usuario.")
 
     try:
         first_warning = False
@@ -596,49 +598,18 @@ async def advertir(ctx, member: discord.Member=None, *, reason=None):
 
     count = bot.warnings[ctx.guild.id][member.id][0]
 
-    # create the .txt warnings file. (base file)
+    # create the .txt warnings file.
     async with aiofiles.open(f"databases/{member.name}_adverts.txt", mode="a") as file:
         await file.write(f"{member.id} {ctx.author.id} {reason}\n")
 
-    warn_json = {
-        "Warnings":[
-            {
-                "warn_no.": count,
-                "warned_id": warned,
-                "warner_id": warner,
-                "reason": reason,
-            }
-        ]
-    }
-
-    new_warn = {    
-        "warn_no.": count,
-        "warned_id": warned,
-        "warner_id": warner,
-        "reason": reason
-    }
-
-    if first_warning:
-        async with aiofiles.open(f"databases/{member.name}_adverts.json", "w") as file_json:
-            await json.dump(warn_json, file_json, indent=4)
-
-    if not first_warning:
-        async with aiofiles.open(f"databases/{member.name}_adverts.json", "r+") as data_file:
-            data = json.load(data_file)
-            data = data["Warnings"][0]
-            data.update(new_warn)
-            #data_file.seek(0)
-            await json.dump(data, data_file, indent=4)
-
-    await typing_sleep(ctx)
-    await ctx.send(f"{member.mention} tiene {count} {'advertencia' if first_warning else 'advertencias'}.")
-    print(f"cmdAdvertir||      {ctx.author.name} advirtio a {member} por {count}° vez a las {current_hour}")
+    await ctx.send(content=f"{member.mention} tiene {count} {'advertencia' if first_warning else 'advertencias'}.")
+    print(f"cmdAdvertir||      {ctx.author.name} advirtio a {member}")
 
 
 
 #-------------> RIP command <-----------------
-@bot.command()
-async def rip(ctx, member:discord.Member=None):
+@slash.slash(description="Pon la foto de un @miembro en una tumba")
+async def rip(ctx: SlashContext, member: discord.Member=None):
     '''Tumba de @alguien a quien menciones'''
     # first we put the member avatar pic
     if not member:
@@ -667,8 +638,7 @@ async def rip(ctx, member:discord.Member=None):
     rip_image.save('images/prip2.jpg')
 
 
-    await typing_sleep(ctx)
-    await ctx.send(file = discord.File(r'images/prip2.jpg'))
+    await ctx.send(content="Aqui esta la foto", file = discord.File(r'images/prip2.jpg'))
     print(f'cmdRip||          {ctx.author.name} ripeo a {member}')
 
 
@@ -855,11 +825,11 @@ async def invitame(ctx: SlashContext):
         ]
     )
     
-    while True:
-        res = await bot.wait_for("button_click")
-        if "invitame" in res.component.label.lower():
-            await res.respond(type=6)
-            await ctx.send(content=f"Ahora podre unirme a tus servidor!")
+# while True:
+#     res = await bot.wait_for("button_click")
+#     if "invitame" in res.component.label.lower():
+#         await res.respond(type=6)
+#         await ctx.send(content=f"Ahora podre unirme a tus servidor!")
     
 
 @bot.command()
@@ -1447,41 +1417,30 @@ async def submit(ctx, titulo:str, mensaje:str, log=False):
         await ctx.send(content="Faltan argumentos para el comando, utiliza `#help submit` para ver los argumentos que espera la función")
 
 
-
 # cog loader cmd
 # bot_developer_id Variable is at top of file
-@bot.command()
-async def load(ctx, extension):
-    '''
-    Loads an specific cog, developer only atm! 
-    Don't include the .py extension!
-    '''
+@slash.slash(description="Carga un cog especifico, solo desarrollador.")
+async def load(ctx: SlashContext, extension):
+    await ctx.defer()
     id = str(ctx.author.id)
-    if id == bot_developer_id:
+    if id in bot_developer_id:
         bot.load_extension(f'cogs.{extension}')
-        await typing_sleep(ctx)
-        await ctx.send(f"{ctx.author.name} cargaste el cog {extension} con exito")
+        await ctx.send(content=f"{ctx.author.name} cargaste el cog {extension} con exito")
         print(f'cmdLoad||     El cog {extension}.py fue cargado con exito')
     else:
-        await typing_sleep(ctx)
-        await ctx.send("Solo el desarrollador puede cargar/habilitar los cogs del bot")
+        await ctx.send(content="Solo el desarrollador puede cargar/habilitar los cogs del bot")
 
 # cog unloader cmd
-@bot.command()
-async def unload(ctx, extension):
-    '''
-    Unloads an specific cog, developer only!
-    Don't include the .py extension!
-    '''
+@slash.slash(description="Desactiva un cogf especifico, solo desarrollador.")
+async def unload(ctx: SlashContext, extension):
+    await ctx.defer()
     id = str(ctx.author.id)
-    if id == bot_developer_id:
+    if id in bot_developer_id:
         bot.unload_extension(f'cogs.{extension}')
-        await typing_sleep(ctx)
-        await ctx.send(f"{ctx.author.name} descargaste el cog {extension} con exito")
+        await ctx.send(content=f"{ctx.author.name} descargaste el cog {extension} con exito")
         print(f'cmdUnload||   El cog {extension}.py fue descargado con exito')
     else:
-        await typing_sleep(ctx)
-        await ctx.send("Solo el desarrollador puede cargar/habilitar los cogs del bot")
+        await ctx.send(content="Solo el desarrollador puede cargar/habilitar los cogs del bot")
 
 
 # ---> ping con latencia  4<----
