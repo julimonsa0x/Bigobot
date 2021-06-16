@@ -6,6 +6,7 @@ import discord
 import asyncio
 import aiohttp
 from discord.ext.commands.core import command
+from discord_slash.model import SlashCommandPermissionType
 import requests
 import json
 from datetime import datetime
@@ -15,7 +16,7 @@ from discord.ext import commands
 from apis import permissions
 from databases import ballresponse
 import apis.tuning
-from apis.functions import printt, typing_sleep, throw_error
+from apis.functions import printt, throw_error
 from apis.listas import (brawlers, 
                     campeones, 
                     images, 
@@ -40,126 +41,107 @@ class FunCommands(commands.Cog):
 	    printt("cog de fun_stuff listo")
     
 
-    @commands.command(aliases=["8ball"])
-    async def eightball(self, ctx, *, question: commands.clean_content):
-        """ Consulta 8ball para recibir una respuesta """
+    @cog_ext.cog_slash(description="Consulta 8ball para recibir una respuesta a una preugnta que escribas")
+    async def eightball(self, ctx: SlashContext, *, pregunta):
         answer = random.choice(ballresponse)
-        await typing_sleep(ctx)
-        await ctx.send(f"🎱 **Pregunta:** {question}\n**Respuesta:** {answer}")
+        await ctx.send(content=f"🎱 **Pregunta:** {pregunta}\n**Respuesta:** {answer}")
 
-    @commands.command()
-    @commands.cooldown(rate=1, per=1.5, type=commands.BucketType.user)
-    async def pato(self, ctx):
+    @cog_ext.cog_slash()
+    async def pato(self, ctx: SlashContext):
         """ Manda una foto de patos random"""
         r = requests.get('https://random-d.uk/api/v1/random')
         duck_url = r.json()["url"]
         embed = discord.Embed(color = discord.Colour.dark_gold())
         embed.set_image(url = duck_url)
         await ctx.message.delete()
-        await typing_sleep(ctx)
-        await ctx.send(embed = embed)
+        await ctx.send(content="pato random", embed = embed)
         print(f"cmdPato||         {ctx.author.name} pidio una foto de patos")
 
-    @commands.command()
-    @commands.cooldown(rate=1, per=1.5, type=commands.BucketType.user)
-    async def cafe(self, ctx):
+    @cog_ext.cog_slash()
+    async def cafe(self, ctx: SlashContext):
         """ Manda una foto de cafe random """
         r = requests.get('https://coffee.alexflipnote.dev/random.json')
         coffe_url = r.json()["file"]
         embed = discord.Embed(color = discord.Colour.dark_gold())
         embed.set_image(url = coffe_url)
-        await typing_sleep(ctx)
-        await ctx.send(embed = embed)
+        await ctx.send(content="toma un cafe", embed = embed)
         print(f"cmdCafe||         {ctx.author.name} pidio una foto de cafes")
 
-    @commands.command(aliases=["flip", "coin", "tossacoin", "flipcoin", "caracruz"])
-    async def coinflip(self, ctx):
-        """ Coinflip! / Cara o cruz, ideal para decisiones de turnos!"""
+    @cog_ext.cog_slash(description="Tira una moneda y devuelve cara o cruz...")
+    async def coinflip(self, ctx: SlashContext):
         # head and tails in english!
         coinsides = ["Cara", "Cruz"]
-        await typing_sleep(ctx)
-        await ctx.send(f"**{ctx.author.name}** tiro una moneda y toco **{random.choice(coinsides)}**!")
+        embedCoin=discord.Embed(title=f"toco **{random.choice(coinsides)}**!")
+        await ctx.send(content=f"**{ctx.author.name}** tiro una moneda", embed=embedCoin)
 
-    @commands.command()
-    async def f(self, ctx, *, text: commands.clean_content = None):
+    @cog_ext.cog_slash(description="paga respetos con un texto opcional.")
+    async def f(self, ctx: SlashContext, *, texto=None):
         """ Press #F to pay respect """
         hearts = ["❤", "💛", "💚", "💙", "💜"]
-        reason = f"por:\n `**{text}**` " if text else ""
-        await typing_sleep(ctx)
+        reason = f"por:\n `**{texto}**` " if texto else ""
+        embedF = discord.Embed(title=f"{reason}{random.choice(hearts)}")
         await ctx.message.delete()
-        await ctx.send(f"**{ctx.author.name}** le ha pagado respetos {reason}{random.choice(hearts)}")
+        await ctx.send(content=f"**{ctx.author.name}** le ha pagado respetos", embed=embedF)
 
-    @commands.command()
-    @commands.cooldown(rate=1, per=2.0, type=commands.BucketType.user)
-    async def definir(self, ctx, *search: commands.clean_content):
+    @cog_ext.cog_slash(description="busca una definicion para cualquier texto.")
+    async def definir(self, ctx: SlashContext, *busqueda):
         """ Encuentra la mejor definicion para tus palabras """
-        async with ctx.channel.typing():
-            try:
-                r = requests.get(f"https://api.urbandictionary.com/v0/define?term={search}").json()
-            except Exception as e:
-                await typing_sleep(ctx)
-                await ctx.send(f"Exception: {e}. Urban API returned invalid data... might be down atm.")
+        try:
+            r = requests.get(f"https://api.urbandictionary.com/v0/define?term={busqueda}").json()
+        except Exception as e:
+            await ctx.send(content=f"Exception: {e}. Urban API returned invalid data... might be down atm.")
 
-            if not r:
-                await typing_sleep(ctx)
-                return await ctx.send("Hubo un error...")
+        if not r:
+            return await ctx.send(content="Hubo un error...")
 
-            if not len(r["list"]):
-                await typing_sleep(ctx)
-                return await ctx.send(f"No pude encontrar una definicion para {search}...")
+        if not len(r["list"]):
+            return await ctx.send(content=f"No pude encontrar una definicion para {busqueda}...")
 
-            result = sorted(r["list"], reverse=True, key=lambda g: int(g["thumbs_up"]))[0]
+        result = sorted(r["list"], reverse=True, key=lambda g: int(g["thumbs_up"]))[0]
 
-            definition = result["definition"]
-            if len(definition) >= 1000:
-                definition = definition[:1000]
-                definition = definition.rsplit(" ", 1)[0]
-                definition += "..."
+        definition = result["definition"]
+        if len(definition) >= 1000:
+            definition = definition[:1000]
+            definition = definition.rsplit(" ", 1)[0]
+            definition += "..."
 
-            await typing_sleep(ctx)
-            await ctx.send(f"📚 Definicion para: **{result['word']}**```fix\n{definition}```")
+        await ctx.send(content=f"📚 Definicion para: **{result['word']}**```fix\n{definition}```")
 
-    @commands.command()
-    async def reverse(self, ctx, *, text: str):
+    @cog_ext.cog_slash(description="invierte un texto, aunque es recomendable utilizar #tunear 4 <texto>.")
+    async def invierte(self, ctx, *, text: str):
         """
-        EN: Everything you type after reverse will of course, be reversed
-        ES: Lo que escribas se da vuelta, aunque es recomendable usar #tunear 4 <tu_texto>
+        Lo que escribas se da vuelta, aunque es recomendable usar #tunear 4 <tu_texto>
         Para mas informacion utiliza **#help tunear** 
         """
         t_rev = text[::-1].replace("@", "@\u200B").replace("&", "&\u200B")
-        await typing_sleep(ctx)
         await ctx.send(f"🔁 {t_rev}")
 
-    @commands.command()
-    async def rating(self, ctx, *, thing: commands.clean_content):
+    @cog_ext.cog_slash(description="Punteo lo que sea")
+    async def rating(self, ctx: SlashContext, *, thing):
         """ Le doy un rating a lo que sea... """
         rate_amount = random.uniform(0.0, 100.0)
-        await typing_sleep(ctx)
-        await ctx.send(f"A `{thing}` le doy un... **{round(rate_amount, 2)} / 100**")
-        print(f"cmdRating||        el bigobot le dio un rating de {rate_amount} a {thing}")
+        await ctx.send(content=f"A `{thing}` le doy un... **{round(rate_amount, 2)} / 100**")
+        print(f"cmdRating||        el bigobot dio un rating")
 
-    @commands.command()
-    async def birra(self, ctx, user: discord.Member = None, *, reason: commands.clean_content = ""):
+    @cog_ext.cog_slash()
+    async def birra(self, ctx: SlashContext, user: discord.Member = None, *, reason: commands.clean_content = ""):
         """ Toma una cerveza con alguien! 🍻, la sintaxis es #birra <@usuario> <razon> """
         
         # if its yourself or theres no mention
         if not user or user.id == ctx.author.id:
-            await typing_sleep(ctx)
-            return await ctx.send(f"**{ctx.author.name}**: paaaarty! 🎉 🍺")
+            return await ctx.send(content=f"**{ctx.author.name}**: paaaarty! 🎉 🍺")
         
         # if you mention the bot
         if user.id == self.bot.user.id:
-            await typing_sleep(ctx)
-            return await ctx.send("Tomare birra contigo 🍻")
+            return await ctx.send(content="Tomare birra contigo 🍻")
         
         # if ??? XDLOL 
         if user.bot:
-            await typing_sleep(ctx)
-            return await ctx.send(f"I would love to give beer to the bot **{ctx.author.name}**, but I don't think it will respond to you :/")
+            return await ctx.send(content=f"Me encantaria tomar una birra contigo **{ctx.author.name}**, pero no creo que sea posible por ahora...")
 
         beer_offer = f"**{user.name}**, acabas de recibir una invitacion 🍺  de parte de: **{ctx.author.name}**"
         beer_offer = beer_offer + f"\n\n**Razon:** {reason}" if reason else beer_offer
-        msg = await ctx.send(beer_offer)
+        msg = await ctx.send(content=beer_offer)
 
         def reaction_check(m):
             if m.message_id == msg.id and m.user_id == user.id and str(m.emoji) == "🍻":
@@ -169,20 +151,18 @@ class FunCommands(commands.Cog):
         try:
             await msg.add_reaction("🍻")
             await self.bot.wait_for("raw_reaction_add", timeout=30.0, check=reaction_check)
-            await typing_sleep(ctx)
             await msg.edit(content=f"**{user.name}** junto a **{ctx.author.name}** estan disfrutando unas birritas 🍻")
         except asyncio.TimeoutError:
             await msg.delete()
-            await typing_sleep(ctx)
-            await ctx.send(f"Al parecer **{user.name}** no tenia interes en tomar una pinta con **{ctx.author.name}** ;-;")
+            await ctx.send(content=f"Al parecer **{user.name}** no tenia interes en tomar una pinta con **{ctx.author.name}** ;-;")
         except discord.Forbidden:
             # Yeah so, if bot doesn't have reaction permission, drop the "offer" word
             beer_offer = f"**{user.name}**, acabas de recibir una invitacion 🍺  de parte de: **{ctx.author.name}**"
             beer_offer = beer_offer + f"\n\n**Razon:** {reason}" if reason else beer_offer
             await msg.edit(content=beer_offer)
 
-    @commands.command(aliases=["howhot", "hot"])
-    async def hotcalc(self, ctx, *, user: discord.Member = None):
+    @cog_ext.cog_slash(description="el calentometro (hotmeter) puntua del 1~100 cualquier cosa que intrduzcas.")
+    async def hotmeter(self, ctx: SlashContext, *, user: discord.Member = None):
         """ Returns a random percent for how hot is a discord user """
         user = user or ctx.author
 
@@ -198,11 +178,9 @@ class FunCommands(commands.Cog):
             emoji = "💞"
         else:
             emoji = "💔"
-        await typing_sleep(ctx)
-        await ctx.send(f"**{user.name}** is **{hot:.2f}%** hot {emoji}")
+        await ctx.send(content=f"**{user.name}** is **{hot:.2f}%** hot {emoji}")
 
-    @commands.command(aliases=["slots", "bet"])
-    @commands.cooldown(rate=1, per=3.0, type=commands.BucketType.user)
+    @cog_ext.cog_slash(aliases=["slots", "bet"])
     async def slot(self, ctx):
         """ Gira la maquina tragaperras, util para decisiones de turnos """
         emojis = "🍎🍊🍐🍋🍉🍇🍓🍒"
@@ -213,14 +191,14 @@ class FunCommands(commands.Cog):
         slotmachine = f"**[ {a} {b} {c} ]\n{ctx.author.name}**,"
 
         if (a == b == c):
-            await ctx.send(f"{slotmachine} Perfecto, Tu ganas! 🎉")
+            await ctx.send(content=f"{slotmachine} Perfecto, Tu ganas! 🎉")
         elif (a == b) or (a == c) or (b == c):
-            await ctx.send(f"{slotmachine} Casi perfecto, pero aun ganas! 🎉")
+            await ctx.send(content=f"{slotmachine} Casi perfecto, pero aun ganas! 🎉")
         else:
-            await ctx.send(f"{slotmachine} No hay match, no ganas... 😢")
+            await ctx.send(content=f"{slotmachine} No hay match, no ganas... 😢")
 
-    @commands.command(aliases=['dices','roll_dices','tirardados','tirar_dados','lanzardados'])
-    async def dados(self, ctx, user=None, number1=1, number2=6):
+    @cog_ext.cog_slash(description="Lanza dados del 1 al 6. Comando personalizable, los ultimos dos argumentos pueden cambiar su digito!")
+    async def dados(self, ctx: SlashContext, user=None, number1=1, number2=6):
         '''
         Tira un dado, recomendado para decidir turnos...
         argumento user opcional.
@@ -234,18 +212,17 @@ class FunCommands(commands.Cog):
             description=f"Toco el numero {number} para {user.mention}")
         dadosEmbed.set_thumbnail(url="https://cdn.discordapp.com/attachments/793309880861458473/842125661585276978/1f3b2.png") # dado.png
 
-        await typing_sleep(ctx)
-        await ctx.send(embed=dadosEmbed)
-        print(f"cmdDados||   A {ctx.author.name} le tocó el dado {number}")
+        await ctx.send(content="Dados lanzados!", embed=dadosEmbed)
+        print(f"cmdDados||      Comando utilizado")
 
-    @commands.command(description="Aparece un brawler random")
-    async def randombrawl(self, ctx):
+    @cog_ext.cog_slash(description="Aparece un brawler random")
+    async def randombrawl(self, ctx: SlashContext):
         '''Brawler random, recomendado primero jugar al #ppt (piedra papel o tijeras) si se requiere turnarse'''
-        await ctx.send("3...", delete_after=45.0)
+        msg = await ctx.send("1...")
         await asyncio.sleep(0.5)
-        await ctx.send("2...", delete_after=45.0)
+        await msg.edit("2...")
         await asyncio.sleep(0.5)
-        await ctx.send("1...", delete_after=45.0)
+        await msg.edit("3...", delete_after=30.0)
         await asyncio.sleep(0.5)
         
         randomBrawl = random.choice(brawlers)
@@ -258,18 +235,18 @@ class FunCommands(commands.Cog):
         embed.add_field(name= "**Brawler Aleatorio:**", value=f"**{randomBrawl}**")
         embed.set_footer(icon_url = ctx.author.avatar_url, text = f"Le tocó a {ctx.author}")
         
-        await typing_sleep(ctx)
-        await ctx.send(embed=embed, delete_after=100.0)
+        await ctx.send(content="Este es el brawler", embeds=[embed], delete_after=50.0)
         print(f"cmdRandomBrawl|| Brawler aleatorio enviado, en la lista hay: {str(len(brawlers))}")
 
     @cog_ext.cog_slash(description="Aparece un campeon random del lol")
     async def randomchamp(self, ctx: SlashContext):
         '''Campeon random de lol, recomendado primero jugar al #ppt (piedra papel o tijeras) si se requiere turnarse'''
-        await ctx.send("3...", delete_after=35.0)
+        # countdown
+        msg = await ctx.send("1...")
         await asyncio.sleep(0.5)
-        await ctx.send("2...", delete_after=35.0)
+        await msg.edit("2...")
         await asyncio.sleep(0.5)
-        await ctx.send("1...", delete_after=35.0)
+        await msg.edit("3...", delete_after=30.0)
         await asyncio.sleep(0.5)
 
         random_int = random.randint(0, 154)
@@ -285,11 +262,12 @@ class FunCommands(commands.Cog):
         embed3.set_image(url=randomImag)
         embed3.set_footer(icon_url = ctx.author.avatar_url, text = f"Le tocó a {ctx.author}") 
         
-        await ctx.send(content="Este es el campeon", embeds=[embed3])
+        await ctx.send(content="Este es el campeon", embeds=[embed3], delete_after=50.0)
         print(f"cmdRandomChamp|| Campeón aleatorio enviado, en la lista hay: {str(len(campeones))}")
 
     @cog_ext.cog_slash(name="meme", description="a quien no le gustan los memes?")
     async def meme(self, ctx: SlashContext):
+
         random_link = random.choice(images)
         if (
                 random_link.startswith('https://video.twimg.com/ext_tw_video/') or 
@@ -305,10 +283,8 @@ class FunCommands(commands.Cog):
             embedMeme.set_image(url = str(random_link))
             await ctx.send(content="meme salido del horno", embeds=[embedMeme])
 
-    @commands.command()
-    #@commands.has_permissions(kick_members=True)
-    #for if you wanna limit this command usage and prevent spamming
-    async def contar(self, ctx, number: int, intervalo):
+    @cog_ext.cog_slash(description="1er argumento number, un numero. 2do argumento int. tiempo de espera en segundos")
+    async def contar(self, ctx: SlashContext, number: int, intervalo):
         '''
         El bot cuenta hasta un numero dado, puede ser re carnasa...
         Los mensajes luego de 30 segundos se autoeliminan...
@@ -317,53 +293,48 @@ class FunCommands(commands.Cog):
         Ejemplo: `#contar 50 0.5` -> el bot contara hasta el 50 a velocidad de 1/2 segundo
         '''
         i = 1
-        while i <= number:
-            async with ctx.typing():    
-                await asyncio.sleep(float(intervalo))
-                await ctx.send(f"{i}", delete_after=30.0)
-                i += 1
+        while i <= number:    
+            await asyncio.sleep(float(intervalo))
+            await ctx.send(content=f"{i}", delete_after=30.0)
+            i += 1
 
-    @commands.command()
-    async def trivia(self, ctx):
+    @cog_ext.cog_slash()
+    async def trivia(self, ctx: SlashContext):
         '''It's trivia time!!!'''
-        await typing_sleep(ctx)
-        msg = await ctx.channel.send(random.choice(trivias))
+        msg = await ctx.channel.send(content=random.choice(trivias))
         await msg.add_reaction(u"\u2705")
         await msg.add_reaction(u"\U0001F6AB")
 
         try:
             reaction, user = await self.bot.wait_for("reaction_add", check=lambda reaction, user: user == ctx.author and reaction.emoji in [u"\u2705", u"\U0001F6AB"], timeout=15.0)  
+            # countdown
+            msg = await ctx.send("1...")
             await asyncio.sleep(1)
-            await ctx.channel.send("3...", delete_after=15.0)
+            await msg.edit("2...")
             await asyncio.sleep(1)
-            await ctx.channel.send("2...", delete_after=15.0)
+            await msg.edit("3...", delete_after=30.0)
             await asyncio.sleep(1)
-            await ctx.channel.send("1...", delete_after=15.0)
 
         except asyncio.TimeoutError:
-            await typing_sleep(ctx)
-            await ctx.channel.send("Che me ignoraron la trivia (▀̿Ĺ̯▀̿ ̿) ", delete_after=35.0)
+            await ctx.channel.send(content="Che me ignoraron la trivia (▀̿Ĺ̯▀̿ ̿) ", delete_after=35.0)
 
         else:
             if reaction.emoji ==  u"\u2705":
-                await typing_sleep(ctx)
                 await ctx.message.delete()
-                await ctx.channel.send(random.choice(trivia_accept), delete_after=120.0)
+                await ctx.channel.send(content=random.choice(trivia_accept), delete_after=120.0)
 
             else:
-                await typing_sleep(ctx)
                 await ctx.message.delete()
-                await ctx.channel.send(random.choice(trivia_decline), delete_after=120.0)
+                await ctx.channel.send(content=random.choice(trivia_decline), delete_after=120.0)
 
-    @commands.command()
-    async def willy(self, ctx):
+    @cog_ext.cog_slash()
+    async def willy(self, ctx: SlashContext):
         '''videos del willy out of context, un cago de risa...'''
-        await typing_sleep(ctx)
-        await ctx.send(random.choice(willyooc))
-        print(f'cmdWilly||      Willy OOC enviado a {ctx.author.name}')
+        await ctx.send(content=random.choice(willyooc))
+        print(f'cmdWilly||      video de Willy OOC enviado')
 
-    @commands.command(aliases=['tunearletras','messletters','changefont'])
-    async def tunear(self, ctx, orden: int, *, args=None,):
+    @cog_ext.cog_slash(description="Tunea un texto (fuente), 2do argumento <orden> 1 ~ 8, 3er argumento <tutexto>")
+    async def tunear(self, ctx: SlashContext, orden: int, *, args=None):
         '''
         Tunea un texto, la sintaxis es #[tunear] <orden> <el_texto_que_quieras_tunear>. 
         El orden debe ser un numero del 1 al 7 (distintas fuentes)
@@ -380,60 +351,54 @@ class FunCommands(commands.Cog):
         try:
             if args != None:
                 myThiccString = apis.tuning.tunear(args.replace("#tunear", ""), orden)
-                await typing_sleep(ctx)
-                await ctx.send(myThiccString)
+                await ctx.send(content=myThiccString)
                 print(f"cmdTunear1||        {ctx.author.name} tuneó un texto")
 
             elif args is None and orden is None:
-                await typing_sleep(ctx)    
-                await ctx.send("Seguido del comando debes introducir un orden (1 a 6) seguido del texto a tunear", delete_after=60.0)
-                await ctx.send("A modo de ejemplo: **#tunear 4 textodepruebacopipedro**", delete_after=60.0)
+                await ctx.send(content="Seguido del comando debes introducir un orden (1 a 8) seguido del texto a tunear", delete_after=30.0)
+                await ctx.send(content="A modo de ejemplo: **#tunear 4 textodepruebacopipedro**", delete_after=30.0)
                 print(f"cmdTunear||        {ctx.author.name} falló al tunear un texto")
 
         except Exception as e:
             if isinstance(e, commands.MissingRequiredArgument):
-                await typing_sleep(ctx)
-                await ctx.send("Debes seguir la sintáxis #tunear <orden>, prueba con #help tunear para mas info.", delete_after=130.0)
-                await ctx.send("Recuerda que si quieres ver la sintaxis especfica de un comando puedes recurrir a **#help <#comando>** y para ver todos los comandos puedes recurrir a **#help** o **#ayuda** / **#comandos**", delete_after=150.0)
+                await ctx.send(content="Debes seguir la sintáxis #tunear <orden>, prueba con #help tunear para mas info.", delete_after=130.0)
+                await ctx.send(content="Recuerda que si quieres ver la sintaxis especfica de un comando puedes recurrir a **#help <#comando>** y para ver todos los comandos puedes recurrir a **#help** o **#ayuda** / **#comandos**", delete_after=150.0)
             else:
-                await typing_sleep(ctx)
                 await throw_error(ctx=ctx, e=e)
 
 
     ##############
     ############## COMANDOS DE VIDEOS RANDOMS 
     #---> Lamar roasts Franklin vid <---
-    @commands.command()
-    async def roast(self, ctx):
+    @cog_ext.cog_slash()
+    async def roast(self, ctx: SlashContext):
         '''Lamar roasts Franklin trending videos...'''
-        await typing_sleep(ctx)
-        await ctx.send(random.choice(roasts))
-        print(f'cmdRoast||      Lamar v Franklin enviado a {ctx.author.name}')
+        await ctx.send(content=random.choice(roasts))
+        print(f'cmdRoast||      Lamar v Franklin enviado.')
 
     #---> LocuraBailandoSinPantalones vid <---
-    @commands.command()
-    async def locurabailando(self, ctx):
+    @cog_ext.cog_slash()
+    async def locurabailando(self, ctx: SlashContext):
         '''Locura bailando...'''
         await ctx.send("http://youtu.be/tvvGVZpnOMA")
         print(f'cmdLocura...||  Video del locurabailando a {ctx.author.name}')
 
     #---> gordoPistero vid <---
-    @commands.command()
-    async def pistero(self, ctx):
+    @cog_ext.cog_slash()
+    async def pistero(self, ctx: SlashContext):
         '''Gordo pistero'''
-        await ctx.send("https://cdn.discordapp.com/attachments/793309880861458473/850956075892998175/gordo_pistero_en_moto_con_cancion_brasilena.mp4")
-        print(f'cmdLocura...|| Video del gordopistero enviado a {ctx.author.name}')
+        await ctx.send(content="https://cdn.discordapp.com/attachments/793309880861458473/850956075892998175/gordo_pistero_en_moto_con_cancion_brasilena.mp4")
+        print(f'cmdLocura...||      Video del gordopistero enviado')
 
     #---> TADEO 1hs EN WHEELIE vid <---
-    @commands.command()
-    @commands.has_permissions(administrator=True)
-    async def tadeo(self, ctx):
+    @cog_ext.cog_slash()
+    async def tadeo(self, ctx: SlashContext):
         '''Video del Tadeo moto moto 1 hora en bucle'''
-        await ctx.send("https://youtu.be/ffoXJhzwcHQ")
+        await ctx.send(content="https://youtu.be/ffoXJhzwcHQ")
 
     #---> MATEUS505 GALO SNIPER vid <---
-    @commands.command()
-    async def galosniper(self, ctx):
+    @cog_ext.cog_slash()
+    async def galosniper(self, ctx: SlashContext):
         ''' PLEASE DO NOT ! '''
         embedGalo = discord.Embed(
             title="galo sniper",
@@ -451,8 +416,9 @@ class FunCommands(commands.Cog):
         embedGalo.add_field(name="FATO 8: ¿QUAL o SEU INSTAGRAM", value="GALO SNIPER", inline=False)
         embedGalo.add_field(name="FATO 9: ¿QUAL SEU MELHOR AMIGO DA INFANCIA?", value="GALO SNIPER")
         embedGalo.add_field(name="FATO 10: ¿QUAL SEU ANIMAL FAVORITO?", value="Spoky ???? SNIPER", inline=False)
-        await ctx.send(embed=embedGalo)
-        await ctx.send("https://www.youtube.com/watch?v=cwiVlpW7-XM")
+        embedGalo.set_footer(text="galo sniper")
+        
+        await ctx.send(content="https://www.youtube.com/watch?v=cwiVlpW7-XM", embed=embedGalo)
         print(f'cmdGaloSniper||   Video del GALOSNIPER enviado a {ctx.author.name} XD')
     ############## FIN DE VIDEOS DE COMANDOS RANDOMS
     ##############

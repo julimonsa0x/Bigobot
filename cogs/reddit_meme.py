@@ -13,7 +13,9 @@ from dotenv import load_dotenv
 from os import getenv
 load_dotenv()
 
-from apis.functions import typing_sleep, printt
+from discord_slash import cog_ext, SlashContext
+
+from apis.functions import printt
 REDDIT_ICON = 'https://media.discordapp.net/attachments/793309880861458473/852006681126895666/toppng.com-reddit-logo-reddit-icon-698x698.png?width=498&height=498'
 
 
@@ -27,8 +29,8 @@ class RedditMeme(commands.Cog):
         printt("cog de reddit_meme listo")
     
 
-    @commands.command(aliases=['redditmeme','memereddit','meme_reddit'])
-    async def reddit_meme(self, ctx, subreddit_to_search=None):
+    @cog_ext.cog_slash(description="Busca memes en reddit, argumento <subredit_to_search> personalizable para buscar en un subreddit especifico. Por defecto busca en r/memes (ingles)")
+    async def reddit_meme(self, ctx: SlashContext, subreddit_to_search=None):
         """
         ES: Busca un meme random en un subreddit dado.
         por defecto envia memes del subreddit r/memes...
@@ -69,12 +71,14 @@ class RedditMeme(commands.Cog):
             embedReddit.set_image(url=url_var)
             embedReddit.set_footer(icon_url = ctx.author.avatar_url, text = f"Meme para {ctx.author.name}")
             
-            await typing_sleep(ctx)
-            await ctx.send(embed = embedReddit)
+
+            await ctx.send(content="Aqui esta el meme", embed=embedReddit)
             print(f'cmdRedditMeme||         Meme enviado a {ctx.author.name}')
         except:
             printt("====| El 1er metodo para extraer memes fallo, usando el 2do metodo")
             
+            await ctx.defer()
+            # pesonal credentials!
             reddit = asyncpraw.Reddit(
                 client_id = getenv('CLIENT_ID'),
                 client_secret = getenv('CLIENT_SECRET'),
@@ -95,20 +99,22 @@ class RedditMeme(commands.Cog):
             name = random_sub.title
             url = random_sub.url
 
-            embed = discord.Embed(
+            embedTwo = discord.Embed(
                 title=f'__{name}__',
                 colour=discord.Color.purple(),
                 timestamp = ctx.message.created_at,
                 url=url
             )
 
-            embed.set_image(url=url)
-            embed.set_footer(text="Este es el meme 🥂:", icon_url=REDDIT_ICON)
+            embedTwo.set_image(url=url)
+            embedTwo.set_footer(text="Este es el meme 🥂:", icon_url=REDDIT_ICON)
             
-            await typing_sleep(ctx)
             await ctx.message.delete()
-            await ctx.send("Usando el segundo metodo del comando ya que el primer metodo retorna error 429", delete_after=10.0)
-            await ctx.send(embed=embed)
+            await ctx.send(
+                content="Usando el segundo metodo del comando ya que el primer metodo retorna error 429", 
+                embed=embedTwo,
+            )
+
 
 def setup(bot):
     bot.add_cog(RedditMeme(bot))

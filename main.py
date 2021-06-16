@@ -211,12 +211,11 @@ async def feliz_jueves():
             with open('json_files/felizjueves.json', 'w', encoding="utf8") as thu:
                 thu.write('{["is_sent":false]}')
 
-        
         # read the json to check if already sent
         try:
             with open('json_files/felizjueves.json', 'r', encoding="utf8") as thur:
                 content = json.load(thur)
-            is_sent = content[0]
+            is_sent = content[0]["is_sent"]
             print(f"====| Imprimiendo lo cargado del json: {is_sent}")
         except Exception as e:
             print(f"====| Hubo un error al cargar los datos del json del feliz jueves\nExcepcion:{e} - Causa:{e.__cause__} - Traceback:{e.__annotations__}")
