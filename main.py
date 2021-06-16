@@ -218,7 +218,7 @@ async def feliz_jueves():
             is_sent = content[0]["is_sent"]
             print(f"====| Imprimiendo lo cargado del json: {is_sent}")
         except Exception as e:
-            print(f"====| Hubo un error al cargar los datos del json del feliz jueves\nExcepcion:{e} - Causa:{e.__cause__} - Traceback:{e.__annotations__}")
+            print(f"====| Hubo un error al cargar los datos del json del feliz jueves\nExcepcion:{e} - Causa:{e.__cause__} - Traceback:{e.with_traceback}")
 
         today_int = datetime.today().weekday()  # range 0 - 6 
         #date_sent = str(date.today())  # YYYY-MM-DD
