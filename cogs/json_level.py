@@ -20,29 +20,37 @@ class LevelSystem(commands.Cog):
     @commands.command(aliases = ['rank','lvl','nivel'])
     async def level(self, ctx, member: discord.Member = None):
         """ Muestra el nivel basado en cantidad de comentarios enviados de un @miembro """
-        if not member:
-            user = ctx.message.author
-            with open('databases/level.json','r') as f:
-                users = json.load(f)
-            lvl = users[str(ctx.guild.id)][str(user.id)]['level']
-            exp = users[str(ctx.guild.id)][str(user.id)]['experience']
+        try:
+            if not member:
+                user = ctx.message.author
+                with open('databases/level.json','r') as f:
+                    users = json.load(f)
+                lvl = users[str(ctx.guild.id)][str(user.id)]['level']
+                exp = users[str(ctx.guild.id)][str(user.id)]['experience']
 
-            embed = discord.Embed(title = 'Level {}'.format(lvl), description = f"{exp} XP " ,color = discord.Color.green())
-            embed.set_author(name = ctx.author, icon_url = ctx.author.avatar_url)
-            await ctx.message.delete()
-            await typing_sleep(ctx)
-            await ctx.send(embed = embed)
-        else:
-            with open('databases/level.json','r') as f:
-                users = json.load(f)
-            lvl = users[str(ctx.guild.id)][str(member.id)]['level']
-            exp = users[str(ctx.guild.id)][str(member.id)]['experience']
-            embed = discord.Embed(title = 'Nivel {}'.format(lvl), description = f"{exp} XP" ,color = discord.Color.green())
-            embed.set_author(name = member, icon_url = member.avatar_url)
+                embed = discord.Embed(title = 'Level {}'.format(lvl), description = f"{exp} XP " ,color = discord.Color.green())
+                embed.set_author(name = ctx.author, icon_url = ctx.author.avatar_url)
+                await ctx.message.delete()
+                await typing_sleep(ctx)
+                await ctx.send(embed = embed)
+            else:
+                with open('databases/level.json','r') as f:
+                    users = json.load(f)
+                lvl = users[str(ctx.guild.id)][str(member.id)]['level']
+                exp = users[str(ctx.guild.id)][str(member.id)]['experience']
+                embed = discord.Embed(title = 'Nivel {}'.format(lvl), description = f"{exp} XP" ,color = discord.Color.green())
+                embed.set_author(name = member, icon_url = member.avatar_url)
 
-            await ctx.message.delete()
-            await typing_sleep(ctx)
-            await ctx.send(embed = embed)
+                await ctx.message.delete()
+                await typing_sleep(ctx)
+                await ctx.send(embed = embed)
+        
+        except Exception as e:
+            if isinstance(e, commands.errors.CommandInvokeError):
+                await typing_sleep(ctx)
+                await ctx.send("No tengo registros de tal usuario, intenta de nuevo.")
+            else:
+                pass
 
 
     @commands.command(aliases=['cambiar_prefijo','set_prefix'])

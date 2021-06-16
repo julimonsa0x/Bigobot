@@ -1320,9 +1320,7 @@ async def borrar(ctx, limit=10, member: discord.Member=None):
     Usar el comando a secas causara una eliminacion de 10 mensajes por defecto. 
     [#borrar] <10> <@usuario_c> causara una eliminacion de los ultimos 10 mensajes del usuario_c....
     '''
-    await ctx.message.delete()
     try:
-        
         butn = await ctx.send(f"**Estas seguro que quieres borrar {limit} mensajes?**",
             components = [
                 Button(style=ButtonStyle.blue, label="Cancelar y no borrar"),
@@ -1332,11 +1330,11 @@ async def borrar(ctx, limit=10, member: discord.Member=None):
         res = await bot.wait_for("button_click")
         if "cancelar" in res.component.label.lower():
             await res.respond(type=6)  # ???????
-            await ctx.send(".", delete_after=0.5)
+            await ctx.send(".", delete_after=0.1)
             borrar_bool = False
         elif "borrar" in res.component.label.lower():
             await res.respond(type=6)  # ???????
-            await ctx.send(".", delete_after=0.5)
+            await ctx.send(".", delete_after=0.1)
             borrar_bool = True
         
         msg = []

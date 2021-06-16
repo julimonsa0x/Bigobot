@@ -230,15 +230,15 @@ class FunCommands(commands.Cog):
         order = brawlers.index(randomBrawl)
         imageBrawl = brawlers_images[order]
 
-        embed = discord.Embed(color = discord.Colour.orange())
-        embed.set_thumbnail(url="https://cdn.discordapp.com/attachments/793309880861458473/797964925980246066/c849eb95e858ce12cdc86cb6d4ecb36b00bbdfaa96d9973852d1421661f5aec5200.png")
-        embed.set_image(url=imageBrawl)
-        embed.add_field(name= "**Brawler Aleatorio:**", value=f"**{randomBrawl}**")
-        embed.set_footer(icon_url = ctx.author.avatar_url, text = f"Le tocó a {ctx.author}")
+        brawlEmbed = discord.Embed(color = discord.Colour.orange())
+        brawlEmbed.set_thumbnail(url="https://cdn.discordapp.com/attachments/793309880861458473/797964925980246066/c849eb95e858ce12cdc86cb6d4ecb36b00bbdfaa96d9973852d1421661f5aec5200.png")
+        brawlEmbed.set_image(url=imageBrawl)
+        brawlEmbed.add_field(name= "**Brawler Aleatorio:**", value=f"**{randomBrawl}**")
+        brawlEmbed.set_footer(icon_url = ctx.author.avatar_url, text = f"Le tocó a {ctx.author}")
         
-        await ctx.send(content="Este es el brawler", embeds=[embed], delete_after=50.0)
-        await asyncio.sleep(30.0)
         await firstMsg.delete()
+        await ctx.send(content="Este es el brawler", embeds=[brawlEmbed], delete_after=50.0)
+        await asyncio.sleep(30.0)
         print(f"cmdRandomBrawl|| Brawler aleatorio enviado, en la lista hay: {str(len(brawlers))}")
 
     @cog_ext.cog_slash(description="Aparece un campeon random del lol")
@@ -260,14 +260,14 @@ class FunCommands(commands.Cog):
             randomSubt = key["campeones"][random_int]["frase"]
             randomImag = key["campeones"][random_int]["icon"]
             
-        embed3 = discord.Embed(title=randomCham,description=randomSubt,color = discord.Colour.orange())
-        embed3.set_thumbnail(url="https://cdn.discordapp.com/attachments/793309880861458473/797965087767396442/lol-icon.png")
-        embed3.set_image(url=randomImag)
-        embed3.set_footer(icon_url = ctx.author.avatar_url, text = f"Le tocó a {ctx.author}") 
+        lolEmbed = discord.Embed(title=randomCham,description=randomSubt,color = discord.Colour.orange())
+        lolEmbed.set_thumbnail(url="https://cdn.discordapp.com/attachments/793309880861458473/797965087767396442/lol-icon.png")
+        lolEmbed.set_image(url=randomImag)
+        lolEmbed.set_footer(icon_url = ctx.author.avatar_url, text = f"Le tocó a {ctx.author}") 
         
-        await ctx.send(content="Este es el campeon", embeds=[embed3], delete_after=50.0)
-        await asyncio.sleep(30.0)
         await msg.delete()
+        await ctx.send(content="Este es el campeon", embeds=[lolEmbed], delete_after=50.0)
+        await asyncio.sleep(30.0)
         print(f"cmdRandomChamp|| Campeón aleatorio enviado, en la lista hay: {str(len(campeones))}")
 
     @cog_ext.cog_slash(name="meme", description="a quien no le gustan los memes?")
@@ -313,11 +313,11 @@ class FunCommands(commands.Cog):
         try:
             reaction, user = await self.bot.wait_for("reaction_add", check=lambda reaction, user: user == ctx.author and reaction.emoji in [u"\u2705", u"\U0001F6AB"], timeout=15.0)  
             # countdown
-            msg = await ctx.send("1...")
+            msgg = await ctx.send(embed=discord.Embed(title="1..."))
             await asyncio.sleep(1)
-            await msg.edit("2...")
+            await msgg.edit(embed=discord.Embed(title="2..."))
             await asyncio.sleep(1)
-            await msg.edit("3...", delete_after=30.0)
+            await msgg.edit(embed=discord.Embed(title="3..."))
             await asyncio.sleep(1)
 
         except asyncio.TimeoutError:
