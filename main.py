@@ -218,7 +218,7 @@ async def feliz_jueves():
             is_sent = content[0]["is_sent"]
             print(f"====| Imprimiendo lo cargado del json: {is_sent}")
         except Exception as e:
-            print(f"====| Hubo un error al cargar los datos del json del feliz jueves\nExcepcion:{e} - Causa:{e.__cause__} - Traceback:{e.with_traceback}")
+            print(f"====| Hubo un error al cargar los datos del json del feliz jueves\n-> Excepcion:{e}\n-> Causa:{e.__cause__}\n-> Traceback:{e.with_traceback}")
 
         today_int = datetime.today().weekday()  # range 0 - 6 
         #date_sent = str(date.today())  # YYYY-MM-DD
@@ -240,12 +240,12 @@ async def feliz_jueves():
                     felizjuevesEmbed.set_image(url='https://cdn.discordapp.com/attachments/793309880861458473/849848243662618644/Feliz_Jueves.mp4')
                     await general_bigos.send(embed=felizjuevesEmbed)
                     with open('json_files/felizjueves.json', 'w', encoding="utf8") as thursd:
-                        content["is_sent"] = True
+                        content[0]["is_sent"] = True
                         json.dump(content, thursd, indent=2)
                     print("====| Enviado con exito el feliz jueves mañanero semanal!")
 
                 except Exception as e:
-                    print(f"!!!Hubo un error al enviar el feliz jueves semanal: Excepcion:{e}\nCausa:{e.__cause__}\nTraceback{e.with_traceback}")
+                    print(f"!!!Hubo un error al enviar el feliz jueves semanal\n-> Excepcion:{e}\n-> Causa:{e.__cause__}\n-> Traceback{e.with_traceback}")
                 
                 # wait for a whole week now
                 await asyncio.sleep(60 * 60 * 24 * 7)
@@ -842,21 +842,34 @@ async def crearemoji_error(ctx, error):
         pass
 
 
-# a slash command that returns "working"
-@slash.slash(description="Comando de prueba")
-async def testcmd(ctx: SlashContext):
-    await ctx.send(content="Working!")
-
+@slash.slash(description="Invitame a tu servidor!")
+async def invitame(ctx: SlashContext):
+    inv = await ctx.send(
+        "testButtons",
+        components = [
+            Button(
+                style=ButtonStyle.URL, 
+                label="Invitame a tu server", 
+                url="https://discord.com/api/oauth2/authorize?client_id=788950461884792854&permissions=8&scope=bot%20applications.commands"
+            ),
+        ]
+    )
+    
+    while True:
+        res = await bot.wait_for("button_click")
+        if "invitame" in res.component.label.lower():
+            await res.respond(type=6)
+            await ctx.send(content=f"Ahora podre unirme a tus servidor!")
+    
 
 @bot.command()
 async def testButtons(ctx):
     m = await ctx.send(
         "testButtons",
         components = [
-            Button(style=ButtonStyle.red, label="Boton deshabilitado", disabled=True),
+            Button(style=ButtonStyle.red, label="Boton test deshabilitado", disabled=True),
             Button(style=ButtonStyle.blue, label="Click test"),
             Button(style=ButtonStyle.URL, label="Repositorio", url="https://github.com/julimonsa0x/Bigobot"),
-            Button(style=ButtonStyle.URL, label="Invitame a tu server", url="https://discord.com/api/oauth2/authorize?client_id=788950461884792854&permissions=8&scope=bot%20applications.commands"),
         ],
     )
     while True:
@@ -864,10 +877,6 @@ async def testButtons(ctx):
         if "repo" in res.component.label.lower():
             await res.respond(type=6)
             await ctx.send(content=f" :white_check_mark: {res.button.label} has been clicked!")
-        
-        elif "invitame" in res.component.label.lower():
-            await res.respond(type=6)
-            await ctx.send(" :white_check_mark: Ahora podre unirme a tu servidor!")
     
         elif "click" in res.component.label.lower():
             await res.respond(type=6)
