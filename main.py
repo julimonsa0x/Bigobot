@@ -5,7 +5,7 @@
 import os
 import sys
 from discord.guild import Guild  # to get python version ????? who modified this ahh fuck pylance...
-from dotenv import load_dotenv  # to get the .env TOKEN
+from dotenv import load_dotenv  # check readme.md
 # ----------------------------------------->  # discord.py fundamentals 
 import discord
 from discord.ext import commands, tasks
@@ -34,7 +34,7 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageOps
 
 
 from discord_slash import SlashCommand, SlashContext  # slash commands
-from discord_slash.utils.manage_commands import create_permission  # to createa permissions
+from discord_slash.utils.manage_commands import add_slash_command, create_permission  # to create permissions
 from discord_slash.model import SlashCommandPermissionType  # required when creating permissions
 from discord_components import DiscordComponents, Button, ButtonStyle  # buttons 
 
@@ -43,8 +43,7 @@ from discord_components import DiscordComponents, Button, ButtonStyle  # buttons
 import apis.listas
 import apis.tuning
 import game
-from apis.functions import (degrees_to_cardinal, 
-                       get_dolar, 
+from apis.functions import (get_dolar, 
                        printt,
                        typing_sleep,
                        word_to_emoji,
@@ -182,7 +181,7 @@ async def on_ready():
     printt(f" Con un total de {len(set(bot.get_all_members()))} miembros <¬", 0.001)
     printt(' |            author: JuliTJZ             |', 0.001)
     printt(' |          created : 23/12/2020          |', 0.001)
-    printt(' |        last updated: 10/06/2021        |', 0.001)
+    printt(' |        last updated: 25/06/2021        |', 0.001)
     printt(f' |      Python: 3.8.10, Oct 14 2019       |', 0.001)
     printt(f' |          Discord.py:  {discord.__version__}            |', 0.001)
     printt('---------------------------------------------------->>>', 0.001)
@@ -192,6 +191,9 @@ async def on_ready():
     await channel.send(f' :white_check_mark:  Connected at {current_hora} UTC')
     channel2 = bot.get_channel(791042478982824000)
     await channel2.send(f' :white_check_mark:  Connected at {current_hora} UTC')
+
+    await add_slash_command(788950461884792854, os.getenv('TOKEN'))
+    
 
 
 ##------> Statuses del Bot <--------
@@ -213,7 +215,7 @@ async def feliz_jueves():
         # if json doesnt exists, create it.
         if not os.path.exists("json_files/felizjueves.json"):
             with open('json_files/felizjueves.json', 'w', encoding="utf8") as thu:
-                thu.write('{["is_sent":false]}')
+                thu.write(r'{["is_sent":false]}')
 
         # read the json to check if already sent
         try:

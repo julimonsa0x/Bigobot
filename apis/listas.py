@@ -801,7 +801,110 @@ images = [
   'https://media.discordapp.net/attachments/793309880861458473/852764300069961788/unknown.png', # wensel machito lava los platos
   'https://media.discordapp.net/attachments/793309880861458473/852764300069961788/unknown.png', # wensel machito lava los platos X2
   'https://media.discordapp.net/attachments/793309880861458473/852764300069961788/unknown.png', # wensel machito lava los platos X3
- 
+  'https://media.discordapp.net/attachments/793309880861458473/854161879718559754/Screenshot_20210612-115841-851.png?width=482&height=477', # empanadas star wars 
+  'https://media.discordapp.net/attachments/793309880861458473/854161880045060096/Screenshot_20210612-115856-753.png?width=482&height=477', # zoom triple foto gato fino
+  'https://media.discordapp.net/attachments/793309880861458473/854161880355176458/Screenshot_20210612-115928-732.png?width=781&height=409', # ninja di waht in europe? 
+  'https://media.discordapp.net/attachments/793309880861458473/854161880633704448/Screenshot_20210612-130836-221.png?width=589&height=477', # messi humilde en carroza 
+  'https://media.discordapp.net/attachments/793309880861458473/854161880950898748/Screenshot_20210612-203358-044.png?width=497&height=477', # la roca pills 
+  'https://media.discordapp.net/attachments/793309880861458473/854161881295749180/Screenshot_20210612-203727-153.png?width=587&height=477', # profe puede correrse? 
+  'https://media.discordapp.net/attachments/793309880861458473/854161881769967616/IMG-20210612-WA0060.jpg?width=220&height=477', # nico le manda un centavo ala claudia
+  'https://media.discordapp.net/attachments/793309880861458473/854161882230423552/Screenshot_20210613-005146-079.png?width=489&height=477', # sabes que te fumas? 
+  'https://media.discordapp.net/attachments/793309880861458473/854162024576450610/Screenshot_20210614-020501-670.png?width=480&height=477', # freezer de DBZ literal 
+  'https://media.discordapp.net/attachments/793309880861458473/854162024892203008/Screenshot_20210614-002344-686.png?width=492&height=477', # el que tiene miedo a morir que no nazca 
+  'https://media.discordapp.net/attachments/793309880861458473/854166615778918430/poli_tira_a_jose.gif?width=576&height=317', # polilla tira a jose futbol 
+  'https://media.discordapp.net/attachments/793309880861458473/854446679507730452/unknown.png?width=387&height=429', # choque de choferes maradona 
+  'https://media.discordapp.net/attachments/793309880861458473/854502132358447144/unknown.png?width=214&height=203', # mato loco 
+  'https://media.discordapp.net/attachments/793309880861458473/854834897117904936/Screenshot_20210616-182821-952.png?width=590&height=477', # mama vs papa cuando estan enojados 
+  'https://media.discordapp.net/attachments/793309880861458473/854835040815284254/Screenshot_20210616-182903-762.png?width=499&height=477', # hombre ciego se olvida que tiene alzheimer
+  'https://media.discordapp.net/attachments/793309880861458473/854858929325736016/Screenshot_20210616-200358-169.png?width=579&height=477', # kennedy tiro 
+  'https://media.discordapp.net/attachments/793309880861458473/854923245563412500/Screenshot_20210617-001932-522.png?width=491&height=477', # pov llevaste agua a ed fisica
+  'https://media.discordapp.net/attachments/793309880861458473/854923245563412500/Screenshot_20210617-001932-522.png?width=491&height=477', # pov llevaste agua a ed fisica X2
+  'https://media.discordapp.net/attachments/793309880861458473/854953490655608842/Screenshot_20210617-021937-316.png?width=493&height=477', # perro panson brasuca 
+  'https://media.discordapp.net/attachments/813176675071819797/854937473120469012/20201207_160632.jpg?width=385&height=477', # sos o te haces 
+  'https://media.discordapp.net/attachments/793309880861458473/854956409758154752/Screenshot_20210617-023049-080.png?width=454&height=477', # mihail no la pone hace años 
+  'https://media.discordapp.net/attachments/793309880861458473/854956409991725056/Screenshot_20210617-022356-404.png?width=648&height=477', # un mudo dijo 
+  'https://media.discordapp.net/attachments/793309880861458473/854956410235387914/Screenshot_20210617-022339-422.png?width=481&height=477', # perro hyundai 
+  'https://media.discordapp.net/attachments/793309880861458473/854956410486915082/Screenshot_20210617-022329-078.png?width=662&height=477', # kratos haciendo alto guiso 
+  'https://media.discordapp.net/attachments/793309880861458473/854956410835828796/Screenshot_20210617-022058-270.png?width=481&height=477', # milanesas con detergente 
+  'https://media.discordapp.net/attachments/793309880861458473/854956520592113715/Screenshot_20210616-191043-391.png?width=381&height=477', # imagen grasiosa de sejota 
+  'https://media.discordapp.net/attachments/793309880861458473/854961529702842368/Screenshot_20210617-024805-255.png?width=401&height=477', # el vecino esta aca mama 
+  'https://media.discordapp.net/attachments/793309880861458473/854961530085048341/Screenshot_20210617-024727-541.png?width=387&height=477', # amor caja sorpresa 
+  'https://media.discordapp.net/attachments/793309880861458473/854961530460962817/Screenshot_20210617-024620-622.png?width=473&height=476', # callta psicologo 
+  'https://media.discordapp.net/attachments/793309880861458473/854961530701479946/Screenshot_20210617-024456-317.png?width=464&height=476', # pov tenes 100 diamantes
+  'https://media.discordapp.net/attachments/793309880861458473/855117348809342996/Screenshot_20210617-131055-869.png?width=704&height=476', # gotica vs latam 
+  'https://media.discordapp.net/attachments/793309880861458473/855108156363636776/Screenshot_20210617-123326-474.png?width=781&height=388', # the girls tit went 
+  'https://media.discordapp.net/attachments/793309880861458473/855321500348055572/Screenshot_20210617-225144-191.png?width=389&height=477', # aveces estoy lol guason 
+  'https://media.discordapp.net/attachments/793309880861458473/855108156613722182/Screenshot_20210617-123312-623.png?width=487&height=477', # how to potion 
+  'https://media.discordapp.net/attachments/793309880861458473/855108157001039872/Screenshot_20210617-123254-836.png?width=584&height=477', # reported for nudity 
+  'https://media.discordapp.net/attachments/793309880861458473/855321500893577246/Screenshot_20210617-225124-671.png?width=490&height=476', # fernan muñecas 
+  'https://media.discordapp.net/attachments/793309880861458473/855321501174464522/Screenshot_20210617-225044-795.png?width=552&height=477', # oceano pacifico no se peleen  
+  'https://media.discordapp.net/attachments/793309880861458473/855321501519577088/Screenshot_20210617-224206-125.png?width=484&height=477', # pedro dbz  
+  'https://media.discordapp.net/attachments/793309880861458473/855321502206132234/Screenshot_20210617-165704-491.png?width=589&height=477', # firulais preso  
+  'https://media.discordapp.net/attachments/793309880861458473/855321501800202240/Screenshot_20210617-224103-779.png?width=408&height=477', # clitoris milei no conozco esa teoria...  
+  'https://media.discordapp.net/attachments/793309880861458473/855321502597906432/Screenshot_20210617-165642-018.png?width=274&height=477', # noo k hiciste firulais  
+  'https://media.discordapp.net/attachments/793309880861458473/855321502902648842/Screenshot_20210617-165601-137.png?width=479&height=477', # no abras la boca si sos mas viejo que la nintendo  
+  'https://media.discordapp.net/attachments/793309880861458473/855321601427636274/Screenshot_20210617-144334-451.png?width=482&height=477', # culo de alto calibre halo   
+  'https://media.discordapp.net/attachments/793309880861458473/855321601838415922/Screenshot_20210617-144059-003.png?width=389&height=477', # gatito en adopcion 
+  'https://media.discordapp.net/attachments/793309880861458473/855321602202533888/Screenshot_20210617-131818-303.png?width=500&height=477', # wtf equipo de dj para mujer 
+  'https://media.discordapp.net/attachments/793309880861458473/855321602727084092/Screenshot_20210617-131416-490.png?width=489&height=477', # meme loco leer al reves  
+  'https://media.discordapp.net/attachments/793309880861458473/855321603126853662/Screenshot_20210617-131357-113.png?width=561&height=477', # red ded redemption apple store  
+  'https://media.discordapp.net/attachments/793309880861458473/856600883764002836/Screenshot_20210620-012433-529.png?width=507&height=477', # solo di trece  
+  'https://media.discordapp.net/attachments/793309880861458473/856290358777348096/e550dc96-cd19-457a-8660-c06e37c24e9f.png?width=779&height=358', # feliz dia papa river a boca  
+  'https://media.discordapp.net/attachments/793309880861458473/856600883303415868/Screenshot_20210620-012414-691.png?width=498&height=477', # gracias amigo por prestarme los auris  
+  'https://media.discordapp.net/attachments/793309880861458473/855321603487170580/Screenshot_20210617-131345-923.png?width=421&height=477', # waifu con meme en la entrepierna  
+  'https://media.discordapp.net/attachments/793309880861458473/856600884125630534/Screenshot_20210620-014408-901.png?width=388&height=477', # alverso y su perro de mierda leyendo 
+  'https://media.discordapp.net/attachments/793309880861458473/856600884725547018/Screenshot_20210620-120953-923.png?width=273&height=476', # sugar mami rtx 3090  
+  'https://media.discordapp.net/attachments/793309880861458473/856600884979826738/Screenshot_20210620-153933-015.png?width=443&height=477', # netflix anos  
+  'https://media.discordapp.net/attachments/793309880861458473/856601073413783582/Screenshot_20210620-154124-732.png?width=389&height=477', # tenet con proyector en una vaca  
+  'https://media.discordapp.net/attachments/793309880861458473/856601073702535198/Screenshot_20210620-154306-031.png?width=483&height=477', # dont be a cunt 
+  'https://media.discordapp.net/attachments/793309880861458473/856601073120313404/Screenshot_20210620-154106-449.png?width=399&height=477', # fredi mercuri panadero 
+  'https://media.discordapp.net/attachments/793309880861458473/856601072592355378/Screenshot_20210620-153959-571.png?width=612&height=477', # paja barbara kun fu panda  
+  'https://media.discordapp.net/attachments/793309880861458473/856601074126553088/Screenshot_20210620-210948-148.png?width=581&height=476', # la divina comedia  
+  'https://media.discordapp.net/attachments/793309880861458473/856601074412945458/Screenshot_20210620-211000-256.png?width=720&height=477', # precision vs fuerza mosquitos 
+  'https://media.discordapp.net/attachments/793309880861458473/856601155929112646/Screenshot_20210620-230549-888.png?width=511&height=477', # bien ahi rey pero queda poco espacio  
+  'https://media.discordapp.net/attachments/793309880861458473/856601156195975238/Screenshot_20210620-230621-630.png?width=530&height=477', # feliz 18 padre hijo boca  
+  'https://media.discordapp.net/attachments/793309880861458473/856601156527849522/Screenshot_20210621-023700-409.png?width=451&height=477', # messi sentado enano  
+  'https://media.discordapp.net/attachments/793309880861458473/856601156972183583/Screenshot_20210621-023717-608.png?width=423&height=477', # troll tatoo  
+  'https://media.discordapp.net/attachments/793309880861458473/856601157342199828/Screenshot_20210621-023741-740.png?width=512&height=477', # que harias si que harias si  
+  'https://media.discordapp.net/attachments/793309880861458473/857003615431819284/unknown-3.png?width=437&height=222', # discord tweet XD  
+  'https://media.discordapp.net/attachments/793309880861458473/857003615650054165/Screenshot_20210622-174333-587.png?width=779&height=443', # queres un dato  
+  'https://media.discordapp.net/attachments/793309880861458473/857003615918096434/Screenshot_20210622-173710-773.png?width=406&height=477', # feminista alberto   
+  'https://media.discordapp.net/attachments/793309880861458473/857003616283131924/Screenshot_20210622-014739.png?width=220&height=477', # poli en casa de copi  
+  'https://media.discordapp.net/attachments/793309880861458473/857003786114564106/Screenshot_20210622-014636.png?width=220&height=477', # apa apa apa apa  
+  'https://media.discordapp.net/attachments/793309880861458473/857003786361765958/Screenshot_20210622-014310.png?width=220&height=477', # firu firu firu firu   
+  'https://media.discordapp.net/attachments/793309880861458473/857003786652352542/Screenshot_20210622-013807.png?width=220&height=477', # copipedro copipedro  
+  'https://media.discordapp.net/attachments/793309880861458473/857003786911088690/Screenshot_20210622-013448.png?width=220&height=477', # te escribimos murdok y dami  
+  'https://media.discordapp.net/attachments/793309880861458473/857003787436818482/Screenshot_20210622-012838-250.png?width=605&height=477', # alberto asado de perro  
+  'https://media.discordapp.net/attachments/793309880861458473/857003787708268564/Screenshot_20210622-010504-010.png?width=474&height=477', # si me ves hablando solo   
+  'https://media.discordapp.net/attachments/793309880861458473/857003874970763284/Screenshot_20210622-010403-688.png?width=479&height=477', # acepta la llamada ronaldo vecino  
+  'https://media.discordapp.net/attachments/793309880861458473/857003875387310130/Screenshot_20210622-003749-205.png?width=365&height=477', # ves firulais  
+  'https://media.discordapp.net/attachments/793309880861458473/857003875848159262/Screenshot_20210622-003739-417.png?width=391&height=477', # pollo flaco  
+  'https://media.discordapp.net/attachments/793309880861458473/857003876162207764/Screenshot_20210621-234545-971.png?width=502&height=477', # esta bien ser negro  
+  'https://media.discordapp.net/attachments/793309880861458473/857003876434575370/Screenshot_20210621-232744-698.png?width=540&height=477', # verbos ingles dificiles  
+  'https://media.discordapp.net/attachments/793309880861458473/857003876791484476/Screenshot_20210621-232547-492.png?width=460&height=477', # argentinos en fechas patrias  
+  'https://media.discordapp.net/attachments/793309880861458473/857004015766339624/Screenshot_20210621-232453.png?width=220&height=477', # im crying chile pais  
+  'https://media.discordapp.net/attachments/793309880861458473/857004016155230208/Screenshot_20210621-232415-525.png?width=540&height=477', # el indio 
+  'https://media.discordapp.net/attachments/793309880861458473/857004016395223060/Screenshot_20210621-221617-947.png?width=481&height=477', # vas ganando papa trading  
+  'https://media.discordapp.net/attachments/793309880861458473/857004201137799177/Screenshot_20210621-222109-806.png?width=517&height=476', # perro encima de perro  
+  'https://media.discordapp.net/attachments/793309880861458473/857004202496622622/Screenshot_20210621-154752-509.png?width=468&height=477', # te escribo?
+  'https://media.discordapp.net/attachments/793309880861458473/857004201434808320/Screenshot_20210621-205906-411.png?width=779&height=432', # alberto por decir una burrada
+  'https://media.discordapp.net/attachments/793309880861458473/857004201841918032/Screenshot_20210621-205834-756.png?width=593&height=477', # meme retk 
+  'https://media.discordapp.net/attachments/793309880861458473/857004202197647360/Screenshot_20210621-205722-593.png?width=547&height=477', # meme genshin
+  'https://media.discordapp.net/attachments/793309880861458473/857004202840948776/Screenshot_20210621-154708-095.png?width=439&height=477', # pelotas testiculos 
+  'https://media.discordapp.net/attachments/793309880861458473/857004203083169843/Screenshot_20210621-154650-312.png?width=489&height=477', # yakisieras ser peruano 
+  'https://media.discordapp.net/attachments/793309880861458473/857651829345222656/E4nN55eXIAgGJHE.png?width=487&height=477', # que ojete estos brasileros 
+  'https://media.discordapp.net/attachments/793309880861458473/857651829639086121/Screenshot_20210623-224835-484.png?width=513&height=477', # tengo arena en los rinones 
+  'https://media.discordapp.net/attachments/793309880861458473/857651829952086036/Screenshot_20210623-225007-919.png?width=485&height=477', # se le achico el pene tras vacunarse 
+  'https://media.discordapp.net/attachments/793309880861458473/857998929161093180/Captura_de_pantalla_20200517-122833.png?width=481&height=477', # the sliding door company 
+  'https://media.discordapp.net/attachments/793309880861458473/857999049364996136/Screenshot_20210624-233236-261.png?width=475&height=477', # you okay bro? bro is in the mid of the sea 
+  'https://media.discordapp.net/attachments/793309880861458473/857999049738420284/Screenshot_20210624-233347-048.png?width=534&height=477', # laura no estabaa 2 km 
+  'https://media.discordapp.net/attachments/793309880861458473/857999154503614504/Screenshot_20210625-012433-707.png?width=518&height=477', # george sicario biografia google 
+  'https://media.discordapp.net/attachments/793309880861458473/857999154903253032/Screenshot_20210625-012459-100.png?width=482&height=477', # porno de roblox inventor 
+  'https://media.discordapp.net/attachments/793309880861458473/857999155283361792/Screenshot_20210625-014228-036.png?width=394&height=477', # socialistas broma
+  'https://media.discordapp.net/attachments/793309880861458473/857999154000822312/Screenshot_20210625-011157-305.png?width=480&height=477', # carne amongus 
+  'https://media.discordapp.net/attachments/793309880861458473/857999050314088458/Screenshot_20210625-010759-537.png?width=479&height=477', # frasada de princesa 
+  'https://cdn.discordapp.com/attachments/793309880861458473/857999194891616276/30.000_dolares_con_eso_me_compro_venezuela480P.mp4', # kun 
+  'https://media.discordapp.net/attachments/793309880861458473/858057915326791680/unknown.png?width=374&height=223', # pili cuanto te pagaron -tambo 
 
 ]
 
