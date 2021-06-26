@@ -1322,8 +1322,8 @@ async def borrar(ctx, limit=10, member: discord.Member=None):
     Usar el comando a secas causara una eliminacion de 10 mensajes por defecto. 
     [#borrar] <10> <@usuario_c> causara una eliminacion de los ultimos 10 mensajes del usuario_c....
     '''
-    member_warn = (f"**Estas seguro que quieres borrar {limit} mensaje(s)?**")
-    no_member_warn = (f"**Estas seguro que quieres borrar {limit} mensaje(s) de {member}?**")
+    no_member_warn = (f"**Estas seguro que quieres borrar {limit} mensaje(s)?**")
+    member_warn = (f"**Estas seguro que quieres borrar {limit} mensaje(s) de {member}?**")
 
     try:
         # create the warning
@@ -1395,7 +1395,7 @@ async def borrar(ctx, limit=10, member: discord.Member=None):
             pass
 
 
-@slash.slash(description="comando de prueba, carga datos a un .json")
+@slash.slash(description="comando de prueba, carga datos a un .json", guild_ids=apis.listas.joined_guilds)
 async def submit(ctx, titulo:str, mensaje:str, log=False):
     """
     4th argument log if true shows whole log, default False.

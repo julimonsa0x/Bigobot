@@ -14,6 +14,7 @@ from instaloader.structures import Post, Profile
 from instaloader import Instaloader
 
 from apis.functions import printt
+from apis.listas import joined_guilds
 
 from discord_slash import cog_ext, SlashContext
 
@@ -50,7 +51,7 @@ class Instagram(commands.Cog):
     async def on_ready(self):
         printt("cog de instagram listo")
 
-    @cog_ext.cog_slash(description="descarga un post de insta. 1er arg url. 2do arg nombre para el archivo")
+    @cog_ext.cog_slash(description="descarga un post de insta. 1er arg url. 2do arg nombre para el archivo", guild_ids=joined_guilds)
     async def descargar_post(self, ctx: SlashContext, url:str, nombre:str):
         """
         Descarga un post de instagram de una cuenta publica 

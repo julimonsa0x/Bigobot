@@ -5,6 +5,7 @@ import discord
 from discord.ext import commands
 import lyricsgenius
 from apis.functions import printt
+from apis.listas import joined_guilds
 
 from discord_slash import cog_ext, SlashContext
 
@@ -21,7 +22,7 @@ class Lyrics(commands.Cog):
     async def on_ready(self):
 	    printt("cog de lyrics listo")
 
-    @cog_ext.cog_slash(description="Busca las letras de una cancion. Argumento artista debe ser de una sola palabra")
+    @cog_ext.cog_slash(description="Busca las letras de una cancion. Argumento artista debe ser de una sola palabra", guild_ids=joined_guilds)
     async def lyrics(self, ctx: SlashContext, artista: str, *, cancion):
         """
         #lyrics, #letras, #buscar_letras, todos sirven igual.
