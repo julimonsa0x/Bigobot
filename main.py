@@ -146,8 +146,8 @@ async def on_ready():
         # populate the joined_guilds apis.listas 
         try:
             apis.listas.joined_guilds.append(guild)
-        except:
-            pass
+        except Exception as e:
+            printt(f"====| Hubo un error al llenar joined_guilds!\nExcep:{e}\nArgs:{e.args}\n====|")
 
         # last, bot warnings.
         async with aiofiles.open(f"databases/{guild.id}.txt", mode="r") as file:
@@ -192,7 +192,7 @@ async def on_ready():
     channel2 = bot.get_channel(791042478982824000)
     await channel2.send(f' :white_check_mark:  Connected at {current_hora} UTC')
 
-    await add_slash_command(788950461884792854, os.getenv('TOKEN'))
+    #await add_slash_command(788950461884792854, os.getenv('TOKEN'))
     
 
 
@@ -463,7 +463,7 @@ async def ticket_menu(ctx):
         await ctx.channel.send(embed=embed)
         #alphascript cmd
 
-@slash.slash(description="Comando para crear roles raccionable.")
+@slash.slash(description="Comando para crear roles raccionable.", guild_ids=apis.listas.joined_guilds)
 @slash.permission(guild_id=bigo_guild_id, 
                   permissions=[
                    create_permission(559592215295557634, SlashCommandPermissionType.ROLE, True)
@@ -554,7 +554,7 @@ async def set_canal_despedida(ctx, new_channel: discord.TextChannel=None, *, mes
         await ctx.channel.send("No incluiste el nombre del canal o el mensaje a setear...")
         print(f"cmdCanaldeDespedida||    {ctx.author.name} falló al setear un canal de Despedida...")
 
-@slash.slash(description="Comando para leer las advertencias de un usuario, si las hay.")
+@slash.slash(description="Comando para leer las advertencias de un usuario, si las hay.", guild_ids=apis.listas.joined_guilds)
 @slash.permission(guild_id=bigo_guild_id, 
                   permissions=[
                    create_permission(559592215295557634, SlashCommandPermissionType.ROLE, True)
@@ -577,7 +577,7 @@ async def advertencias(ctx: SlashContext, member: discord.Member=None):
     except KeyError: # no warnings
         await ctx.send(content="Este usuario no cuenta con advertencias :thumbsup:")
         
-@slash.slash(description="Comando para dar advertencias a usuarios, solo admins pueden usar este comando")
+@slash.slash(description="Comando para dar advertencias a usuarios, solo admins pueden usar este comando", guild_ids=apis.listas.joined_guilds)
 @slash.permission(guild_id=bigo_guild_id, 
                   permissions=[
                    create_permission(559592215295557634, SlashCommandPermissionType.ROLE, True)
@@ -610,7 +610,7 @@ async def advertir(ctx: SlashContext, member: discord.Member=None, *, reason=Non
 
 
 #-------------> RIP command <-----------------
-@slash.slash(description="Pon la foto de un @miembro en una tumba")
+@slash.slash(description="Pon la foto de un @miembro en una tumba", guild_ids=apis.listas.joined_guilds)
 async def rip(ctx: SlashContext, member: discord.Member=None):
     '''Tumba de @alguien a quien menciones'''
     # first we put the member avatar pic
@@ -814,7 +814,7 @@ async def crearemoji_error(ctx, error):
         pass
 
 
-@slash.slash(description="Invitame a tu servidor!")
+@slash.slash(description="Invitame a tu servidor!", guild_ids=apis.listas.joined_guilds)
 async def invitame(ctx: SlashContext):
     inv = await ctx.send(
         content="Invitacion",
@@ -1322,8 +1322,12 @@ async def borrar(ctx, limit=10, member: discord.Member=None):
     Usar el comando a secas causara una eliminacion de 10 mensajes por defecto. 
     [#borrar] <10> <@usuario_c> causara una eliminacion de los ultimos 10 mensajes del usuario_c....
     '''
+    member_warn = (f"**Estas seguro que quieres borrar {limit} mensaje(s)?**")
+    no_member_warn = (f"**Estas seguro que quieres borrar {limit} mensaje(s) de {member}?**")
+
     try:
-        butn = await ctx.send(f"**Estas seguro que quieres borrar {limit} mensajes?**",
+        # create the warning
+        butn = await ctx.send(member_warn if member else no_member_warn,
             components = [
                 Button(style=ButtonStyle.blue, label="Cancelar y no borrar"),
                 Button(style=ButtonStyle.red, label="Borrar"),
@@ -1343,13 +1347,13 @@ async def borrar(ctx, limit=10, member: discord.Member=None):
         try:
             limit = int(limit)     
         except:
-            return await ctx.send(content='Se requiere de un numero para el limite de mensajes a borrar!' + '\n' + 'recuerda seguir la sintaxis `#borrar <cantidad de mensajes a borrar>')
+            return await ctx.send(content='Se requiere de un numero para el limite de mensajes a borrar!\nrecuerda seguir la sintaxis `#borrar <cantidad de mensajes a borrar>')
         
         checksent=[]
 
         if not member:
             if borrar_bool:
-                await ctx.channel.purge(limit=limit)
+                await ctx.channel.purge(limit = limit + 3)
                 await typing_sleep(ctx)
                 await butn.delete()
                 return await ctx.send(content=f" :wastebasket: {limit} mensaje(s) borrado(s)", delete_after=10.0)
@@ -1374,8 +1378,7 @@ async def borrar(ctx, limit=10, member: discord.Member=None):
             if (not borrar_bool) and (checksent == []):
                 await typing_sleep(ctx)
                 await ctx.send(content="Ningun mensaje eliminado", delete_after=10.0)
-            
-        
+               
     except Exception as e:
         # check if the msg is older than 2 weeks
         if isinstance(e, errors.CommandInvokeError):
@@ -1386,9 +1389,10 @@ async def borrar(ctx, limit=10, member: discord.Member=None):
             await ctx.send(f":exclamation: {ctx.author.name} esa no es la sintaxis correcta del comando, utiliza `#help borrar`!")
         # otherwise send the name and reason of the exception
         else:
-            await typing_sleep(ctx)
-            await ctx.send(f":exclamation:  Hubo un error al ejecutar el comando. Info detallada:")
-            await ctx.send(f"`Excepcion: {e}`\n\n`Razon: {e.args}`\n\n`Traceback: {e.with_traceback}`\n\n`Causa:{e.__cause__}`")
+            #await typing_sleep(ctx)
+            #await ctx.send(f":exclamation:  Hubo un error al ejecutar el comando. Info detallada:")
+            #await ctx.send(f"`Excepcion: {e}`\n\n`Razon: {e.args}`\n\n`Traceback: {e.with_traceback}`\n\n`Causa:{e.__cause__}`")
+            pass
 
 
 @slash.slash(description="comando de prueba, carga datos a un .json")
@@ -1419,7 +1423,7 @@ async def submit(ctx, titulo:str, mensaje:str, log=False):
 
 # cog loader cmd
 # bot_developer_id Variable is at top of file
-@slash.slash(description="Carga un cog especifico, solo desarrollador.")
+@slash.slash(description="Carga un cog especifico, solo desarrollador.", guild_ids=apis.listas.joined_guilds)
 async def load(ctx: SlashContext, extension):
     await ctx.defer()
     id = str(ctx.author.id)
@@ -1431,7 +1435,7 @@ async def load(ctx: SlashContext, extension):
         await ctx.send(content="Solo el desarrollador puede cargar/habilitar los cogs del bot")
 
 # cog unloader cmd
-@slash.slash(description="Desactiva un cogf especifico, solo desarrollador.")
+@slash.slash(description="Desactiva un cogf especifico, solo desarrollador.", guild_ids=apis.listas.joined_guilds)
 async def unload(ctx: SlashContext, extension):
     await ctx.defer()
     id = str(ctx.author.id)
@@ -1444,7 +1448,7 @@ async def unload(ctx: SlashContext, extension):
 
 
 # ---> ping con latencia  4<----
-@slash.slash(description='Muestra el ping del bot')
+@slash.slash(description='Muestra el ping del bot', guild_ids=apis.listas.joined_guilds)
 async def ping(ctx, arg=None):
     '''Muestra tu ping con respecto al bot'''
     if arg == "pong":

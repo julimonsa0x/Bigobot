@@ -239,7 +239,7 @@ async def level_up(users, user, channel, server):
 # 12th function
 async def throw_error(ctx, e: Exception):
     """ 
-    A custom function to easily send exceptions info 
+    A custom function to easily send exceptions info to a ctx 
     Recommended when: `Except Exception as e:`
     """
     await ctx.send(f":exclamation:  Hubo un error al ejecutar el comando. Info detallada:")
